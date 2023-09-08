@@ -1,0 +1,5 @@
+[install]
+optional = false
+peer = false
+minimumReleaseAge = 259200 # 3days ago, seconds
+minimumReleaseAgeExcludes = ["@types/node", "typescript"]

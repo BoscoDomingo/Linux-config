@@ -1,0 +1,50 @@
+#!/bin/sh
+# Wrapper around ssh-keygen that ensures the SSH key is in the agent
+# before signing. Prompts for passphrase only on first use.
+
+key_path="${SSH_SIGN_KEY_PATH:-$HOME/.ssh/id_ed25519}"
+pubkey_path="$key_path.pub"
+
+if [ ! -r "$key_path" ]; then
+    echo "ssh-sign: key not readable: $key_path" >&2
+    exit 1
+fi
+
+ensure_agent() {
+    ssh-add -l >/dev/null 2>&1
+    rc=$?
+
+    if [ "$rc" -eq 2 ]; then
+        agent_dir="$HOME/.ssh/agent"
+        agent_sock="$agent_dir/agent.sock"
+        mkdir -p "$agent_dir"
+        rm -f "$agent_sock"
+        eval "$(ssh-agent -a "$agent_sock" -s)" >/dev/null
+        export SSH_AUTH_SOCK="$agent_sock"
+    fi
+}
+
+key_loaded() {
+    [ -r "$pubkey_path" ] || return 1
+
+    wanted_key=$(awk '{ print $1 " " $2 }' "$pubkey_path")
+    ssh-add -L 2>/dev/null | awk -v k="$wanted_key" '{ if ($1 " " $2 == k) { found=1; exit } } END { exit(found ? 0 : 1) }'
+}
+
+need_add=1
+
+ensure_agent
+
+if key_loaded; then
+    need_add=0
+fi
+
+if [ "$need_add" -eq 1 ]; then
+    if [ -r /dev/tty ]; then
+        ssh-add "$key_path" </dev/tty || exit 1
+    else
+        ssh-add "$key_path" || exit 1
+    fi
+fi
+
+exec ssh-keygen "$@"

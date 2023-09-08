@@ -1,0 +1,22 @@
+---
+description: Require explicit approval before AI agents run risky Jujutsu operations
+alwaysApply: true
+---
+
+# Jujutsu AI Approval Gate
+
+This rule applies to AI agents only. It does not restrict the human user's shell.
+
+Before running any Jujutsu command that commits, moves the working copy, rewrites history, changes bookmarks, abandons work, pushes, or otherwise may leave working changes behind, stop and ask for express approval for that exact operation.
+
+Protected operations include, but are not limited to:
+
+- `jj commit`, `jj describe` when used as a commit/finalization step, and aliases such as `jj c` or `jj ci`
+- `jj new`, `jj edit`, `jj next`, `jj prev`, and aliases such as `jj n`, `jj e`, `jj p`, `jj top`
+- `jj rebase`, `jj squash`, `jj absorb`, `jj split`, `jj diffedit`, `jj restore`, `jj abandon`, `jj undo`
+- `jj bookmark create`, `jj bookmark set`, `jj bookmark advance`, `jj bookmark delete`, especially with `--allow-backwards`
+- `jj git push`, including push aliases such as `jj gp`, `jj gpb`, `jj gpn`, `jj gpt`, `jj gpm`, `jj gpd`
+
+Express approval must name the operation or clearly answer a prompt that names it. General momentum words such as "continue", "proceed", "go ahead", or approval for a previous workflow stage are not enough.
+
+Read-only Jujutsu inspection is allowed without this gate, for example `jj status`, `jj diff`, `jj log`, `jj show`, `jj op log`, and `jj config list`.

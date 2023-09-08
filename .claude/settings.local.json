@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:github.com)",
+      "Bash(echo:*)",
+      "Bash(jj config list:*)",
+      "WebSearch",
+      "Bash(git:*)",
+      "Bash(mise ls:*)",
+      "Bash(mise which:*)",
+      "Read(//home/bosco/.local/share/pnpm/**)",
+      "Read(//home/bosco/.opencode/bin/**)",
+      "Bash(mise plugins:*)",
+      "Bash(mise registry:*)",
+      "Read(//home/bosco/.claude/**)",
+      "Bash(claude config:*)",
+      "Bash(claude --version)"
+    ]
+  }
+}

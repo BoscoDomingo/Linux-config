@@ -1,0 +1,44 @@
+#!/usr/bin/env sh
+# Environment for Cursor WSL server before extension hosts start.
+# Keep this PATH-only so IDE services get tools without interactive shell setup.
+
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export PNPM_HOME="${PNPM_HOME:-$XDG_DATA_HOME/pnpm}"
+
+_dotfiles_path_prepend_if_dir() {
+	case ":$PATH:" in
+	*":$1:"*) ;;
+	*) [ -d "$1" ] && PATH="$1:$PATH" ;;
+	esac
+}
+
+_dotfiles_path_prepend_if_dir "/home/linuxbrew/.linuxbrew/bin"
+_dotfiles_path_prepend_if_dir "$HOME/bin"
+_dotfiles_path_prepend_if_dir "$HOME/.local/bin"
+_dotfiles_path_prepend_if_dir "$HOME/.local/bin/scripts"
+_dotfiles_path_prepend_if_dir "$HOME/.local/share/mise/shims"
+_dotfiles_path_prepend_if_dir "$PNPM_HOME"
+_dotfiles_path_prepend_if_dir "$HOME/.opencode/bin"
+
+_dotfiles_path_dedupe() {
+	old_ifs="$IFS"
+	IFS=:
+	deduped_path=""
+	for entry in $PATH; do
+		[ -n "$entry" ] || continue
+		case ":$deduped_path:" in
+		*":$entry:"*) ;;
+		*) deduped_path="${deduped_path:+$deduped_path:}$entry" ;;
+		esac
+	done
+	IFS="$old_ifs"
+	PATH="$deduped_path"
+}
+
+_dotfiles_path_dedupe
+export PATH
+
+unset -f _dotfiles_path_prepend_if_dir _dotfiles_path_dedupe
+unset old_ifs deduped_path entry

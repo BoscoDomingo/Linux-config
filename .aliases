@@ -1,0 +1,96 @@
+alias c='clear'
+alias rmf='rm -rf'
+alias rm="echo \"Use 'rip' instead of rm (or /usr/bin/rm)\" && exit 1"
+
+# filesystem usage, default human readable sizes
+alias df='df -h'
+alias du='du -h'
+
+# Better cp alternative
+# alias cp='zcp'
+
+# ls
+alias le='eza -a -T -L=1 -1 -l --color auto --icons --group-directories-first --header --created --modified --time-style=long-iso --git'
+alias l='le --git-ignore'
+alias ll='ls -FAGhl --group-directories-first --time-style=long-iso --color'
+alias la='ls -A'
+# alias lls='lsd -1AFl --total-size'
+
+# Pretty print $PATH
+alias ppath="tr ':' '\n' <<< \"$PATH\""
+
+alias ping='gping --clear'
+
+alias nano='nvim'
+# alias nano='nano --rcfile ~/.nanorc'
+alias vim='nvim'
+
+alias ff="fastfetch"
+alias of="onefetch"
+
+alias j="jj"
+alias lj="lazyjj"
+alias cc="claude"
+alias oc="opencode"
+
+# yt-dlp
+alias ytd="yt-dlp"
+alias ytdb="yt-dlp -t mkv"                        # Get best video in mkv format. Add `-P path` for output destination
+alias ytda="yt-dlp -f 'ba' -x --audio-format m4a" # Extract best audio in m4a (AAC) since Davinci doesn't support .opus
+alias yt2k="yt-dlp -f \"bestvideo[height<=1440]+bestaudio/best[height<=1440]\" --merge-output-format mkv -P \"~/videos\""
+
+# Git
+alias git-delete-untracked-branches='LANG=en_US git branch -vv | awk "/: gone]/{print \$1}" | xargs -p git branch -D'
+alias gdub="git-delete-untracked-branches"
+
+alias gccd='f(){ git clone "$1" && cd "$(basename $1 .git)"; unset -f f; }; f'
+
+# Graphite
+alias gtc='gt create'
+alias gtm='gt modify -p -m'
+# alias gtm='f(){ gt modify -m $1; unset -f f; }; f' # Alternative way which allows passing multiple arguments if needed
+
+alias gtl='gt log'
+alias gtll='gt log long'
+
+alias gtch='gt checkout'
+alias gtrs='gt restack'
+alias gtro='gt reorder'
+alias gtct='gt continue'
+alias gtcfg='gt config'
+
+# TLDR fuzzy finder for tealdeer (https://www.reddit.com/r/archlinux/comments/n7o1ne/comment/gxeawav/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
+# alias tl="tldr --list | fzf --preview 'tldr {} --color always' | xargs tldr"
+
+# Better Commits
+alias bc="better-commits"
+alias bca='git add -p && bc'
+alias bb='better-branch'
+
+# Supabase
+alias sb="supabase"
+alias sbs="supabase start"
+alias sbk="supabase stop --no-backup"
+alias sbd="supabase db"
+alias sbm="supabase migration"
+
+# Releases
+alias release-patch='\
+	git stash push -a -k && \
+	NEW_VERSION=$(npm version patch --no-git-tag-version | cut -c 2-) && \
+	git commit -a -m "chore(release): v$NEW_VERSION" && \
+	git stash pop'
+alias release-minor='\
+	git stash push -a -k && \
+	NEW_VERSION=$(npm version minor --no-git-tag-version | cut -c 2-) && \
+	git commit -a -m "chore(release): v$NEW_VERSION" && \
+	git stash pop'
+alias release-major='\
+	git stash push -a -k && \
+	NEW_VERSION=$(npm version major --no-git-tag-version | cut -c 2-) && \
+	git commit -a -m "chore(release): v$NEW_VERSION" && \
+	git stash pop'
+
+# gcloud
+alias gcloud-switch='f(){ gcloud config configurations activate "$@" && gcloud auth login; unset -f f; }; f'
+alias gcloud-project-number='gcloud projects describe $(gcloud config get-value core/project) --format=value\(projectNumber\)'

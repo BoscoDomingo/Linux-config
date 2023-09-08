@@ -1,0 +1,13 @@
+# Node
+npm-debug.log
+
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+
+.jj
+.cursor/mcp.json
+
+*.log
