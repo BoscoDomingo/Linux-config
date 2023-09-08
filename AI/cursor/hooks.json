@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"hooks": {
+		"beforeShellExecution": [
+			{
+				"command": "$HOME/.local/bin/ai-agent-guard-jj-approval --provider cursor",
+				"matcher": "(^|[\\s;&|()'\\\"])jj([\\s;&|()'\\\"]|$)",
+				"failClosed": true
+			}
+		]
+	}
+}

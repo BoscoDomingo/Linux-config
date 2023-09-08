@@ -1,0 +1,13 @@
+{
+  "sidebar": "auto",
+  "thinking_visibility": true,
+  "timestamps": "hide",
+  "tool_details_visibility": true,
+  "assistant_metadata_visibility": true,
+  "scrollbar_visible": true,
+  "header_visible": true,
+  "diff_wrap_mode": "word",
+  "animations_enabled": true,
+  "generic_tool_output_visibility": false,
+  "theme": "one-dark"
+}

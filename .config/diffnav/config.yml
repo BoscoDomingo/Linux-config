@@ -1,0 +1,11 @@
+ui:
+  hideHeader: false
+  hideFooter: false
+  showFileTree: true
+  fileTreeWidth: 30
+  searchTreeWidth: 60
+  icons: nerd-fonts-full # nerd-fonts-status, nerd-fonts-simple, nerd-fonts-filetype, nerd-fonts-full, unicode, ascii
+  colorFileNames: true
+  showDiffStats: true
+  sideBySide: false
+  startFoldersOpenDepth: 1

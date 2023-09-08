@@ -1,0 +1,156 @@
+"$schema" = "https://jj-vcs.github.io/jj/latest/config-schema.json"
+
+[user]
+name = "Bosco Domingo"
+email = "boscodomingob@gmail.com"
+
+[signing]
+behavior = "keep"
+backend = "ssh"
+key = "~/.ssh/id_ed25519"
+
+[signing.backends.ssh]
+allowed-signers = "~/.ssh/allowed_signers"
+program = "ssh-sign"
+
+[[--scope]]
+--when.platforms = ["windows"]
+
+[--scope.signing.backends.ssh]
+program = "C:/Windows/System32/OpenSSH/ssh-keygen.exe"
+
+[git]
+# push-bookmark-prefix = "feat/"
+sign-on-push = true # Lazy signing only on pushes
+
+[remotes.origin]
+auto-track-bookmarks = "*"
+
+[templates]
+git_push_bookmark = '"feat/" ++ change_id.short()'
+
+[template-aliases]
+'format_short_signature(signature)' = 'signature' # Name and email
+
+[ui]
+bookmark-list-sort-keys = ["committer-date"]
+conflict-marker-style = "snapshot"
+default-command = ["log", "--no-pager", "-n=5"]
+diff-editor = ":builtin"
+diff-formatter = "delta" # Use delta as the external diff formatter so syntax highlighting works for diff/show/log -p.
+editor = "nvim"
+graph.style = "curved"
+wrapping = "word"
+log-word-wrap = true
+movement.edit = true # Useful if using `prev` and `next` and want to edit the parent directly
+pager = ["less", "-FRX"] # Keep non-diff output visible after closing the pager.
+paginate = "auto"
+show-cryptographic-signatures = true
+
+[merge-tools.delta]
+# Pass jj's computed content width to delta and accept delta's "differences found" exit code.
+diff-args = ["--side-by-side", "$left", "$right", "--width=$width"]
+diff-expected-exit-codes = [0, 1]
+
+[ui.streampager]
+interface = "quit-if-one-page"
+
+# These options allow for `jj diff` and `jj show` to clear the output from the terminal after closing the pager.
+[[--scope]]
+--when.commands = ["diff", "show"]
+
+[--scope.ui]
+pager = ["less", "-FR"] # Clear diff output after closing the pager.
+
+# MARK: - Aliases
+[aliases]
+# Current state
+st = ["status"]
+# Use diffnav for commit inspection; delta's global side-by-side default must be hidden so `s` toggles unified view.
+sh = ["show", "--config=ui.diff-formatter=':git'", "--config=ui.pager=[\"env\", \"GIT_CONFIG_PARAMETERS='delta.side-by-side=false'\", \"diffnav\"]"]
+d = ["diff"]
+l = ["log"]
+ls = ["log", "--summary"]
+la = ["log", "-r", "::"]
+le = ["log", "-r", "empty() & mutable()"]
+ld = ["log", "-r", "divergent()"]
+ln = ["log", "-r", "remote_bookmarks().."] # All non-pushed-yet commits
+lnp = ["log", "-r", "(remote_bookmarks()..@)::"] # Current working copy's non-pushed-yet commits
+
+# Commit
+c = ["commit"]
+ci = ["commit", "--interactive"]
+
+# Edit commits
+s = ["squash"]
+si = ["squash", "--interactive"] # Edit a previous commit (empty for parent)
+sii = ["squash", "--interactive", "--ignore-immutable"] # Force edit a previous commit (empty for parent)
+er = ["squash", "-i", "-u", "-t"] # Edit target revision with current changes
+de = ["diffedit"] # Alternative to squash
+
+u = ["undo"]
+
+a = ["absorb"]
+aa = ["absorb", "--ignore-immutable", "-t", "immutable()"] # absorb disregarding immutability (such as bookmarked changes)
+
+# Navigation
+m = ["rebase", "-r", "@", "-d"] # move current revision only to the chosen destination
+mm = ["rebase", "-r", "@", "-d", "main"]
+md = ["rebase", "-r", "@", "-d", "develop"]
+
+n = ["new"]
+p = ["prev"]
+nm = ["new", "main"]
+e = ["edit"]
+top = ["edit", "-r", "heads(@::)"]
+
+# Rebase
+rb = ["rebase"]
+rbb = ["rebase", "--branch"]
+rbm = ["rebase", "-d", "main", "-s"] # Rebase the chosen revision onto main
+rbbm = ["rebase", "-d", "main", "--branch"] # Rebase the chosen branch onto main
+rbi = ["rebase", "--interactive"]
+
+# Merge
+mgm = ["new", "main"] # Merge main into the chosen destination, i.e. `jj mgm @-` to merge main into the parent
+mgmc = ["new", "main", "@"] # Merge main into the current bookmark
+mgd = ["new", "develop"] # Merge develop into the chosen destination, i.e. `jj mg @-` to merge develop into the parent
+mgdc = ["new", "develop", "@"] # Merge develop into the current bookmark
+
+# Restore
+rst = ["restore"]
+rsti = ["restore", "--interactive"]
+
+# Abandon
+an = ["abandon"]
+ane = ["abandon", "-r", "empty() & mutable()"]
+
+# Resolve
+slv = ["resolve"]
+oplog = ["op", "log"]
+
+# Branches/bookmarks
+b = ["bookmark"]
+bc = ["bookmark", "create"]
+bcp = ["bookmark", "create", "-r", "@-"] # Create bookmark at parent
+bs = ["bookmark", "set"] # Set bookmark. E.g. `jbsp main -r @-` to update tracked main to the latest commit
+bsp = ["bookmark", "set", "-r", "@-"]
+bspa = ["bookmark", "set", "-r", "@-", "--allow-backwards"]
+ba = ["bookmark", "advance"]
+bap = ["bookmark", "advance", "-t", "@-"]
+bsm = ["bookmark", "set", "main"] # Set main to the latest commit
+bsmp = ["bookmark", "set", "main", "-r", "@-"] # set main to the previous commit
+bsmo = ["bookmark", "set", "main", "-r", "main@origin", "--allow-backwards"] # Sync local main to origin/main
+bsd = ["bookmark", "set", "develop"] # Set develop to the latest commit
+bsdp = ["bookmark", "set", "develop", "-r", "@-"] # set develop to the previous commit
+bsdo = ["bookmark", "set", "develop", "-r", "develop@origin", "--allow-backwards"] # Sync local develop to origin/develop
+
+# Git
+g = ["git"]
+gf = ["git", "fetch"]
+gp = ["git", "push"]
+gpb = ["git", "push", "-b"]
+gpn = ["git", "push", "-N"] # Push only bookmarked changes
+gpt = ["git", "push", "--tracked"] # Pushes all tracked branches
+gpm = ["git", "push", "-b", "main"] # Push bookmarked changes to main
+gpd = ["git", "push", "-b", "develop"] # Push bookmarked changes to develop

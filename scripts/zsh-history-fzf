@@ -1,0 +1,119 @@
+#!/usr/bin/env zsh
+# Helper for the zsh Ctrl-R/Up fzf history picker.
+
+emulate -L zsh
+setopt extendedglob no_aliases
+
+histfile=${HISTFILE:-$HOME/.histfile}
+
+_load_history_records() {
+	integer id=0
+	local line current_raw current_command
+	raw_records=()
+	commands=()
+
+	[[ -r "$histfile" ]] || return 0
+	while IFS= read -r line || [[ -n "$line" ]]; do
+		if [[ "$line" =~ '^: [0-9]+:[0-9]+;(.*)$' ]]; then
+			if [[ -n "$current_raw" ]]; then
+				((id++))
+				raw_records[$id]="$current_raw"
+				commands[$id]="$current_command"
+			fi
+			current_raw="$line"$'\n'
+			current_command="$match[1]"
+		else
+			if [[ -n "$current_raw" ]]; then
+				current_raw+="$line"$'\n'
+				current_command+=$'\n'"$line"
+			else
+				current_raw="$line"$'\n'
+				current_command="$line"
+			fi
+		fi
+	done <"$histfile"
+
+	if [[ -n "$current_raw" ]]; then
+		((id++))
+		raw_records[$id]="$current_raw"
+		commands[$id]="$current_command"
+	fi
+}
+
+_list_history() {
+	local display
+	typeset -A seen
+	_load_history_records
+
+	for id in {${#commands}..1}; do
+		[[ -n "${commands[$id]}" ]] || continue
+		((${+seen[${commands[$id]}]})) && continue
+		seen[${commands[$id]}]=1
+		display=${commands[$id]//$'\n'/\\n}
+		display=${display//$'\t'/    }
+		printf '%s\t%s\n' "$id" "$display"
+	done
+}
+
+_show_history() {
+	local id=$1
+	[[ "$id" == <-> ]] || return 0
+	_load_history_records
+	printf '%s' "${commands[$id]}"
+}
+
+_pick_history() {
+	local query=${1:-} selected id delete_action
+	delete_action='execute-silent(zsh-history-fzf delete {1})+reload(zsh-history-fzf list)'
+
+	selected="$(_list_history | fzf \
+		--height "${FZF_TMUX_HEIGHT:-40%}" \
+		--min-height 20+ \
+		-n2..,.. \
+		--scheme=history \
+		--bind="ctrl-r:toggle-sort,alt-r:toggle-raw,ctrl-d:$delete_action,delete:$delete_action,del:$delete_action,shift-delete:$delete_action" \
+		--bind='enter:accept-or-print-query' \
+		--header='enter select · ^d/delete remove' \
+		--prompt='Global History > ' \
+		--with-nth=2.. \
+		--wrap-sign=$'\t↳ ' \
+		--highlight-line \
+		--query="$query")" || return $?
+
+	id=${selected%%$'\t'*}
+	if [[ "$id" == <-> ]]; then
+		_show_history "$id"
+	else
+		printf '%s' "$selected"
+	fi
+}
+
+_delete_history() {
+	local id=$1 target tmpfile
+	[[ "$id" == <-> ]] || return 0
+	_load_history_records
+	target=${commands[$id]}
+	[[ -n "$target" ]] || return 0
+
+	umask 077
+	tmpfile=$(mktemp "${TMPDIR:-/tmp}/zsh-history-fzf.XXXXXX") || return 1
+	{
+		for id in {1..${#commands}}; do
+			[[ "${commands[$id]}" == "$target" ]] && continue
+			printf '%s' "${raw_records[$id]}"
+		done
+	} >"$tmpfile"
+	cat "$tmpfile" >"$histfile"
+	rm -f "$tmpfile"
+}
+
+case ${1:-list} in
+list) _list_history ;;
+show) _show_history "${2:-}" ;;
+pick) _pick_history "${2:-}" ;;
+delete) _delete_history "${2:-}" ;;
+*)
+	printf 'Usage: %s [list|show ID|pick [QUERY]|delete ID]\n' "$0" >&2
+	exit 2
+	;;
+esac

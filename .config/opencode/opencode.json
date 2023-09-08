@@ -1,0 +1,24 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "permission": {
+    "bash": {
+      "jj *": "ask",
+      "jj status*": "allow",
+      "jj st*": "allow",
+      "jj diff*": "allow",
+      "jj d*": "allow",
+      "jj log*": "allow",
+      "jj l*": "allow",
+      "jj show*": "allow",
+      "jj sh*": "allow",
+      "jj op log*": "allow",
+      "jj oplog*": "allow",
+      "jj config get*": "allow",
+      "jj config list*": "allow",
+      "jj config path*": "allow",
+      "jj bookmark list*": "allow",
+      "jj git fetch*": "allow",
+      "jj gf*": "allow"
+    }
+  }
+}
