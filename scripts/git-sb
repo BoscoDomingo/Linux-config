@@ -1,0 +1,22 @@
+#!/bin/zsh
+# Git subcommand to switch between a list of branches. `git sb`.
+
+# initialize an index and an empty array of branches
+i=1
+branches=()
+
+# list local branches in plain format and loop through them
+git for-each-ref --sort=-committerdate --format='%(refname:short)' refs/heads/ | while read -r branchname; do
+	branches+=($branchname)
+	echo "[$i] $branchname"
+	((i++))
+done
+
+echo "\nSelect a branch to switch to (q to quit):"
+# read the user's selected integer
+read selected_index
+if [ "$selected_index" = "q" ]; then
+	exit 0
+elif [ "$selected_index" -gt "$i" ]; then
+	git switch ${branches[$selected_index]}
+fi

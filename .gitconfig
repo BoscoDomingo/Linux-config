@@ -1,0 +1,103 @@
+[user]
+  name="Bosco Domingo"
+  email = "boscodomingob@gmail.com"
+  signingKey = "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBJ9uF4A1FF454eFAWhQab6uOuhtl6PVrvAez3AWuFLN Bosco Domingo"
+
+[core]
+  editor = nvim
+  excludesfile = /home/bosco/.gitignore_global
+  eol = lf
+  autocrlf = false
+  ignorecase = false
+  pager = delta
+
+[init]
+  defaultBranch = main
+
+[gpg]
+  format = ssh
+
+[gpg "ssh"]
+  allowedSignersFile = ~/.ssh/allowed_signers
+
+[commit]
+  gpgSign = true
+
+[tag]
+  gpgSign = false
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  navigate = true    # use n and N to move between diff sections
+  light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+  line-numbers = true
+  side-by-side = true
+  syntax-theme = DarkNeon
+  diff-so-fancy = true
+
+[merge]
+  conflictstyle = diff3
+
+[push]
+  autoSetupRemote = true
+
+[diff]
+  colorMoved = default
+
+[rerere]
+  enabled = true
+  autoUpdate = true
+
+[maintenance]
+	repo = /home/bosco/dotfiles
+	repo = /home/bosco/repos/Linux-config
+
+[fetch]
+  prune = true
+
+[credential]
+  helper = libsecret
+
+[alias]
+  l="log --oneline --graph --decorate"
+  la="log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
+  ls="log --oneline --graph --decorate --show-signature"
+
+  st = status
+
+  sh = "stash -u"
+  shp = stash pop
+
+  # Show changes in current working tree and/or index
+  d = diff --ignore-all-space --ignore-cr-at-eol # Working tree
+  dc = diff --ignore-all-space --ignore-cr-at-eol --cached # Index
+  da = diff --ignore-all-space --ignore-cr-at-eol HEAD # All
+  daa = diff HEAD^! # ALL
+
+  sc = show HEAD # Show changes made by the current commit
+  sp = show HEAD~1 # Show changes made by the previous commit
+  # alias gsc="git diff HEAD^!"
+# alias gsp="git diff HEAD~1^!"
+
+
+  a = "add --renormalize"
+
+  c = commit --clean=strip
+  cm = commit --clean=strip -m
+
+  clcd = f(){ git clone "$1" && cd "$(basename $1 .git)"; unset -f f; }; f
+
+# Show all local branches and their upstreams
+  bv = branch -vv
+  bav = branch --all -vv
+
+  rb = rebase
+  rbaa = rebase --autostash
+
+  sw = switch
+  swm = switch main
+  swd = switch develop
+
+  dub=delete-untracked-branches

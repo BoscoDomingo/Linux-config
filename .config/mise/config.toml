@@ -1,0 +1,37 @@
+[tools]
+usage = "latest" # Internal
+neovim = "latest"
+jujutsu = "latest"
+dotenvx = "latest"
+
+node = "24"
+bun = "latest"
+
+go = "latest"
+golangci-lint = "latest"
+go-blueprint = "latest"
+
+python = "latest"
+uv = "latest"
+
+dotnet = "10.0.100"
+
+rust = "latest"
+# Tools
+"tldr++" = "latest"
+gdu = "latest"
+yt-dlp = "latest"
+act = "latest"
+hyperfine = "latest"
+
+[settings]
+idiomatic_version_file_enable_tools = ["go"]
+
+[tool_alias]
+"tldr++" = "ubi:isacikgoz/tldr"
+tlrc = "cargo:tlrc"
+dotenvx = "ubi:dotenvx/dotenvx"
+oh-my-posh = "ubi:JanDeDobbeleer/oh-my-posh"
+git-recover = "ubi:ethomson/git-recover"
+posting = "ubi:darrenburns/posting"
+go-blueprint = "ubi:Melkeydev/go-blueprint"

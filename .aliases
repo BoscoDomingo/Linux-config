@@ -1,0 +1,158 @@
+alias c='clear'
+alias rmf='rm -rf'
+alias rm="echo Use 'rip' instead of rm."
+
+# filesystem usage, default human readable sizes
+alias df='df -h'
+alias du='du -h'
+
+# Better cp alternative
+alias cp='gcp'
+
+# ls
+alias le='eza -a -T -L=1 -1 -l --color auto --icons --group-directories-first --header --created --modified --time-style=long-iso --git'
+alias l='le --git-ignore'
+alias ll='ls -FAGhl --group-directories-first --time-style=long-iso --color'
+alias la='ls -A'
+# alias lls='lsd -1AFl --total-size'
+
+# Pretty print $PATH
+alias ppath="tr ':' '\n' <<< \"$PATH\""
+
+alias ping='gping --clear'
+
+alias nano='nvim'
+# alias nano='nano --rcfile ~/.nanorc'
+alias vim='nvim'
+
+alias ff="fastfetch"
+alias of="onefetch"
+
+alias cc="claude"
+alias oc="opencode"
+
+# yt-dlp
+alias ytd="yt-dlp"
+alias ytdb="yt-dlp -t mkv" # Get best video in mkv format. Add `-P path` for output destination
+alias ytda="yt-dlp -f 'ba' -x --audio-format m4a" # Extract best audio in m4a (AAC) since Davinci doesn't support .opus
+
+# Git
+alias git-delete-untracked-branches='LANG=en_US git branch -vv | awk "/: gone]/{print \$1}" | xargs -p git branch -D'
+alias gdub="git-delete-untracked-branches"
+
+
+alias gccd='f(){ git clone "$1" && cd "$(basename $1 .git)"; unset -f f; }; f'
+
+# Jujutsu
+alias jjst="jj status"
+
+alias jjl="jj log"
+alias jjla="jj log -r ::"
+alias jjle="jj log -r 'empty() & mutable()'"
+alias jjln="jj log -r 'remote_bookmarks()..'" # All non-pushed-yet commits
+alias jjlnp="jj log -r '(remote_bookmarks()..@)::'" # Current working copy's non-pushed-yet commits
+
+
+alias jjsh="jj show"
+alias jjd="jj diff"
+
+alias jju="jj undo"
+
+alias jjn="jj next"
+alias jjp="jj prev"
+alias jje="jj edit"
+alias jjtop="jj edit -r \"heads(@::)\""
+
+alias jjc="jj commit"
+alias jjci="jj commit --interactive"
+
+alias jjs="jj squash"
+alias jjsi="jj squash -i" # Edit a previous commit (empty for parent)
+alias jjer="jj squash -i -u -t" # Edit target revision with current changes
+alias jjde="jj diffedit" # Alternative to squash
+
+alias jja="jj absorb"
+alias jjaa="jj absorb --ignore-immutable -t 'immutable()'" # absorb disregarding immutability (such as bookmarked changes)
+
+alias jjm="jj rebase -r @ -d" # move current revision only to the chosen destination
+alias jjmd="jj rebase -r @ -d develop"
+alias jjmm="jj rebase -r @ -d main"
+alias jjrb="jj rebase"
+alias jjrbb="jj rebase --branch"
+
+alias jjrst="jj restore"
+alias jjrsti="jj restore -i"
+
+alias jjslv="jj resolve"
+
+alias jjan="jj abandon"
+alias jjane="jj abandon -r 'empty() & mutable()'"
+
+alias jjb="jj bookmark"
+alias jjbc="jj bookmark create"
+alias jjbcp="jj bookmark create -r @-" # Create bookmark at parent
+alias jjbs="jj bookmark set" # Set bookmark. E.g. `jjbs main -r @-` to update tracked main to the latest commit
+alias jjbsp="jj bookmark set -r @-"
+alias jjbsm="jj bookmark set main"
+alias jjbsmp="jj bookmark set main -r @-" # Set main to the latest commit
+alias jjbsd="jj bookmark set develop"
+alias jjbsdp="jj bookmark set develop -r @-" # Set develop to the latest commit
+
+alias jjg="jj git"
+alias jjgf="jj git fetch"
+alias jjgp="jj git push"
+alias jjgpb="jj git push -b"
+alias jjgpn="jj git push -N" # Push only bookmarked changes
+alias jjgpt="jj git push --tracked" # Pushes all tracked branches
+alias jjgpm="jj git push -b main" # Push bookmarked changes to main
+alias jjgpd="jj git push -b develop" # Push bookmarked changes to develop
+
+# Graphite
+alias gtc='gt create'
+alias gtm='gt modify -p -m'
+# alias gtm='f(){ gt modify -m $1; unset -f f; }; f' # Alternative way which allows passing multiple arguments if needed
+
+alias gtl='gt log'
+alias gtll='gt log long'
+
+alias gtch='gt checkout'
+alias gtrs='gt restack'
+alias gtro='gt reorder'
+alias gtct='gt continue'
+alias gtcfg='gt config'
+
+# TLDR fuzzy finder for tealdeer (https://www.reddit.com/r/archlinux/comments/n7o1ne/comment/gxeawav/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
+# alias tl="tldr --list | fzf --preview 'tldr {} --color always' | xargs tldr"
+
+# Better Commits
+alias bc="better-commits"
+alias bca='git add -p && bc'
+alias bb='better-branch'
+
+# Supabase
+alias sb="supabase"
+alias sbs="supabase start"
+alias sbk="supabase stop --no-backup"
+alias sbd="supabase db"
+alias sbm="supabase migration"
+
+# Releases
+alias release-patch='\
+	git stash push -a -k && \
+	NEW_VERSION=$(npm version patch --no-git-tag-version | cut -c 2-) && \
+	git commit -a -m "chore(release): v$NEW_VERSION" && \
+	git stash pop'
+alias release-minor='\
+	git stash push -a -k && \
+	NEW_VERSION=$(npm version minor --no-git-tag-version | cut -c 2-) && \
+	git commit -a -m "chore(release): v$NEW_VERSION" && \
+	git stash pop'
+alias release-major='\
+	git stash push -a -k && \
+	NEW_VERSION=$(npm version major --no-git-tag-version | cut -c 2-) && \
+	git commit -a -m "chore(release): v$NEW_VERSION" && \
+	git stash pop'
+
+# gcloud
+alias gcloud-switch='f(){ gcloud config configurations activate "$@" && gcloud auth login; unset -f f; }; f'
+alias gcloud-project-number='gcloud projects describe $(gcloud config get-value core/project) --format=value\(projectNumber\)'

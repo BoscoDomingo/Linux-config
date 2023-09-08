@@ -1,0 +1,76 @@
+# This is the configuration file for Ghostty.
+#
+# This template file has been automatically created at the following
+# path since Ghostty couldn't find any existing config files on your system:
+#
+#   /Users/bosco/Library/Application Support/com.mitchellh.ghostty/config
+#
+# The template does not set any default options, since Ghostty ships
+# with sensible defaults for all options. Users should only need to set
+# options that they want to change from the default.
+#
+# Run `ghostty +show-config --default --docs` to view a list of
+# all available config options and their default values.
+#
+# Additionally, each config option is also explained in detail
+# on Ghostty's website, at https://ghostty.org/docs/config.
+
+# Config syntax crash course
+# ==========================
+# # The config file consists of simple key-value pairs,
+# # separated by equals signs.
+# font-family = Iosevka
+# window-padding-x = 2
+#
+# # Spacing around the equals sign does not matter.
+# # All of these are identical:
+# key=value
+# key= value
+# key =value
+# key = value
+#
+# # Any line beginning with a # is a comment. It's not possible to put
+# # a comment after a config option, since it would be interpreted as a
+# # part of the value. For example, this will have a value of "#123abc":
+# background = #123abc
+#
+# # Empty values are used to reset config keys to default.
+# key =
+#
+# # Some config options have unique syntaxes for their value,
+# # which is explained in the docs for that config option.
+# # Just for example:
+# resize-overlay-duration = 4s 200ms
+
+# Themes
+# theme=UltraViolent
+# theme=Bright Lights
+# theme=Framer
+# theme=Hardcore
+# theme=Molokai
+# theme=NightLion v2
+theme=Ayu Mirage
+# theme=OneHalfDark
+
+# General
+cursor-style=bar
+background-opacity=.9
+background-blur=20
+link-url=true
+clipboard-trim-trailing-spaces=true
+cursor-click-to-move=true
+font-feature=calt,liga,dlig
+font-size=11
+font-family="Liga SFMono Nerd Font"
+
+# Keyboard bindings
+keybind = shift+insert=paste_from_clipboard
+keybind = control+insert=copy_to_clipboard
+
+# Overrides
+# In case the OS supplies its own Ghostty configs, we can let it override the default config.
+# This assumes you've renamed the file to `override_config` and it's present in the same directory as the regular config.
+config-file=?override_config
+
+# Mac OS (optional import)
+config-file=?~/.config/ghostty-mac/config
