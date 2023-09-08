@@ -1,0 +1,83 @@
+# Common interactive shell configuration.
+# Sourced by .zshrc and .bashrc for interactive sessions.
+# Shell-specific config belongs in the respective rc files.
+
+# Detect AI coding agent sessions (Cursor, Claude Code, OpenCode)
+if [ -z "$_IS_AI_AGENT" ]; then
+	[ -n "$CURSOR_AGENT" ] && _IS_AI_AGENT=1
+	[ -n "$CLAUDECODE" ] && [ -z "$VSCODE_IPC_HOOK_CLI" ] && _IS_AI_AGENT=1
+	[ -n "$OPENCODE" ] && _IS_AI_AGENT=1
+	[ -n "$AGENT" ] && _IS_AI_AGENT=1
+	# GitHub Copilot Chat agent terminals expose copilot-chat paths in PATH.
+	# Only check PATH when not in a regular VS Code terminal (Copilot adds these paths to all terminals).
+	if [ -z "$VSCODE_IPC_HOOK_CLI" ]; then
+		case ":${PATH}:" in
+		*":$HOME/.vscode-server/data/User/globalStorage/github.copilot-chat/copilotCli:"*) _IS_AI_AGENT=1 ;;
+		*":$HOME/.vscode-server/data/User/globalStorage/github.copilot-chat/debugCommand:"*) _IS_AI_AGENT=1 ;;
+		esac
+	fi
+fi
+
+if [ -z "$_IS_AI_AGENT" ] && [ "${_DOTFILES_HAS_REAL_TTY:-1}" = "1" ]; then
+	# Skip cosmetic/user-facing setup for IDE shell-environment probes without a real terminal.
+	export "MICRO_TRUECOLOR=1"
+	[ -e "$HOME/.aliases" ] && . "$HOME/.aliases"
+
+	# Run once a day
+	if [ ! -e "/tmp/$(date -I).sem" ]; then
+		touch "/tmp/$(date -I).sem"
+		fastfetch
+		if [ -n "$(command -v brew)" ]; then
+			(brew update &>/dev/null &)
+		fi
+	fi
+fi
+
+# Lightweight utility functions
+killport() {
+	if [ -z "$1" ]; then
+		echo "Usage: killport <port>"
+		echo "Example: killport 3000"
+		return 1
+	fi
+
+	local port="$1"
+	local pids=$(lsof -t -i:"$port" 2>/dev/null)
+
+	if [ -z "$pids" ]; then
+		echo "No processes found running on port $port"
+		return 0
+	fi
+
+	echo "Killing processes on port $port: $pids"
+	kill -9 $pids
+
+	if [ $? -eq 0 ]; then
+		echo "Successfully killed processes on port $port"
+	else
+		echo "Failed to kill some processes on port $port"
+		return 1
+	fi
+}
+
+check_node_port() {
+	node -e "require('net').createServer().listen($1, ()=>console.log('Success (port is available)')).on('error', console.error)"
+}
+
+ensure_link() {
+	src="${1%/}"
+	dst="$2"
+
+	if [ -L "$dst" ]; then
+		current_target=$(readlink "$dst")
+		current_target="${current_target%/}"
+		if [ "$current_target" = "$src" ]; then
+			return
+		fi
+		mv "$dst" "$dst.bak"
+	elif [ -e "$dst" ]; then
+		mv "$dst" "$dst.bak"
+	fi
+
+	ln -s "$src" "$dst"
+}

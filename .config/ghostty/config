@@ -1,0 +1,97 @@
+# $XDG_CONFIG_HOME/ghostty/config
+#
+# Run `ghostty +show-config --default --docs` to view a list of
+# all available config options and their default values.
+#
+# Additionally, each config option is also explained in detail
+# on Ghostty's website, at https://ghostty.org/docs/config.
+
+# Config syntax crash course
+# ==========================
+# # The config file consists of simple key-value pairs,
+# # separated by equals signs.
+# font-family = Iosevka
+# window-padding-x = 2
+#
+# # Spacing around the equals sign does not matter.
+# # All of these are identical:
+# key=value
+# key= value
+# key =value
+# key = value
+#
+# # Any line beginning with a # is a comment. It's not possible to put
+# # a comment after a config option, since it would be interpreted as a
+# # part of the value. For example, this will have a value of "#123abc":
+# background = #123abc
+#
+# # Empty values are used to reset config keys to default.
+# key =
+#
+# # Some config options have unique syntaxes for their value,
+# # which is explained in the docs for that config option.
+# # Just for example:
+# resize-overlay-duration = 4s 200ms
+
+# Themes
+# theme=UltraViolent
+# theme=Bright Lights
+# theme=Framer
+# theme=Hardcore
+# theme=Molokai
+# theme=NightLion v2
+theme = Ayu Mirage
+# theme=OneHalfDark
+
+# Shaders
+# custom-shader = /home/bosco/.config/ghostty/shaders/blaze_sparks.glsl
+# custom-shader = ~/.config/ghostty/shaders/cursor_blaze.glsl
+custom-shader = ~/.config/ghostty/shaders/cursor_border_1.glsl
+# custom-shader = /home/bosco/.config/ghostty/shaders/cursor_frozen.glsl # also slow, although cool af
+# custom-shader = ~/.config/ghostty/shaders/cursor_smear.glsl # Just a yellow smear
+# custom-shader = ~/.config/ghostty/shaders/cursor_smear_fade.glsl # A yellow smear with a gradient
+# custom-shader = ~/.config/ghostty/shaders/cursor_smear_fade_original.glsl
+# custom-shader = ~/.config/ghostty/shaders/cursor_smear_gradient.glsl # alternates between yellow and blue
+# custom-shader = ~/.config/ghostty/shaders/cursor_smear_gradient_original.glsl
+# custom-shader = ~/.config/ghostty/shaders/cursor_smear_rainbow.glsl
+custom-shader = ~/.config/ghostty/shaders/cursor_smear_rainbow_original.glsl
+# custom-shader = ~/.config/ghostty/shaders/debug_cursor_animated.glsl
+# custom-shader = /home/bosco/.config/ghostty/shaders/last_letter_zoom.glsl # doesn't work well
+# custom-shader = ~/.config/ghostty/shaders/manga_slash.glsl # doesn't work
+# custom-shader = /home/bosco/.config/ghostty/shaders/party_sparks.glsl # slow as shit
+# custom-shader = ~/.config/ghostty/shaders/shake.glsl
+custom-shader = ~/.config/ghostty/shaders/sparks.glsl
+# custom-shader = ~/.config/ghostty/shaders/test.glsl
+# custom-shader = ~/.config/ghostty/shaders/WIP.glsl # fairly cool, very similar to cursor_blaze but better
+# custom-shader = ~/.config/ghostty/shaders/zoom_and_aberration.glsl # reaaally cool effect
+
+
+# General
+cursor-style = bar
+cursor-style-blink = true
+cursor-click-to-move = true
+mouse-hide-while-typing = true
+
+background-opacity = 0.9
+background-blur = 20
+
+clipboard-trim-trailing-spaces = true
+
+link-url = true
+font-feature = calt,liga,dlig
+font-size = 11
+font-family = "Liga SFMono Nerd Font"
+
+# Keyboard bindings
+keybind = shift+insert=paste_from_clipboard
+keybind = control+insert=copy_to_clipboard
+keybind = performable:ctrl+c=copy_to_clipboard
+keybind = performable:ctrl+v=paste_from_clipboard
+
+# Overrides
+# In case the OS supplies its own Ghostty configs, we can let it override the default config.
+# This assumes you've renamed the file to `override_config` and it's present in the same directory as the regular config.
+config-file=?override_config
+
+# Mac OS (optional import)
+config-file=?~/.config/ghostty-mac/config

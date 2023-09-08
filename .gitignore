@@ -1,0 +1,15 @@
+# This repo's gitignore. Shouldn't be symlinked anywhere
+.vscode
+*.log
+.DS_Store
+.aider*
+
+.config/ghostty/override_config
+# They should be installed in the system using Leader + I inside tmux
+.config/tmux/plugins
+*_secret
+.config/jj/repos/
+
+micro/
+!micro/*.json
+**/repos/

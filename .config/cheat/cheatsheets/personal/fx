@@ -1,0 +1,5 @@
+# To parse a JSON (interactive)
+| fx
+
+# To print the output to console (non-interactive)
+| fx .

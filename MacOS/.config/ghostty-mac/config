@@ -1,0 +1,26 @@
+# official, blueprint, chalkboard, microchip, glass, holographic, paper, retro, xray
+macos-icon=holographic
+macos-titlebar-style=transparent
+copy-on-select=false
+confirm-close-surface = false
+# Change keybinds to it's easier to work with an external keyboard
+# Source: https://www3.rocketsoftware.com/bluezone/help/v42/en/bzadmin/APPENDIX_C/ASCII_Character_Set.htm
+# \x is hexadecimal escape character in Zig
+# \u for unicode
+keybind = cmd+shift+c=copy_to_clipboard
+keybind = cmd+shift+v=paste_from_clipboard
+# Bind Cmd+<key> to Ctrl+<key>
+keybind = cmd+b=text:\x02
+keybind = cmd+c=text:\x03
+keybind = cmd+d=text:\x04
+keybind = cmd+r=text:\x12
+keybind = cmd+s=text:\x13
+keybind = cmd+z=text:\x1a
+# Bind Cmd+delete to delete word forward (Ctrl+Delete)
+keybind = cmd+delete=text:\x1b[3;5~
+# Bind Cmd+backspace to delete word backward (Ctrl+Backspace/Alt+Backspace)
+keybind = cmd+backspace=text:\x17
+# Bind Cmd+left to jump one word left (Ctrl+left)
+keybind = cmd+left=text:\x1b[1;5D
+# Bind Cmd+right to jump one word right (Ctrl+right)
+keybind = cmd+right=text:\x1b[1;5C
