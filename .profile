@@ -27,6 +27,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 eval "$(oh-my-posh init bash --config ~/shell_themes/niceDark.omp.json)"
 eval "$(rtx activate bash)" # Assuming rtx is installed
 eval "$(direnv hook bash)" # Assuming direnv is installed
+PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a"; # Ensures VS Code terminal history is saved without `exit` command
 # eval "$(thefuck --alias)" # If using thefuck
 
 # export PYENV_ROOT="$HOME/.pyenv"
