@@ -10,6 +10,22 @@ Before anything:
 
 `sudo apt-get update && sudo apt-get upgrade && sudo apt-get install build-essential`
 
+## Link `.bash_rc`, `.bash_profile`, `.nanorc`, `.gitconfig`
+```shell
+if [ -f ~/.bash_profile ]; then
+	mv ~/.bash_profile ~/.bash_profile.bak
+fi
+ln .bash_profile ~/.bash_profile
+
+if [ -f ~/.bashrc ]; then
+	mv ~/.bashrc ~/.bashrc.bak
+fi
+ln .bashrc ~/.bashrc
+
+ln .gitconfig ~/.gitconfig
+ln .nanorc ~/.nanorc
+```
+
 ## Homebrew:
 
 ```shell
@@ -22,7 +38,7 @@ brew install gcc
 
 ```shell
 brew install jandedobbeleer/oh-my-posh/oh-my-posh
-mkdir ~/shell_themes && touch ~/shell_themes/bosco.omp.json
+mkdir ~/shell_themes && touch ~/shell_themes/niceDark.omp.json
 ```
 
 
@@ -68,12 +84,7 @@ pyenv global 3.11.3
 `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash`
 </s>
 
-## Update .bash_rc, .profile, nanorc, .gitconfig
-```shell
-cd ~
-touch .gitconfig && touch nanorc && touch .profile
-# Add the corresponding contents
-```
+
 
 ## [bat](https://github.com/sharkdp/bat)
 ```bash
@@ -93,7 +104,8 @@ eza\
 bfs \
 thefuck \
 direnv \
-git-delta
+git-delta \
+fzf
 ```
 
 ### [cheat](https://github.com/cheat/cheat)
@@ -122,6 +134,9 @@ git-delta
 
 ### [Delta](https://github.com/dandavison/delta)
 `brew install git-delta`
+
+### [fzf](https://github.com/junegunn/fzf)
+`brew install fzf`
 
 ### [thefuck](https://github.com/nvbn/thefuck) (quite slow on my machine, but a useful command nonetheless)
 `brew install thefuck`
