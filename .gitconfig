@@ -3,6 +3,8 @@
 
 [core]
   pager = delta
+	eol = lf
+	autocrlf = input
 
 [interactive]
   diffFilter = delta --color-only
