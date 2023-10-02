@@ -10,6 +10,7 @@ alias pyenv-install='CFLAGS="-I$(brew --prefix openssl)/include" LDFLAGS="-L$(br
 alias git-delete-untracked-branches="git checkout main && git fetch --prune && LANG=en_US git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D"
 alias gc="git commit --clean=strip -p"
 alias gcm="git commit --clean=strip -p -m"
+alias gn="git add --renormalize ."
 
 alias gcloud-switch='gcloud config configurations activate'
 alias gcloud-project-number='gcloud projects describe $(gcloud config get-value core/project) --format=value\(projectNumber\)'
