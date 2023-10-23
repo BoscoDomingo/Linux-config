@@ -12,5 +12,22 @@ alias gc="git commit --clean=strip -p"
 alias gcm="git commit --clean=strip -p -m"
 alias gn="git add --renormalize ."
 
+alias release-patch='\
+	git stash push -a -k && \
+	NEW_VERSION=$(npm version patch --no-git-tag-version | cut -c 2-) && \
+	git commit -a -m "Upgrade version to $NEW_VERSION" && \
+	git stash pop'
+alias release-minor='\
+	git stash push -a -k && \
+	NEW_VERSION=$(npm version minor --no-git-tag-version | cut -c 2-) && \
+	git commit -a -m "Upgrade version to $NEW_VERSION" && \
+	git stash pop'
+alias release-major='\
+	git stash push -a -k && \
+	NEW_VERSION=$(npm version major --no-git-tag-version | cut -c 2-) && \
+	git commit -a -m "Upgrade version to $NEW_VERSION" && \
+	git stash pop'
+
+# gcloud
 alias gcloud-switch='gcloud config configurations activate'
 alias gcloud-project-number='gcloud projects describe $(gcloud config get-value core/project) --format=value\(projectNumber\)'
