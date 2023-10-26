@@ -10,20 +10,24 @@ Before anything:
 
 `sudo apt-get update && sudo apt-get upgrade && sudo apt-get install build-essential`
 
-## Link `.bash_rc`, `.bash_profile`, `.nanorc`, `.gitconfig`
+## Link `.bash_rc`, `.bash_profile`, `.aliases`, `.nanorc`, `.gitconfig`
 ```shell
 if [ -f ~/.bash_profile ]; then
 	mv ~/.bash_profile ~/.bash_profile.bak
 fi
-ln .bash_profile ~/.bash_profile
+ln -s .bash_profile ~/.bash_profile
 
 if [ -f ~/.bashrc ]; then
 	mv ~/.bashrc ~/.bashrc.bak
 fi
-ln .bashrc ~/.bashrc
 
-ln .gitconfig ~/.gitconfig
-ln .nanorc ~/.nanorc
+if [ -f ~/.aliases ]; then
+	mv ~/.aliases ~/.aliases.bak
+fi
+ln -s .aliases ~/.aliases
+
+ln -s .gitconfig ~/.gitconfig
+ln -s .nanorc ~/.nanorc
 ```
 
 ## Homebrew:
@@ -58,7 +62,7 @@ sudo apt update; sudo apt install build-essential libssl-dev zlib1g-dev \
 libbz2-dev libreadline-dev libsqlite3-dev curl \
 libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
 ```
-and using the following for installing Python: `CFLAGS="-I$(brew --prefix openssl)/include" LDFLAGS="-L$(brew --prefix openssl)/lib"`
+Use the following for installing Python: `CFLAGS="-I$(brew --prefix openssl)/include" LDFLAGS="-L$(brew --prefix openssl)/lib"`
 
 e.g. `CFLAGS="-I$(brew --prefix openssl)/include" LDFLAGS="-L$(brew --prefix openssl)/lib" rtx install python@3.12`
 
