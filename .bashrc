@@ -1,5 +1,3 @@
-# Add this at the bottom of the file
-
 # Alias definitions.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
@@ -28,8 +26,8 @@ fi
 #[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 #[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# GOPATH=$HOME/go
 # Commented since I'll be using Oh-My-Posh. This is for powerline-go (which works, but not as customisable)
+#GOPATH=$HOME/go
 #function _update_ps1() {
 #    PS1="$($GOPATH/bin/powerline-go -error $? -jobs $(jobs -p | wc -l) -modules time,venv,user,host,ssh,cwd,perms,git,hg,jobs,exit,root -colorize-hostname -max-width 80 -numeric-exit-codes)"
 #
