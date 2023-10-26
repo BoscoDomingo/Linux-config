@@ -4,15 +4,15 @@
 
 # if running bash, include .bashrc if it exists and we're not coming from VS Code (otherwise it won't load)
 if [ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ] && [ -z "${VSCODE_IPC_HOOK_CLI}" ]; then
-  . "$HOME/.bashrc"
+	. "$HOME/.bashrc"
 fi
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
-  PATH="$HOME/bin:$PATH"
+	PATH="$HOME/bin:$PATH"
 fi
 if [ -d "$HOME/.local/bin" ] ; then
-  PATH="$HOME/.local/bin:$PATH"
+	PATH="$HOME/.local/bin:$PATH"
 fi
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
