@@ -5,15 +5,20 @@ sudo apt update && sudo apt upgrade && sudo apt install build-essential
 if [ -f ~/.bash_profile ]; then
 	mv ~/.bash_profile ~/.bash_profile.bak
 fi
-ln .bash_profile ~/.bash_profile
+ln -s .bash_profile ~/.bash_profile
 
 if [ -f ~/.bashrc ]; then
 	mv ~/.bashrc ~/.bashrc.bak
 fi
-ln .bashrc ~/.bashrc
 
-ln .gitconfig ~/.gitconfig
-ln .nanorc ~/.nanorc
+if [ -f ~/.aliases ]; then
+	mv ~/.aliases ~/.aliases.bak
+fi
+ln -s .aliases ~/.aliases
+
+ln -s .gitconfig ~/.gitconfig
+ln -s .nanorc ~/.nanorc
+```
 
 # Install Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
