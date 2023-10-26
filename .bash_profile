@@ -24,6 +24,7 @@ eval "$(direnv hook bash)" # Assuming direnv is installed
 # Ensures VS Code terminal history is saved without `exit` command
 PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a";
 
+
 # eval "$(thefuck --alias)" # If using thefuck
 
 # Pyenv code (if not using rtx)
