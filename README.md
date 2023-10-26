@@ -38,11 +38,11 @@ brew install gcc
 
 ```shell
 brew install jandedobbeleer/oh-my-posh/oh-my-posh
-mkdir ~/shell_themes && touch ~/shell_themes/niceDark.omp.json
+git clone https://gist.github.com/62f35772e52178b31353a99d2d80ca77.git ~/shell_themes
 ```
 
 
-The gist is [here](https://gist.githubusercontent.com/BoscoDomingo/62f35772e52178b31353a99d2d80ca77/raw/2a345cf8a3ec0fa1559d4946e61391e84abb5751/bosco.omp.json)
+The gist is [here](https://gist.github.com/BoscoDomingo/62f35772e52178b31353a99d2d80ca77)
 
 # Version managers
 
