@@ -17,8 +17,8 @@ if ! shopt -oq posix; then
 fi
 
 # If coming from VS Code and .profile exists (DO NOT SET `bash -l` IN VS CODE SETTINGS)
-if [ -n "${VSCODE_IPC_HOOK_CLI}" ] && [ -f "$HOME/.bash_profile" ]; then
-	. "$HOME/.bash_profile"
+if [ -n "${VSCODE_IPC_HOOK_CLI}" ] && [ -f "$HOME/.profile" ]; then
+	. "$HOME/.profile"
 fi
 
 # If using nvm instead of rtx

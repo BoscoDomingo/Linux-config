@@ -2,10 +2,10 @@ echo "This installer will automatically update your Linux config. All existing c
 
 sudo apt update && sudo apt upgrade && sudo apt install build-essential
 
-if [ -f ~/.bash_profile ]; then
-	mv ~/.bash_profile ~/.bash_profile.bak
+if [ -f ~/.profile ]; then
+	mv ~/.profile ~/.profile.bak
 fi
-ln -s .bash_profile ~/.bash_profile
+ln -s .profile ~/.profile
 
 if [ -f ~/.bashrc ]; then
 	mv ~/.bashrc ~/.bashrc.bak

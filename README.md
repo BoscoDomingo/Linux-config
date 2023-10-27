@@ -10,12 +10,12 @@ Before anything:
 
 `sudo apt-get update && sudo apt-get upgrade && sudo apt-get install build-essential`
 
-## Link `.bash_rc`, `.bash_profile`, `.aliases`, `.nanorc`, `.gitconfig`
+## Link `.bash_rc`, `.profile`, `.aliases`, `.nanorc`, `.gitconfig`
 ```shell
-if [ -f ~/.bash_profile ]; then
-	mv ~/.bash_profile ~/.bash_profile.bak
+if [ -f ~/.profile ]; then
+	mv ~/.profile ~/.profile.bak
 fi
-ln -s .bash_profile ~/.bash_profile
+ln -s .profile ~/.profile
 
 if [ -f ~/.bashrc ]; then
 	mv ~/.bashrc ~/.bashrc.bak
