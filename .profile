@@ -3,7 +3,7 @@
 #umask 022
 
 # if running bash, include .bashrc if it exists and we're not coming from VS Code (otherwise it won't load)
-if [ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ] && [ -z "${VSCODE_IPC_HOOK_CLI}" ]; then
+if [ -n "$BASH_VERSION" ] && [ -e "$HOME/.bashrc" ] && [ -z "${VSCODE_IPC_HOOK_CLI}" ]; then
 	. "$HOME/.bashrc"
 fi
 

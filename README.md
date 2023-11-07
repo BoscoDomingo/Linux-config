@@ -12,16 +12,16 @@ Before anything:
 
 ## Link `.bash_rc`, `.profile`, `.aliases`, `.nanorc`, `.gitconfig`
 ```shell
-if [ -f ~/.profile ]; then
+if [ -e ~/.profile ]; then
 	mv ~/.profile ~/.profile.bak
 fi
 ln -s .profile ~/.profile
 
-if [ -f ~/.bashrc ]; then
+if [ -e ~/.bashrc ]; then
 	mv ~/.bashrc ~/.bashrc.bak
 fi
 
-if [ -f ~/.aliases ]; then
+if [ -e ~/.aliases ]; then
 	mv ~/.aliases ~/.aliases.bak
 fi
 ln -s .aliases ~/.aliases

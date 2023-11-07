@@ -2,23 +2,22 @@ echo "This installer will automatically update your Linux config. All existing c
 
 sudo apt update && sudo apt upgrade && sudo apt install build-essential
 
-if [ -f ~/.profile ]; then
+if [ -e ~/.profile ]; then
 	mv ~/.profile ~/.profile.bak
 fi
 ln -s .profile ~/.profile
 
-if [ -f ~/.bashrc ]; then
+if [ -e ~/.bashrc ]; then
 	mv ~/.bashrc ~/.bashrc.bak
 fi
 
-if [ -f ~/.aliases ]; then
+if [ -e ~/.aliases ]; then
 	mv ~/.aliases ~/.aliases.bak
 fi
 ln -s .aliases ~/.aliases
 
 ln -s .gitconfig ~/.gitconfig
 ln -s .nanorc ~/.nanorc
-```
 
 # Install Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"

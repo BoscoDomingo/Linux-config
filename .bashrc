@@ -1,7 +1,7 @@
 # Alias definitions.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-if [ -f ~/.aliases ]; then
+if [ -e ~/.aliases ]; then
 	. ~/.aliases
 fi
 
@@ -17,7 +17,7 @@ if ! shopt -oq posix; then
 fi
 
 # If coming from VS Code and .profile exists (DO NOT SET `bash -l` IN VS CODE SETTINGS)
-if [ -n "${VSCODE_IPC_HOOK_CLI}" ] && [ -f "$HOME/.profile" ]; then
+if [ -n "${VSCODE_IPC_HOOK_CLI}" ] && [ -e "$HOME/.profile" ]; then
 	. "$HOME/.profile"
 fi
 
