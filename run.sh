@@ -40,6 +40,11 @@ brew install rtx
 # Install Node
 rtx install node
 npm i -g @antfu/ni npm-check-updates
+
+# Install bum
+curl -fsSL https://github.com/owenizedd/bum/raw/main/install.sh | bash
+# bum use <VERSION>
+
 # Install Python
 # CFLAGS="-I$(brew --prefix openssl)/include" LDFLAGS="-L$(brew --prefix openssl)/lib" rtx install python
 

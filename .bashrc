@@ -1,6 +1,5 @@
 # Alias definitions.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
 if [ -e ~/.aliases ]; then
 	. ~/.aliases
 fi
@@ -21,12 +20,22 @@ if [ -n "${VSCODE_IPC_HOOK_CLI}" ] && [ -e "$HOME/.profile" ]; then
 	. "$HOME/.profile"
 fi
 
+source /home/bosco/.config/broot/launcher/bash/br
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH=$BUN_INSTALL/bin:$PATH
+
+# bum (until rtx supports bun)
+export BUM_INSTALL="$HOME/.bum"
+export PATH=$BUM_INSTALL/bin:$PATH
+
 # If using nvm instead of rtx
 #export NVM_DIR="$HOME/.nvm"
 #[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 #[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# Commented since I'll be using Oh-My-Posh. This is for powerline-go (which works, but not as customisable)
+# Commented since I use Oh-My-Posh. This is for powerline-go (which works, but not as customisable)
 #GOPATH=$HOME/go
 #function _update_ps1() {
 #    PS1="$($GOPATH/bin/powerline-go -error $? -jobs $(jobs -p | wc -l) -modules time,venv,user,host,ssh,cwd,perms,git,hg,jobs,exit,root -colorize-hostname -max-width 80 -numeric-exit-codes)"

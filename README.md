@@ -1,5 +1,36 @@
 # Linux Setup
 
+1. [Linux Setup](#linux-setup)
+	1. [Automatic installation](#automatic-installation)
+	2. [Manual installation](#manual-installation)
+	3. [Link `.bash_rc`, `.profile`, `.aliases`, `.nanorc`, `.gitconfig`](#link-bash_rc-profile-aliases-nanorc-gitconfig)
+	4. [Homebrew:](#homebrew)
+	5. [Oh-my-posh](#oh-my-posh)
+2. [Version managers](#version-managers)
+	1. [rtx (Runtime Executor) \<- Recommended option](#rtx-runtime-executor---recommended-option)
+	2. [bum](#bum)
+	3. [~~pyenv~~](#pyenv)
+	4. [~~nvm~~](#nvm)
+3. [Other commands](#other-commands)
+	1. [Homebrew packages](#homebrew-packages)
+		1. [cheat](#cheat)
+		2. [progress](#progress)
+		3. [neofetch](#neofetch)
+		4. [bottom](#bottom)
+		5. [eza](#eza)
+		6. [lsd (slower and I found issues with icons)](#lsd-slower-and-i-found-issues-with-icons)
+		7. [bfs](#bfs)
+		8. [direnv](#direnv)
+		9. [Delta](#delta)
+		10. [fzf](#fzf)
+		11. [thefuck (quite slow on my machine, but a useful command nonetheless)](#thefuck-quite-slow-on-my-machine-but-a-useful-command-nonetheless)
+	2. [NPM packages](#npm-packages)
+		1. [ni](#ni)
+		2. [ncu](#ncu)
+4. [Independent](#independent)
+		1. [bat](#bat)
+
+
 ## Automatic installation
 
 You can try running the `run.sh` file, although it is untested and may not work.
@@ -67,6 +98,16 @@ Use the following for installing Python: `CFLAGS="-I$(brew --prefix openssl)/inc
 e.g. `CFLAGS="-I$(brew --prefix openssl)/include" LDFLAGS="-L$(brew --prefix openssl)/lib" rtx install python@3.12`
 
 
+## [bum](https://github.com/owenizedd/bum)
+
+A version manager for bun (since rtx doesn't yet support it)
+
+```shell
+curl -fsSL https://github.com/owenizedd/bum/raw/main/install.sh | bash
+bum use <VERSION>
+```
+
+
 ## ~~pyenv~~
 <pre><del>
 ```shell
@@ -88,16 +129,9 @@ pyenv global 3.11.3
 `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash`
 </s>
 
+# Other commands
 
-
-## [bat](https://github.com/sharkdp/bat)
-```bash
-sudo apt install bat
-mkdir -p ~/.local/bin
-ln -s /usr/bin/batcat ~/.local/bin/bat
-```
-
-## All Homebrew dependencies
+## Homebrew packages
 ```shell
 brew install cheat \
 progress \
@@ -146,7 +180,7 @@ fzf
 `brew install thefuck`
 
 
-# NPM packages
+## NPM packages
 ```
 npm i -g @antfu/ni \
 npm-check-updates
@@ -157,3 +191,12 @@ npm-check-updates
 
 ### [ncu](https://www.npmjs.com/package/npm-check-updates)
 `npm i -g npm-check-updates`
+
+# Independent
+
+### [bat](https://github.com/sharkdp/bat)
+```bash
+sudo apt install bat
+mkdir -p ~/.local/bin
+ln -s /usr/bin/batcat ~/.local/bin/bat
+```
