@@ -10,6 +10,7 @@ ln -s .profile ~/.profile
 if [ -e ~/.bashrc ]; then
 	mv ~/.bashrc ~/.bashrc.bak
 fi
+ln -s .bashrc ~/.bashrc
 
 if [ -e ~/.aliases ]; then
 	mv ~/.aliases ~/.aliases.bak
