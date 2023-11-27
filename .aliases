@@ -1,5 +1,5 @@
-alias lle='eza -a -T -L=1 -1 -l --color auto --icons --group-directories-first --header --created --modified --time-style=long-iso'
-alias l='lle --git-ignore'
+alias le='eza -a -T -L=1 -1 -l --color auto --icons --group-directories-first --header --created --modified --time-style=long-iso'
+alias l='le --git-ignore'
 alias ll='ls -FAGhl --group-directories-first --time-style=long-iso --color'
 alias la='ls -A'
 # alias lls='lsd -1AFl --total-size'
