@@ -7,7 +7,7 @@
 	4. [Homebrew:](#homebrew)
 	5. [Oh-my-posh](#oh-my-posh)
 2. [Version managers](#version-managers)
-	1. [rtx (Runtime Executor) \<- Recommended option](#rtx-runtime-executor---recommended-option)
+	1. [rtx (Runtime Executor)](#rtx-runtime-executor)
 	2. [bum](#bum)
 	3. [~~pyenv~~](#pyenv)
 	4. [~~nvm~~](#nvm)
@@ -76,12 +76,11 @@ brew install jandedobbeleer/oh-my-posh/oh-my-posh
 git clone https://gist.github.com/62f35772e52178b31353a99d2d80ca77.git ~/shell_themes
 ```
 
-
 The gist is [here](https://gist.github.com/BoscoDomingo/62f35772e52178b31353a99d2d80ca77)
 
 # Version managers
 
-## [rtx](https://github.com/jdxcode/rtx) (Runtime Executor) <- Recommended option
+## [rtx](https://github.com/jdx/rtx) (Runtime Executor)
 
 Recommended route since you can manage all SDKs from here, not needing a version manager for each.
 
