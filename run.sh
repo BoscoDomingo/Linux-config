@@ -25,11 +25,10 @@ ln -s .nanorc ~/.nanorc
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 brew install gcc
 
+# Original at https://gist.github.com/BoscoDomingo/62f35772e52178b31353a99d2d80ca77
+git clone git@gist.github.com:62f35772e52178b31353a99d2d80ca77.git ~/shell_themes
 # Install oh-my-posh
 brew install jandedobbeleer/oh-my-posh/oh-my-posh
-
-# Original at https://gist.github.com/BoscoDomingo/62f35772e52178b31353a99d2d80ca77
-mkdir ~/shell_themes && cp ./niceDark.omp.json ~/shell_themes/
 
 # Install rtx
 sudo apt update; sudo apt install build-essential libssl-dev zlib1g-dev \
@@ -42,30 +41,34 @@ brew install rtx
 rtx install node
 npm i -g @antfu/ni npm-check-updates
 
-# Install bum
+# Install bun via bum
 curl -fsSL https://github.com/owenizedd/bum/raw/main/install.sh | bash
 # bum use <VERSION>
 
 # Install Python
-# CFLAGS="-I$(brew --prefix openssl)/include" LDFLAGS="-L$(brew --prefix openssl)/lib" rtx install python
+brew unlink pkg-config && \
+CFLAGS="-I$(brew --prefix openssl)/include" \
+LDFLAGS="-L$(brew --prefix openssl)/lib" \
+rtx install python@latest; \
+brew link pkg-config
 
 # Install extra tools
-sudo apt install bat
-mkdir -p ~/.local/bin
-ln -s /usr/bin/batcat ~/.local/bin/bat
-
 brew install cheat \
 progress \
 neofetch \
 bottom \
-eza\
+eza \
 bfs \
 direnv \
-git-delta\
-fzf
+broot \
+git-delta \
+fzf \
+bat
 
 # To install useful key bindings and fuzzy completion for fzf:
 $(brew --prefix)/opt/fzf/install
 
 # mkdir ~/.config/lsd/
 # ln lsd.config.yaml ~/.config/lsd/config.yaml
+
+cd && . .profile
