@@ -27,8 +27,9 @@
 		12. [bat](#bat)
 		13. [thefuck (quite slow on my machine, but a useful command nonetheless)](#thefuck-quite-slow-on-my-machine-but-a-useful-command-nonetheless)
 	2. [NPM packages](#npm-packages)
-		1. [ncu](#ncu)
-		2. [ni](#ni)
+		1. [pnpm](#pnpm)
+		2. [ncu](#ncu)
+		3. [ni](#ni)
 
 
 ## Automatic installation
@@ -191,9 +192,14 @@ bat
 
 ## NPM packages
 ```
-npm i -g @antfu/ni \
+npm i -g
+pnpm \
+@antfu/ni \
 npm-check-updates
 ```
+
+### [pnpm](https://pnpm.io/)
+`npm i -g pnpm`
 
 ### [ncu](https://www.npmjs.com/package/npm-check-updates)
 `npm i -g npm-check-updates`

@@ -39,7 +39,7 @@ brew install rtx
 
 # Install Node
 rtx install node
-npm i -g @antfu/ni npm-check-updates
+npm i -g pnpm @antfu/ni npm-check-updates
 
 # Install bun via bum
 curl -fsSL https://github.com/owenizedd/bum/raw/main/install.sh | bash
