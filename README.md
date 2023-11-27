@@ -21,14 +21,14 @@
 		6. [lsd (slower and I found issues with icons)](#lsd-slower-and-i-found-issues-with-icons)
 		7. [bfs](#bfs)
 		8. [direnv](#direnv)
-		9. [Delta](#delta)
-		10. [fzf](#fzf)
-		11. [thefuck (quite slow on my machine, but a useful command nonetheless)](#thefuck-quite-slow-on-my-machine-but-a-useful-command-nonetheless)
+		9. [broot](#broot)
+		10. [Delta](#delta)
+		11. [fzf](#fzf)
+		12. [bat](#bat)
+		13. [thefuck (quite slow on my machine, but a useful command nonetheless)](#thefuck-quite-slow-on-my-machine-but-a-useful-command-nonetheless)
 	2. [NPM packages](#npm-packages)
-		1. [ni](#ni)
-		2. [ncu](#ncu)
-4. [Independent](#independent)
-		1. [bat](#bat)
+		1. [ncu](#ncu)
+		2. [ni](#ni)
 
 
 ## Automatic installation
@@ -87,16 +87,21 @@ Recommended route since you can manage all SDKs from here, not needing a version
 
 `brew install rtx`
 
-May need
+Needs
 ```shell
 sudo apt update; sudo apt install build-essential libssl-dev zlib1g-dev \
 libbz2-dev libreadline-dev libsqlite3-dev curl \
 libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
 ```
-Use the following for installing Python: `CFLAGS="-I$(brew --prefix openssl)/include" LDFLAGS="-L$(brew --prefix openssl)/lib"`
 
-e.g. `CFLAGS="-I$(brew --prefix openssl)/include" LDFLAGS="-L$(brew --prefix openssl)/lib" rtx install python@3.12`
-
+Use the following for installing Python:
+```sh
+brew unlink pkg-config && \
+CFLAGS="-I$(brew --prefix openssl)/include" \
+LDFLAGS="-L$(brew --prefix openssl)/lib" \
+rtx install python@latest; \
+brew link pkg-config
+```
 
 ## [bum](https://github.com/owenizedd/bum)
 
@@ -106,7 +111,6 @@ A version manager for bun (since rtx doesn't yet support it)
 curl -fsSL https://github.com/owenizedd/bum/raw/main/install.sh | bash
 bum use <VERSION>
 ```
-
 
 ## ~~pyenv~~
 <pre><del>
@@ -119,8 +123,8 @@ brew install tcl-tk
 # Alternative
 # sudo apt-get install tk-dev
 
-pyenv-install 3.11.3 # This is to use the alias instead of the usual, to get rid of the '_ssl missing' error
-pyenv global 3.11.3
+pyenv-install 3.11 # This is to use the alias instead of the usual, to get rid of the '_ssl missing' error
+pyenv global 3.11
 ```
 </del></pre>
 
@@ -137,13 +141,14 @@ brew install cheat \
 progress \
 neofetch \
 bottom \
-eza\
-# lsd \
+eza \
 bfs \
 thefuck \
 direnv \
+broot \
 git-delta \
-fzf
+fzf \
+bat
 ```
 
 ### [cheat](https://github.com/cheat/cheat)
@@ -170,15 +175,20 @@ fzf
 ### [direnv](https://direnv.net/)
 `brew install direnv`
 
+### [broot](https://github.com/Canop/broot)
+`brew install broot`
+
 ### [Delta](https://github.com/dandavison/delta)
 `brew install git-delta`
 
 ### [fzf](https://github.com/junegunn/fzf)
 `brew install fzf`
 
+### [bat](https://github.com/sharkdp/bat)
+`brew install bat`
+
 ### [thefuck](https://github.com/nvbn/thefuck) (quite slow on my machine, but a useful command nonetheless)
 `brew install thefuck`
-
 
 ## NPM packages
 ```
@@ -186,17 +196,8 @@ npm i -g @antfu/ni \
 npm-check-updates
 ```
 
-### [ni](https://github.com/antfu/ni)
-`npm i -g @antfu/ni`
-
 ### [ncu](https://www.npmjs.com/package/npm-check-updates)
 `npm i -g npm-check-updates`
 
-# Independent
-
-### [bat](https://github.com/sharkdp/bat)
-```bash
-sudo apt install bat
-mkdir -p ~/.local/bin
-ln -s /usr/bin/batcat ~/.local/bin/bat
-```
+### [ni](https://github.com/antfu/ni)
+`npm i -g @antfu/ni`
