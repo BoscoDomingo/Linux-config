@@ -30,5 +30,5 @@ alias release-major='\
 	git stash pop'
 
 # gcloud
-alias gcloud-switch='gcloud config configurations activate'
+alias gcloud-switch='f(){ gcloud config configurations activate "$@" && gcloud auth login; unset -f f; }; f'
 alias gcloud-project-number='gcloud projects describe $(gcloud config get-value core/project) --format=value\(projectNumber\)'
