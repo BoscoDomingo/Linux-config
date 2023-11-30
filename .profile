@@ -46,6 +46,15 @@ export PATH=$BUN_INSTALL/bin:$PATH
 export BUM_INSTALL="$HOME/.bum"
 export PATH=$BUM_INSTALL/bin:$PATH
 
+# pnpm
+export PNPM_HOME="/home/bosco/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+
 export GOOGLE_APPLICATION_CREDENTIALS="/home/bosco/.config/gcloud/application_default_credentials.json"
 
 ###-begin-gt-completions-###

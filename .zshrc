@@ -84,12 +84,10 @@ emoji
 
 source $ZSH/oh-my-zsh.sh
 
-
 # User configuration
 if [ -e "$HOME/.profile" ]; then
 	source ~/.profile
 fi
-
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -114,11 +112,3 @@ fi
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# pnpm
-export PNPM_HOME="/home/bosco/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
