@@ -1,17 +1,21 @@
 # Linux Setup
 
 1. [Linux Setup](#linux-setup)
-	1. [Automatic installation](#automatic-installation)
-	2. [Manual installation](#manual-installation)
-	3. [Link `.bash_rc`, `.profile`, `.aliases`, `.nanorc`, `.gitconfig`](#link-bash_rc-profile-aliases-nanorc-gitconfig)
-	4. [Homebrew:](#homebrew)
-	5. [Oh-my-posh](#oh-my-posh)
-2. [Version managers](#version-managers)
+2. [Automatic installation](#automatic-installation)
+3. [Manual installation](#manual-installation)
+	1. [Before anything:](#before-anything)
+	2. [Create symbolic links to `.bash_rc`, `.zshrc`, `.profile`, `.aliases`, `.nanorc`, `.gitconfig` and oh-my-zsh config](#create-symbolic-links-to-bash_rc-zshrc-profile-aliases-nanorc-gitconfig-and-oh-my-zsh-config)
+	3. [Homebrew:](#homebrew)
+	4. [Oh-my-posh](#oh-my-posh)
+	5. [zsh](#zsh)
+	6. [oh-my-zsh](#oh-my-zsh)
+4. [Version managers](#version-managers)
 	1. [rtx (Runtime Executor)](#rtx-runtime-executor)
+		1. [Python installation](#python-installation)
 	2. [bum](#bum)
 	3. [~~pyenv~~](#pyenv)
 	4. [~~nvm~~](#nvm)
-3. [Other commands](#other-commands)
+5. [Other commands](#other-commands)
 	1. [Homebrew packages](#homebrew-packages)
 		1. [cheat](#cheat)
 		2. [progress](#progress)
@@ -25,25 +29,30 @@
 		10. [Delta](#delta)
 		11. [fzf](#fzf)
 		12. [bat](#bat)
-		13. [thefuck (quite slow on my machine, but a useful command nonetheless)](#thefuck-quite-slow-on-my-machine-but-a-useful-command-nonetheless)
+		13. [tailspin](#tailspin)
+		14. [thefuck (quite slow on my machine, but a useful command nonetheless)](#thefuck-quite-slow-on-my-machine-but-a-useful-command-nonetheless)
 	2. [NPM packages](#npm-packages)
 		1. [pnpm](#pnpm)
 		2. [ncu](#ncu)
 		3. [ni](#ni)
 
 
-## Automatic installation
+# Automatic installation
 
 You can try running the `run.sh` file, although it is untested and may not work.
 
-## Manual installation
+# Manual installation
 
-Before anything:
+## Before anything:
 
-`sudo apt-get update && sudo apt-get upgrade && sudo apt-get install build-essential`
+```sh
+sudo apt-get update && sudo apt-get upgrade && sudo apt-get install build-essential
+```
 
-## Link `.bash_rc`, `.profile`, `.aliases`, `.nanorc`, `.gitconfig`
+## Create symbolic links to `.bash_rc`, `.zshrc`, `.profile`, `.aliases`, `.nanorc`, `.gitconfig` and oh-my-zsh config
+
 ```shell
+# Setup config files and backup existing ones
 if [ -e ~/.profile ]; then
 	mv ~/.profile ~/.profile.bak
 fi
@@ -52,6 +61,14 @@ ln -s .profile ~/.profile
 if [ -e ~/.bashrc ]; then
 	mv ~/.bashrc ~/.bashrc.bak
 fi
+ln -s .bashrc ~/.bashrc
+
+if [ -e ~/.zshrc ]; then
+	mv ~/.zshrc ~/.zshrc.bak
+	mv $ZSH_CUSTOM/ $ZSH_CUSTOM_bak/
+fi
+ln -s .zshrc ~/.zshrc
+ln -s .oh-my-zsh/custom ~/.oh-my-zsh/custom
 
 if [ -e ~/.aliases ]; then
 	mv ~/.aliases ~/.aliases.bak
@@ -79,11 +96,24 @@ git clone https://gist.github.com/62f35772e52178b31353a99d2d80ca77.git ~/shell_t
 
 The gist is [here](https://gist.github.com/BoscoDomingo/62f35772e52178b31353a99d2d80ca77)
 
+## zsh
+
+```shell
+sudo apt install zsh -y
+zsh
+chsh -s $(which zsh)
+```
+
+## oh-my-zsh
+
+```shell
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
 # Version managers
 
 ## [rtx](https://github.com/jdx/rtx) (Runtime Executor)
 
-Recommended route since you can manage all SDKs from here, not needing a version manager for each.
+Recommended since you can manage multiple language SDKs from here, not needing a version manager for each.
 
 `brew install rtx`
 
@@ -94,7 +124,8 @@ libbz2-dev libreadline-dev libsqlite3-dev curl \
 libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
 ```
 
-Use the following for installing Python:
+### Python installation
+
 ```sh
 brew unlink pkg-config && \
 CFLAGS="-I$(brew --prefix openssl)/include" \
@@ -148,7 +179,8 @@ direnv \
 broot \
 git-delta \
 fzf \
-bat
+bat \
+tailspin
 ```
 
 ### [cheat](https://github.com/cheat/cheat)
@@ -187,14 +219,21 @@ bat
 ### [bat](https://github.com/sharkdp/bat)
 `brew install bat`
 
+### [tailspin](https://github.com/bensadeh/tailspin)
+`brew install tailspin`
+
 ### [thefuck](https://github.com/nvbn/thefuck) (quite slow on my machine, but a useful command nonetheless)
 `brew install thefuck`
 
 ## NPM packages
+```sh
+npm i -g pnpm && pnpm setup;
 ```
-npm i -g
-pnpm \
-@antfu/ni \
+
+Restart shell or `. .bashrc` or `. .zshrc`
+
+```sh
+pnpm i -g @antfu/ni \
 npm-check-updates
 ```
 
@@ -202,7 +241,7 @@ npm-check-updates
 `npm i -g pnpm`
 
 ### [ncu](https://www.npmjs.com/package/npm-check-updates)
-`npm i -g npm-check-updates`
+`pnpm i -g npm-check-updates`
 
 ### [ni](https://github.com/antfu/ni)
-`npm i -g @antfu/ni`
+`pnpm i -g @antfu/ni`

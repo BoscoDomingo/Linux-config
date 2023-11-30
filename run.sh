@@ -2,6 +2,7 @@ echo "This installer will automatically update your Linux config. All existing c
 
 sudo apt update && sudo apt upgrade && sudo apt install build-essential
 
+# Setup config files and backup existing ones
 if [ -e ~/.profile ]; then
 	mv ~/.profile ~/.profile.bak
 fi
@@ -14,8 +15,10 @@ ln -s .bashrc ~/.bashrc
 
 if [ -e ~/.zshrc ]; then
 	mv ~/.zshrc ~/.zshrc.bak
+	mv $ZSH_CUSTOM/ $ZSH_CUSTOM_bak/
 fi
 ln -s .zshrc ~/.zshrc
+ln -s .oh-my-zsh/custom ~/.oh-my-zsh/custom
 
 if [ -e ~/.aliases ]; then
 	mv ~/.aliases ~/.aliases.bak
@@ -30,10 +33,10 @@ ln -s .nanorc ~/.nanorc
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 brew install gcc
 
+# Install oh-my-posh and use my custom theme
+brew install jandedobbeleer/oh-my-posh/oh-my-posh
 # Original at https://gist.github.com/BoscoDomingo/62f35772e52178b31353a99d2d80ca77
 git clone git@gist.github.com:62f35772e52178b31353a99d2d80ca77.git ~/shell_themes
-# Install oh-my-posh
-brew install jandedobbeleer/oh-my-posh/oh-my-posh
 
 # Install rtx
 sudo apt update; sudo apt install build-essential libssl-dev zlib1g-dev \
@@ -45,6 +48,8 @@ brew install rtx
 # Install Node
 rtx install node
 npm i -g pnpm @antfu/ni npm-check-updates
+echo "pnpm setup, no need to reload afterwards"
+pnpm setup
 
 # Install bun via bum
 curl -fsSL https://github.com/owenizedd/bum/raw/main/install.sh | bash
@@ -68,7 +73,8 @@ direnv \
 broot \
 git-delta \
 fzf \
-bat
+bat \
+tailspin
 
 # To install useful key bindings and fuzzy completion for fzf:
 $(brew --prefix)/opt/fzf/install
@@ -76,4 +82,12 @@ $(brew --prefix)/opt/fzf/install
 # mkdir ~/.config/lsd/
 # ln lsd.config.yaml ~/.config/lsd/config.yaml
 
-cd && . .profile
+# Install zsh and set it up
+sudo apt install zsh -y
+zsh
+chsh -s $(which zsh)
+
+# Install oh-my-posh
+sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+
+exec zsh
