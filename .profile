@@ -33,7 +33,7 @@ fi
 if [ -n "$ZSH_VERSION" ]; then
 	eval "$(rtx activate zsh)"
 	[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-	# eval "$(oh-my-posh init zsh --config ~/shell_themes/niceDark.omp.json)"
+	eval "$(oh-my-posh init zsh --config ~/shell_themes/niceDark.omp.json)"
 fi
 
 source /home/bosco/.config/broot/launcher/bash/br
@@ -53,7 +53,6 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
-
 
 export GOOGLE_APPLICATION_CREDENTIALS="/home/bosco/.config/gcloud/application_default_credentials.json"
 
