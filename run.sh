@@ -12,6 +12,11 @@ if [ -e ~/.bashrc ]; then
 fi
 ln -s .bashrc ~/.bashrc
 
+if [ -e ~/.zshrc ]; then
+	mv ~/.zshrc ~/.zshrc.bak
+fi
+ln -s .zshrc ~/.zshrc
+
 if [ -e ~/.aliases ]; then
 	mv ~/.aliases ~/.aliases.bak
 fi

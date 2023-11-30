@@ -20,15 +20,6 @@ if [ -n "${VSCODE_IPC_HOOK_CLI}" ] && [ -e "$HOME/.profile" ]; then
 	. "$HOME/.profile"
 fi
 
-source /home/bosco/.config/broot/launcher/bash/br
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH=$BUN_INSTALL/bin:$PATH
-
-# bum (until rtx supports bun)
-export BUM_INSTALL="$HOME/.bum"
-export PATH=$BUM_INSTALL/bin:$PATH
 
 # If using nvm instead of rtx
 #export NVM_DIR="$HOME/.nvm"
