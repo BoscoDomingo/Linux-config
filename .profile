@@ -24,6 +24,7 @@ fi
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 # Check if $BASH_VERSION exists
 if [ -n "$BASH_VERSION" ]; then
+	eval "$(direnv hook bash)"
 	eval "$(rtx activate bash)"
 	[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 	eval "$(oh-my-posh init bash --config ~/shell_themes/niceDark.omp.json)"
@@ -31,6 +32,7 @@ fi
 
 # Check if $ZSH_VERSION exists
 if [ -n "$ZSH_VERSION" ]; then
+	eval "$(direnv hook zsh)"
 	eval "$(rtx activate zsh)"
 	[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 	eval "$(oh-my-posh init zsh --config ~/shell_themes/niceDark.omp.json)"

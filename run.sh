@@ -27,6 +27,7 @@ ln -s .aliases ~/.aliases
 
 ln -s .gitconfig ~/.gitconfig
 ln -s .nanorc ~/.nanorc
+ln -s direnv.toml ~/.config/direnv/direnv.toml
 
 # Install Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"

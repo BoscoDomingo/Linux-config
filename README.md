@@ -77,6 +77,7 @@ ln -s .aliases ~/.aliases
 
 ln -s .gitconfig ~/.gitconfig
 ln -s .nanorc ~/.nanorc
+ln -s direnv.toml ~/.config/direnv/direnv.toml
 ```
 
 ## Homebrew:
