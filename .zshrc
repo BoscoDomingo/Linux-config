@@ -5,6 +5,20 @@
 #   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 # fi
 
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=10000
+setopt autocd
+bindkey -e
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+zstyle :compinstall filename '/home/bosco/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -83,8 +97,6 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git
 zsh-interactive-cd
-zsh-autosuggestions
-zsh-syntax-highlighting
 colored-man-pages
 colorize
 command-not-found
@@ -97,6 +109,9 @@ source $ZSH/oh-my-zsh.sh
 if [ -e "$HOME/.profile" ]; then
 	source ~/.profile
 fi
+
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
