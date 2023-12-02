@@ -2,6 +2,14 @@ echo "This installer will automatically update your Linux config. All existing c
 
 sudo apt update && sudo apt upgrade && sudo apt install build-essential
 
+# Install zsh and set it up
+sudo apt install zsh -y
+zsh
+chsh -s $(which zsh)
+
+# Install oh-my-zsh
+sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+
 # Setup config files and backup existing ones
 if [ -e ~/.profile ]; then
 	mv ~/.profile ~/.profile.bak
@@ -13,11 +21,9 @@ if [ -e ~/.bashrc ]; then
 fi
 ln -s .bashrc ~/.bashrc
 
-if [ -e ~/.zshrc ]; then
-	mv ~/.zshrc ~/.zshrc.bak
-	mv $ZSH_CUSTOM/ $ZSH_CUSTOM_bak/
-fi
+mv ~/.zshrc ~/.zshrc.bak
 ln -s .zshrc ~/.zshrc
+rm -rf ~/.oh-my-zsh/custom
 ln -s .oh-my-zsh/custom ~/.oh-my-zsh/custom
 
 if [ -e ~/.aliases ]; then
@@ -75,20 +81,14 @@ broot \
 git-delta \
 fzf \
 bat \
-tailspin
+tailspin \
+zsh-autosuggestions \
+zsh-syntax-highlighting
 
 # To install useful key bindings and fuzzy completion for fzf:
 $(brew --prefix)/opt/fzf/install
 
 # mkdir ~/.config/lsd/
 # ln lsd.config.yaml ~/.config/lsd/config.yaml
-
-# Install zsh and set it up
-sudo apt install zsh -y
-zsh
-chsh -s $(which zsh)
-
-# Install oh-my-posh
-sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
 
 exec zsh

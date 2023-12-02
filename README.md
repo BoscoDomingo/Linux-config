@@ -22,16 +22,19 @@
 		3. [neofetch](#neofetch)
 		4. [bottom](#bottom)
 		5. [eza](#eza)
-		6. [lsd (slower and I found issues with icons)](#lsd-slower-and-i-found-issues-with-icons)
-		7. [bfs](#bfs)
-		8. [direnv](#direnv)
-		9. [broot](#broot)
-		10. [Delta](#delta)
-		11. [fzf](#fzf)
-		12. [bat](#bat)
-		13. [tailspin](#tailspin)
+		6. [bfs](#bfs)
+		7. [direnv](#direnv)
+		8. [broot](#broot)
+		9. [Delta](#delta)
+		10. [fzf](#fzf)
+		11. [bat](#bat)
+		12. [tailspin](#tailspin)
+		13. [zsh-autosuggestions](#zsh-autosuggestions)
 		14. [thefuck (quite slow on my machine, but a useful command nonetheless)](#thefuck-quite-slow-on-my-machine-but-a-useful-command-nonetheless)
-	2. [NPM packages](#npm-packages)
+	2. [Archived](#archived)
+		1. [thefuck (quite slow on my machine, but a useful command nonetheless)](#thefuck-quite-slow-on-my-machine-but-a-useful-command-nonetheless-1)
+		2. [lsd (slower and I found issues with icons)](#lsd-slower-and-i-found-issues-with-icons)
+	3. [NPM packages](#npm-packages)
 		1. [pnpm](#pnpm)
 		2. [ncu](#ncu)
 		3. [ni](#ni)
@@ -181,7 +184,9 @@ broot \
 git-delta \
 fzf \
 bat \
-tailspin
+tailspin \
+zsh-autosuggestions \
+zsh-syntax-highlighting
 ```
 
 ### [cheat](https://github.com/cheat/cheat)
@@ -198,9 +203,6 @@ tailspin
 
 ### [eza](https://github.com/eza-community/eza)
 `brew install eza`
-
-### [lsd](https://github.com/Peltoche/lsd) (slower and I found issues with icons)
-`brew install lsd`
 
 ### [bfs](https://github.com/tavianator/bfs)
 `brew install bfs`
@@ -223,8 +225,20 @@ tailspin
 ### [tailspin](https://github.com/bensadeh/tailspin)
 `brew install tailspin`
 
+### [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
+`brew install zsh-autosuggestions`
+
+### [thefuck](https://github.com/nvbn/thefuck) (quite slow on my machine, but a useful command nonetheless)
+`brew install zsh-syntax-highlighting`
+
+## Archived
+
 ### [thefuck](https://github.com/nvbn/thefuck) (quite slow on my machine, but a useful command nonetheless)
 `brew install thefuck`
+
+### [lsd](https://github.com/Peltoche/lsd) (slower and I found issues with icons)
+`brew install lsd`
+
 
 ## NPM packages
 ```sh
