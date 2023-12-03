@@ -20,4 +20,4 @@ alias df='df -h'
 alias du='du -h'
 
 # git, see ~/.gitconfig for git aliases
-alias g='gt'
+#alias g='gt'
