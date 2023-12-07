@@ -1,10 +1,14 @@
 [init]
   defaultBranch = main
 
+[user]
+  name="Bosco Domingo"
+  email="boscodomingob@gmail.com"
+
 [core]
   pager = delta
-	eol = lf
-	autocrlf = input
+  eol = lf
+  autocrlf = input
 
 [interactive]
   diffFilter = delta --color-only
@@ -16,8 +20,17 @@
   side-by-side = true
   syntax-theme = DarkNeon
   diff-so-fancy = true
+
 [merge]
   conflictstyle = diff3
 
+[push]
+  autoSetupRemote = true
+
 [diff]
   colorMoved = default
+
+[safe]
+  directory = %(prefix)///wsl.localhost/Ubuntu/home/bosco/repos/
+  directory = %(prefix)///wsl.localhost/Ubuntu/home/bosco/repos/*
+  directory = %(prefix)///wsl.localhost/Ubuntu/home/bosco/repos/**/*
