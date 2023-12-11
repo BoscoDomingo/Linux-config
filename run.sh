@@ -51,6 +51,7 @@ libbz2-dev libreadline-dev libsqlite3-dev curl \
 libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
 
 brew install rtx
+rtx completions zsh > ~/.rtx-completions
 
 # Install Node
 rtx install node
