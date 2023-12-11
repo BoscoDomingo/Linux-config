@@ -8,7 +8,7 @@ zsh
 chsh -s $(which zsh)
 
 # Install oh-my-zsh
-sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Setup config files and backup existing ones
 if [ -e ~/.profile ]; then
@@ -54,16 +54,16 @@ libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-d
 brew install rtx
 rtx completions zsh > ~/.rtx-completions
 
-# Install Node
+# Install Node + pnpm
 rtx p i pnpm # add the pnpm plugin
 rtx use -g node@lts
 rts use -g pnpm@latest
 pnpm i -g @antfu/ni
 npm i -g npm-check-updates
 
-# Install bun via bum
-curl -fsSL https://github.com/owenizedd/bum/raw/main/install.sh | bash
-# bum use <VERSION>
+# Install Bun
+rtx p i bun
+rtx use -g bun@latest
 
 # Install Python
 brew unlink pkg-config && \
@@ -72,7 +72,7 @@ LDFLAGS="-L$(brew --prefix openssl)/lib" \
 rtx install python@latest; \
 brew link pkg-config
 
-# Install extra tools
+# Install Homebrew tools
 brew install cheat \
 progress \
 neofetch \
@@ -88,8 +88,8 @@ tailspin \
 zsh-autosuggestions \
 zsh-syntax-highlighting
 
-# To install useful key bindings and fuzzy completion for fzf:
-$(brew --prefix)/opt/fzf/install
+# To install useful key bindings and fuzzy completion for fzf. Not necessary as result's already in .profile
+# $(brew --prefix)/opt/fzf/install
 
 # mkdir ~/.config/lsd/
 # ln lsd.config.yaml ~/.config/lsd/config.yaml
