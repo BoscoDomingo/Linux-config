@@ -34,6 +34,7 @@ ln -s .aliases ~/.aliases
 ln -s .gitconfig ~/.gitconfig
 ln -s .nanorc ~/.nanorc
 ln -s direnv.toml ~/.config/direnv/direnv.toml
+ln -s .nirc ~/.nirc
 
 # Install Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -54,10 +55,11 @@ brew install rtx
 rtx completions zsh > ~/.rtx-completions
 
 # Install Node
-rtx install node
-npm i -g pnpm @antfu/ni npm-check-updates
-echo "pnpm setup, no need to reload afterwards"
-pnpm setup
+rtx p i pnpm # add the pnpm plugin
+rtx use -g node@lts
+rts use -g pnpm@latest
+pnpm i -g @antfu/ni
+npm i -g npm-check-updates
 
 # Install bun via bum
 curl -fsSL https://github.com/owenizedd/bum/raw/main/install.sh | bash

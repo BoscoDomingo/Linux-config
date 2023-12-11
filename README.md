@@ -4,14 +4,15 @@
 2. [Automatic installation](#automatic-installation)
 3. [Manual installation](#manual-installation)
 	1. [Before anything:](#before-anything)
-	2. [Create symbolic links to `.bash_rc`, `.zshrc`, `.profile`, `.aliases`, `.nanorc`, `.gitconfig` and oh-my-zsh config](#create-symbolic-links-to-bash_rc-zshrc-profile-aliases-nanorc-gitconfig-and-oh-my-zsh-config)
+	2. [Create symbolic links to all config files (allows Git tracking)](#create-symbolic-links-to-all-config-files-allows-git-tracking)
 	3. [Homebrew:](#homebrew)
 	4. [Oh-my-posh](#oh-my-posh)
 	5. [zsh](#zsh)
 	6. [oh-my-zsh](#oh-my-zsh)
 4. [Version managers](#version-managers)
 	1. [rtx (Runtime Executor)](#rtx-runtime-executor)
-		1. [Python installation](#python-installation)
+		1. [Node + pnpm installation](#node--pnpm-installation)
+		2. [Python installation](#python-installation)
 	2. [bum](#bum)
 	3. [~~pyenv~~](#pyenv)
 	4. [~~nvm~~](#nvm)
@@ -42,7 +43,7 @@
 
 # Automatic installation
 
-You can try running the `run.sh` file, although it is untested and may not work.
+You can try running the [`./run.sh`](run.sh) file, although it is untested and may not work.
 
 # Manual installation
 
@@ -52,36 +53,9 @@ You can try running the `run.sh` file, although it is untested and may not work.
 sudo apt-get update && sudo apt-get upgrade && sudo apt-get install build-essential
 ```
 
-## Create symbolic links to `.bash_rc`, `.zshrc`, `.profile`, `.aliases`, `.nanorc`, `.gitconfig` and oh-my-zsh config
+## Create symbolic links to all config files (allows Git tracking)
 
-```shell
-# Setup config files and backup existing ones
-if [ -e ~/.profile ]; then
-	mv ~/.profile ~/.profile.bak
-fi
-ln -s .profile ~/.profile
-
-if [ -e ~/.bashrc ]; then
-	mv ~/.bashrc ~/.bashrc.bak
-fi
-ln -s .bashrc ~/.bashrc
-
-if [ -e ~/.zshrc ]; then
-	mv ~/.zshrc ~/.zshrc.bak
-	mv $ZSH_CUSTOM/ $ZSH_CUSTOM_bak/
-fi
-ln -s .zshrc ~/.zshrc
-ln -s .oh-my-zsh/custom ~/.oh-my-zsh/custom
-
-if [ -e ~/.aliases ]; then
-	mv ~/.aliases ~/.aliases.bak
-fi
-ln -s .aliases ~/.aliases
-
-ln -s .gitconfig ~/.gitconfig
-ln -s .nanorc ~/.nanorc
-ln -s direnv.toml ~/.config/direnv/direnv.toml
-```
+See [`./run.sh`](run.sh)
 
 ## Homebrew:
 
@@ -119,13 +93,25 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 Recommended since you can manage multiple language SDKs from here, not needing a version manager for each.
 
-`brew install rtx`
-
-Needs
-```shell
+```sh
+# Prerequisites
 sudo apt update; sudo apt install build-essential libssl-dev zlib1g-dev \
 libbz2-dev libreadline-dev libsqlite3-dev curl \
 libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+
+brew install rtx
+rtx completions zsh > ~/.rtx-completions
+```
+
+### Node + pnpm installation
+```shell
+rtx p i pnpm # add the pnpm plugin
+rtx use -g node@lts
+rts use -g pnpm@latest
+
+# optional
+pnpm i -g @antfu/ni
+npm i -g npm-check-updates
 ```
 
 ### Python installation
@@ -241,22 +227,17 @@ zsh-syntax-highlighting
 
 
 ## NPM packages
-```sh
-npm i -g pnpm && pnpm setup;
-```
-
-Restart shell or `. .bashrc` or `. .zshrc`
 
 ```sh
 pnpm i -g @antfu/ni \
-npm-check-updates
+npm i -g npm-check-updates # pnpm doesn't need it
 ```
 
 ### [pnpm](https://pnpm.io/)
-`npm i -g pnpm`
+`rtx p i pnpm && rtx use -g pnpm@latest`
 
 ### [ncu](https://www.npmjs.com/package/npm-check-updates)
-`pnpm i -g npm-check-updates`
+`npm i -g npm-check-updates`
 
 ### [ni](https://github.com/antfu/ni)
 `pnpm i -g @antfu/ni`
