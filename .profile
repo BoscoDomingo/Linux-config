@@ -40,14 +40,6 @@ fi
 
 source /home/bosco/.config/broot/launcher/bash/br
 
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH=$BUN_INSTALL/bin:$PATH
-
-# bum (until rtx supports bun)
-export BUM_INSTALL="$HOME/.bum"
-export PATH=$BUM_INSTALL/bin:$PATH
-
 # pnpm
 export PNPM_HOME="$(rtx where pnpm)"
 case ":$PATH:" in
