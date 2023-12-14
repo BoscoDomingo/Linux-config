@@ -56,7 +56,6 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-export GOOGLE_APPLICATION_CREDENTIALS="/home/bosco/.config/gcloud/application_default_credentials.json"
 
 # eval "$(thefuck --alias)" # If using thefuck
 # Pyenv code (if not using rtx)
