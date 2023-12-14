@@ -1,18 +1,17 @@
-# Linux Setup
+# Linux Setup <!-- omit from toc -->
 
-1. [Linux Setup](#linux-setup)
-2. [Automatic installation](#automatic-installation)
-3. [Manual installation](#manual-installation)
+1. [Automatic installation](#automatic-installation)
+2. [Manual installation](#manual-installation)
 	1. [Before anything](#before-anything)
 	2. [zsh](#zsh)
 	3. [Create symbolic links to all config files (allows Git tracking)](#create-symbolic-links-to-all-config-files-allows-git-tracking)
 	4. [Homebrew](#homebrew)
 	5. [Oh-my-posh](#oh-my-posh)
 	6. [oh-my-zsh](#oh-my-zsh)
-4. [Version managers](#version-managers)
+3. [Version managers](#version-managers)
 	1. [rtx (Runtime Executor)](#rtx-runtime-executor)
 		1. [Deprecated](#deprecated)
-5. [Other commands](#other-commands)
+4. [Other commands](#other-commands)
 	1. [Homebrew packages](#homebrew-packages)
 		1. [Deprecated](#deprecated-1)
 	2. [NPM packages](#npm-packages)
