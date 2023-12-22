@@ -187,6 +187,7 @@ See [`./run.sh`](run.sh)
 * [tailspin](https://github.com/bensadeh/tailspin) -`brew install tailspin`
 * [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) -`brew install zsh-autosuggestions`
 * [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) - `brew install zsh-syntax-highlighting`
+* [trippy](https://trippy.cli.rs/) - `brew install trippy`
 
 ### Deprecated
 
