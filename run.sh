@@ -70,6 +70,7 @@ brew unlink pkg-config && \
 CFLAGS="-I$(brew --prefix openssl)/include" \
 LDFLAGS="-L$(brew --prefix openssl)/lib" \
 rtx install python@latest; \
+# rtx upgrade python; \
 brew link pkg-config
 
 # Install Homebrew tools
