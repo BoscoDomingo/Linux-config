@@ -92,6 +92,7 @@ trippy
 
 # To install useful key bindings and fuzzy completion for fzf. Not necessary as result's already in .profile
 # $(brew --prefix)/opt/fzf/install
+# mv ~/.fzf.* ~/.local
 
 # mkdir ~/.config/lsd/
 # ln lsd.config.yaml ~/.config/lsd/config.yaml

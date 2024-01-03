@@ -22,11 +22,12 @@ if [ -e "$HOME/.aliases" ]; then
 fi
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 # Check if $BASH_VERSION exists
 if [ -n "$BASH_VERSION" ]; then
 	eval "$(direnv hook bash)"
 	eval "$(mise activate bash)"
-	[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+	[ -f ~/.local/.fzf.bash ] && source ~/.local/.fzf.bash
 	eval "$(oh-my-posh init bash --config ~/shell_themes/niceDark.omp.json)"
 fi
 
@@ -34,7 +35,7 @@ fi
 if [ -n "$ZSH_VERSION" ]; then
 	eval "$(direnv hook zsh)"
 	eval "$(mise activate zsh)"
-	[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+	[ -f ~/.local/.fzf.zsh ] && source ~/.local/.fzf.zsh
 	eval "$(oh-my-posh init zsh --config ~/shell_themes/niceDark.omp.json)"
 fi
 
