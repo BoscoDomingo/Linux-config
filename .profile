@@ -25,7 +25,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 # Check if $BASH_VERSION exists
 if [ -n "$BASH_VERSION" ]; then
 	eval "$(direnv hook bash)"
-	eval "$(rtx activate bash)"
+	eval "$(mise activate bash)"
 	[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 	eval "$(oh-my-posh init bash --config ~/shell_themes/niceDark.omp.json)"
 fi
@@ -33,7 +33,7 @@ fi
 # Check if $ZSH_VERSION exists
 if [ -n "$ZSH_VERSION" ]; then
 	eval "$(direnv hook zsh)"
-	eval "$(rtx activate zsh)"
+	eval "$(mise activate zsh)"
 	[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 	eval "$(oh-my-posh init zsh --config ~/shell_themes/niceDark.omp.json)"
 fi
@@ -41,7 +41,7 @@ fi
 source /home/bosco/.config/broot/launcher/bash/br
 
 # pnpm
-export PNPM_HOME="$(rtx where pnpm)"
+export PNPM_HOME="$(mise where pnpm)"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
@@ -50,7 +50,7 @@ esac
 
 
 # eval "$(thefuck --alias)" # If using thefuck
-# Pyenv code (if not using rtx)
+# Pyenv code (if not using mise)
 # export PYENV_ROOT="$HOME/.pyenv"
 # command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 # eval "$(pyenv init -)"

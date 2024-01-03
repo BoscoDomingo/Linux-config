@@ -46,31 +46,31 @@ brew install jandedobbeleer/oh-my-posh/oh-my-posh
 # Original at https://gist.github.com/BoscoDomingo/62f35772e52178b31353a99d2d80ca77
 git clone git@gist.github.com:62f35772e52178b31353a99d2d80ca77.git ~/shell_themes
 
-# Install rtx
+# Install mise
 sudo apt update; sudo apt install build-essential libssl-dev zlib1g-dev \
 libbz2-dev libreadline-dev libsqlite3-dev curl \
 libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
 
-brew install rtx
-rtx completions zsh > ~/.local/.rtx-completions
+brew install mise
+mise completions zsh > ~/.local/.mise-completions
 
 # Install Node + pnpm
-rtx p i pnpm # add the pnpm plugin
-rtx use -g node@lts
+mise p i pnpm # add the pnpm plugin
+mise use -g node@lts
 rts use -g pnpm@latest
 pnpm i -g @antfu/ni
 npm i -g npm-check-updates
 
 # Install Bun
-rtx p i bun
-rtx use -g bun@latest
+mise p i bun
+mise use -g bun@latest
 
 # Install Python
 brew unlink pkg-config && \
 CFLAGS="-I$(brew --prefix openssl)/include" \
 LDFLAGS="-L$(brew --prefix openssl)/lib" \
-rtx install python@latest; \
-# rtx upgrade python; \
+mise install python@latest; \
+# mise upgrade python; \
 brew link pkg-config
 
 # Install Homebrew tools

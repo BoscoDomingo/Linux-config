@@ -113,8 +113,8 @@ fi
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-if [ -e "$HOME/.rtx-completions" ]; then
-	source ~/.rtx-completions
+if [ -e "$HOME/.mise-completions" ]; then
+	source ~/.mise-completions
 fi
 
 # export MANPATH="/usr/local/man:$MANPATH"

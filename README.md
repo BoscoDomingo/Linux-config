@@ -9,7 +9,7 @@
 	5. [Oh-my-posh](#oh-my-posh)
 	6. [oh-my-zsh](#oh-my-zsh)
 3. [Version managers](#version-managers)
-	1. [rtx (Runtime Executor)](#rtx-runtime-executor)
+	1. [mise](#mise)
 		1. [Deprecated](#deprecated)
 4. [Other commands](#other-commands)
 	1. [Homebrew packages](#homebrew-packages)
@@ -69,7 +69,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 ---
 # Version managers
 
-## [rtx](https://github.com/jdx/rtx) (Runtime Executor)
+## [mise](https://mise.jdx.dev/)
 
 Recommended since you can manage multiple language SDKs from here, not needing a version manager for each.
 
@@ -81,8 +81,8 @@ sudo apt update; sudo apt install build-essential libssl-dev zlib1g-dev \
 libbz2-dev libreadline-dev libsqlite3-dev curl \
 libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
 
-brew install rtx
-rtx completions zsh > ~/.rtx-completions
+brew install mise
+mise completions zsh > ~/.mise-completions
 ```
 
 <details>
@@ -91,8 +91,8 @@ rtx completions zsh > ~/.rtx-completions
 	</summary>
 
 ```sh
-rtx p i pnpm # add the pnpm plugin
-rtx use -g node@lts
+mise p i pnpm # add the pnpm plugin
+mise use -g node@lts
 rts use -g pnpm@latest
 
 # optional
@@ -111,7 +111,7 @@ npm i -g npm-check-updates
 brew unlink pkg-config && \
 CFLAGS="-I$(brew --prefix openssl)/include" \
 LDFLAGS="-L$(brew --prefix openssl)/lib" \
-rtx install python@latest; \
+mise install python@latest; \
 brew link pkg-config
 ```
 
@@ -123,8 +123,8 @@ brew link pkg-config
 	</summary>
 
 ```sh
-rtx p i bun
-rtx use -g bun@latest
+mise p i bun
+mise use -g bun@latest
 ```
 </details>
 
@@ -174,18 +174,18 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 See [`./run.sh`](run.sh)
 
 * [cheat](https://github.com/cheat/cheat) - `brew install cheat`
-* [progress](https://github.com/Xfennec/progress) -`brew install progress`
-* [neofetch](https://github.com/dylanaraps/neofetch) -`sudo apt install neofetch`
-* [bottom](https://github.com/ClementTsang/bottom) -`brew install bottom`
-* [eza](https://github.com/eza-community/eza) -`brew install eza`
-* [bfs](https://github.com/tavianator/bfs) -`brew install bfs`
-* [direnv](https://direnv.net/) -`brew install direnv`
-* [broot](https://github.com/Canop/broot) -`brew install broot`
-* [Delta](https://github.com/dandavison/delta) -`brew install git-delta`
-* [fzf](https://github.com/junegunn/fzf) -`brew install fzf`
-* [bat](https://github.com/sharkdp/bat) -`brew install bat`
-* [tailspin](https://github.com/bensadeh/tailspin) -`brew install tailspin`
-* [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) -`brew install zsh-autosuggestions`
+* [progress](https://github.com/Xfennec/progress) - `brew install progress`
+* [neofetch](https://github.com/dylanaraps/neofetch) - `sudo apt install neofetch`
+* [bottom](https://github.com/ClementTsang/bottom) - `brew install bottom`
+* [eza](https://github.com/eza-community/eza) - `brew install eza`
+* [bfs](https://github.com/tavianator/bfs) - `brew install bfs`
+* [direnv](https://direnv.net/) - `brew install direnv`
+* [broot](https://github.com/Canop/broot) - `brew install broot`
+* [Delta](https://github.com/dandavison/delta) - `brew install git-delta`
+* [fzf](https://github.com/junegunn/fzf) - `brew install fzf`
+* [bat](https://github.com/sharkdp/bat) - `brew install bat`
+* [tailspin](https://github.com/bensadeh/tailspin) - `brew install tailspin`
+* [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) - `brew install zsh-autosuggestions`
 * [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) - `brew install zsh-syntax-highlighting`
 * [trippy](https://trippy.cli.rs/) - `brew install trippy`
 
