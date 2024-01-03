@@ -52,7 +52,7 @@ libbz2-dev libreadline-dev libsqlite3-dev curl \
 libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
 
 brew install mise
-mise completions zsh > ~/.local/.mise-completions
+mise completion zsh > ~/.local/.mise-completions.zsh
 
 # Install Node + pnpm
 mise p i pnpm # add the pnpm plugin

@@ -82,7 +82,7 @@ libbz2-dev libreadline-dev libsqlite3-dev curl \
 libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
 
 brew install mise
-mise completions zsh > ~/.mise-completions
+mise completion zsh > ~/.local/.mise-completions.zsh
 ```
 
 <details>
@@ -93,7 +93,7 @@ mise completions zsh > ~/.mise-completions
 ```sh
 mise p i pnpm # add the pnpm plugin
 mise use -g node@lts
-rts use -g pnpm@latest
+mise use -g pnpm@latest
 
 # optional
 pnpm i -g @antfu/ni
