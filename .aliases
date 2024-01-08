@@ -4,8 +4,9 @@ alias ll='ls -FAGhl --group-directories-first --time-style=long-iso --color'
 alias la='ls -A'
 # alias lls='lsd -1AFl --total-size'
 
+alias gtm='f(){ gt modify -m $1; unset -f f; }; f'
+
 # alias nano='nano --rcfile ~/.nanorc'
-alias pyenv-install='CFLAGS="-I$(brew --prefix openssl)/include" LDFLAGS="-L$(brew --prefix openssl)/lib" pyenv install'
 
 alias git-delete-untracked-branches="git checkout main && git fetch --prune && LANG=en_US git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D"
 alias gc="git commit --clean=strip -p"
