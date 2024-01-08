@@ -16,17 +16,17 @@ alias gn="git add --renormalize ."
 alias release-patch='\
 	git stash push -a -k && \
 	NEW_VERSION=$(npm version patch --no-git-tag-version | cut -c 2-) && \
-	git commit -a -m "Upgrade version to $NEW_VERSION" && \
+	git commit -a -m "chore(release): v$NEW_VERSION" && \
 	git stash pop'
 alias release-minor='\
 	git stash push -a -k && \
 	NEW_VERSION=$(npm version minor --no-git-tag-version | cut -c 2-) && \
-	git commit -a -m "Upgrade version to $NEW_VERSION" && \
+	git commit -a -m "chore(release): v$NEW_VERSION" && \
 	git stash pop'
 alias release-major='\
 	git stash push -a -k && \
 	NEW_VERSION=$(npm version major --no-git-tag-version | cut -c 2-) && \
-	git commit -a -m "Upgrade version to $NEW_VERSION" && \
+	git commit -a -m "chore(release): v$NEW_VERSION" && \
 	git stash pop'
 
 # gcloud
