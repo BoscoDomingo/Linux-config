@@ -49,7 +49,7 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-###-begin-gt-completions-###
+###-Graphite-###
 #
 # yargs command completion script
 #
@@ -71,9 +71,10 @@ _gt_yargs_completions()
 		return 0
 }
 complete -o bashdefault -o default -F _gt_yargs_completions gt
-###-end-gt-completions-###
+###-Graphite-###
 
 # eval "$(thefuck --alias)" # If using thefuck
+
 # Pyenv code (if not using mise)
 # export PYENV_ROOT="$HOME/.pyenv"
 # command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"

@@ -55,23 +55,21 @@ brew install mise
 mise completion zsh > ~/.local/.mise-completions.zsh
 
 # Install Node + pnpm
-mise p i pnpm # add the pnpm plugin
 mise use -g node@lts
-rts use -g pnpm@latest
-pnpm i -g @antfu/ni
-npm i -g npm-check-updates
+npm i -g npm-check-updates pnpm @antfu/ni
 
-# Install Bun
-mise p i bun
+# Install Bun and Rust
+mise p i bun rust
 mise use -g bun@latest
+mise use -g rust@latest
 
-# Install Python
-brew unlink pkg-config && \
-CFLAGS="-I$(brew --prefix openssl)/include" \
-LDFLAGS="-L$(brew --prefix openssl)/lib" \
-mise install python@latest; \
+# Install Python (it kinda breaks, so don't use it unless necessary)
+# brew unlink pkg-config && \
+# CFLAGS="-I$(brew --prefix openssl)/include" \
+# LDFLAGS="-L$(brew --prefix openssl)/lib" \
+# mise install python@latest; \
 # mise upgrade python; \
-brew link pkg-config
+# brew link pkg-config
 
 # Install Homebrew tools
 brew install cheat \
