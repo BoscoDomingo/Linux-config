@@ -42,7 +42,7 @@ fi
 source /home/bosco/.config/broot/launcher/bash/br
 
 # pnpm
-export PNPM_HOME="$(mise where pnpm)"
+export PNPM_HOME="/home/bosco/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
