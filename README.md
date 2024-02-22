@@ -86,7 +86,7 @@ mise completion zsh > ~/.local/.mise-completions.zsh
 ```
 
 <details>
-  <summary>
+	<summary>
 		Node + pnpm
 	</summary>
 
@@ -103,7 +103,7 @@ npm i -g npm-check-updates
 </details>
 
 <details>
-  <summary>
+	<summary>
 		Python
 	</summary>
 
