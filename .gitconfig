@@ -1,36 +1,36 @@
 [init]
-  defaultBranch = main
+	defaultBranch = main
 
 [user]
-  name="Bosco Domingo"
-  email="boscodomingob@gmail.com"
+	name="Bosco Domingo"
+	email="boscodomingob@gmail.com"
 
 [core]
-  pager = delta
-  eol = lf
-  autocrlf = input
+	pager = delta
+	eol = lf
+	autocrlf = false
 
 [interactive]
-  diffFilter = delta --color-only
+	diffFilter = delta --color-only
 
 [delta]
-  navigate = true    # use n and N to move between diff sections
-  light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
-  line-numbers = true
-  side-by-side = true
-  syntax-theme = DarkNeon
-  diff-so-fancy = true
+	navigate = true    # use n and N to move between diff sections
+	light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+	line-numbers = true
+	side-by-side = true
+	syntax-theme = DarkNeon
+	diff-so-fancy = true
 
 [merge]
-  conflictstyle = diff3
+	conflictstyle = diff3
 
 [push]
-  autoSetupRemote = true
+	autoSetupRemote = true
 
 [diff]
-  colorMoved = default
+	colorMoved = default
 
 [safe]
-  directory = %(prefix)///wsl.localhost/Ubuntu/home/bosco/repos/
-  directory = %(prefix)///wsl.localhost/Ubuntu/home/bosco/repos/*
-  directory = %(prefix)///wsl.localhost/Ubuntu/home/bosco/repos/**/*
+	directory = %(prefix)///wsl.localhost/Ubuntu/home/bosco/repos/
+	directory = %(prefix)///wsl.localhost/Ubuntu/home/bosco/repos/*
+	directory = %(prefix)///wsl.localhost/Ubuntu/home/bosco/repos/**/*
