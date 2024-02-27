@@ -189,6 +189,7 @@ See [`./run.sh`](run.sh)
 * [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) - `brew install zsh-syntax-highlighting`
 * [trippy](https://trippy.cli.rs/) - `brew install trippy`
 * [ugrep](https://ugrep.com/) - `brew install ugrep`
+* [gping](https://github.com/orf/gping) - `brew install gping`
 
 ### Deprecated
 

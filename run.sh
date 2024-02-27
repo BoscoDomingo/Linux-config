@@ -87,7 +87,8 @@ tailspin \
 zsh-autosuggestions \
 zsh-syntax-highlighting \
 trippy \
-ugrep
+ugrep \
+gping
 
 # To install useful key bindings and fuzzy completion for fzf. Not necessary as result's already in .profile
 # $(brew --prefix)/opt/fzf/install
