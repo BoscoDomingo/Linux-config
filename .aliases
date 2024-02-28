@@ -23,6 +23,8 @@ alias gc="git commit --clean=strip -p"
 alias gcm="git commit --clean=strip -p -m"
 alias gn="git add --renormalize ."
 
+alias bc='better-commits'
+alias bb='better-branch'
 
 alias release-patch='\
 	git stash push -a -k && \
