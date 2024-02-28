@@ -34,3 +34,6 @@
 	directory = %(prefix)///wsl.localhost/Ubuntu/home/bosco/repos/
 	directory = %(prefix)///wsl.localhost/Ubuntu/home/bosco/repos/*
 	directory = %(prefix)///wsl.localhost/Ubuntu/home/bosco/repos/**/*
+[rerere]
+	enabled = true
+	autoUpdate = true
