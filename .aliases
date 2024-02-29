@@ -18,12 +18,15 @@ alias ping='gping --clear'
 alias gtm='gt modify -m'
 # alias gtm='f(){ gt modify -m $1; unset -f f; }; f' # Alternative way which allows passing multiple arguments if needed
 
-alias git-delete-untracked-branches="git checkout main && git fetch --prune && LANG=en_US git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D"
+alias git-delete-untracked-branches="git stash && git checkout main && git fetch --prune && LANG=en_US git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D && git stash pop"
 alias gc="git commit --clean=strip -p"
 alias gcm="git commit --clean=strip -p -m"
-alias gn="git add --renormalize ."
+alias ga="git add --renormalize ."
+alias gl="git log --oneline --graph --decorate"
+alias gla="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
 
-alias bc='better-commits'
+alias bc="better-commits"
+alias bca='git add -p && bc'
 alias bb='better-branch'
 
 alias release-patch='\
