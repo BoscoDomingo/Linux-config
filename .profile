@@ -41,6 +41,9 @@ fi
 
 source /home/bosco/.config/broot/launcher/bash/br
 
+# WSL browser support
+export BROWSER=wslview
+
 # pnpm
 export PNPM_HOME="/home/bosco/.local/share/pnpm"
 case ":$PATH:" in
@@ -58,7 +61,7 @@ esac
 #
 _gt_yargs_completions()
 {
-			local cur_word args type_list
+		local cur_word args type_list
 		cur_word="${COMP_WORDS[COMP_CWORD]}"
 		args=("${COMP_WORDS[@]}")
 		# ask yargs to generate completions.
