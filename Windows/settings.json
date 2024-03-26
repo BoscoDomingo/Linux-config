@@ -42,13 +42,15 @@
     ],
     "alwaysShowNotificationIcon": false,
     "autoHideWindow": false,
+    "centerOnLaunch": true,
     "copyFormatting": "none",
     "copyOnSelect": false,
     "defaultProfile": "{51855cb2-8cce-5362-8f54-464b92b32386}",
+    "experimental.rendering.software": true,
     "firstWindowPreference": "defaultProfile",
     "focusFollowMouse": true,
-    "initialCols": 145,
-    "initialRows": 38,
+    "initialCols": 155,
+    "initialRows": 42,
     "language": "en-US",
     "newTabMenu": 
     [
@@ -56,6 +58,7 @@
             "type": "remainingProfiles"
         }
     ],
+    "newTabPosition": "afterCurrentTab",
     "profiles": 
     {
         "defaults": 
@@ -73,7 +76,7 @@
             "font": 
             {
                 "face": "Consolasligaturizedv2 NF",
-                "size": 10.0
+                "size": 11.0
             },
             "intenseTextStyle": "all",
             "opacity": 82,
@@ -102,7 +105,7 @@
                 "startingDirectory": "%USERPROFILE%"
             },
             {
-                "colorScheme": "PaulMillr",
+                "colorScheme": "One Half Dark",
                 "font": 
                 {
                     "face": "Consolasligaturizedv2 NF"
@@ -119,11 +122,9 @@
                 "source": "Windows.Terminal.Azure"
             },
             {
-                "colorScheme": "UltraViolent",
-                "font": 
+                "colorScheme": 
                 {
-                    "face": "FiraCode+UbuntuMono NF",
-                    "size": 12.0
+                    "light": "UltraViolent"
                 },
                 "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
                 "hidden": false,
@@ -131,6 +132,11 @@
                 "source": "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc"
             },
             {
+                "adjustIndistinguishableColors": "always",
+                "font": 
+                {
+                    "cellHeight": "1.3"
+                },
                 "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
                 "hidden": true,
                 "name": "Ubuntu",
