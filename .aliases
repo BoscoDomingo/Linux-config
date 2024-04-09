@@ -18,8 +18,10 @@ alias ping='gping --clear'
 alias ghcs='gh copilot suggest'
 alias ghce='gh copilot explain'
 
+alias gtc='gt c'
 alias gtm='gt modify -p -m'
 alias gtl='gt log long'
+alias gtch='gt checkout'
 # alias gtm='f(){ gt modify -m $1; unset -f f; }; f' # Alternative way which allows passing multiple arguments if needed
 
 alias git-delete-untracked-branches="git stash && git checkout main && git fetch --prune && LANG=en_US git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D && git stash pop"
