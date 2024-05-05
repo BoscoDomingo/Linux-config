@@ -16,10 +16,6 @@
             "keys": "ctrl+v"
         },
         {
-            "command": "find",
-            "keys": "ctrl+shift+f"
-        },
-        {
             "command": 
             {
                 "action": "splitPane",
@@ -27,6 +23,10 @@
                 "splitMode": "duplicate"
             },
             "keys": "alt+shift+d"
+        },
+        {
+            "command": "find",
+            "keys": "ctrl+shift+f"
         },
         {
             "command": "closePane",
@@ -81,7 +81,7 @@
             "intenseTextStyle": "all",
             "opacity": 82,
             "useAcrylic": true,
-            "useAtlasEngine": true
+            "useAtlasEngine": false
         },
         "list": 
         [
@@ -114,12 +114,6 @@
                 "hidden": false,
                 "name": "PowerShell 7",
                 "source": "Windows.Terminal.PowershellCore"
-            },
-            {
-                "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
-                "hidden": true,
-                "name": "Azure Cloud Shell",
-                "source": "Windows.Terminal.Azure"
             },
             {
                 "colorScheme": 
