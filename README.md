@@ -6,20 +6,19 @@
 	2. [zsh](#zsh)
 	3. [Create symbolic links to all config files (allows Git tracking)](#create-symbolic-links-to-all-config-files-allows-git-tracking)
 	4. [Homebrew](#homebrew)
-	5. [Oh-my-posh](#oh-my-posh)
+	5. [oh-my-posh](#oh-my-posh)
 	6. [oh-my-zsh](#oh-my-zsh)
 3. [Version managers](#version-managers)
 	1. [mise](#mise)
-		1. [Deprecated](#deprecated)
-4. [Other commands](#other-commands)
-	1. [Homebrew packages](#homebrew-packages)
+			1. [Optional extras](#optional-extras)
+	2. [Deprecated](#deprecated)
+4. [Homebrew packages](#homebrew-packages)
 		1. [Deprecated](#deprecated-1)
-	2. [NPM packages](#npm-packages)
 
 
 # Automatic installation
 
-You can try running the [`./run.sh`](run.sh) file, although it is untested and may not work.
+You can try running the [`./run.sh`](run.sh) file directly, although it is untested and may not work.
 
 ---
 
@@ -52,7 +51,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 brew install gcc
 ```
 
-## Oh-my-posh
+## oh-my-posh
 
 ```shell
 brew install jandedobbeleer/oh-my-posh/oh-my-posh
@@ -73,7 +72,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 Recommended since you can manage multiple language SDKs from here, not needing a version manager for each.
 
-It also works with [asdf plugins](https://github.com/asdf-vm/asdf-plugins), so you can manage pretty much anything with it. Pretty neat!
+It also works with [asdf plugins](https://github.com/asdf-vm/asdf-plugins), and soon with vfox too, so you can manage pretty much anything with it. Pretty neat!
 
 ```sh
 # Prerequisites
@@ -87,24 +86,40 @@ mise completion zsh > ~/.local/.mise-completions.zsh
 
 <details>
 	<summary>
-		Node + pnpm
+		<h3>Node + pnpm</h3>
 	</summary>
 
-```sh
-mise p i pnpm # add the pnpm plugin
-mise use -g node@lts
-mise use -g pnpm@latest
+Use npm to install pnpm because otherwise the cache and installed modules are lost every time pnpm is updated.
 
-# optional
-pnpm i -g @antfu/ni
-npm i -g npm-check-updates
+```sh
+mise use -g node@lts
+npm i -g pnpm
 ```
+
+#### Optional extras
+
+* [ni](https://github.com/antfu/ni)
+`pnpm i -g @antfu/ni`
+
+* [ncu](https://www.npmjs.com/package/npm-check-updates)
+`npm i -g npm-check-updates` - pnpm doesn't need it
 
 </details>
 
 <details>
 	<summary>
-		Python
+		<h3>Bun</h3>
+	</summary>
+
+```sh
+mise p i bun
+mise use -g bun@latest
+```
+</details>
+
+<details>
+	<summary>
+		<h3>Python</h3>
 	</summary>
 
 ```sh
@@ -117,21 +132,10 @@ brew link pkg-config
 
 </details>
 
-<details>
-	<summary>
-		Bun
-	</summary>
-
-```sh
-mise p i bun
-mise use -g bun@latest
-```
-</details>
-
-### Deprecated
+## Deprecated
 
 <details>
-	<summary><del>pyenv (deprecated)</del></summary>
+	<summary><del>pyenv</del></summary>
 
 <del>
 
@@ -154,7 +158,7 @@ pyenv global 3.12
 </details>
 
 <details>
-	<summary><del>nvm (deprecated)</del></summary>
+	<summary><del>nvm</del></summary>
 
 <del>
 
@@ -167,9 +171,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 
 </details>
 
-# Other commands
-
-## Homebrew packages
+# Homebrew packages
 
 See [`./run.sh`](run.sh)
 
@@ -190,22 +192,9 @@ See [`./run.sh`](run.sh)
 * [trippy](https://trippy.cli.rs/) - `brew install trippy`
 * [ugrep](https://ugrep.com/) - `brew install ugrep`
 * [gping](https://github.com/orf/gping) - `brew install gping`
+* [hyperfine](https://github.com/sharkdp/hyperfine) - `brew install hyperfine`
 
 ### Deprecated
 
 * [thefuck](https://github.com/nvbn/thefuck) (quite slow on my machine, but a useful command nonetheless) - `brew install thefuck`
 * [lsd](https://github.com/Peltoche/lsd) (slower and I found issues with icons) - `brew install lsd`
-
-
-## NPM packages
-
-```sh
-pnpm i -g @antfu/ni
-npm i -g npm-check-updates # pnpm doesn't need it
-```
-
-* [ni](https://github.com/antfu/ni)
-`pnpm i -g @antfu/ni`
-
-* [ncu](https://www.npmjs.com/package/npm-check-updates)
-`npm i -g npm-check-updates`
