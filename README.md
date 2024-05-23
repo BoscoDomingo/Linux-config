@@ -14,6 +14,9 @@
 	2. [Deprecated](#deprecated)
 4. [Homebrew packages](#homebrew-packages)
 		1. [Deprecated](#deprecated-1)
+5. [GPG and commit signing](#gpg-and-commit-signing)
+	1. [WSL](#wsl)
+	2. [Use built-in pinentry](#use-built-in-pinentry)
 
 
 # Automatic installation
@@ -198,3 +201,45 @@ See [`./run.sh`](run.sh)
 
 * [thefuck](https://github.com/nvbn/thefuck) (quite slow on my machine, but a useful command nonetheless) - `brew install thefuck`
 * [lsd](https://github.com/Peltoche/lsd) (slower and I found issues with icons) - `brew install lsd`
+
+# GPG and commit signing
+
+## WSL
+
+> Note that you *don't* need GPG4Win, you can use everything from Linux itself.
+> However, GPG4Win can be useful if you ever plan on using Windows directly to develop or sign anything.
+
+> Also, keys can only be cached for as long as the agent is running.
+> Rebooting the machine will clear the cache.
+
+Follow any of these guides:
+
+* [39Signals](https://www.39digits.com/signed-git-commits-on-wsl2-using-visual-studio-code)
+* [The Miners](https://blog.codeminer42.com/securing-git-commits-on-windows-10-and-wsl2/)
+* [nathanv@blog](https://blog.nathanv.me/posts/gpg-windows/)
+* [Ryan Emerle - importing Linux keys to Windows](https://emerle.dev/2020/08/21/git-signed-commits-in-windows-and-wsl/)
+
+You may need to fix issues:
+
+- [`gpg: WARNING: unsafe permissions on homedir '/home/path/to/user/.gnupg'`](https://gist.github.com/oseme-techguy/bae2e309c084d93b75a9b25f49718f85)
+- [`gpg: signing failed: Inappropriate ioctl for device`](https://github.com/keybase/keybase-issues/issues/2798) <- Already implemented in [`.profile`](.profile)
+
+
+## Use built-in pinentry
+
+You can use `pinentry` which prompts with a TUI, or `pinentry-tty` which uses stdin directly, as `sudo` does.
+
+Example:
+
+```sh
+# Either one should work
+sudo apt install pinentry-tty
+brew install pinentry-tty
+```
+
+and modify your `~/.gnupg/gpg-agent.conf` to use the built-in pinentry:
+
+```sh
+pinentry-program /usr/bin/pinentry-tty
+pinentry-program /home/linuxbrew/.linuxbrew/bin/pinentry-tty
+```

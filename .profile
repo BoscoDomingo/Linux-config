@@ -43,6 +43,8 @@ source /home/bosco/.config/broot/launcher/bash/br
 
 # WSL browser support
 export BROWSER=wslview
+# GPG signing with WSL native tools
+export GPG_TTY=$(tty)
 
 # pnpm
 export PNPM_HOME="/home/bosco/.local/share/pnpm"
