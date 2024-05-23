@@ -1,0 +1,12 @@
+#!/bin/bash
+
+while true; do
+	CPU_USAGE=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1"%"}')
+	MEM_TOTAL=$(free -m | awk 'NR==2{printf "%.2f", $2/1024}')
+	MEM_USED=$(free -m | awk 'NR==2{printf "%.2f", $3/1024}')
+	DATE_TIME=$(date +"%Y-%m-%d %H:%M:%S")
+
+	echo "CPU: #[fg=cyan]$CPU_USAGE#[default] | RAM: #[fg=yellow]${MEM_USED}GB/${MEM_TOTAL}GB#[default] | #[fg=white]$DATE_TIME#[default]" >~/.tmux-status
+
+	sleep 1
+done
