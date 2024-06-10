@@ -13,23 +13,23 @@ try {
 	let Services = globalThis.Services || ChromeUtils.import("resource://gre/modules/Services.jsm").Services;
 	function ConfigJS() { Services.obs.addObserver(this, 'chrome-document-global-created', false); }
 	ConfigJS.prototype = {
-	 observe: function (aSubject) { aSubject.addEventListener('DOMContentLoaded', this, {once: true}); },
-	 handleEvent: function (aEvent) {
+	observe: function (aSubject) { aSubject.addEventListener('DOMContentLoaded', this, {once: true}); },
+	handleEvent: function (aEvent) {
 		let document = aEvent.originalTarget;
 		let window = document.defaultView;
 		let location = window.location;
 		if (/^(chrome:(?!\/\/(global\/content\/commonDialog|browser\/content\/webext-panels)\.x?html)|about:(?!blank))/i.test(location.href)) {
-		 if (window._gBrowser) {
+		if (window._gBrowser) {
 			let attr, elm, key, mbo;
-			 let KEYS = ['key_search2'];
-			 let ATTR = ['key','modifiers','command','oncommand'];
-			 for (key in KEYS){
+			let KEYS = ['key_search2'];
+			let ATTR = ['key','modifiers','command','oncommand'];
+			for (key in KEYS){
 				elm = window.document.getElementById(KEYS[key]);
 				if (elm) for (attr in ATTR) if (ATTR[attr] in elm.attributes) elm.removeAttribute(ATTR[attr]);
-			 }
-		 }
+			}
 		}
-	 }
+		}
+	}
 	};
 	if (!Services.appinfo.inSafeMode) { new ConfigJS(); }
- } catch(e) {Cu.reportError(e);}
+} catch(e) {Cu.reportError(e);}
