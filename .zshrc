@@ -7,7 +7,7 @@
 
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
-HISTSIZE=1000
+HISTSIZE=10000
 SAVEHIST=10000
 setopt autocd
 bindkey -e
@@ -66,13 +66,13 @@ zstyle ':omz:update' frequency 10
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # You can also set it to another string to have that shown instead of the default red dots.
 # e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
 # Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -106,6 +106,20 @@ plugins=(git
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+# Enable auto-complete of aliases
+setopt complete_aliases
+
+# History
+setopt share_history          # share history between all sessions
+setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt hist_ignore_dups       # ignore duplicated commands
+setopt hist_ignore_space      # ignore commands prefixed with space
+setopt hist_reduce_blanks     # remove superfluous blanks from history
+setopt hist_verify            # show command with history expansion to user before running it
+setopt extended_history       # record timestamp of command in HISTFILE
+setopt inc_append_history     # append to HISTFILE instead of overwriting it
+
+
 if [ -e "$HOME/.profile" ]; then
 	source ~/.profile
 fi
