@@ -180,9 +180,10 @@ See [`./run.sh`](run.sh)
 
 * [cheat](https://github.com/cheat/cheat) - `brew install cheat`
 * [progress](https://github.com/Xfennec/progress) - `brew install progress`
-* [neofetch](https://github.com/dylanaraps/neofetch) - `sudo apt install neofetch`
+* [fastfetch](https://github.com/fastfetch-cli/fastfetch) - `sudo apt install fastfetch`
 * [bottom](https://github.com/ClementTsang/bottom) - `brew install bottom`
 * [eza](https://github.com/eza-community/eza) - `brew install eza`
+* [fd](https://github.com/sharkdp/fd) - `brew install fd`
 * [bfs](https://github.com/tavianator/bfs) - `brew install bfs`
 * [direnv](https://direnv.net/) - `brew install direnv`
 * [broot](https://github.com/Canop/broot) - `brew install broot`

@@ -75,23 +75,24 @@ mise use -g rust@latest
 
 # Install Homebrew tools
 brew install cheat \
-progress \
-neofetch \
-bottom \
-eza \
-bfs \
-direnv \
-broot \
-git-delta \
-fzf \
-bat \
-tailspin \
-zsh-autosuggestions \
-zsh-syntax-highlighting \
-trippy \
-ugrep \
-gping \
-hyperfine
+	progress \
+	fastfetch \
+	bottom \
+	eza \
+	bfs \
+	fd \
+	direnv \
+	broot \
+	git-delta \
+	fzf \
+	bat \
+	tailspin \
+	zsh-autosuggestions \
+	zsh-syntax-highlighting \
+	trippy \
+	ugrep \
+	gping \
+	hyperfine
 
 # To install useful key bindings and fuzzy completion for fzf. Not necessary as result's already in .profile
 # $(brew --prefix)/opt/fzf/install
