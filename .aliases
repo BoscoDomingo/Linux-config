@@ -5,7 +5,8 @@ alias rmf='rm -rf'
 alias df='df -h'
 alias du='du -h'
 
-alias le='eza -a -T -L=1 -1 -l --color auto --icons --group-directories-first --header --created --modified --time-style=long-iso'
+# ls
+alias le='eza -a -T -L=1 -1 -l --color auto --icons --group-directories-first --header --created --modified --time-style=long-iso --git'
 alias l='le --git-ignore'
 alias ll='ls -FAGhl --group-directories-first --time-style=long-iso --color'
 alias la='ls -A'
@@ -15,22 +16,37 @@ alias ping='gping --clear'
 
 # alias nano='nano --rcfile ~/.nanorc'
 
-alias ghcs='gh copilot suggest'
-alias ghce='gh copilot explain'
+# Git
+alias gst="git status"
 
-alias gtc='gt c'
-alias gtm='gt modify -p -m'
-alias gtl='gt log long'
-alias gtch='gt checkout'
-# alias gtm='f(){ gt modify -m $1; unset -f f; }; f' # Alternative way which allows passing multiple arguments if needed
+alias gsh="git stash -u"
+alias gshp="git stash pop"
 
 alias git-delete-untracked-branches="git stash && git checkout main && git fetch --prune && LANG=en_US git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D && git stash pop"
+
 alias gc="git commit --clean=strip -p"
 alias gcm="git commit --clean=strip -p -m"
-alias ga="git add --renormalize ."
+
+alias ga="git add --renormalize"
+
 alias gl="git log --oneline --graph --decorate"
 alias gla="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
 
+# Graphite
+alias gtc='gt create'
+alias gtm='gt modify -p -m'
+# alias gtm='f(){ gt modify -m $1; unset -f f; }; f' # Alternative way which allows passing multiple arguments if needed
+
+alias gtl='gt log'
+alias gtll='gt log long'
+
+alias gtch='gt checkout'
+alias gtrs='gt restack'
+alias gtro='gt reorder'
+alias gtct='gt continue'
+alias gtcfg='gt config'
+
+# Better Commits
 alias bc="better-commits"
 alias bca='git add -p && bc'
 alias bb='better-branch'
