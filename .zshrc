@@ -131,6 +131,37 @@ if [ -e "$HOME/.local/.mise-completions.zsh" ]; then
 	source ~/.local/.mise-completions.zsh
 fi
 
+## Fzf
+# Source: https://dev.to/dshafik/finding-terminal-utopia-583k
+_fzf_comprun() {
+	local command=$1
+	shift
+
+	case "$command" in
+	cd) fzf --preview 'eza --tree --color=always {} | head -200' "$@" ;;
+	export | unset) fzf --preview "eval 'echo \$'{}" "$@" ;;
+	ssh) fzf --preview 'dig {}' "$@" ;;
+	cat | bat) fzf --preview 'bat -n --color=always {}' "$@" ;;
+	*) fzf --preview '$HOME/bin/fzf-preview.sh {}' "$@" ;;
+	esac
+}
+
+_fzf_compgen_path() {
+	fd --hidden --exclude .git . "$1"
+}
+
+_fzf_compgen_dir() {
+	fd --type=d --hidden --exclude .git . "$1"
+}
+
+# Enable using fzf preview with eza when using tab completion with `cd`
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:*' fzf-preview '$HOME/bin/fzf-preview.sh $realpath'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --tree --color=always --icons=always --git $realpath | head -200'
+zstyle ':fzf-tab:*' switch-group '<' '>'
+
+export BAT_THEME="Monokai Extended Bright"
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
