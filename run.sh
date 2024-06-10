@@ -59,7 +59,8 @@ mise completion zsh > ~/.local/.mise-completions.zsh
 
 # Install Node + pnpm
 mise use -g node@lts
-npm i -g npm-check-updates pnpm @antfu/ni
+npx pnpm i -g pnpm
+pnpm i -g @antfu/ni
 
 # Install Bun and Rust
 mise p i bun rust

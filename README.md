@@ -96,7 +96,7 @@ Use npm to install pnpm because otherwise the cache and installed modules are lo
 
 ```sh
 mise use -g node@lts
-npm i -g pnpm
+npx pnpm i -g pnpm # To save pnpm to $PNPM_HOME so cache won't be lost on updates
 ```
 
 #### Optional extras
@@ -104,6 +104,8 @@ npm i -g pnpm
 * [ni](https://github.com/antfu/ni)
 `pnpm i -g @antfu/ni`
 
+* [taze](https://github.com/antfu-collective/taze)
+`npm i -g taze` - pnpm doesn't need it
 * [ncu](https://www.npmjs.com/package/npm-check-updates)
 `npm i -g npm-check-updates` - pnpm doesn't need it
 
