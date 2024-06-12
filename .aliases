@@ -51,6 +51,14 @@ alias bc="better-commits"
 alias bca='git add -p && bc'
 alias bb='better-branch'
 
+# Supabase
+alias sb="supabase"
+alias sbs="supabase start"
+alias sbk="supabase stop --no-backup"
+alias sbd="supabase db"
+alias sbm="supabase migration"
+
+# Samara
 alias release-patch='\
 	git stash push -a -k && \
 	NEW_VERSION=$(npm version patch --no-git-tag-version | cut -c 2-) && \
