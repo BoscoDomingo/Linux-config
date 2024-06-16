@@ -8,10 +8,10 @@ if [ -n "$BASH_VERSION" ] && [ -e "$HOME/.bashrc" ] && [ -z "${VSCODE_IPC_HOOK_C
 fi
 
 # set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
+if [ -d "$HOME/bin" ]; then
 	PATH="$HOME/bin:$PATH"
 fi
-if [ -d "$HOME/.local/bin" ] ; then
+if [ -d "$HOME/.local/bin" ]; then
 	PATH="$HOME/.local/bin:$PATH"
 fi
 # Ensures VS Code terminal history is saved without `exit` command
@@ -49,10 +49,12 @@ export GPG_TTY=$(tty)
 # pnpm
 export PNPM_HOME="/home/bosco/.local/share/pnpm"
 case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
+	*":$PNPM_HOME:"*) ;;
+	*) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+fastfetch
 
 ###-Graphite-###
 #
@@ -61,19 +63,18 @@ esac
 # Installation: gt completion >> ~/.bashrc
 #    or gt completion >> ~/.bash_profile on OSX.
 #
-_gt_yargs_completions()
-{
-		local cur_word args type_list
-		cur_word="${COMP_WORDS[COMP_CWORD]}"
-		args=("${COMP_WORDS[@]}")
-		# ask yargs to generate completions.
-		type_list=$(gt --get-yargs-completions "${args[@]}")
-		COMPREPLY=( $(compgen -W "${type_list}" -- ${cur_word}) )
-		# if no match was found, fall back to filename completion
-		if [ ${#COMPREPLY[@]} -eq 0 ]; then
-			COMPREPLY=()
-		fi
-		return 0
+_gt_yargs_completions() {
+	local cur_word args type_list
+	cur_word="${COMP_WORDS[COMP_CWORD]}"
+	args=("${COMP_WORDS[@]}")
+	# ask yargs to generate completions.
+	type_list=$(gt --get-yargs-completions "${args[@]}")
+	COMPREPLY=($(compgen -W "${type_list}" -- ${cur_word}))
+	# if no match was found, fall back to filename completion
+	if [ ${#COMPREPLY[@]} -eq 0 ]; then
+		COMPREPLY=()
+	fi
+	return 0
 }
 complete -o bashdefault -o default -F _gt_yargs_completions gt
 ###-Graphite-###
