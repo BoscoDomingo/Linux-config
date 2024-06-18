@@ -15,7 +15,7 @@ if [ -d "$HOME/.local/bin" ]; then
 	PATH="$HOME/.local/bin:$PATH"
 fi
 # Ensures VS Code terminal history is saved without `exit` command
-PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a";
+PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a"
 
 if [ -e "$HOME/.aliases" ]; then
 	source ~/.aliases
@@ -39,6 +39,11 @@ if [ -n "$ZSH_VERSION" ]; then
 	eval "$(oh-my-posh init zsh --config ~/shell_themes/niceDark.omp.json)"
 fi
 
+# Custom commands
+fastfetch
+(brew update &>/dev/null &) # To execute on a subshell and redirect all output to /dev/null
+
+# broot
 source /home/bosco/.config/broot/launcher/bash/br
 
 # WSL browser support
@@ -53,8 +58,6 @@ case ":$PATH:" in
 	*) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
-
-fastfetch
 
 ###-Graphite-###
 #
