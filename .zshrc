@@ -66,7 +66,11 @@ zstyle ':omz:update' frequency 10
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
+# ENABLE_CORRECTION="false"
+# CORRECT_IGNORE_FILE=".turbo|.nx"
+
+# Uncomment to enable correcting only arguments, not commands
+setopt correct
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # You can also set it to another string to have that shown instead of the default red dots.
@@ -118,7 +122,6 @@ setopt hist_reduce_blanks     # remove superfluous blanks from history
 setopt hist_verify            # show command with history expansion to user before running it
 setopt extended_history       # record timestamp of command in HISTFILE
 setopt inc_append_history     # append to HISTFILE instead of overwriting it
-
 
 if [ -e "$HOME/.profile" ]; then
 	source ~/.profile
