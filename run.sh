@@ -94,7 +94,8 @@ brew install cheat \
 	trippy \
 	ugrep \
 	gping \
-	hyperfine
+	hyperfine \
+	superfile
 
 # To install useful key bindings and fuzzy completion for fzf. Not necessary as result's already in .profile
 # $(brew --prefix)/opt/fzf/install

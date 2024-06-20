@@ -199,6 +199,7 @@ See [`./run.sh`](run.sh)
 * [ugrep](https://ugrep.com/) - `brew install ugrep`
 * [gping](https://github.com/orf/gping) - `brew install gping`
 * [hyperfine](https://github.com/sharkdp/hyperfine) - `brew install hyperfine`
+* [superfile](https://superfile.netlify.app/) - `brew install superfile`
 
 ### Deprecated
 
