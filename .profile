@@ -40,8 +40,12 @@ if [ -n "$ZSH_VERSION" ]; then
 fi
 
 # Custom commands
-fastfetch
-(brew update &>/dev/null &) # To execute on a subshell and redirect all output to /dev/null
+## Run once a day
+if [[ ! -e /tmp/$(date -I).sem ]]; then
+	touch /tmp/$(date -I).sem
+	fastfetch
+	(brew update &>/dev/null &) # To execute on a subshell and redirect all output to /dev/null
+fi
 
 # broot
 source /home/bosco/.config/broot/launcher/bash/br
