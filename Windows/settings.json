@@ -79,7 +79,7 @@
             "experimental.retroTerminalEffect": false,
             "font": 
             {
-                "face": "Consolasligaturizedv2 NF",
+                "face": "JetBrainsMono NF",
                 "size": 11.0
             },
             "intenseTextStyle": "all",
