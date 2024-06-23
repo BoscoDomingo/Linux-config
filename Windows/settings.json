@@ -16,6 +16,10 @@
             "keys": "ctrl+v"
         },
         {
+            "command": "restartConnection",
+            "keys": "alt+shift+r"
+        },
+        {
             "command": 
             {
                 "action": "splitPane",
@@ -81,7 +85,7 @@
             "intenseTextStyle": "all",
             "opacity": 82,
             "useAcrylic": true,
-            "useAtlasEngine": false
+            "useAtlasEngine": true
         },
         "list": 
         [
