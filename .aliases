@@ -24,8 +24,8 @@ alias gshp="git stash pop"
 
 alias git-delete-untracked-branches="git stash && git checkout main && git fetch --prune && LANG=en_US git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D && git stash pop"
 
-alias gc="git commit --clean=strip -p"
-alias gcm="git commit --clean=strip -p -m"
+alias gc="git commit --clean=strip"
+alias gcm="git commit --clean=strip -m"
 
 alias ga="git add --renormalize"
 
