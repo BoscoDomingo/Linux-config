@@ -200,6 +200,7 @@ See [`./run.sh`](run.sh)
 * [gping](https://github.com/orf/gping) - `brew install gping`
 * [hyperfine](https://github.com/sharkdp/hyperfine) - `brew install hyperfine`
 * [superfile](https://superfile.netlify.app/) - `brew install superfile`
+* [httpstat](https://github.com/reorx/httpstat) - `brew install httpstat`
 
 ### Deprecated
 
