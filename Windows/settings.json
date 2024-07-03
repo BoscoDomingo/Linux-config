@@ -50,7 +50,7 @@
     "copyFormatting": "none",
     "copyOnSelect": false,
     "defaultProfile": "{51855cb2-8cce-5362-8f54-464b92b32386}",
-    "experimental.rendering.software": true,
+    "experimental.rendering.software": false,
     "firstWindowPreference": "defaultProfile",
     "focusFollowMouse": true,
     "initialCols": 155,
@@ -76,11 +76,10 @@
             "colorScheme": "UltraViolent",
             "cursorShape": "bar",
             "elevate": true,
-            "experimental.retroTerminalEffect": false,
             "font": 
             {
                 "face": "JetBrainsMono NF",
-                "size": 11.0
+                "size": 10.0
             },
             "intenseTextStyle": "all",
             "opacity": 82,
