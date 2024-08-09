@@ -50,7 +50,7 @@
     "copyFormatting": "none",
     "copyOnSelect": false,
     "defaultProfile": "{51855cb2-8cce-5362-8f54-464b92b32386}",
-    "experimental.rendering.software": false,
+    "experimental.rendering.software": true,
     "firstWindowPreference": "defaultProfile",
     "focusFollowMouse": true,
     "initialCols": 155,
@@ -82,7 +82,7 @@
                 "size": 10.0
             },
             "intenseTextStyle": "all",
-            "opacity": 82,
+            "opacity": 65,
             "useAcrylic": true,
             "useAtlasEngine": true
         },
