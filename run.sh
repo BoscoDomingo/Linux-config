@@ -38,6 +38,12 @@ ln -s .nirc ~/.nirc
 ln -s $(pwd)/tmux/.tmux.conf ~/.tmux.conf
 ln -s $(pwd)/tmux/.tmux-resource-monitor.sh ~/.tmux-resource-monitor.sh
 
+ln -s .config/broot ~/.config/broot
+ln -s .config/bottom ~/.config/bottom
+ln -s .config/cheat ~/.config/cheat
+ln -s .config/direnv ~/.config/direnv
+ln -s .config/superfile ~/.config/superfile
+
 # Install Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
