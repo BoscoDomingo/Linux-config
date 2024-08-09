@@ -33,7 +33,6 @@ ln -s .aliases ~/.aliases
 
 ln -s .gitconfig ~/.gitconfig
 ln -s .nanorc ~/.nanorc
-ln -s direnv.toml ~/.config/direnv/direnv.toml
 ln -s .nirc ~/.nirc
 ln -s $(pwd)/tmux/.tmux.conf ~/.tmux.conf
 ln -s $(pwd)/tmux/.tmux-resource-monitor.sh ~/.tmux-resource-monitor.sh
