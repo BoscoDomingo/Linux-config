@@ -201,6 +201,7 @@ See [`./run.sh`](run.sh)
 * [hyperfine](https://github.com/sharkdp/hyperfine) - `brew install hyperfine`
 * [superfile](https://superfile.netlify.app/) - `brew install superfile`
 * [httpstat](https://github.com/reorx/httpstat) - `brew install httpstat`
+* [fx](https://github.com/antonmedv/fx) - `brew install fx`
 
 ### Deprecated
 
