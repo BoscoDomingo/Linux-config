@@ -14,7 +14,9 @@ alias la='ls -A'
 
 alias ping='gping --clear'
 
+alias nano='nvim'
 # alias nano='nano --rcfile ~/.nanorc'
+alias vim='nvim'
 
 # Git
 alias gst="git status"

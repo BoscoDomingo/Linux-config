@@ -10,7 +10,7 @@
 	pager = delta
 	eol = lf
 	autocrlf = false
-	editor = nano
+	editor = nvim
 
 [interactive]
 	diffFilter = delta --color-only

@@ -67,10 +67,11 @@ mise use -g node@lts
 npx pnpm i -g pnpm
 pnpm i -g @antfu/ni
 
-# Install Bun, Rust and Go
-mise p i bun rust https://github.com/asdf-community/asdf-golang
+# Install Bun, Rust, Neovim and Go
+mise p i bun rust neovim https://github.com/asdf-community/asdf-golang
 mise use -g bun@latest
 mise use -g rust@latest
+mise use -g neovim@latest
 mise use -g go@latest
 
 # Install Python (it kinda breaks, so don't use it unless necessary)
@@ -99,6 +100,7 @@ brew install cheat \
 	zsh-syntax-highlighting \
 	trippy \
 	ugrep \
+	ripgrep \
 	gping \
 	hyperfine \
 	superfile \

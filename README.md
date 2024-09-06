@@ -113,6 +113,17 @@ npx pnpm i -g pnpm # To save pnpm to $PNPM_HOME so cache won't be lost on update
 
 <details>
 	<summary>
+		<h3>Neovim</h3>
+	</summary>
+
+```sh
+mise p i neovim
+mise use -g neovim@latest
+```
+</details>
+
+<details>
+	<summary>
 		<h3>Bun</h3>
 	</summary>
 
@@ -208,6 +219,7 @@ See [`./run.sh`](run.sh)
 * [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) - `brew install zsh-syntax-highlighting`
 * [trippy](https://trippy.cli.rs/) - `brew install trippy`
 * [ugrep](https://ugrep.com/) - `brew install ugrep`
+* [ripgrep](https://github.com/BurntSushi/ripgrep) - `brew install ripgrep`
 * [gping](https://github.com/orf/gping) - `brew install gping`
 * [hyperfine](https://github.com/sharkdp/hyperfine) - `brew install hyperfine`
 * [superfile](https://superfile.netlify.app/) - `brew install superfile`

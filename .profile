@@ -63,7 +63,7 @@ export BROWSER=wslview
 # GPG signing with WSL native tools
 export GPG_TTY=$(tty)
 export VISUAL=nano
-export EDITOR=vim
+export EDITOR=nvim
 
 # pnpm
 export PNPM_HOME="/home/bosco/.local/share/pnpm"
