@@ -52,6 +52,8 @@ brew install gcc
 brew install jandedobbeleer/oh-my-posh/oh-my-posh
 # Original at https://gist.github.com/BoscoDomingo/62f35772e52178b31353a99d2d80ca77
 git clone git@gist.github.com:62f35772e52178b31353a99d2d80ca77.git ~/shell_themes
+# Extra shell completions
+git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions
 
 # Install mise
 sudo apt update
