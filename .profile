@@ -27,7 +27,11 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 if [ -n "$BASH_VERSION" ]; then
 	eval "$(direnv hook bash)"
 	eval "$(mise activate bash)"
-	[ -f ~/.local/.fzf.bash ] && source ~/.local/.fzf.bash
+	if [ -f ~/.local/.fzf.bash ]; then
+		source ~/.local/.fzf.bash
+	else
+		eval "$(fzf --bash)"
+	fi
 	eval "$(oh-my-posh init bash --config ~/shell_themes/niceDark.omp.json)"
 fi
 
@@ -35,7 +39,11 @@ fi
 if [ -n "$ZSH_VERSION" ]; then
 	eval "$(direnv hook zsh)"
 	eval "$(mise activate zsh)"
-	[ -f ~/.local/.fzf.zsh ] && source ~/.local/.fzf.zsh
+	if [ -f ~/.local/.fzf.zsh ]; then
+		source ~/.local/.fzf.zsh
+	else
+		source <(fzf --zsh)
+	fi
 	eval "$(oh-my-posh init zsh --config ~/shell_themes/niceDark.omp.json)"
 fi
 
