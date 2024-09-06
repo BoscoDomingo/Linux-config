@@ -8,7 +8,7 @@ Then simply use the following:
 $LINUX_CONFIG_PATH="\\wsl.localhost\Ubuntu\home\bosco\repos\Linux-config"
 
 <!-- PowerShell profile -->
-cd C:\Users\bosco\Documents\PowerShell\
+cd D:\Users\bosco\Documents\PowerShell\
 mv .\Microsoft.PowerShell_profile.ps1 .\Microsoft.PowerShell_profile.ps1.bak && New-Item -ItemType SymbolicLink -Path ".\Microsoft.PowerShell_profile.ps1" -Target "$LINUX_CONFIG_PATH\Windows\Microsoft.PowerShell_profile.ps1"
 
 <!-- Terminal settings -->
