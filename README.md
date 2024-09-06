@@ -124,6 +124,17 @@ mise use -g bun@latest
 
 <details>
 	<summary>
+		<h3>Go</h3>
+	</summary>
+
+```sh
+mise p i https://github.com/asdf-community/asdf-golang
+mise use -g go@latest
+```
+</details>
+
+<details>
+	<summary>
 		<h3>Python</h3>
 	</summary>
 
