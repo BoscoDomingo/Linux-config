@@ -1,10 +1,10 @@
 {
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions": 
+    "actions":
     [
         {
-            "command": 
+            "command":
             {
                 "action": "copy",
                 "singleLine": false
@@ -20,7 +20,7 @@
             "keys": "alt+shift+r"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "splitPane",
                 "split": "auto",
@@ -37,7 +37,7 @@
             "keys": "ctrl+alt+d"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "closeTab"
             },
@@ -57,23 +57,23 @@
     "initialCols": 155,
     "initialRows": 42,
     "language": "en-US",
-    "newTabMenu": 
+    "newTabMenu":
     [
         {
             "type": "remainingProfiles"
         }
     ],
     "newTabPosition": "afterCurrentTab",
-    "profiles": 
+    "profiles":
     {
-        "defaults": 
+        "defaults":
         {
             "adjustIndistinguishableColors": "indexed",
             "colorScheme": "UltraViolent",
             "compatibility.reloadEnvironmentVariables": false,
             "cursorShape": "bar",
             "elevate": true,
-            "font": 
+            "font":
             {
                 "face": "JetBrainsMono NF",
                 "size": 10.0
@@ -84,7 +84,7 @@
             "useAcrylic": true,
             "useAtlasEngine": true
         },
-        "list": 
+        "list":
         [
             {
                 "colorScheme": "Tango Dark",
@@ -95,7 +95,7 @@
             },
             {
                 "colorScheme": "One Half Dark",
-                "font": 
+                "font":
                 {
                     "face": "Consolasligaturizedv2 NF"
                 },
@@ -105,7 +105,7 @@
                 "source": "Windows.Terminal.PowershellCore"
             },
             {
-                "colorScheme": 
+                "colorScheme":
                 {
                     "light": "UltraViolent"
                 },
@@ -116,7 +116,7 @@
             },
             {
                 "adjustIndistinguishableColors": "always",
-                "font": 
+                "font":
                 {
                     "cellHeight": "1.3"
                 },
@@ -127,7 +127,7 @@
             }
         ]
     },
-    "schemes": 
+    "schemes":
     [
         {
             "background": "#191919",
