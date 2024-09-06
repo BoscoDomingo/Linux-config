@@ -50,6 +50,7 @@
     "copyFormatting": "none",
     "copyOnSelect": false,
     "defaultProfile": "{51855cb2-8cce-5362-8f54-464b92b32386}",
+    "experimental.rendering.forceFullRepaint": false,
     "experimental.rendering.software": true,
     "firstWindowPreference": "defaultProfile",
     "focusFollowMouse": true,
@@ -67,13 +68,9 @@
     {
         "defaults": 
         {
-            "antialiasingMode": "cleartype",
-            "bellStyle": 
-            [
-                "audible",
-                "taskbar"
-            ],
+            "adjustIndistinguishableColors": "indexed",
             "colorScheme": "UltraViolent",
+            "compatibility.reloadEnvironmentVariables": false,
             "cursorShape": "bar",
             "elevate": true,
             "font": 
@@ -81,6 +78,7 @@
                 "face": "JetBrainsMono NF",
                 "size": 10.0
             },
+            "historySize": 10000,
             "intenseTextStyle": "all",
             "opacity": 65,
             "useAcrylic": true,
@@ -94,18 +92,6 @@
                 "hidden": false,
                 "name": "Command Prompt",
                 "startingDirectory": null
-            },
-            {
-                "bellStyle": 
-                [
-                    "audible",
-                    "taskbar"
-                ],
-                "colorScheme": "PaulMillr",
-                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-                "hidden": true,
-                "name": "PowerShell 5",
-                "startingDirectory": "%USERPROFILE%"
             },
             {
                 "colorScheme": "One Half Dark",
@@ -627,7 +613,7 @@
             "yellow": "#FEDE5D"
         }
     ],
-    "tabWidthMode": "equal",
+    "tabWidthMode": "compact",
     "theme": "dark",
     "themes": [],
     "useAcrylicInTabRow": true,
