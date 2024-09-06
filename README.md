@@ -184,20 +184,6 @@ pyenv global 3.12
 
 </details>
 
-<details>
-	<summary><del>nvm</del></summary>
-
-<del>
-
-```sh
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-```
-
-</del>
-
-
-</details>
-
 # Homebrew packages
 
 See [`./run.sh`](run.sh)
