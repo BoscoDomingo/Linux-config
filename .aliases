@@ -32,9 +32,14 @@ alias ga="git add --renormalize"
 alias gl="git log --oneline --graph --decorate"
 alias gla="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
 
-alias gdc="git diff --cached"
-alias gdca="git diff HEAD"
-alias gsc="git show HEAD" # Show changes made by the current commit
+# Show changes in current working tree and/or index
+
+alias gd='git diff --ignore-all-space --ignore-cr-at-eol' # Working tree
+alias gdc="gd --cached" # Index
+alias gda="gd HEAD" # All
+alias gdaa="git diff HEAD" # ALL
+
+alias gsc="git show HEAD"   # Show changes made by the current commit
 alias gsp="git show HEAD~1" # Show changes made by the previous commit
 # alias gsc="git diff HEAD^!"
 # alias gsp="git diff HEAD~1^!"
