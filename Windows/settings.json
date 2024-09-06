@@ -75,7 +75,7 @@
             "elevate": true,
             "font":
             {
-                "face": "JetBrainsMono NF",
+                "face": "Consolasligaturizedv2 NF",
                 "size": 10.0
             },
             "historySize": 10000,
