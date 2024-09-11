@@ -139,7 +139,7 @@ mise use -g bun@latest
 	</summary>
 
 ```sh
-mise p i https://github.com/asdf-community/asdf-golang
+# mise p i https://github.com/asdf-community/asdf-golang # Optional
 mise use -g go@latest
 ```
 </details>

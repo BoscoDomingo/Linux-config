@@ -70,7 +70,7 @@ npx pnpm i -g pnpm
 pnpm i -g @antfu/ni
 
 # Install Bun, Rust, Neovim and Go
-mise p i bun rust neovim https://github.com/asdf-community/asdf-golang
+mise p i bun rust neovim
 mise use -g bun@latest
 mise use -g rust@latest
 mise use -g neovim@latest
