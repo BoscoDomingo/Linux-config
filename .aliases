@@ -25,6 +25,9 @@ alias gsh="git stash -u"
 alias gshp="git stash pop"
 
 alias git-delete-untracked-branches="git stash && git checkout main && git fetch --prune && LANG=en_US git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D && git stash pop"
+alias gdu="git-delete-untracked-branches"
+# This is because another source added this alias and I want to overwrite it
+alias gbgd="git-delete-untracked-branches"
 
 alias gc="git commit --clean=strip"
 alias gcm="git commit --clean=strip -m"
@@ -34,8 +37,11 @@ alias ga="git add --renormalize"
 alias gl="git log --oneline --graph --decorate"
 alias gla="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
 
-# Show changes in current working tree and/or index
+# Show all local branches and their upstreams
+alias gbv='git branch -vv'
+alias gbav='git branch --all -vv'
 
+# Show changes in current working tree and/or index
 alias gd='git diff --ignore-all-space --ignore-cr-at-eol' # Working tree
 alias gdc="gd --cached" # Index
 alias gda="gd HEAD" # All
