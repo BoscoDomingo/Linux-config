@@ -3,8 +3,8 @@
 
 [user]
 	name="Bosco Domingo"
-	email = 46006784+BoscoDomingo@users.noreply.github.com
-	signingkey = 68F987A3A162F29E
+	email = "boscodomingob@gmail.com"
+	signingkey = "68F987A3A162F29E"
 
 [core]
 	pager = delta
