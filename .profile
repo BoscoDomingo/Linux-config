@@ -102,3 +102,9 @@ complete -o bashdefault -o default -F _gt_yargs_completions gt
 # export PYENV_ROOT="$HOME/.pyenv"
 # command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 # eval "$(pyenv init -)"
+
+# rip2
+export RIP_GRAVEYARD="$HOME/.local/share/rip2/graveyard"
+if ! [ -d "$RIP_GRAVEYARD" ]; then
+	mkdir -p "$RIP_GRAVEYARD"
+fi

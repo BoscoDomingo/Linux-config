@@ -137,6 +137,9 @@ source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 if [ -e "$HOME/.local/.mise-completions.zsh" ]; then
 	source ~/.local/.mise-completions.zsh
 fi
+if [ -e "$HOME/.local/rip2/completions.zsh" ]; then
+	source $HOME/.local/rip2/completions.zsh
+fi
 
 ## Fzf
 # Source: https://dev.to/dshafik/finding-terminal-utopia-583k
