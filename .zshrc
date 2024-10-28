@@ -135,7 +135,7 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 if [ -e "$HOME/.local/.mise-completions.zsh" ]; then
-	source ~/.local/.mise-completions.zsh
+	source $HOME/.local/.mise-completions.zsh
 fi
 if [ -e "$HOME/.local/rip2/completions.zsh" ]; then
 	source $HOME/.local/rip2/completions.zsh
