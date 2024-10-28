@@ -25,7 +25,7 @@ alias gst="git status"
 alias gsh="git stash -u"
 alias gshp="git stash pop"
 
-alias git-delete-untracked-branches="git stash && git checkout main && git fetch --prune && LANG=en_US git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D && git stash pop"
+alias git-delete-untracked-branches="LANG=en_US git branch -vv | awk '/: gone]/{print $1}' | xargs -p git branch -D"
 alias gdu="git-delete-untracked-branches"
 # This is because another source added this alias and I want to overwrite it
 alias gbgd="git-delete-untracked-branches"
@@ -37,7 +37,7 @@ alias ga="git add --renormalize"
 
 alias gl="git log --oneline --graph --decorate"
 alias gla="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
-
+alias gls="gl --show-signature"
 # Show all local branches and their upstreams
 alias gbv='git branch -vv'
 alias gbav='git branch --all -vv'
@@ -53,6 +53,8 @@ alias gsp="git show HEAD~1" # Show changes made by the previous commit
 alias gccd='f(){ git clone "$1" && cd "$(basename $1 .git)"; unset -f f; }; f'
 # alias gsc="git diff HEAD^!"
 # alias gsp="git diff HEAD~1^!"
+
+alias gsm="git switch main"
 
 # Graphite
 alias gtc='gt create'
