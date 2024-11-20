@@ -34,14 +34,15 @@ ln -s .aliases ~/.aliases
 ln -s .gitconfig ~/.gitconfig
 ln -s .nanorc ~/.nanorc
 ln -s .nirc ~/.nirc
-ln -s $(pwd)/tmux/.tmux.conf ~/.tmux.conf
-ln -s $(pwd)/tmux/.tmux-resource-monitor.sh ~/.tmux-resource-monitor.sh
+ln -s ./tmux/.tmux.conf ~/.tmux.conf
+ln -s ./tmux/.tmux-resource-monitor.sh ~/.tmux-resource-monitor.sh
 
 ln -s .config/broot ~/.config/broot
 ln -s .config/bottom ~/.config/bottom
 ln -s .config/cheat ~/.config/cheat
 ln -s .config/direnv ~/.config/direnv
 ln -s .config/superfile ~/.config/superfile
+ln -s .config/tmux-powerline ~/.config/
 
 # Install Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -75,6 +76,11 @@ mise use -g bun@latest
 mise use -g rust@latest
 mise use -g neovim@latest
 mise use -g go@latest
+
+# Doesn't work
+# mise plugin add tmux https://github.com/aphecetche/asdf-tmux.git
+# mise use -g tmux@latest
+brew install tmux
 
 # Install Python (it kinda breaks, so don't use it unless necessary)
 # brew unlink pkg-config && \

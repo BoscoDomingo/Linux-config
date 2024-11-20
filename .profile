@@ -108,3 +108,13 @@ export RIP_GRAVEYARD="$HOME/.local/share/rip2/graveyard"
 if ! [ -d "$RIP_GRAVEYARD" ]; then
 	mkdir -p "$RIP_GRAVEYARD"
 fi
+
+# tmux config
+~/.tmux-resource-monitor.sh &
+
+# Start tmux if not already inside a tmux session
+if command -v tmux >/dev/null 2>&1; then
+	if [ -z "$TMUX" ]; then
+		tmux attach-session -t default || tmux new-session -s default
+	fi
+fi
