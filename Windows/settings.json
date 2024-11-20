@@ -83,10 +83,13 @@
         "defaults": 
         {
             "adjustIndistinguishableColors": "indexed",
+            "autoMarkPrompts": true,
             "colorScheme": "UltraViolent",
             "compatibility.reloadEnvironmentVariables": false,
             "cursorShape": "bar",
             "elevate": true,
+            "experimental.repositionCursorWithMouse": true,
+            "experimental.rightClickContextMenu": true,
             "font": 
             {
                 "face": "Consolasligaturizedv2 NF",
@@ -95,6 +98,7 @@
             "historySize": 10000,
             "intenseTextStyle": "all",
             "opacity": 65,
+            "showMarksOnScrollbar": true,
             "useAcrylic": true
         },
         "list": 
@@ -118,13 +122,17 @@
                 "source": "Windows.Terminal.PowershellCore"
             },
             {
+                "autoMarkPrompts": true,
                 "colorScheme": 
                 {
                     "light": "UltraViolent"
                 },
+                "experimental.repositionCursorWithMouse": true,
+                "experimental.rightClickContextMenu": true,
                 "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
                 "hidden": false,
                 "name": "Ubuntu 22.04LTS",
+                "showMarksOnScrollbar": true,
                 "source": "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc"
             },
             {
