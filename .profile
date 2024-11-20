@@ -17,12 +17,12 @@ if command -v tmux >/dev/null 2>&1; then
 fi
 
 # set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ]; then
-	PATH="$HOME/bin:$PATH"
-fi
-if [ -d "$HOME/.local/bin" ]; then
-	PATH="$HOME/.local/bin:$PATH"
-fi
+# if [ -d "$HOME/bin" ]; then
+# 	PATH="$HOME/bin:$PATH"
+# fi
+# if [ -d "$HOME/.local/bin" ]; then
+# 	PATH="$HOME/.local/bin:$PATH"
+# fi
 # Ensures VS Code terminal history is saved without `exit` command
 PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a"
 
@@ -74,6 +74,10 @@ export GPG_TTY=$(tty)
 export VISUAL=nano
 export EDITOR=nvim
 
+# Go. Not sure if needed, but after updating Go it fucked several things
+# up with not finding deps, so just in case
+export PATH=/home/bosco/.local/share/mise/installs/go/latest/bin:${PATH}
+
 # pnpm
 export PNPM_HOME="/home/bosco/.local/share/pnpm"
 case ":$PATH:" in
@@ -104,13 +108,6 @@ _gt_yargs_completions() {
 }
 complete -o bashdefault -o default -F _gt_yargs_completions gt
 ###-Graphite-###
-
-# eval "$(thefuck --alias)" # If using thefuck
-
-# Pyenv code (if not using mise)
-# export PYENV_ROOT="$HOME/.pyenv"
-# command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-# eval "$(pyenv init -)"
 
 # rip2
 export RIP_GRAVEYARD="$HOME/.local/share/rip2/graveyard"
