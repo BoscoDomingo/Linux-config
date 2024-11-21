@@ -196,12 +196,4 @@ export BAT_THEME="Monokai Extended Bright"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# tmux config
-# ~/.tmux-resource-monitor.sh &
 
-# # Start tmux if not already inside a tmux session
-# if command -v tmux >/dev/null 2>&1; then
-# 	if [ -z "$TMUX" ]; then
-# 		tmux attach-session -t default || tmux new-session -s default
-# 	fi
-# fi

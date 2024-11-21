@@ -10,9 +10,14 @@ fi
 # tmux config
 # Start tmux if not already inside a tmux session and not in VS CODE
 if command -v tmux >/dev/null 2>&1; then
-	if [ -z "$TMUX" ux-resource-monitor.sh &] && [ -z "${VSCODE_IPC_HOOK_CLI}" ]; then
+	# Only needed if not using tmux plugins for this
+	# if [ -z "$(ps -a | grep .tmux-resource)" ]; then
+	# 	echo "Starting tmux resource monitor"
+	# 	~/.tmux-resource-monitor.sh &
+	# fi
+
+	if [ -z "$TMUX" ] && [ -z "$VSCODE_IPC_HOOK_CLI" ]; then
 		tmux a -t default || tmux new-session -s default
-		~/.tm
 	fi
 fi
 
