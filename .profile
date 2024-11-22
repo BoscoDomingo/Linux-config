@@ -7,20 +7,6 @@ if [ -n "$BASH_VERSION" ] && [ -e "$HOME/.bashrc" ] && [ -z "${VSCODE_IPC_HOOK_C
 	. "$HOME/.bashrc"
 fi
 
-# tmux config
-# Start tmux if not already inside a tmux session and not in VS CODE
-if command -v tmux >/dev/null 2>&1; then
-	# Only needed if not using tmux plugins for this
-	# if [ -z "$(ps -a | grep .tmux-resource)" ]; then
-	# 	echo "Starting tmux resource monitor"
-	# 	~/.tmux-resource-monitor.sh &
-	# fi
-
-	if [ -z "$TMUX" ] && [ -z "$VSCODE_IPC_HOOK_CLI" ]; then
-		tmux a -t default || tmux new-session -s default
-	fi
-fi
-
 # set PATH so it includes user's private bin if it exists
 # if [ -d "$HOME/bin" ]; then
 # 	PATH="$HOME/bin:$PATH"
@@ -118,4 +104,18 @@ complete -o bashdefault -o default -F _gt_yargs_completions gt
 export RIP_GRAVEYARD="$HOME/.local/share/rip2/graveyard"
 if ! [ -d "$RIP_GRAVEYARD" ]; then
 	mkdir -p "$RIP_GRAVEYARD"
+fi
+
+# tmux config
+# Start tmux if not already inside a tmux session and not in VS CODE
+if command -v tmux >/dev/null 2>&1; then
+	# Only needed if not using tmux plugins for this
+	# if [ -z "$(ps -a | grep .tmux-resource)" ]; then
+	# 	echo "Starting tmux resource monitor"
+	# 	~/.tmux-resource-monitor.sh &
+	# fi
+
+	if [ -z "$TMUX" ] && [ -z "$VSCODE_IPC_HOOK_CLI" ]; then
+		tmux a -t default || tmux new-session -s default
+	fi
 fi
