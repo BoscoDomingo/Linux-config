@@ -67,7 +67,11 @@ export EDITOR=nvim
 
 # Go. Not sure if needed, but after updating Go it fucked several things
 # up with not finding deps, so just in case
-export PATH=/home/bosco/.local/share/mise/installs/go/latest/bin:${PATH}
+# export PATH=/home/bosco/.local/share/mise/installs/go/latest/bin:${PATH}
+case ":$PATH:" in
+*":$HOME/go/bin:"*) ;;
+*) export PATH="$HOME/go/bin:$PATH" ;;
+esac
 
 # pnpm
 export PNPM_HOME="/home/bosco/.local/share/pnpm"
