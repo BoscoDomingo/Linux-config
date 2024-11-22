@@ -8,12 +8,13 @@ if [ -n "$BASH_VERSION" ] && [ -e "$HOME/.bashrc" ] && [ -z "${VSCODE_IPC_HOOK_C
 fi
 
 # set PATH so it includes user's private bin if it exists
-# if [ -d "$HOME/bin" ]; then
-# 	PATH="$HOME/bin:$PATH"
-# fi
-# if [ -d "$HOME/.local/bin" ]; then
-# 	PATH="$HOME/.local/bin:$PATH"
-# fi
+if [ -d "$HOME/bin" ]; then
+	PATH="$HOME/bin:$PATH"
+fi
+if [ -d "$HOME/.local/bin" ]; then
+	PATH="$HOME/.local/bin:$PATH"
+fi
+
 # Ensures VS Code terminal history is saved without `exit` command
 PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a"
 
@@ -67,7 +68,7 @@ export EDITOR=nvim
 
 # Go. Not sure if needed, but after updating Go it fucked several things
 # up with not finding deps, so just in case
-# export PATH=/home/bosco/.local/share/mise/installs/go/latest/bin:${PATH}
+export PATH="/home/bosco/.local/share/mise/installs/go/latest/bin:$PATH"
 case ":$PATH:" in
 *":$HOME/go/bin:"*) ;;
 *) export PATH="$HOME/go/bin:$PATH" ;;
