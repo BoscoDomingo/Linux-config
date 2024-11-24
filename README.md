@@ -188,6 +188,7 @@ pyenv global 3.12
 
 See [`./run.sh`](run.sh)
 
+* [tmux](https://github.com/tmux/tmux/wiki) - `brew install tmux`
 * [cheat](https://github.com/cheat/cheat) - `brew install cheat`
 * [progress](https://github.com/Xfennec/progress) - `brew install progress`
 * [fastfetch](https://github.com/fastfetch-cli/fastfetch) - `sudo apt install fastfetch`

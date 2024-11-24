@@ -77,10 +77,13 @@ mise use -g rust@latest
 mise use -g neovim@latest
 mise use -g go@latest
 
-# Doesn't work
+# tmux
+brew install tmux
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+echo "Installed tmux and tmp. Run Ctrl + B, I to install plugins inside tmux"
+## mise doesn't work (unfortunately)
 # mise plugin add tmux https://github.com/aphecetche/asdf-tmux.git
 # mise use -g tmux@latest
-brew install tmux
 
 # Install Python (it kinda breaks, so don't use it unless necessary)
 # brew unlink pkg-config && \
