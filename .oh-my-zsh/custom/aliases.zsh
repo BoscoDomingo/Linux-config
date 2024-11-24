@@ -10,4 +10,4 @@ alias reload='source ~/.zshrc'
 # alias la='ll -A'    # as per ll but show dotfiles, excluding '.' and '..'
 
 # Graphite, see ~/.gitconfig for git aliases
-#alias g='gt'
+# alias g='gt'
