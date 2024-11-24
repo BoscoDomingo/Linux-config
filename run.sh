@@ -11,38 +11,39 @@ chsh -s $(which zsh)
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Setup config files and backup existing ones
+$LINUX_CONFIG_HOME=$(pwd)
 if [ -e ~/.profile ]; then
 	mv ~/.profile ~/.profile.bak
 fi
-ln -s .profile ~/.profile
+ln -s $LINUX_CONFIG_HOME/.profile ~/.profile
 
 if [ -e ~/.bashrc ]; then
 	mv ~/.bashrc ~/.bashrc.bak
 fi
-ln -s .bashrc ~/.bashrc
+ln -s $LINUX_CONFIG_HOME/.bashrc ~/.bashrc
 
 mv ~/.zshrc ~/.zshrc.bak
-ln -s .zshrc ~/.zshrc
+ln -s $LINUX_CONFIG_HOME/.zshrc ~/.zshrc
 rm -rf ~/.oh-my-zsh/custom
-ln -s .oh-my-zsh/custom ~/.oh-my-zsh/custom
+ln -s $LINUX_CONFIG_HOME/.oh-my-zsh/custom ~/.oh-my-zsh/custom
 
 if [ -e ~/.aliases ]; then
 	mv ~/.aliases ~/.aliases.bak
 fi
-ln -s .aliases ~/.aliases
+ln -s $LINUX_CONFIG_HOME/.aliases ~/.aliases
 
-ln -s .gitconfig ~/.gitconfig
-ln -s .nanorc ~/.nanorc
-ln -s .nirc ~/.nirc
-ln -s ./tmux/.tmux.conf ~/.tmux.conf
-ln -s ./tmux/.tmux-resource-monitor.sh ~/.tmux-resource-monitor.sh
+ln -s $LINUX_CONFIG_HOME/.gitconfig ~/.gitconfig
+ln -s $LINUX_CONFIG_HOME/.nanorc ~/.nanorc
+ln -s $LINUX_CONFIG_HOME/.nirc ~/.nirc
+ln -s $LINUX_CONFIG_HOME/tmux/.tmux.conf ~/.tmux.conf
+ln -s $LINUX_CONFIG_HOME/tmux/.tmux-resource-monitor.sh ~/.tmux-resource-monitor.sh
 
-ln -s .config/broot ~/.config/broot
-ln -s .config/bottom ~/.config/bottom
-ln -s .config/cheat ~/.config/cheat
-ln -s .config/direnv ~/.config/direnv
-ln -s .config/superfile ~/.config/superfile
-ln -s .config/tmux-powerline ~/.config/
+ln -s $LINUX_CONFIG_HOME/.config/broot ~/.config/broot
+ln -s $LINUX_CONFIG_HOME/.config/bottom ~/.config/bottom
+ln -s $LINUX_CONFIG_HOME/.config/cheat ~/.config/cheat
+ln -s $LINUX_CONFIG_HOME/.config/direnv ~/.config/direnv
+ln -s $LINUX_CONFIG_HOME/.config/superfile ~/.config/superfile
+ln -s $LINUX_CONFIG_HOME/.config/tmux-powerline ~/.config/
 
 # Install Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -123,6 +124,6 @@ brew install cheat \
 # mv ~/.fzf.* ~/.local
 
 # mkdir ~/.config/lsd/
-# ln lsd.config.yaml ~/.config/lsd/config.yaml
+# ln $LINUX_CONFIG_HOME/lsd.config.yaml ~/.config/lsd/config.yaml
 
 exec zsh
