@@ -86,7 +86,6 @@
             "autoMarkPrompts": true,
             "colorScheme": "UltraViolent",
             "compatibility.reloadEnvironmentVariables": false,
-            "cursorShape": "bar",
             "elevate": true,
             "experimental.repositionCursorWithMouse": true,
             "experimental.rightClickContextMenu": true,
@@ -127,6 +126,7 @@
                 {
                     "light": "UltraViolent"
                 },
+                "cursorShape": "bar",
                 "experimental.repositionCursorWithMouse": true,
                 "experimental.rightClickContextMenu": true,
                 "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
