@@ -11,39 +11,40 @@ chsh -s $(which zsh)
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Setup config files and backup existing ones
-$LINUX_CONFIG_HOME=$(pwd)
+$CURRENT_DIR=$(pwd)
 if [ -e ~/.profile ]; then
 	mv ~/.profile ~/.profile.bak
 fi
-ln -s $LINUX_CONFIG_HOME/.profile ~/.profile
+ln -s $CURRENT_DIR/.profile ~/.profile
 
 if [ -e ~/.bashrc ]; then
 	mv ~/.bashrc ~/.bashrc.bak
 fi
-ln -s $LINUX_CONFIG_HOME/.bashrc ~/.bashrc
+ln -s $CURRENT_DIR/.bashrc ~/.bashrc
 
 mv ~/.zshrc ~/.zshrc.bak
-ln -s $LINUX_CONFIG_HOME/.zshrc ~/.zshrc
+ln -s $CURRENT_DIR/.zshrc ~/.zshrc
 rm -rf ~/.oh-my-zsh/custom
-ln -s $LINUX_CONFIG_HOME/.oh-my-zsh/custom ~/.oh-my-zsh/custom
+ln -s $CURRENT_DIR/.oh-my-zsh/custom ~/.oh-my-zsh/custom
 
 if [ -e ~/.aliases ]; then
 	mv ~/.aliases ~/.aliases.bak
 fi
-ln -s $LINUX_CONFIG_HOME/.aliases ~/.aliases
+ln -s $CURRENT_DIR/.aliases ~/.aliases
 
-ln -s $LINUX_CONFIG_HOME/.gitconfig ~/.gitconfig
-ln -s $LINUX_CONFIG_HOME/.nanorc ~/.nanorc
-ln -s $LINUX_CONFIG_HOME/.nirc ~/.nirc
-ln -s $LINUX_CONFIG_HOME/tmux/.tmux.conf ~/.tmux.conf
-ln -s $LINUX_CONFIG_HOME/tmux/.tmux-resource-monitor.sh ~/.tmux-resource-monitor.sh
+ln -s $CURRENT_DIR/.gitconfig ~/.gitconfig
+ln -s $CURRENT_DIR/.nanorc ~/.nanorc
+ln -s $CURRENT_DIR/.nirc ~/.nirc
+ln -s $CURRENT_DIR/tmux/.tmux.conf ~/.tmux.conf
+ln -s $CURRENT_DIR/tmux/.tmux-resource-monitor.sh ~/.tmux-resource-monitor.sh
 
-ln -s $LINUX_CONFIG_HOME/.config/broot ~/.config/broot
-ln -s $LINUX_CONFIG_HOME/.config/bottom ~/.config/bottom
-ln -s $LINUX_CONFIG_HOME/.config/cheat ~/.config/cheat
-ln -s $LINUX_CONFIG_HOME/.config/direnv ~/.config/direnv
-ln -s $LINUX_CONFIG_HOME/.config/superfile ~/.config/superfile
-ln -s $LINUX_CONFIG_HOME/.config/tmux-powerline ~/.config/
+ln -s $CURRENT_DIR/.config/broot ~/.config/broot
+ln -s $CURRENT_DIR/.config/bottom ~/.config/bottom
+ln -s $CURRENT_DIR/.config/cheat ~/.config/cheat
+ln -s $CURRENT_DIR/.config/direnv ~/.config/direnv
+ln -s $CURRENT_DIR/.config/superfile ~/.config/superfile
+ln -s $CURRENT_DIR/.config/tmux-powerline ~/.config/tmux-powerline
+ln -s $CURRENT_DIR/.config/tealdeer ~/.config/tealdeer
 
 # Install Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -72,11 +73,15 @@ npx pnpm i -g pnpm
 pnpm i -g @antfu/ni
 
 # Install Bun, Rust, Neovim and Go
+mise use -g go@latest
 mise p i bun rust neovim
 mise use -g bun@latest
 mise use -g rust@latest
 mise use -g neovim@latest
-mise use -g go@latest
+
+# Tealdeer - https://github.com/tealdeer-rs/tealdeer
+mise p i https://github.com/sarg3nt/asdf-tealdeer
+mise use -g tealdeer@latest
 
 # tmux
 brew install tmux
