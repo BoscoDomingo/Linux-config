@@ -73,6 +73,9 @@ alias gtro='gt reorder'
 alias gtct='gt continue'
 alias gtcfg='gt config'
 
+# TLDR fuzzy finder for tealdeer (https://www.reddit.com/r/archlinux/comments/n7o1ne/comment/gxeawav/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
+# alias tl="tldr --list | fzf --preview 'tldr {} --color always' | xargs tldr"
+
 # Better Commits
 alias bc="better-commits"
 alias bca='git add -p && bc'

@@ -79,9 +79,9 @@ mise use -g bun@latest
 mise use -g rust@latest
 mise use -g neovim@latest
 
-# Tealdeer - https://github.com/tealdeer-rs/tealdeer
-mise p i https://github.com/sarg3nt/asdf-tealdeer
-mise use -g tealdeer@latest
+# # Tealdeer - https://github.com/tealdeer-rs/tealdeer
+# mise p i https://github.com/sarg3nt/asdf-tealdeer
+# mise use -g tealdeer@latest
 
 # tmux
 brew install tmux
@@ -122,7 +122,8 @@ brew install cheat \
 	hyperfine \
 	superfile \
 	httpstat \
-	fx
+	fx \
+	isacikgoz/taps/tldr # tldr++: https://github.com/isacikgoz/tldr
 
 # To install useful key bindings and fuzzy completion for fzf. Not necessary as result's already in .profile
 # $(brew --prefix)/opt/fzf/install
