@@ -130,6 +130,14 @@ setopt inc_append_history     # append to HISTFILE instead of overwriting it
 if [ -e "$HOME/.profile" ]; then
 	source ~/.profile
 fi
+eval "$(direnv hook zsh)"
+eval "$(mise activate zsh)"
+if [ -f ~/.local/.fzf.zsh ]; then
+	source ~/.local/.fzf.zsh
+else
+	source <(fzf --zsh)
+fi
+eval "$(oh-my-posh init zsh --config ~/shell_themes/niceDark.omp.json)"
 
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

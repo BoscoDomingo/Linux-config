@@ -116,15 +116,3 @@ if [ -n "$BASH_VERSION" ]; then
 	fi
 	eval "$(oh-my-posh init bash --config ~/shell_themes/niceDark.omp.json)"
 fi
-
-# Check if $ZSH_VERSION exists
-if [ -n "$ZSH_VERSION" ]; then
-	eval "$(direnv hook zsh)"
-	eval "$(mise activate zsh)"
-	if [ -f ~/.local/.fzf.zsh ]; then
-		source ~/.local/.fzf.zsh
-	else
-		eval "$(fzf --zsh)"
-	fi
-	eval "$(oh-my-posh init zsh --config ~/shell_themes/niceDark.omp.json)"
-fi
