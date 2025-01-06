@@ -148,11 +148,11 @@ _fzf_comprun() {
 	shift
 
 	case "$command" in
-	cd) fzf --preview 'eza --tree --color=always {} | head -200' "$@" ;;
-	export | unset) fzf --preview "eval 'echo \$'{}" "$@" ;;
-	ssh) fzf --preview 'dig {}' "$@" ;;
-	cat | bat) fzf --preview 'bat -n --color=always {}' "$@" ;;
-	*) fzf --preview '$HOME/bin/fzf-preview.sh {}' "$@" ;;
+		cd) fzf --preview 'eza --tree --color=always {} | head -200' "$@" ;;
+		export | unset) fzf --preview "eval 'echo \$'{}" "$@" ;;
+		ssh) fzf --preview 'dig {}' "$@" ;;
+		cat | bat) fzf --preview 'bat -n --color=always {}' "$@" ;;
+		*) fzf --preview '$HOME/bin/fzf-preview.sh {}' "$@" ;;
 	esac
 }
 
@@ -195,5 +195,3 @@ export BAT_THEME="Monokai Extended Bright"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-

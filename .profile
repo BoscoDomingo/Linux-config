@@ -24,30 +24,6 @@ fi
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-# Check if $BASH_VERSION exists
-if [ -n "$BASH_VERSION" ]; then
-	eval "$(direnv hook bash)"
-	eval "$(mise activate bash)"
-	if [ -f ~/.local/.fzf.bash ]; then
-		source ~/.local/.fzf.bash
-	else
-		eval "$(fzf --bash)"
-	fi
-	eval "$(oh-my-posh init bash --config ~/shell_themes/niceDark.omp.json)"
-fi
-
-# Check if $ZSH_VERSION exists
-if [ -n "$ZSH_VERSION" ]; then
-	eval "$(direnv hook zsh)"
-	eval "$(mise activate zsh)"
-	if [ -f ~/.local/.fzf.zsh ]; then
-		source ~/.local/.fzf.zsh
-	else
-		source <(fzf --zsh)
-	fi
-	eval "$(oh-my-posh init zsh --config ~/shell_themes/niceDark.omp.json)"
-fi
-
 # Custom commands
 ## Run once a day
 if [[ ! -e /tmp/$(date -I).sem ]]; then
@@ -66,19 +42,23 @@ export GPG_TTY=$(tty)
 export VISUAL=nano
 export EDITOR=nvim
 
-# Go. Not sure if needed, but after updating Go it fucked several things
-# up with not finding deps, so just in case
+# Go. This is needed since mise is instantiated after VS Code is started,
+# and the VS Code extension for Go doesn't work properly if the GOPATH is not set.
 export PATH="/home/bosco/.local/share/mise/installs/go/latest/bin:$PATH"
 case ":$PATH:" in
-*":$HOME/go/bin:"*) ;;
-*) export PATH="$HOME/go/bin:$PATH" ;;
+	*":$HOME/go/bin:"*) ;;
+	*) export PATH="$HOME/go/bin:$PATH" ;;
 esac
+
+# C#. This is needed since mise is instantiated after VS Code is started,
+# leading to a missing .NET SDK error
+export PATH="/home/bosco/.local/share/mise/installs/dotnet/latest:$PATH"
 
 # pnpm
 export PNPM_HOME="/home/bosco/.local/share/pnpm"
 case ":$PATH:" in
-*":$PNPM_HOME:"*) ;;
-*) export PATH="$PNPM_HOME:$PATH" ;;
+	*":$PNPM_HOME:"*) ;;
+	*) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
 
@@ -123,4 +103,28 @@ if command -v tmux >/dev/null 2>&1; then
 	if [ -z "$TMUX" ] && [ -z "$VSCODE_IPC_HOOK_CLI" ]; then
 		tmux a -t default || tmux new-session -s default
 	fi
+fi
+
+# Check if $BASH_VERSION exists
+if [ -n "$BASH_VERSION" ]; then
+	eval "$(direnv hook bash)"
+	eval "$(mise activate bash)"
+	if [ -f ~/.local/.fzf.bash ]; then
+		source ~/.local/.fzf.bash
+	else
+		eval "$(fzf --bash)"
+	fi
+	eval "$(oh-my-posh init bash --config ~/shell_themes/niceDark.omp.json)"
+fi
+
+# Check if $ZSH_VERSION exists
+if [ -n "$ZSH_VERSION" ]; then
+	eval "$(direnv hook zsh)"
+	eval "$(mise activate zsh)"
+	if [ -f ~/.local/.fzf.zsh ]; then
+		source ~/.local/.fzf.zsh
+	else
+		eval "$(fzf --zsh)"
+	fi
+	eval "$(oh-my-posh init zsh --config ~/shell_themes/niceDark.omp.json)"
 fi
