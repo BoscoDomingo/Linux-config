@@ -110,15 +110,3 @@ if command -v tmux >/dev/null 2>&1; then
 		tmux send-keys -t default "clear" C-m
 	fi
 fi
-
-# Check if $BASH_VERSION exists
-if [ -n "$BASH_VERSION" ]; then
-	eval "$(direnv hook bash)"
-	eval "$(mise activate bash)"
-	if [ -f ~/.local/.fzf.bash ]; then
-		source ~/.local/.fzf.bash
-	else
-		eval "$(fzf --bash)"
-	fi
-	eval "$(oh-my-posh init bash --config ~/shell_themes/niceDark.omp.json)"
-fi
