@@ -1,5 +1,7 @@
 echo "This installer will automatically update your Linux config. All existing config files will be backed up to *.bak"
 
+export XDG_CONFIG_HOME=$HOME/.config
+
 sudo apt update && sudo apt upgrade && sudo apt install build-essential
 
 # Install zsh and set it up
@@ -38,13 +40,14 @@ ln -s $CURRENT_DIR/.nirc ~/.nirc
 ln -s $CURRENT_DIR/tmux/.tmux.conf ~/.tmux.conf
 ln -s $CURRENT_DIR/tmux/.tmux-resource-monitor.sh ~/.tmux-resource-monitor.sh
 
-ln -s $CURRENT_DIR/.config/broot ~/.config/broot
-ln -s $CURRENT_DIR/.config/bottom ~/.config/bottom
-ln -s $CURRENT_DIR/.config/cheat ~/.config/cheat
-ln -s $CURRENT_DIR/.config/direnv ~/.config/direnv
-ln -s $CURRENT_DIR/.config/superfile ~/.config/superfile
-ln -s $CURRENT_DIR/.config/tmux-powerline ~/.config/tmux-powerline
-ln -s $CURRENT_DIR/.config/tealdeer ~/.config/tealdeer
+ln -s $CURRENT_DIR/.config/broot $XDG_CONFIG_HOME/broot
+ln -s $CURRENT_DIR/.config/bottom $XDG_CONFIG_HOME/bottom
+ln -s $CURRENT_DIR/.config/cheat $XDG_CONFIG_HOME/cheat
+ln -s $CURRENT_DIR/.config/direnv $XDG_CONFIG_HOME/direnv
+ln -s $CURRENT_DIR/.config/superfile $XDG_CONFIG_HOME/superfile
+ln -s $CURRENT_DIR/.config/tmux-powerline $XDG_CONFIG_HOME/tmux-powerline
+ln -s $CURRENT_DIR/.config/tealdeer $XDG_CONFIG_HOME/tealdeer
+ln -s $CURRENT_DIR/.config/btop $XDG_CONFIG_HOME/btop
 
 # Install Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -130,7 +133,7 @@ brew install cheat \
 # $(brew --prefix)/opt/fzf/install
 # mv ~/.fzf.* ~/.local
 
-# mkdir ~/.config/lsd/
-# ln $LINUX_CONFIG_HOME/lsd.config.yaml ~/.config/lsd/config.yaml
+# mkdir $XDG_CONFIG_HOME/lsd/
+# ln $LINUX_CONFIG_HOME/lsd.config.yaml $XDG_CONFIG_HOME/lsd/config.yaml
 
 exec zsh
