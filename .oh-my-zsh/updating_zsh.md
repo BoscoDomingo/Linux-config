@@ -1,4 +1,4 @@
-To update ZSH, you'll need to temporarily rename the symlink directly in oh-my-zsh's home directory
+To update Oh-my-zsh, you'll need to temporarily rename the symlink directly in oh-my-zsh's home directory
 
 ```zsh
 cd "$ZSH"
