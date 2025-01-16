@@ -37,8 +37,6 @@ ln -s $CURRENT_DIR/.aliases ~/.aliases
 ln -s $CURRENT_DIR/.gitconfig ~/.gitconfig
 ln -s $CURRENT_DIR/.nanorc ~/.nanorc
 ln -s $CURRENT_DIR/.nirc ~/.nirc
-ln -s $CURRENT_DIR/tmux/.tmux.conf ~/.tmux.conf
-ln -s $CURRENT_DIR/tmux/.tmux-resource-monitor.sh ~/.tmux-resource-monitor.sh
 
 ln -s $CURRENT_DIR/.config/broot $XDG_CONFIG_HOME/broot
 ln -s $CURRENT_DIR/.config/bottom $XDG_CONFIG_HOME/bottom
@@ -48,6 +46,8 @@ ln -s $CURRENT_DIR/.config/superfile $XDG_CONFIG_HOME/superfile
 ln -s $CURRENT_DIR/.config/tmux-powerline $XDG_CONFIG_HOME/tmux-powerline
 ln -s $CURRENT_DIR/.config/tealdeer $XDG_CONFIG_HOME/tealdeer
 ln -s $CURRENT_DIR/.config/btop $XDG_CONFIG_HOME/btop
+ln -s $CURRENT_DIR/.config/tmux $XDG_CONFIG_HOME/tmux
+ln -s $CURRENT_DIR/tmux/.tmux-resource-monitor.sh $HOME/.tmux-resource-monitor.sh
 
 # Install Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"

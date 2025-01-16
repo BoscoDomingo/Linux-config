@@ -105,8 +105,8 @@ if command -v tmux >/dev/null 2>&1; then
 	# fi
 
 	if [ -z "$TMUX" ] && [ -z "$VSCODE_IPC_HOOK_CLI" ]; then
-		tmux a -t default || tmux new-session -s default
-		tmux send-keys -t default "zsh" C-m
-		tmux send-keys -t default "clear" C-m
+		tmux a -t default -c "zsh && clear" || tmux new-session -s default -c "zsh && clear"
+		# tmux send-keys -t default "zsh" C-m
+		# tmux send-keys -t default "clear" C-m
 	fi
 fi
