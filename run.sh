@@ -123,6 +123,7 @@ brew install cheat \
 	superfile \
 	httpstat \
 	fx \
+	btop \
 	isacikgoz/taps/tldr # tldr++: https://github.com/isacikgoz/tldr
 
 # To install useful key bindings and fuzzy completion for fzf. Not necessary as result's already in .profile
