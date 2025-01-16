@@ -2,6 +2,10 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
+export XDG_CONFIG_HOME=~/.config
+export XDG_DATA_HOME=~/.local/share
+export XDG_CACHE_HOME=~/.cache
+
 # if running bash, include .bashrc if it exists and we're not coming from VS Code (otherwise it won't load)
 if [ -n "$BASH_VERSION" ] && [ -e "$HOME/.bashrc" ] && [ -z "${VSCODE_IPC_HOOK_CLI}" ]; then
 	. "$HOME/.bashrc"
@@ -19,15 +23,15 @@ fi
 PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a"
 
 if [ -e "$HOME/.aliases" ]; then
-	source ~/.aliases
+	. ~/.aliases
 fi
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # Custom commands
 ## Run once a day
-if [[ ! -e /tmp/$(date -I).sem ]]; then
-	touch /tmp/$(date -I).sem
+if [[ ! -e "/tmp/$(date -I).sem" ]]; then
+	touch "/tmp/$(date -I).sem"
 	fastfetch
 	(brew update &>/dev/null &) # To execute on a subshell and redirect all output to /dev/null
 fi
