@@ -1,6 +1,8 @@
 echo "This installer will automatically update your Linux config. All existing config files will be backed up to *.bak"
 
 export XDG_CONFIG_HOME=$HOME/.config
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_CACHE_HOME=$HOME/.cache
 
 sudo apt update && sudo apt upgrade && sudo apt install build-essential
 
@@ -33,6 +35,7 @@ if [ -e ~/.aliases ]; then
 	mv ~/.aliases ~/.aliases.bak
 fi
 ln -s $CURRENT_DIR/.aliases ~/.aliases
+ln -s $CURRENT_DIR/scripts ~/.local/bin/scripts
 
 ln -s $CURRENT_DIR/.gitconfig ~/.gitconfig
 ln -s $CURRENT_DIR/.nanorc ~/.nanorc

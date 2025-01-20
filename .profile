@@ -2,9 +2,9 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-export XDG_CONFIG_HOME=~/.config
-export XDG_DATA_HOME=~/.local/share
-export XDG_CACHE_HOME=~/.cache
+export XDG_CONFIG_HOME="~/.config"
+export XDG_DATA_HOME="~/.local/share"
+export XDG_CACHE_HOME="~/.cache"
 
 # if running bash, include .bashrc if it exists and we're not coming from VS Code (otherwise it won't load)
 if [ -n "$BASH_VERSION" ] && [ -e "$HOME/.bashrc" ] && [ -z "${VSCODE_IPC_HOOK_CLI}" ]; then
@@ -17,6 +17,9 @@ if [ -d "$HOME/bin" ]; then
 fi
 if [ -d "$HOME/.local/bin" ]; then
 	PATH="$HOME/.local/bin:$PATH"
+fi
+if [ -d "$HOME/.local/bin/scripts" ]; then
+	PATH="$HOME/.local/bin/scripts:$PATH"
 fi
 
 # Ensures VS Code terminal history is saved without `exit` command
