@@ -86,6 +86,7 @@
             "autoMarkPrompts": true,
             "colorScheme": "UltraViolent",
             "compatibility.reloadEnvironmentVariables": false,
+            "cursorShape": "bar",
             "elevate": true,
             "experimental.repositionCursorWithMouse": true,
             "experimental.rightClickContextMenu": true,
@@ -94,7 +95,7 @@
                 "face": "Consolasligaturizedv2 NF",
                 "size": 10
             },
-            "historySize": 10000,
+            "historySize": 20000,
             "intenseTextStyle": "all",
             "opacity": 65,
             "showMarksOnScrollbar": true,
