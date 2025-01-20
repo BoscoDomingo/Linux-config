@@ -1,3 +1,4 @@
+vim.g.MYVIMRC = "$XDG_CONFIG_HOME/nvim/init.lua"
 require("bosco")
 
 if vim.g.vscode then
