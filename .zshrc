@@ -66,7 +66,7 @@ zstyle ':omz:update' frequency 10
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="false"
+ENABLE_CORRECTION="false"
 # CORRECT_IGNORE_FILE=".turbo|.nx"
 
 # Uncomment to enable correcting only arguments, not commands
@@ -189,7 +189,7 @@ export BAT_THEME="Monokai Extended Bright"
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
 # else
-#   export EDITOR='mvim'
+#   export EDITOR='nvim'
 # fi
 
 # Compilation flags
