@@ -66,11 +66,13 @@ zstyle ':omz:update' frequency 10
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="false"
+# ENABLE_CORRECTION="true"
 # CORRECT_IGNORE_FILE=".turbo|.nx"
 
 # Uncomment to enable correcting only arguments, not commands
-setopt correct
+# setopt correct
+unsetopt correct
+unsetopt correct_all
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # You can also set it to another string to have that shown instead of the default red dots.
@@ -105,6 +107,7 @@ plugins=(git
 	colorize
 	command-not-found
 	cp
+	docker
 )
 
 if [ -d "${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src" ]; then
@@ -203,3 +206,20 @@ export BAT_THEME="Monokai Extended Bright"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/bosco/google-cloud-sdk/path.zsh.inc' ]; then
+	. '/home/bosco/google-cloud-sdk/path.zsh.inc'
+fi
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/bosco/google-cloud-sdk/completion.zsh.inc' ]; then
+	. '/home/bosco/google-cloud-sdk/completion.zsh.inc'
+fi
+
+# PostgreSQL
+export PATH="/home/linuxbrew/.linuxbrew/opt/postgresql@15/bin:$PATH"
+export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/postgresql@15/lib/pkgconfig"
+
+autoload -U +X bashcompinit && bashcompinit
+
+complete -o nospace -C /home/linuxbrew/.linuxbrew/Cellar/opentofu/1.6.1/bin/tofu tofu
