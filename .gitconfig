@@ -11,6 +11,7 @@
 	eol = lf
 	autocrlf = false
 	editor = nvim
+	ignorecase = false
 
 [interactive]
 	diffFilter = delta --color-only
