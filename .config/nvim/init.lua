@@ -1,5 +1,5 @@
-vim.g.MYVIMRC = "$XDG_CONFIG_HOME/nvim/init.lua"
-require("bosco")
+vim.g.MYVIMRC = "$XDG_CONFIG_HOME/nvim/init.lua" -- required to reload the config with :luafile $MYVIMRC
+require("bosco") -- Imports my personal config
 
 if vim.g.vscode then
     -- VSCode extension
