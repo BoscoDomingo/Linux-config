@@ -52,6 +52,10 @@ ln -s $CURRENT_DIR/.config/btop $XDG_CONFIG_HOME/btop
 ln -s $CURRENT_DIR/.config/tmux $XDG_CONFIG_HOME/tmux
 ln -s $CURRENT_DIR/tmux/.tmux-resource-monitor.sh $HOME/.tmux-resource-monitor.sh
 
+# Install Cursor settings
+ln -s $CURRENT_DIR/vscode/settings.json $XDG_CONFIG_HOME/Cursor/User/settings.json
+ln -s $CURRENT_DIR/vscode/keybindings.json $XDG_CONFIG_HOME/Cursor/User/keybindings.json
+
 # Install Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"

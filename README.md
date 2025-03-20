@@ -1,6 +1,7 @@
 # Linux Setup <!-- omit from toc -->
 
 1. [Automatic installation](#automatic-installation)
+	1. [Prerequisites](#prerequisites)
 2. [Manual installation](#manual-installation)
 	1. [Before anything](#before-anything)
 	2. [zsh](#zsh)
@@ -22,6 +23,11 @@
 # Automatic installation
 
 You can try running the [`./run.sh`](run.sh) file directly, although it is untested and may not work.
+
+## Prerequisites
+
+- Git configured with at least an SSH key.
+- VS Code or Cursor installed.
 
 ---
 
@@ -68,7 +74,9 @@ The gist is [here](https://gist.github.com/BoscoDomingo/62f35772e52178b31353a99d
 ```shell
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
+
 ---
+
 # Version managers
 
 ## [mise](https://mise.jdx.dev/)
