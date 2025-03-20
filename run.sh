@@ -15,7 +15,7 @@ chsh -s $(which zsh)
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Setup config files and backup existing ones
-$CURRENT_DIR=$(pwd)
+export CURRENT_DIR=$(pwd)
 if [ -e ~/.profile ]; then
 	mv ~/.profile ~/.profile.bak
 fi
@@ -102,6 +102,7 @@ echo "Installed tmux and tmp. Run Ctrl + B, I to install plugins inside tmux"
 # mise plugin add tmux https://github.com/aphecetche/asdf-tmux.git
 # mise use -g tmux@latest
 
+mise use -g python@latest
 # Install Python (it kinda breaks, so don't use it unless necessary)
 # brew unlink pkg-config && \
 # CFLAGS="-I$(brew --prefix openssl)/include" \
@@ -137,7 +138,8 @@ brew install cheat \
 	btop \
 	isacikgoz/taps/tldr # tldr++: https://github.com/isacikgoz/tldr
 
-# To install useful key bindings and fuzzy completion for fzf. Not necessary as result's already in .profile
+# To install useful key bindings and fuzzy completion for fzf.
+# Not necessary since result's already in .profile, here for reference
 # $(brew --prefix)/opt/fzf/install
 # mv ~/.fzf.* ~/.local
 

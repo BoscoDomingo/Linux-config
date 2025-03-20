@@ -51,7 +51,7 @@ chsh -s $(which zsh)
 
 See [`./run.sh`](run.sh)
 
-## Homebrew
+## [Homebrew](https://brew.sh/)
 
 ```shell
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -60,7 +60,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 brew install gcc
 ```
 
-## oh-my-posh
+## [oh-my-posh](https://ohmyposh.dev/)
 
 ```shell
 brew install jandedobbeleer/oh-my-posh/oh-my-posh
@@ -69,7 +69,7 @@ git clone https://gist.github.com/62f35772e52178b31353a99d2d80ca77.git ~/shell_t
 
 The gist is [here](https://gist.github.com/BoscoDomingo/62f35772e52178b31353a99d2d80ca77)
 
-## oh-my-zsh
+## [oh-my-zsh](https://ohmyz.sh/)
 
 ```shell
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"

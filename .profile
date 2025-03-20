@@ -40,7 +40,7 @@ if [[ ! -e "/tmp/$(date -I).sem" ]]; then
 fi
 
 # broot
-source /home/bosco/.config/broot/launcher/bash/br
+source "$XDG_CONFIG_HOME/broot/launcher/bash/br"
 
 # WSL browser support
 export BROWSER=wslview
@@ -51,7 +51,7 @@ export EDITOR=nvim
 
 # Go. This is needed since mise is instantiated after VS Code is started,
 # and the VS Code extension for Go doesn't work properly if the GOPATH is not set.
-export PATH="/home/bosco/.local/share/mise/installs/go/latest/bin:$PATH"
+export PATH="$XDG_DATA_HOME/mise/installs/go/latest/bin:$PATH"
 case ":$PATH:" in
 	*":$HOME/go/bin:"*) ;;
 	*) export PATH="$HOME/go/bin:$PATH" ;;
@@ -59,10 +59,10 @@ esac
 
 # C#. This is needed since mise is instantiated after VS Code is started,
 # leading to a missing .NET SDK error
-export PATH="/home/bosco/.local/share/mise/installs/dotnet/latest:$PATH"
+export PATH="$XDG_DATA_HOME/mise/installs/dotnet/latest:$PATH"
 
 # pnpm
-export PNPM_HOME="/home/bosco/.local/share/pnpm"
+export PNPM_HOME="$XDG_DATA_HOME/pnpm"
 case ":$PATH:" in
 	*":$PNPM_HOME:"*) ;;
 	*) export PATH="$PNPM_HOME:$PATH" ;;
