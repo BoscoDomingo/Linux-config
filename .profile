@@ -7,7 +7,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 
 # if running bash, include .bashrc if it exists and we're not coming from VS Code (otherwise it won't load)
-if [ -n "$BASH_VERSION" ] && [ -e "$HOME/.bashrc" ] && [ -z "${VSCODE_IPC_HOOK_CLI}" ]; then
+if [ -n "$BASH_VERSION" ] && [ -e "$HOME/.bashrc" ] && [ -z "${VSCODE_IPC_HOOK_CLI}" ] && [ "$TERM_PROGRAM" != "Cursor" ] && [ "$TERM_PROGRAM" != "vscode" ]; then
 	. "$HOME/.bashrc"
 fi
 
@@ -99,7 +99,7 @@ if ! [ -d "$RIP_GRAVEYARD" ]; then
 fi
 
 # tmux config
-# Start tmux if not already inside a tmux session and not in VS CODE
+# Start tmux if not already inside a tmux session and not in VS Code nor Cursor
 if command -v tmux >/dev/null 2>&1; then
 	# Only needed if not using tmux plugins for this
 	# if [ -z "$(ps -a | grep .tmux-resource)" ]; then
@@ -107,7 +107,11 @@ if command -v tmux >/dev/null 2>&1; then
 	# 	~/.tmux-resource-monitor.sh &
 	# fi
 
-	if [ -z "$TMUX" ] && [ -z "$VSCODE_IPC_HOOK_CLI" ]; then
+	# # Debug print to confirm environment variables at the time .profile runs
+	# echo "[.profile debug] TMUX=$TMUX, VSCODE_IPC_HOOK_CLI=$VSCODE_IPC_HOOK_CLI, TERM_PROGRAM=$TERM_PROGRAM" 1>&2
+	# printenv 1>&2 # Debug print all environment variables
+
+	if [ -z "$TMUX" ] && [ -z "$VSCODE_IPC_HOOK_CLI" ] && [ "$TERM_PROGRAM" != "Cursor" ] && [ "$TERM_PROGRAM" != "vscode" ]; then
 		tmux a -t default -c "zsh && clear" || tmux new-session -s default -c "zsh && clear"
 		# tmux send-keys -t default "zsh" C-m
 		# tmux send-keys -t default "clear" C-m
