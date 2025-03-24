@@ -41,6 +41,7 @@ ln -s $CURRENT_DIR/.gitconfig ~/.gitconfig
 ln -s $CURRENT_DIR/.nanorc ~/.nanorc
 ln -s $CURRENT_DIR/.nirc ~/.nirc
 
+ln -s $CURRENT_DIR/.config/nvim $XDG_CONFIG_HOME/nvim
 ln -s $CURRENT_DIR/.config/broot $XDG_CONFIG_HOME/broot
 ln -s $CURRENT_DIR/.config/bottom $XDG_CONFIG_HOME/bottom
 ln -s $CURRENT_DIR/.config/cheat $XDG_CONFIG_HOME/cheat
