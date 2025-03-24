@@ -221,6 +221,7 @@ See [`./run.sh`](run.sh)
 * [httpstat](https://github.com/reorx/httpstat) - `brew install httpstat`
 * [fx](https://github.com/antonmedv/fx) - `brew install fx`
 * [btop](https://github.com/aristocratos/btop) - `brew install btop`
+* [duf](https://github.com/muesli/duf) - `brew install duf`
 
 ### Deprecated
 

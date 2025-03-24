@@ -136,6 +136,7 @@ brew install cheat \
 	httpstat \
 	fx \
 	btop \
+	duf \
 	isacikgoz/taps/tldr # tldr++: https://github.com/isacikgoz/tldr
 
 # To install useful key bindings and fuzzy completion for fzf.
