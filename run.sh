@@ -138,7 +138,9 @@ brew install cheat \
 	fx \
 	btop \
 	duf \
-	isacikgoz/taps/tldr # tldr++: https://github.com/isacikgoz/tldr
+	isacikgoz/taps/tldr \
+	# tldr++: https://github.com/isacikgoz/tldr
+	rip2
 
 # To install useful key bindings and fuzzy completion for fzf.
 # Not necessary since result's already in .profile, here for reference
