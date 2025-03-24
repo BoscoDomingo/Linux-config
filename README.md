@@ -222,6 +222,7 @@ See [`./run.sh`](run.sh)
 * [fx](https://github.com/antonmedv/fx) - `brew install fx`
 * [btop](https://github.com/aristocratos/btop) - `brew install btop`
 * [duf](https://github.com/muesli/duf) - `brew install duf`
+* [rip](https://github.com/MilesCranmer/rip2) - `brew install rip2`
 
 ### Deprecated
 
