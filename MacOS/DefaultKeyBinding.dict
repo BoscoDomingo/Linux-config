@@ -13,12 +13,12 @@
     "@\UF728" = deleteWordForward:; // Cmd+Delete to delete word right
     "\UF729"  = moveToBeginningOfLine:; // Home
     "\UF72B"  = moveToEndOfLine:; // End
+    "$\UF729" = moveToBeginningOfLineAndModifySelection:; // shift-home
+    "$\UF72B" = moveToEndOfLineAndModifySelection:; // shift-end
     "@\UF729"  = moveToBeginningOfDocument:; // Cmd+home -> ctrl+home
     "@\UF72B"  = moveToEndOfDocument:; // Cmd+end -> ctrl+end
     "@$\UF729"  = moveToBeginningOfDocumentAndModifySelection:; // ctrl+shift+home
     "@$\UF72B"  = moveToEndOfDocumentAndModifySelection:; // ctrl+shift+end
-    "$\UF729" = moveToBeginningOfLineAndModifySelection:; // shift-home
-    "$\UF72B" = moveToEndOfLineAndModifySelection:; // shift-end
     "\UF72C"  = (moveUp:, moveUp:, moveUp:, moveUp:, moveUp:, moveUp:, moveUp:, moveUp:, moveUp:, moveUp:, moveUp:, moveUp:, moveUp:, moveUp:, moveUp:, moveUp:, moveUp:, moveUp:, moveUp:, moveUp:, moveUp:, moveUp:, moveUp:, moveUp:, moveUp:, moveUp:, moveUp:, moveUp:, moveUp:, moveUp:); // page up - move up 30 lines.
     "\UF72D"  = (moveDown:,moveDown:,moveDown:,moveDown:,moveDown:,moveDown:,moveDown:,moveDown:,moveDown:,moveDown:,moveDown:,moveDown:,moveDown:,moveDown:,moveDown:,moveDown:,moveDown:,moveDown:,moveDown:,moveDown:,moveDown:,moveDown:,moveDown:,moveDown:,moveDown:,moveDown:,moveDown:,moveDown:,moveDown:); // page down - move down 30 lines.
     "$\UF72C"  = (moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:,moveUpAndModifySelection:); // shift+page up - move up 30 lines.
