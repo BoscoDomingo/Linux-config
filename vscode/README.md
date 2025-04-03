@@ -2,13 +2,19 @@
 
 For VS Code the settings sync should work well enough. For Cursor, the settings sync is not available and thus more manual management is needed.
 
+## Semi-automated setup
+
+Use the built-in Profile Manager to export files. However, it may not work perfectly (as of 2025-04 the extensions importer is broken).
+
 ## Windows
 
 Powershell:
 
 ```powershell
 rm "C:\Users\bosco\AppData\Roaming\Cursor\User\settings.json" "C:\Users\bosco\AppData\Roaming\Cursor\User\keybindings.json"
+
 New-Item -Path "C:\Users\bosco\AppData\Roaming\Cursor\User\settings.json" -ItemType SymbolicLink -Value "\\wsl.localhost\Ubuntu\home\bosco\repos\Linux-config\vscode\settings.json"
+
 New-Item -Path "C:\Users\bosco\AppData\Roaming\Cursor\User\keybindings.json" -ItemType SymbolicLink -Value "\\wsl.localhost\Ubuntu\home\bosco\repos\Linux-config\vscode\keybindings.json"
 ```
 
