@@ -57,6 +57,7 @@ clipboard-trim-trailing-spaces=true
 cursor-click-to-move=true
 font-feature=calt,liga,dlig
 font-size=11
+font-family="Liga SFMono Nerd Font"
 
 # MacOS options
 # official, blueprint, chalkboard, microchip, glass, holographic, paper, retro, xray
