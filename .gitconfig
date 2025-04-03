@@ -41,11 +41,7 @@
 	enabled = true
 	autoUpdate = true
 [maintenance]
-	repo = /home/bosco/repos/beam
-	repo = /home/bosco/repos/samara-core
-	repo = /home/bosco/repos/samara-website-backend
-	repo = /home/bosco/repos/samara-website-frontend
-	repo = /home/bosco/repos/discovery-call-backend
+	repo = /home/bosco/repos/Linux-config
 [alias]
 	lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
 	add = add --renormalize
