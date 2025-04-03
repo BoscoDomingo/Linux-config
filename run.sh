@@ -70,6 +70,14 @@ git clone git@gist.github.com:62f35772e52178b31353a99d2d80ca77.git ~/shell_theme
 # Extra shell completions
 git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions
 
+# tmux
+brew install tmux
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+echo "Installed tmux and tmp. Run Ctrl + B, I to install plugins inside tmux"
+## mise doesn't work (unfortunately)
+# mise plugin add tmux https://github.com/aphecetche/asdf-tmux.git
+# mise use -g tmux@latest
+
 # Install mise
 sudo apt update
 sudo apt install build-essential libssl-dev zlib1g-dev \
@@ -86,23 +94,12 @@ pnpm i -g @antfu/ni
 
 # Install Bun, Rust, Neovim and Go
 mise use -g go@latest
-mise p i bun rust neovim
 mise use -g bun@latest
-mise use -g rust@latest
+mise p i rust neovim
 mise use -g neovim@latest
+mise use -g rust@latest
 
-# # Tealdeer - https://github.com/tealdeer-rs/tealdeer
-# mise p i https://github.com/sarg3nt/asdf-tealdeer
-# mise use -g tealdeer@latest
-
-# tmux
-brew install tmux
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-echo "Installed tmux and tmp. Run Ctrl + B, I to install plugins inside tmux"
-## mise doesn't work (unfortunately)
-# mise plugin add tmux https://github.com/aphecetche/asdf-tmux.git
-# mise use -g tmux@latest
-
+# Python (if needed)
 mise use -g python@latest
 # Install Python (it kinda breaks, so don't use it unless necessary)
 # brew unlink pkg-config && \
@@ -110,6 +107,13 @@ mise use -g python@latest
 # LDFLAGS="-L$(brew --prefix openssl)/lib" \
 # mise install python@latest; \
 # mise upgrade python; \
+
+# Currently using tldr++ so this is not needed
+# tldr++: https://github.com/isacikgoz/tldr
+# # Tealdeer - https://github.com/tealdeer-rs/tealdeer
+# mise p i https://github.com/sarg3nt/asdf-tealdeer
+# mise use -g tealdeer@latest
+
 # brew link pkg-config
 
 # Install Homebrew tools
@@ -139,7 +143,6 @@ brew install cheat \
 	btop \
 	duf \
 	isacikgoz/taps/tldr \
-	# tldr++: https://github.com/isacikgoz/tldr
 	rip2
 
 # To install useful key bindings and fuzzy completion for fzf.
