@@ -53,6 +53,7 @@ ln -s $CURRENT_DIR/.config/tealdeer $XDG_CONFIG_HOME/tealdeer
 ln -s $CURRENT_DIR/.config/tmux $XDG_CONFIG_HOME/tmux
 ln -s $CURRENT_DIR/.config/tmux-powerline $XDG_CONFIG_HOME/tmux-powerline
 ln -s $CURRENT_DIR/.config/tmux/.tmux-resource-monitor.sh $HOME/.tmux-resource-monitor.sh
+ln -s $CURRENT_DIR/.config/zsh $XDG_CONFIG_HOME/zsh
 
 # Install Cursor settings
 ln -s $CURRENT_DIR/vscode/settings.json $XDG_CONFIG_HOME/Cursor/User/settings.json
