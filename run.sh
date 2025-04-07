@@ -35,25 +35,24 @@ if [ -e ~/.aliases ]; then
 	mv ~/.aliases ~/.aliases.bak
 fi
 ln -s $CURRENT_DIR/.aliases ~/.aliases
-ln -s $CURRENT_DIR/scripts ~/.local/bin/scripts
-
 ln -s $CURRENT_DIR/.gitconfig ~/.gitconfig
 ln -s $CURRENT_DIR/.nanorc ~/.nanorc
 ln -s $CURRENT_DIR/.nirc ~/.nirc
+ln -s $CURRENT_DIR/scripts ~/.local/bin/scripts
 
-ln -s $CURRENT_DIR/.config/nvim $XDG_CONFIG_HOME/nvim
-ln -s $CURRENT_DIR/.config/broot $XDG_CONFIG_HOME/broot
+ln -s $CURRENT_DIR/.config/bat $XDG_CONFIG_HOME/bat
 ln -s $CURRENT_DIR/.config/bottom $XDG_CONFIG_HOME/bottom
+ln -s $CURRENT_DIR/.config/broot $XDG_CONFIG_HOME/broot
+ln -s $CURRENT_DIR/.config/btop $XDG_CONFIG_HOME/btop
 ln -s $CURRENT_DIR/.config/cheat $XDG_CONFIG_HOME/cheat
 ln -s $CURRENT_DIR/.config/direnv $XDG_CONFIG_HOME/direnv
-ln -s $CURRENT_DIR/.config/superfile $XDG_CONFIG_HOME/superfile
-ln -s $CURRENT_DIR/.config/tmux-powerline $XDG_CONFIG_HOME/tmux-powerline
-ln -s $CURRENT_DIR/.config/tealdeer $XDG_CONFIG_HOME/tealdeer
-ln -s $CURRENT_DIR/.config/btop $XDG_CONFIG_HOME/btop
-ln -s $CURRENT_DIR/.config/tmux $XDG_CONFIG_HOME/tmux
 ln -s $CURRENT_DIR/.config/ghostty $XDG_CONFIG_HOME/ghostty
-ln -s $CURRENT_DIR/.config/bat $XDG_CONFIG_HOME/bat
-ln -s $CURRENT_DIR/tmux/.tmux-resource-monitor.sh $HOME/.tmux-resource-monitor.sh
+ln -s $CURRENT_DIR/.config/nvim $XDG_CONFIG_HOME/nvim
+ln -s $CURRENT_DIR/.config/superfile $XDG_CONFIG_HOME/superfile
+ln -s $CURRENT_DIR/.config/tealdeer $XDG_CONFIG_HOME/tealdeer
+ln -s $CURRENT_DIR/.config/tmux $XDG_CONFIG_HOME/tmux
+ln -s $CURRENT_DIR/.config/tmux-powerline $XDG_CONFIG_HOME/tmux-powerline
+ln -s $CURRENT_DIR/.config/tmux/.tmux-resource-monitor.sh $HOME/.tmux-resource-monitor.sh
 
 # Install Cursor settings
 ln -s $CURRENT_DIR/vscode/settings.json $XDG_CONFIG_HOME/Cursor/User/settings.json
