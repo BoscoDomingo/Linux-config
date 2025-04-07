@@ -78,3 +78,11 @@ keybind = cmd+d=text:\x04
 keybind = cmd+r=text:\x12
 keybind = cmd+s=text:\x13
 keybind = cmd+z=text:\x1a
+# Bind Cmd+delete to delete word forward (Ctrl+Delete)
+keybind = cmd+delete=text:\x1b[3;5~
+# Bind Cmd+backspace to delete word backward (Ctrl+Backspace/Alt+Backspace)
+keybind = cmd+backspace=text:\x17
+# Bind Cmd+left to jump one word left (Ctrl+left)
+keybind = cmd+left=text:\x1b[1;5D
+# Bind Cmd+right to jump one word right (Ctrl+right)
+keybind = cmd+right=text:\x1b[1;5C
