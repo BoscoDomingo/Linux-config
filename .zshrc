@@ -223,3 +223,6 @@ export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/postgresql@15/lib/pkgconf
 autoload -U +X bashcompinit && bashcompinit
 
 complete -o nospace -C /home/linuxbrew/.linuxbrew/Cellar/opentofu/1.6.1/bin/tofu tofu
+
+export LANG="en_GB.UTF-8"
+export LC_ALL="en_GB.UTF-8"
