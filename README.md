@@ -22,7 +22,7 @@
 
 # Automatic installation
 
-You can try running the [`./run.sh`](run.sh) file directly, although it is untested and may not work.
+You can try running the [`./run.sh`](run.sh) file directly, although it is untested and will likely not work.
 
 ## Prerequisites
 
@@ -49,7 +49,7 @@ chsh -s $(which zsh)
 
 ## Create symbolic links to all config files (allows Git tracking)
 
-See [`./run.sh`](run.sh)
+See the commands in [`./run.sh`](run.sh)
 
 ## [Homebrew](https://brew.sh/)
 
@@ -223,6 +223,7 @@ See [`./run.sh`](run.sh)
 * [btop](https://github.com/aristocratos/btop) - `brew install btop`
 * [duf](https://github.com/muesli/duf) - `brew install duf`
 * [rip](https://github.com/MilesCranmer/rip2) - `brew install rip2`
+* [ggh](https://github.com/byawitz/ggh) - `brew install ggh`
 
 ### Deprecated
 
