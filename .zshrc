@@ -140,6 +140,8 @@ if [ -f ~/.local/.fzf.zsh ]; then
 else
 	source <(fzf --zsh)
 fi
+
+# Oh My Posh
 eval "$(oh-my-posh init zsh --config ~/shell_themes/niceDark.omp.json)"
 
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -180,8 +182,6 @@ zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:*' fzf-preview '$HOME/bin/fzf-preview.sh $realpath'
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --tree --color=always --icons=always --git $realpath | head -200'
 zstyle ':fzf-tab:*' switch-group '<' '>'
-
-export BAT_THEME="Monokai Extended Bright"
 
 # export MANPATH="/usr/local/man:$MANPATH"
 

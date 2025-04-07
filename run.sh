@@ -52,6 +52,7 @@ ln -s $CURRENT_DIR/.config/tealdeer $XDG_CONFIG_HOME/tealdeer
 ln -s $CURRENT_DIR/.config/btop $XDG_CONFIG_HOME/btop
 ln -s $CURRENT_DIR/.config/tmux $XDG_CONFIG_HOME/tmux
 ln -s $CURRENT_DIR/.config/ghostty $XDG_CONFIG_HOME/ghostty
+ln -s $CURRENT_DIR/.config/bat $XDG_CONFIG_HOME/bat
 ln -s $CURRENT_DIR/tmux/.tmux-resource-monitor.sh $HOME/.tmux-resource-monitor.sh
 
 # Install Cursor settings

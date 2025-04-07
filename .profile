@@ -98,6 +98,9 @@ if ! [ -d "$RIP_GRAVEYARD" ]; then
 	mkdir -p "$RIP_GRAVEYARD"
 fi
 
+# bat config
+export BAT_CONFIG_PATH="$XDG_CONFIG_HOME/bat/bat.conf"
+
 # tmux config
 # Start tmux if not already inside a tmux session and not in VS Code nor Cursor
 if command -v tmux >/dev/null 2>&1; then
