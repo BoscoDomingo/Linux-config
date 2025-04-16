@@ -1251,7 +1251,9 @@
     ],
     "cursor.diffs.useCharacterLevelDiffs": true,
     "cursor.terminal.usePreviewBox": true,
-    "diffEditor.hideUnchangedRegions.enabled": true,
     "editor.stickyTabStops": true,
+    "diffEditor.hideUnchangedRegions.enabled": true,
+    "window.newWindowProfile": "Default",
+    "editor.lineNumbers": "relative",
 
 }
