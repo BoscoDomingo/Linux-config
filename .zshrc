@@ -211,22 +211,8 @@ zstyle ':fzf-tab:*' switch-group '<' '>'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/bosco/google-cloud-sdk/path.zsh.inc' ]; then
-	. '/home/bosco/google-cloud-sdk/path.zsh.inc'
-fi
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/bosco/google-cloud-sdk/completion.zsh.inc' ]; then
-	. '/home/bosco/google-cloud-sdk/completion.zsh.inc'
-fi
-
-# PostgreSQL
-export PATH="/home/linuxbrew/.linuxbrew/opt/postgresql@15/bin:$PATH"
-export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/postgresql@15/lib/pkgconfig"
-
+# All other basic completions
 autoload -U +X bashcompinit && bashcompinit
-
-complete -o nospace -C /home/linuxbrew/.linuxbrew/Cellar/opentofu/1.6.1/bin/tofu tofu
 
 export LANG="en_GB.UTF-8"
 export LC_ALL="en_GB.UTF-8"

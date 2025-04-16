@@ -6,6 +6,11 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 
+# Shouldn't be needed for basic functionality.
+# Oh-my-zsh does need it in some cases.
+# export LANG="en_GB.UTF-8"
+# export LC_ALL="en_GB.UTF-8"
+
 # if running bash, include .bashrc if it exists and we're not coming from VS Code (otherwise it won't load)
 if [ -n "$BASH_VERSION" ] && [ -e "$HOME/.bashrc" ] && [ -z "${VSCODE_IPC_HOOK_CLI}" ] && [ "$TERM_PROGRAM" != "Cursor" ] && [ "$TERM_PROGRAM" != "vscode" ]; then
 	. "$HOME/.bashrc"

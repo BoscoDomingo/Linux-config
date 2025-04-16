@@ -4,7 +4,11 @@ export XDG_CONFIG_HOME=$HOME/.config
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_CACHE_HOME=$HOME/.cache
 
-sudo apt update && sudo apt upgrade && sudo apt install build-essential
+sudo apt update && sudo apt upgrade && sudo apt install -y build-essential locales
+
+# Install locales so character encoding works
+sudo locale-gen en_US.UTF-8
+sudo locale-gen en_GB.UTF-8
 
 # Install zsh and set it up
 sudo apt install zsh -y
