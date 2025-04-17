@@ -1,5 +1,9 @@
 [
 	{
+		"key": "ctrl+shift+q",
+		"command": "workbench.action.quit"
+	},
+	{
 		"key": "ctrl+f",
 		"command": "editor.action.startFindReplaceAction",
 		"when": "editorFocus"
@@ -350,5 +354,9 @@
 		"key": "ctrl+backspace",
 		"command": "-editor.action.inlineDiffs.rejectAll",
 		"when": "editorTextFocus && (arbitrary function)"
+	},
+	{
+		"key": "ctrl+i",
+		"command": "composerMode.agent"
 	}
 ]
