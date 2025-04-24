@@ -9,23 +9,23 @@
                 "action": "copy",
                 "singleLine": false
             },
-            "id": "User.copy.644BA8F2",
-            "keys": "ctrl+c"
+            "id": "User.copy.644BA8F2"
         },
         {
             "command": "paste",
-            "id": "User.paste",
-            "keys": "ctrl+v"
+            "id": "User.paste"
         },
         {
             "command": "restartConnection",
-            "id": "User.restartConnection",
-            "keys": "alt+shift+r"
+            "id": "User.restartConnection"
         },
         {
-            "command": "find",
-            "id": "User.find",
-            "keys": "ctrl+shift+f"
+            "command": 
+            {
+                "action": "moveFocus",
+                "direction": "nextInOrder"
+            },
+            "id": "User.moveFocus.D7681B66"
         },
         {
             "command": 
@@ -34,30 +34,22 @@
                 "split": "auto",
                 "splitMode": "duplicate"
             },
-            "id": "User.splitPane.A6751878",
-            "keys": "alt+shift+d"
+            "id": "User.splitPane.A6751878"
+        },
+        {
+            "command": "find",
+            "id": "User.find"
         },
         {
             "command": "closePane",
-            "id": "User.closePane",
-            "keys": "ctrl+alt+d"
+            "id": "User.closePane"
         },
         {
             "command": 
             {
                 "action": "closeTab"
             },
-            "id": "User.closeTab.0",
-            "keys": "ctrl+shift+w"
-        },
-        {
-            "command": 
-            {
-                "action": "moveFocus",
-                "direction": "nextInOrder"
-            },
-            "id": "User.moveFocus.D7681B66",
-            "keys": "ctrl+alt+right"
+            "id": "User.closeTab.0"
         }
     ],
     "alwaysShowNotificationIcon": false,
@@ -70,6 +62,41 @@
     "focusFollowMouse": true,
     "initialCols": 155,
     "initialRows": 42,
+    "keybindings": 
+    [
+        {
+            "id": "User.copy.644BA8F2",
+            "keys": "ctrl+c"
+        },
+        {
+            "id": "User.closeTab.0",
+            "keys": "ctrl+shift+w"
+        },
+        {
+            "id": "User.find",
+            "keys": "ctrl+shift+f"
+        },
+        {
+            "id": "User.restartConnection",
+            "keys": "alt+shift+r"
+        },
+        {
+            "id": "User.paste",
+            "keys": "ctrl+v"
+        },
+        {
+            "id": "User.splitPane.A6751878",
+            "keys": "alt+shift+d"
+        },
+        {
+            "id": "User.closePane",
+            "keys": "ctrl+alt+d"
+        },
+        {
+            "id": "User.moveFocus.D7681B66",
+            "keys": "ctrl+alt+right"
+        }
+    ],
     "language": "en-US",
     "newTabMenu": 
     [
@@ -93,7 +120,7 @@
             "font": 
             {
                 "face": "Consolasligaturizedv2 NF",
-                "size": 10
+                "size": 9
             },
             "historySize": 20000,
             "intenseTextStyle": "all",
