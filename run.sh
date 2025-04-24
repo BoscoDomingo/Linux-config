@@ -69,7 +69,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 brew install gcc
 
 # Install oh-my-posh and use my custom theme
-brew install jandedobbeleer/oh-my-posh/oh-my-posh
+brew install oh-my-posh
 # Original at https://gist.github.com/BoscoDomingo/62f35772e52178b31353a99d2d80ca77
 git clone git@gist.github.com:62f35772e52178b31353a99d2d80ca77.git ~/shell_themes
 # Extra shell completions

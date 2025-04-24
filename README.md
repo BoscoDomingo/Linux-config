@@ -63,7 +63,7 @@ brew install gcc
 ## [oh-my-posh](https://ohmyposh.dev/)
 
 ```shell
-brew install jandedobbeleer/oh-my-posh/oh-my-posh
+brew install oh-my-posh
 git clone https://gist.github.com/62f35772e52178b31353a99d2d80ca77.git ~/shell_themes
 ```
 
