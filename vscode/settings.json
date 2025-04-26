@@ -2,7 +2,7 @@
     "workbench.startupEditor": "readme",
     "workbench.commandPalette.history": 40,
     "workbench.colorTheme": "Andromeda Bordered",
-    "workbench.iconTheme": "vscode-icons",
+    "workbench.iconTheme": "bearded-icons",
     "workbench.settings.applyToAllProfiles": [
         "editor.formatOnSave",
         "editor.defaultFormatter",
@@ -157,9 +157,14 @@
         ]
     },
     "go.alternateTools": {
-        "go": "~/.local/share/mise/installs/go/latest/bin/go"
+        "go": "~/.local/share/mise/installs/go/latest/bin/go",
+        "customFormatter": "golangci-lint"
     },
-    "go.formatTool": "default",
+    "go.formatTool": "custom",
+    "go.formatFlags": [
+        "fmt",
+        "--stdin"
+    ],
     "go.lintTool": "golangci-lint",
     "go.lintFlags": [
         "--fast",
@@ -680,6 +685,7 @@
     "update.mode": "manual",
     "todo-tree.general.revealBehaviour": "end of todo",
     "todo-tree.general.tagGroups": {
+
         "FIX": [
             "FIXME",
             "FIXIT",
@@ -707,6 +713,10 @@
             "BOY-SCOUT",
             "BS",
             "ENH"
+        ],
+        "PERFORMANCE": [
+            "PERF",
+            "PERFORMANCE"
         ]
     },
     "todo-tree.general.tags": [
@@ -727,7 +737,9 @@
         "DEBT",
         "BOY-SCOUT",
         "BS",
-        "ENH"
+        "ENH",
+        "PERF",
+        "PERFORMANCE"
     ],
     "todo-tree.regex.regexCaseSensitive": true,
     "todo-tree.general.showIconsInsteadOfTagsInStatusBar": true,
@@ -772,6 +784,12 @@
             "icon": "check",
             "iconColour": "#9bf739",
             "background": "#c2ff35"
+        },
+        "PERFORMANCE": {
+            "icon": "rocket",
+            "iconColour": "#f739ea",
+            "background": "#ff35ee",
+            "foreground": "#000"
         },
         "BUG": {
             "icon": "bug",
