@@ -356,10 +356,6 @@
 		"when": "editorTextFocus && (arbitrary function)"
 	},
 	{
-		"key": "ctrl+i",
-		"command": "composerMode.agent"
-	},
-	{
 		"key": "alt+left",
 		"command": "-workbench.action.navigateBack",
 		"when": "canNavigateBack"
@@ -368,5 +364,24 @@
 		"key": "alt+right",
 		"command": "-workbench.action.navigateForward",
 		"when": "canNavigateForward"
+	},
+	{
+		"key": "ctrl+shift+y",
+		"command": "editor.action.inlineDiffs.acceptPartialEdit",
+		"when": "@inlineDiffs.acceptPartialEdit.isActiveEditorWithDiffs"
+	},
+	{
+		"key": "ctrl+shift+y",
+		"command": "-editor.action.inlineDiffs.acceptPartialEdit",
+		"when": "editorTextFocus && @inlineDiffs.acceptPartialEdit.isActiveEditorWithDiffs"
+	},
+	{
+		"key": "ctrl+i",
+		"command": "composer.startComposerPrompt",
+		"when": "!(editorLangId =~ /^markdown$|^rmd$|^quarto$/)"
+	},
+	{
+		"key": "ctrl+i",
+		"command": "-composer.startComposerPrompt"
 	}
 ]
