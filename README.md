@@ -12,9 +12,8 @@
 3. [Version managers](#version-managers)
 	1. [mise](#mise)
 			1. [Optional extras](#optional-extras)
-	2. [Deprecated](#deprecated)
 4. [Homebrew packages](#homebrew-packages)
-		1. [Deprecated](#deprecated-1)
+		1. [Deprecated](#deprecated)
 5. [GPG and commit signing](#gpg-and-commit-signing)
 	1. [WSL](#wsl)
 	2. [Use built-in pinentry](#use-built-in-pinentry)
@@ -83,7 +82,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 Recommended since you can manage multiple language SDKs from here, not needing a version manager for each.
 
-It also works with [asdf plugins](https://github.com/asdf-vm/asdf-plugins), and soon with vfox too, so you can manage pretty much anything with it. Pretty neat!
+It also works with [asdf plugins](https://github.com/asdf-vm/asdf-plugins), and a bunch of [other backends (github, vfox, etc)](https://mise.jdx.dev/dev-tools/backends/), so you can manage pretty much anything with it. Pretty neat!
 
 ```sh
 # Prerequisites
@@ -94,6 +93,16 @@ libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-d
 brew install mise
 mise completion zsh > ~/.local/.mise-completions.zsh
 ```
+
+<details>
+	<summary>
+		<h3>Neovim</h3>
+	</summary>
+
+```sh
+mise use -g neovim@latest
+```
+</details>
 
 <details>
 	<summary>
@@ -111,23 +120,11 @@ npx pnpm i -g pnpm # To save pnpm to $PNPM_HOME so cache won't be lost on update
 
 * [ni](https://github.com/antfu/ni)
 `pnpm i -g @antfu/ni`
-
 * [taze](https://github.com/antfu-collective/taze)
-`npm i -g taze` - pnpm doesn't need it
+`npm i -g taze` - pnpm doesn't *need* it but it's still useful
 * [ncu](https://www.npmjs.com/package/npm-check-updates)
 `npm i -g npm-check-updates` - pnpm doesn't need it
 
-</details>
-
-<details>
-	<summary>
-		<h3>Neovim</h3>
-	</summary>
-
-```sh
-mise p i neovim
-mise use -g neovim@latest
-```
 </details>
 
 <details>
@@ -136,7 +133,6 @@ mise use -g neovim@latest
 	</summary>
 
 ```sh
-mise p i bun
 mise use -g bun@latest
 ```
 </details>
@@ -147,8 +143,17 @@ mise use -g bun@latest
 	</summary>
 
 ```sh
-# mise p i https://github.com/asdf-community/asdf-golang # Optional
-mise use -g go@latest
+mise use -g go@latest golangci-lint@latest
+```
+</details>
+
+<details>
+	<summary>
+		<h3>C#</h3>
+	</summary>
+
+```sh
+mise use -g dotnet@latest
 ```
 </details>
 
@@ -158,39 +163,25 @@ mise use -g go@latest
 	</summary>
 
 ```sh
-brew unlink pkg-config && \
-CFLAGS="-I$(brew --prefix openssl)/include" \
-LDFLAGS="-L$(brew --prefix openssl)/lib" \
+# May need unlinking and linking pkg-config
+# brew unlink pkg-config && \
+# CFLAGS="-I$(brew --prefix openssl)/include" \
+# LDFLAGS="-L$(brew --prefix openssl)/lib" \
 mise install python@latest; \
-brew link pkg-config
+# brew link pkg-config
 ```
-
 </details>
-
-## Deprecated
 
 <details>
-	<summary><del>pyenv</del></summary>
-
-<del>
+	<summary>
+		<h3>Rust</h3>
+	</summary>
 
 ```sh
-brew install pyenv
-sudo apt update; sudo apt install build-essential libssl-dev zlib1g-dev \
-libbz2-dev libreadline-dev libsqlite3-dev curl \
-libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
-brew install tcl-tk
-# Alternative
-# sudo apt-get install tk-dev
-
-pyenv-install 3.12 # This is to use the alias instead of the usual, to get rid of the '_ssl missing' error
-pyenv global 3.12
+mise use -g rust@latest
 ```
-
-</del>
-
-
 </details>
+
 
 # Homebrew packages
 

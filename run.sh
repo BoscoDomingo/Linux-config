@@ -92,20 +92,23 @@ sudo apt install build-essential libssl-dev zlib1g-dev \
 brew install mise
 mise completion zsh > ~/.local/.mise-completions.zsh
 
+# Install Neovim
+mise use -g neovim@latest
+
 # Install Node + pnpm
 mise use -g node@lts
 npx pnpm i -g pnpm
 pnpm i -g @antfu/ni
 
-# Install Bun, Rust, Neovim and Go
-mise use -g go@latest
+# Install Bun, Go, .NET and Rust
+mise use -g go@latest golangci-lint@latest
 mise use -g bun@latest
-mise p i rust neovim
-mise use -g neovim@latest
-mise use -g rust@latest
+# mise use -g dotnet@latest
+# mise use -g rust@latest
+
 
 # Python (if needed)
-mise use -g python@latest
+# mise use -g python@latest
 # Install Python (it kinda breaks, so don't use it unless necessary)
 # brew unlink pkg-config && \
 # CFLAGS="-I$(brew --prefix openssl)/include" \
