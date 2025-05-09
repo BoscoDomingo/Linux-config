@@ -135,17 +135,11 @@
     "[sql]": {
         "editor.defaultFormatter": "mtxr.sqltools"
     },
-    "[go]": {
-        "editor.defaultFormatter": "golang.go"
-    },
     "[cpp]": {
         "editor.defaultFormatter": "ms-vscode.cpptools"
     },
     "[xml]": {
         "editor.defaultFormatter": "mikeburgh.xml-format"
-    },
-    "[go.mod]": {
-        "editor.defaultFormatter": "golang.go"
     },
     "[dockerfile]": {
         "editor.defaultFormatter": "ms-azuretools.vscode-docker"
@@ -156,15 +150,21 @@
             "source.organizeImports"
         ]
     },
+    "[go]": {
+        "editor.defaultFormatter": "golang.go"
+    },
+    "[go.mod]": {
+        "editor.defaultFormatter": "golang.go"
+    },
     "go.alternateTools": {
         "go": "~/.local/share/mise/installs/go/latest/bin/go",
-        "customFormatter": "golangci-lint"
+        // "customFormatter": "golangci-lint"
     },
-    "go.formatTool": "custom",
-    "go.formatFlags": [
-        "fmt",
-        "--stdin"
-    ],
+    // "go.formatTool": "custom",
+    // "go.formatFlags": [
+    //     "fmt",
+    //     "--stdin"
+    // ],
     "go.lintTool": "golangci-lint",
     "go.lintFlags": [
         "--fast",
@@ -1273,5 +1273,8 @@
     "diffEditor.hideUnchangedRegions.enabled": true,
     "window.newWindowProfile": "Default",
     "editor.lineNumbers": "relative",
+    "scm.diffDecorationsGutterPattern": {
+        "added": true
+    },
 
 }

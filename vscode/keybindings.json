@@ -378,10 +378,10 @@
 	{
 		"key": "ctrl+i",
 		"command": "composer.startComposerPrompt",
-		"when": "!(editorLangId =~ /^markdown$|^rmd$|^quarto$/)"
+		"when": "!(editorTextFocus && !editorReadonly && editorLangId =~ /^markdown$|^rmd$|^quarto$/)"
 	},
 	{
 		"key": "ctrl+i",
 		"command": "-composer.startComposerPrompt"
-	}
+	},
 ]
