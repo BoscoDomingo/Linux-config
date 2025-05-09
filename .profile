@@ -74,6 +74,9 @@ case ":$PATH:" in
 esac
 # pnpm end
 
+# Bun
+export PATH="/home/bosco/.cache/.bun/bin:$PATH"
+
 ###-Graphite-###
 #
 # yargs command completion script
