@@ -136,9 +136,11 @@ fi
 # bat config
 export BAT_CONFIG_PATH="$XDG_CONFIG_HOME/bat/bat.conf"
 
-# Required for zsh autocomplete to work.
-# Something is turning it on automatically internally,
-# and no settings in .zshrc would work
+# ZSH autocompletions
+# This block is required for autocomplete to work.
+# Something is turning `completealiases` on automatically internally,
+# and no settings in .zshrc would work. This means that all autocompletions
+# loaded before are useless, thus have to be loaded here too.
 if [ -n "$ZSH_VERSION" ]; then
 	if [ -n "$(setopt | grep completealiases)" ]; then
 		unsetopt completealiases
@@ -148,6 +150,19 @@ if [ -n "$ZSH_VERSION" ]; then
 	fi
 	if [ -n "$(setopt | grep completealiases)" ]; then
 		echo "completealiases is set. Unset it manually."
+	fi
+
+	# Jujutsu completions
+	source <(COMPLETE=zsh jj)
+
+	# Mise completions
+	if [ -e "$HOME/.local/.mise-completions.zsh" ]; then
+		source $HOME/.local/.mise-completions.zsh
+	fi
+
+	# Rip2 completions
+	if [ -e "$HOME/.local/rip2/completions.zsh" ]; then
+		source $HOME/.local/rip2/completions.zsh
 	fi
 fi
 

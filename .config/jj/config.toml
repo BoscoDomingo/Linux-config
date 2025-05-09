@@ -1,0 +1,45 @@
+"$schema" = "https://jj-vcs.github.io/jj/latest/config-schema.json"
+
+[user]
+name = "Bosco Domingo"
+email = "boscodomingob@gmail.com"
+
+[signing]
+behavior = "own"
+backend = "gpg"
+key = "F9CC033B96533604"
+
+[diff]
+tool = "delta"
+
+[ui]
+conflict-marker-style = "snapshot"
+default-command = ["log", "--no-pager", "-n=5"]
+diff-formatter = ":git" # required by `delta`
+editor = "nvim"
+graph.style = "curved"
+log-word-wrap = true
+movement.edit = true # Useful if using `prev` and `next` and want to edit the parent directly
+pager=["delta", "--pager", "less -FRX"] # Keeps output from the terminal after closing the pager
+paginate="auto"
+show-cryptographic-signatures = true
+
+[ui.streampager]
+interface = "quit-if-one-page"
+
+[git]
+# push-bookmark-prefix = "feature/"
+sign-on-push = true # Lazy signing
+
+[templates]
+git_push_bookmark = "feature/{{branch}}"
+
+[template-aliases]
+'format_short_signature(signature)' = 'signature' # Name and email
+
+# These options allow for `jj diff` and `jj show` to clear the output from the terminal after closing the pager.
+[[--scope]]
+--when.commands = ["diff", "show"]
+
+[--scope.ui]
+pager = "delta"

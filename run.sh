@@ -127,6 +127,9 @@ mise use -g tldr++@latest
 # mise use -g tlrc@latest
 # mise use -g tealdeer@latest
 
+# Jujutsu (jj)
+mise use -g jujutsu@latest
+
 # Better cp alternative
 sudo apt install gcp
 

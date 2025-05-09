@@ -6,20 +6,6 @@ setopt autocd
 bindkey -e
 # End of lines configured by zsh-newuser-install
 
-# Completions
-fpath=("$XDG_CONFIG_HOME/zsh/completions" $fpath)
-# To add more completions, use the completion generation command with a `>` instead of sourcing them here.
-# File must be named `_<command>`
-# e.g. `bat --completions zsh > $XDG_CONFIG_HOME/zsh/completions/_bat`
-# To check if they've been loaded correctly, use `which _<command>` or `type _<command>`
-
-# For tab to work correctly, the completealiases option must be unset (either one works)
-unsetopt completealiases
-unsetopt complete_aliases
-# However, something keep re-enabling it, so I had to use a workaround
-# in .profile to unset it again after sourcing .zshrc
-# To check if it's working, use `setopt | grep completealiases` and see if it's set (it shouldn't)
-
 # The following lines were added by compinstall
 zstyle :compinstall filename "$HOME/.zshrc"
 autoload -Uz compinit
@@ -29,6 +15,7 @@ compinit
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+# MARK: - Oh My Zsh
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -136,11 +123,6 @@ if [ -e "$HOME/.profile" ]; then
 fi
 eval "$(direnv hook zsh)"
 eval "$(mise activate zsh)"
-if [ -f ~/.local/.fzf.zsh ]; then
-	source ~/.local/.fzf.zsh
-else
-	source <(fzf --zsh)
-fi
 
 # Start Oh My Posh
 eval "$(oh-my-posh init zsh --config ~/shell_themes/niceDark.omp.json)"
@@ -149,17 +131,49 @@ eval "$(oh-my-posh init zsh --config ~/shell_themes/niceDark.omp.json)"
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# Mise completions
+# MARK: - Autocompletions
+fpath=("$XDG_CONFIG_HOME/zsh/completions" $fpath)
+
+# To add more completions, there's 2 options:
+# 1. (Better for "dynamic" completions) Load them in the .profile section for zsh.
+# 2. (Better for "static" completions) Use the completion generation command with a `>` instead of sourcing them here.
+	# File must be named `_<command>`.
+	# Can be out of date and need to be regenerated.
+	# e.g. `bat --completions zsh > $XDG_CONFIG_HOME/zsh/completions/_bat`
+
+# To check if they've been loaded correctly, use `which _<command>` or `type _<command>`
+# If they are dynamic (e.g. source<(fzf --zsh)), they must be loaded in .profile. More info below
+
+# For tab to work correctly, the completealiases option must be unset (either one works)
+unsetopt completealiases
+unsetopt complete_aliases
+# However, something keep re-enabling it, so I had to use a workaround
+# in .profile to unset it again after sourcing .zshrc
+# To check if it's working, use `setopt | grep completealiases` and see if it's set (it shouldn't)
+
+# NOTE: Right now none of these are working, but I'll leave it uncommented anyways in case I figure out the issue.
+# These types of completions will work if they are loaded in .profile.
+
+## Jujutsu
+source <(COMPLETE=zsh jj)
+
+## Mise
 if [ -e "$HOME/.local/.mise-completions.zsh" ]; then
 	source $HOME/.local/.mise-completions.zsh
 fi
 
-# Rip2 completions
+## Rip2
 if [ -e "$HOME/.local/rip2/completions.zsh" ]; then
 	source $HOME/.local/rip2/completions.zsh
 fi
 
 ## Fzf
+if [ -f ~/.local/.fzf.zsh ]; then
+	source ~/.local/.fzf.zsh
+else
+	source <(fzf --zsh)
+fi
+
 # Source: https://dev.to/dshafik/finding-terminal-utopia-583k
 _fzf_comprun() {
 	local command=$1
@@ -188,10 +202,10 @@ zstyle ':fzf-tab:complete:*' fzf-preview '$HOME/bin/fzf-preview.sh $realpath'
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --tree --color=always --icons=always --git $realpath | head -200'
 zstyle ':fzf-tab:*' switch-group '<' '>'
 
-# export MANPATH="/usr/local/man:$MANPATH"
+# All other basic completions
+autoload -U +X bashcompinit && bashcompinit
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+# export MANPATH="/usr/local/man:$MANPATH"
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -211,9 +225,6 @@ zstyle ':fzf-tab:*' switch-group '<' '>'
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# All other basic completions
-autoload -U +X bashcompinit && bashcompinit
 
 # Required for oh-my-zsh
 export LANG="en_GB.UTF-8"
