@@ -89,7 +89,7 @@ sudo apt install build-essential libssl-dev zlib1g-dev \
 	libbz2-dev libreadline-dev libsqlite3-dev curl \
 	libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
 
-brew install mise
+curl https://mise.run | sh
 mise completion zsh > ~/.local/.mise-completions.zsh
 
 # Install Neovim
@@ -101,20 +101,21 @@ npx pnpm i -g pnpm
 pnpm i -g @antfu/ni
 
 # Install Bun, Go, .NET and Rust
-mise use -g go@latest golangci-lint@latest
 mise use -g bun@latest
+mise use -g go@latest golangci-lint@latest
 # mise use -g dotnet@latest
 # mise use -g rust@latest
 
 
-# Python (if needed)
-# mise use -g python@latest
-# Install Python (it kinda breaks, so don't use it unless necessary)
+# Python
+mise use -g python@latest
+# Installation extras (they kinda break, so don't use unless necessary)
 # brew unlink pkg-config && \
 # CFLAGS="-I$(brew --prefix openssl)/include" \
 # LDFLAGS="-L$(brew --prefix openssl)/lib" \
 # mise install python@latest; \
 # mise upgrade python; \
+# brew link pkg-config
 
 # Currently using tldr++ so this is not needed
 # tldr++: https://github.com/isacikgoz/tldr
@@ -122,9 +123,7 @@ mise use -g bun@latest
 # mise p i https://github.com/sarg3nt/asdf-tealdeer
 # mise use -g tealdeer@latest
 
-# brew link pkg-config
-
-# Install Homebrew tools
+# Homebrew tools
 brew install cheat \
 	progress \
 	fastfetch \
