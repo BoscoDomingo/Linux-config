@@ -1274,7 +1274,7 @@
     "window.newWindowProfile": "Default",
     "editor.lineNumbers": "relative",
     "scm.diffDecorationsGutterPattern": {
-        "added": true
+        "modified": false
     },
 
 }
