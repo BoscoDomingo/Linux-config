@@ -6,6 +6,13 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 
+# WSL browser support
+export BROWSER=wslview
+# GPG signing with WSL native tools
+export GPG_TTY=$(tty)
+export VISUAL=nano
+export EDITOR=nvim
+
 # Shouldn't be needed for basic functionality.
 # Oh-my-zsh does need it in some cases.
 # export LANG="en_GB.UTF-8"
@@ -46,13 +53,6 @@ fi
 
 # broot
 source "$XDG_CONFIG_HOME/broot/launcher/bash/br"
-
-# WSL browser support
-export BROWSER=wslview
-# GPG signing with WSL native tools
-export GPG_TTY=$(tty)
-export VISUAL=nano
-export EDITOR=nvim
 
 # Go. This is needed since mise is instantiated after VS Code is started,
 # and the VS Code extension for Go doesn't work properly if the GOPATH is not set.
