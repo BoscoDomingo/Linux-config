@@ -51,6 +51,7 @@ ln -s $CURRENT_DIR/.config/btop $XDG_CONFIG_HOME/btop
 ln -s $CURRENT_DIR/.config/cheat $XDG_CONFIG_HOME/cheat
 ln -s $CURRENT_DIR/.config/direnv $XDG_CONFIG_HOME/direnv
 ln -s $CURRENT_DIR/.config/ghostty $XDG_CONFIG_HOME/ghostty
+ln -s $CURRENT_DIR/.config/mise $XDG_CONFIG_HOME/mise
 ln -s $CURRENT_DIR/.config/nvim $XDG_CONFIG_HOME/nvim
 ln -s $CURRENT_DIR/.config/superfile $XDG_CONFIG_HOME/superfile
 ln -s $CURRENT_DIR/.config/tealdeer $XDG_CONFIG_HOME/tealdeer
@@ -117,10 +118,10 @@ mise use -g python@latest
 # mise upgrade python; \
 # brew link pkg-config
 
-# Currently using tldr++ so this is not needed
-# tldr++: https://github.com/isacikgoz/tldr
-# # Tealdeer - https://github.com/tealdeer-rs/tealdeer
-# mise p i https://github.com/sarg3nt/asdf-tealdeer
+# Currently using tldr++ (https://github.com/isacikgoz/tldr)
+mise use -g tldr++@latest
+# Alternatives: tlrc (cargo) or Tealdeer - https://github.com/tealdeer-rs/tealdeer
+# mise use -g tlrc@latest
 # mise use -g tealdeer@latest
 
 # Homebrew tools

@@ -1,0 +1,19 @@
+[tools]
+node = "lts"
+bun = "latest"
+go = "latest"
+neovim = "latest"
+python = "latest"
+golangci-lint = "latest"
+jujutsu = "latest"
+uv = "latest"
+dotnet = "latest"
+rust = "latest"
+"tldr++" = "latest"
+
+[settings]
+idiomatic_version_file_enable_tools = ["go"]
+
+[alias]
+"tldr++" = "ubi:isacikgoz/tldr"
+tlrc = "cargo:tlrc"
