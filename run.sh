@@ -50,6 +50,7 @@ ln -s $CURRENT_DIR/.config/broot $XDG_CONFIG_HOME/broot
 ln -s $CURRENT_DIR/.config/btop $XDG_CONFIG_HOME/btop
 ln -s $CURRENT_DIR/.config/cheat $XDG_CONFIG_HOME/cheat
 ln -s $CURRENT_DIR/.config/direnv $XDG_CONFIG_HOME/direnv
+ln -s $CURRENT_DIR/.config/fastfetch $XDG_CONFIG_HOME/fastfetch
 ln -s $CURRENT_DIR/.config/ghostty $XDG_CONFIG_HOME/ghostty
 ln -s $CURRENT_DIR/.config/mise $XDG_CONFIG_HOME/mise
 ln -s $CURRENT_DIR/.config/nvim $XDG_CONFIG_HOME/nvim
