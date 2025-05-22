@@ -105,8 +105,9 @@ pnpm i -g @antfu/ni
 # Install Bun, Go, .NET and Rust
 mise use -g bun@latest
 mise use -g go@latest golangci-lint@latest
-# mise use -g dotnet@latest
-# mise use -g rust@latest
+mise use -g rust@latest
+mise p i dotnet
+mise use -g dotnet@latest
 
 
 # Python
@@ -121,7 +122,7 @@ mise use -g python@latest
 
 # Currently using tldr++ (https://github.com/isacikgoz/tldr)
 mise use -g tldr++@latest
-# Alternatives: tlrc (cargo) or Tealdeer - https://github.com/tealdeer-rs/tealdeer
+# Alternatives: tlrc (https://github.com/tldr-pages/tlrc) or Tealdeer (https://github.com/tealdeer-rs/tealdeer)
 # mise use -g tlrc@latest
 # mise use -g tealdeer@latest
 
