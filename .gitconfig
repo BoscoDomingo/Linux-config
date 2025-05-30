@@ -4,7 +4,7 @@
 [user]
 	name="Bosco Domingo"
 	email = "boscodomingob@gmail.com"
-	signingkey = "68F987A3A162F29E"
+	signingkey = F9CC033B96533604
 
 [core]
 	pager = delta
