@@ -60,3 +60,5 @@ if (Test-Path($ChocolateyProfile)) {
 
 Import-Module -Name Microsoft.WinGet.CommandNotFound
 #f45873b3-b655-43a6-b217-97c00aa0db58
+
+# Set-Alias gpg "D:\Program Files (x86)\GnuPG\bin\gpg.exe"
