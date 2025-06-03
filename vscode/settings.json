@@ -1276,5 +1276,10 @@
     "scm.diffDecorationsGutterPattern": {
         "modified": false
     },
+    "cursor.composer.shouldShowMarkdownHoverParticipantActions2": true,
+    "cursor.composer.shouldChimeAfterChatFinishes": true,
+    "typescript.preferences.preferTypeOnlyAutoImports": true,
+    "mise.configureExtensionsAutomatically": false,
+    "mise.configureExtensionsUseSymLinks": true,
 
 }
