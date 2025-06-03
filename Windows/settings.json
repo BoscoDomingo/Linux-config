@@ -20,12 +20,8 @@
             "id": "User.restartConnection"
         },
         {
-            "command": 
-            {
-                "action": "moveFocus",
-                "direction": "nextInOrder"
-            },
-            "id": "User.moveFocus.D7681B66"
+            "command": "find",
+            "id": "User.find"
         },
         {
             "command": 
@@ -37,8 +33,12 @@
             "id": "User.splitPane.A6751878"
         },
         {
-            "command": "find",
-            "id": "User.find"
+            "command": 
+            {
+                "action": "moveFocus",
+                "direction": "nextInOrder"
+            },
+            "id": "User.moveFocus.D7681B66"
         },
         {
             "command": "closePane",
@@ -69,20 +69,20 @@
             "keys": "ctrl+c"
         },
         {
-            "id": "User.closeTab.0",
-            "keys": "ctrl+shift+w"
-        },
-        {
-            "id": "User.find",
-            "keys": "ctrl+shift+f"
+            "id": "User.paste",
+            "keys": "ctrl+v"
         },
         {
             "id": "User.restartConnection",
             "keys": "alt+shift+r"
         },
         {
-            "id": "User.paste",
-            "keys": "ctrl+v"
+            "id": "User.find",
+            "keys": "ctrl+shift+f"
+        },
+        {
+            "id": "User.closeTab.0",
+            "keys": "ctrl+shift+w"
         },
         {
             "id": "User.splitPane.A6751878",
@@ -181,6 +181,12 @@
                 "hidden": true,
                 "name": "Ubuntu 22.04.5 LTS",
                 "source": "CanonicalGroupLimited.Ubuntu22.04LTS_79rhkp1fndgsc"
+            },
+            {
+                "guid": "{a1c4417d-ff2a-5421-9b4f-7e9dbb005d5c}",
+                "hidden": false,
+                "name": "docker-desktop",
+                "source": "Microsoft.WSL"
             }
         ]
     },
