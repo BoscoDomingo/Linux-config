@@ -384,4 +384,12 @@
 		"key": "ctrl+i",
 		"command": "-composer.startComposerPrompt"
 	},
+	{
+		"key": "ctrl+alt+g",
+		"command": "relative-goto.select"
+	},
+	{
+		"key": "alt+s",
+		"command": "-relative-goto.select"
+	},
 ]
