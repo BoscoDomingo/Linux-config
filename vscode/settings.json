@@ -68,6 +68,8 @@
     "editor.semanticHighlighting.enabled": true,
     "editor.suggestSelection": "first",
     "editor.guides.bracketPairs": "active",
+    "editor.minimap.enabled": true,
+    "editor.minimap.showMarkSectionHeaders": true,
     "editor.minimap.renderCharacters": false,
     "editor.minimap.showSlider": "always",
     "editor.mouseWheelZoom": false,
@@ -86,7 +88,9 @@
         "source.addMissingImports": "explicit",
         "source.organizeImports.biome": "explicit",
         "source.fixAll": "explicit",
-        "source.formatDocument": "explicit"
+        "source.formatDocument": "explicit",
+        "source.removeUnusedImports": "explicit",
+        // "source.fixAll.biome": "explicit"
     },
     "editor.defaultFormatter": "biomejs.biome",
     "[markdown]": {
@@ -120,6 +124,9 @@
     "[dockercompose]": {
         "editor.defaultFormatter": "ms-azuretools.vscode-docker"
     },
+    "[dockerfile]": {
+        "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+    },
     "[terraform]": {
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "hashicorp.terraform",
@@ -140,9 +147,6 @@
     },
     "[xml]": {
         "editor.defaultFormatter": "mikeburgh.xml-format"
-    },
-    "[dockerfile]": {
-        "editor.defaultFormatter": "ms-azuretools.vscode-docker"
     },
     "[csharp]": {
         "editor.defaultFormatter": "ms-dotnettools.csharp",
@@ -929,11 +933,6 @@
     "markdown.updateLinksOnFileMove.enabled": "always",
     "markdown.extension.print.theme": "dark",
     "terminal.integrated.macOptionIsMeta": true,
-    "codeium.enableConfig": {
-        "*": true,
-        "bruno": true,
-        "plaintext": true
-    },
     "git.allowForcePush": true,
     "git.autofetchPeriod": 60,
     "git.autoStash": true,
@@ -1037,7 +1036,6 @@
         "valarray": "cpp",
         "variant": "cpp"
     },
-
     "jest.autoRun": {
         "watch": false
     },
@@ -1136,7 +1134,6 @@
         "typeparameter"
     ],
     "editor.inlineSuggest.suppressSuggestions": true,
-    "cody.autocomplete.formatOnAccept": true,
     "security.allowedUNCHosts": [
         "wsl.localhost"
     ],
@@ -1203,10 +1200,6 @@
     "git-graph.repository.commits.showSignatureStatus": true,
     "git-graph.repository.sign.commits": true,
     "git-graph.repository.sign.tags": true,
-    "supermaven.enable": {
-        "*": false,
-        "dotenv": false
-    },
     "dotenv.enableAutocloaking": false,
     "markdown.extension.completion.enabled": true,
     "bun.debugTerminal.stopOnEntry": true,
@@ -1247,7 +1240,6 @@
     "go.hideErrorCases.errorCasesOpacity": 0.6,
     "lowlightgoerrors.MediumOpacity": "0.65",
     "lowlightgoerrors.LowOpacity": "0.3",
-    "codeium.disableSupercomplete": false,
     "go.toolsManagement.autoUpdate": true,
     "cursor.cpp.disabledLanguages": [
         "plaintext",
@@ -1282,4 +1274,5 @@
     "mise.configureExtensionsAutomatically": false,
     "mise.configureExtensionsUseSymLinks": true,
 
+    "docker.extension.enableComposeLanguageServer": false,
 }
