@@ -15,10 +15,9 @@ bindkey -e
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/bosco/.zshrc'
 fpath+=~/.config/zsh/completions
-# To add more completions, use the completion generation command with a `>` to redirect the output to the file.
-# File must be named like `_<command>`
+# To add more completions, use the completion generation command with a `>` instead of sourcing them here.
+# File must be named `_<command>`
 # e.g. `bat --completions zsh > ~/.config/zsh/completions/_bat`
-
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
