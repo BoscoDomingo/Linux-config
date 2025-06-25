@@ -87,6 +87,7 @@
     "editor.codeActionsOnSave": {
         "source.addMissingImports": "explicit",
         "source.organizeImports.biome": "explicit",
+        "source.action.useSortedKeys.biome": "explicit",
         "source.fixAll": "explicit",
         "source.formatDocument": "explicit",
         "source.removeUnusedImports": "explicit",
@@ -1275,4 +1276,5 @@
     "mise.configureExtensionsUseSymLinks": true,
 
     "docker.extension.enableComposeLanguageServer": false,
+    "json.schemaDownload.enable": true
 }
