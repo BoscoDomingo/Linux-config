@@ -44,6 +44,33 @@ fi
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # Custom commands
+## Kill processes on a specific port
+killport() {
+	if [ -z "$1" ]; then
+		echo "Usage: killport <port>"
+		echo "Example: killport 3000"
+		return 1
+	fi
+
+	local port="$1"
+	local pids=$(lsof -t -i:"$port" 2>/dev/null)
+
+	if [ -z "$pids" ]; then
+		echo "No processes found running on port $port"
+		return 0
+	fi
+
+	echo "Killing processes on port $port: $pids"
+	kill -9 $pids
+
+	if [ $? -eq 0 ]; then
+		echo "Successfully killed processes on port $port"
+	else
+		echo "Failed to kill some processes on port $port"
+		return 1
+	fi
+}
+
 ## Run once a day
 if [[ ! -e "/tmp/$(date -I).sem" ]]; then
 	touch "/tmp/$(date -I).sem"
