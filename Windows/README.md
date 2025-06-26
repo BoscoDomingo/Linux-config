@@ -15,3 +15,11 @@ mv .\Microsoft.PowerShell_profile.ps1 .\Microsoft.PowerShell_profile.ps1.bak && 
 cd C:\Users\bosco\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState
 mv .\settings.json .\settings.json.bak && New-Item -ItemType SymbolicLink -Path ".\settings.json" -Target "$LINUX_CONFIG_PATH\Windows\settings.json"
 ```
+
+# WSL setup
+
+Move the WSL config files to your home directory in Windows.
+
+# Git setup
+
+Just copy the .gitconfig file to your home directory in Windows.

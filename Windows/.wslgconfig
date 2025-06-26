@@ -1,0 +1,12 @@
+[system-distro-env]
+;Enabling these two together makes the UI look great but too scaled up (200%) and it becomes non-interactive
+;WESTON_RDP_FRACTIONAL_HI_DPI_SCALING_ROUNDUP=true
+;WESTON_RDP_HI_DPI_SCALING=true
+;Enabling any of these causes blurriness as of June 2025
+;WESTON_RDP_FRACTIONAL_HI_DPI_SCALING=true
+;WESTON_RDP_DEBUG_DESKTOP_SCALING_FACTOR=150
+;60 or 144
+WESTON_RDP_MONITOR_REFRESH_RATE=144
+
+;Github issue: https://github.com/microsoft/wslg/issues/23
+;You can try with `export GDK_DPI_SCALE=1.5` - Only for X11, not Wayland
