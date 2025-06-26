@@ -1,3 +1,5 @@
+#compdef fx
+
 _fx_complete() {
   local reply
   reply=("${(@f)$(COMP_ZSH="${LBUFFER}" fx)}")

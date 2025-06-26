@@ -1,10 +1,3 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-# fi
-
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=10000
@@ -12,12 +5,17 @@ SAVEHIST=10000
 setopt autocd
 bindkey -e
 # End of lines configured by zsh-newuser-install
+
+# Move the compdump dir to cache home to avoid clutter in $HOME
+export ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/compdump"
+
 # The following lines were added by compinstall
-zstyle :compinstall filename '/home/bosco/.zshrc'
-fpath+=~/.config/zsh/completions
+zstyle :compinstall filename "$HOME/.zshrc"
+fpath=("$XDG_CONFIG_HOME/zsh/completions" $fpath)
 # To add more completions, use the completion generation command with a `>` instead of sourcing them here.
 # File must be named `_<command>`
-# e.g. `bat --completions zsh > ~/.config/zsh/completions/_bat`
+# e.g. `bat --completions zsh > $XDG_CONFIG_HOME/zsh/completions/_bat`
+# To check if they've been loaded correctly, use `which _<command>` or `type _<command>`
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
