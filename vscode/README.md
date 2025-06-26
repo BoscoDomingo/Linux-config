@@ -1,6 +1,8 @@
 # VS Code / Cursor settings
 
-For VS Code the settings sync should work well enough. For Cursor, the settings sync is not available and thus more manual management is needed.
+**For VS Code the built-in settings sync should work well enough**.
+
+For Cursor, the settings sync is not available and thus more manual management is needed.
 
 ## Semi-automated setup
 
