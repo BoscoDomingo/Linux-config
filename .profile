@@ -136,6 +136,21 @@ fi
 # bat config
 export BAT_CONFIG_PATH="$XDG_CONFIG_HOME/bat/bat.conf"
 
+# Required for zsh autocomplete to work.
+# Something is turning it on automatically internally,
+# and no settings in .zshrc would work
+if [ -n "$ZSH_VERSION" ]; then
+	if [ -n "$(setopt | grep completealiases)" ]; then
+		unsetopt completealiases
+	fi
+	if [ -n "$(setopt | grep complete_aliases)" ]; then
+		unsetopt complete_aliases
+	fi
+	if [ -n "$(setopt | grep completealiases)" ]; then
+		echo "completealiases is set. Unset it manually."
+	fi
+fi
+
 # tmux config
 # Start tmux if not already inside a tmux session and not in VS Code nor Cursor
 if command -v tmux >/dev/null 2>&1; then

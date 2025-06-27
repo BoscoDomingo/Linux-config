@@ -33,21 +33,48 @@
 [diff]
 	colorMoved = default
 
-[safe]
-	directory = %(prefix)///wsl.localhost/Ubuntu/home/bosco/repos/
-	directory = %(prefix)///wsl.localhost/Ubuntu/home/bosco/repos/*
-	directory = %(prefix)///wsl.localhost/Ubuntu/home/bosco/repos/**/*
 [rerere]
 	enabled = true
 	autoUpdate = true
+
 [maintenance]
 	repo = /home/bosco/repos/Linux-config
+
 [alias]
+	ls = log --oneline --graph --decorate
 	lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+	ls = log --oneline --graph --decorate --show-signature
+
+	bv = branch -vv
+	bav = branch --all -vv
+
+	d = diff --ignore-all-space --ignore-cr-at-eol
+	dc = diff --ignore-all-space --ignore-cr-at-eol --cached
+	da = diff --ignore-all-space --ignore-cr-at-eol HEAD
+	daa = diff HEAD^!
+
+	sc = show HEAD
+	sp = show HEAD~1
+
 	add = add --renormalize
+	st = status
+	sh = stash
+	shp = stash pop
+	rb = rebase
+	sw = switch
+	swm = switch main
+	swd = switch develop
+
+	c = commit --clean=strip
+	cm = commit --clean=strip -m
+
+	clcd = f(){ git clone "$1" && cd "$(basename $1 .git)"; unset -f f; }; f
+
 [commit]
 	gpgSign = true
+
 [tag]
 	gpgSign = true
+
 [fetch]
 	prune = true

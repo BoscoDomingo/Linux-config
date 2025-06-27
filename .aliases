@@ -53,9 +53,10 @@ alias gdaa="git diff HEAD"                                # ALL
 
 alias gsc="git show HEAD"   # Show changes made by the current commit
 alias gsp="git show HEAD~1" # Show changes made by the previous commit
-alias gccd='f(){ git clone "$1" && cd "$(basename $1 .git)"; unset -f f; }; f'
 # alias gsc="git diff HEAD^!"
 # alias gsp="git diff HEAD~1^!"
+
+alias gccd='f(){ git clone "$1" && cd "$(basename $1 .git)"; unset -f f; }; f'
 
 alias gsm="git switch main"
 

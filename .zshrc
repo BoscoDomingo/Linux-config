@@ -6,16 +6,22 @@ setopt autocd
 bindkey -e
 # End of lines configured by zsh-newuser-install
 
-# Move the compdump dir to cache home to avoid clutter in $HOME
-export ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/compdump"
-
-# The following lines were added by compinstall
-zstyle :compinstall filename "$HOME/.zshrc"
+# Completions
 fpath=("$XDG_CONFIG_HOME/zsh/completions" $fpath)
 # To add more completions, use the completion generation command with a `>` instead of sourcing them here.
 # File must be named `_<command>`
 # e.g. `bat --completions zsh > $XDG_CONFIG_HOME/zsh/completions/_bat`
 # To check if they've been loaded correctly, use `which _<command>` or `type _<command>`
+
+# For tab to work correctly, the completealiases option must be unset (either one works)
+unsetopt completealiases
+unsetopt complete_aliases
+# However, something keep re-enabling it, so I had to use a workaround
+# in .profile to unset it again after sourcing .zshrc
+# To check if it's working, use `setopt | grep completealiases` and see if it's set (it shouldn't)
+
+# The following lines were added by compinstall
+zstyle :compinstall filename "$HOME/.zshrc"
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
@@ -114,8 +120,6 @@ plugins=(git
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-# Enable auto-complete of aliases
-setopt complete_aliases
 
 # History
 setopt share_history          # share history between all sessions
@@ -138,15 +142,19 @@ else
 	source <(fzf --zsh)
 fi
 
-# Oh My Posh
+# Start Oh My Posh
 eval "$(oh-my-posh init zsh --config ~/shell_themes/niceDark.omp.json)"
 
+# Autosuggestions and syntax highlighting
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# Mise completions
 if [ -e "$HOME/.local/.mise-completions.zsh" ]; then
 	source $HOME/.local/.mise-completions.zsh
 fi
+
+# Rip2 completions
 if [ -e "$HOME/.local/rip2/completions.zsh" ]; then
 	source $HOME/.local/rip2/completions.zsh
 fi
