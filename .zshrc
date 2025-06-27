@@ -111,10 +111,6 @@ plugins=(git
 	docker
 )
 
-if [ -d "${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src" ]; then
-	fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
-fi
-
 source $ZSH/oh-my-zsh.sh
 
 # User configuration

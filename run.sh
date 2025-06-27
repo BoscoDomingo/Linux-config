@@ -74,8 +74,9 @@ brew install gcc
 brew install oh-my-posh
 # Original at https://gist.github.com/BoscoDomingo/62f35772e52178b31353a99d2d80ca77
 git clone git@gist.github.com:62f35772e52178b31353a99d2d80ca77.git ~/shell_themes
-# Extra shell completions
-git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions
+
+# Link to oh-my-zsh custom
+rm -rf ~/.oh-my-zsh/custom && ln -s $CURRENT_DIR/.oh-my-zsh/custom ~/.oh-my-zsh/custom
 
 # tmux
 brew install tmux
