@@ -164,7 +164,7 @@ if command -v tmux >/dev/null 2>&1; then
 	# echo "[.profile debug] TMUX=$TMUX, VSCODE_IPC_HOOK_CLI=$VSCODE_IPC_HOOK_CLI, TERM_PROGRAM=$TERM_PROGRAM" 1>&2
 	# printenv 1>&2 # Debug print all environment variables
 
-	if [ -z "$TMUX" ] && [ -z "$VSCODE_IPC_HOOK_CLI" ] && [ "$TERM_PROGRAM" != "Cursor" ] && [ "$TERM_PROGRAM" != "vscode" ]; then
+	if [ -z "$TMUX" ] && [ -z "$VSCODE_IPC_HOOK_CLI" ] && [ "$TERM_PROGRAM" != "Cursor" ] && [ "$TERM_PROGRAM" != "vscode" ] && [ "$TERM_PROGRAM" != "WarpTerminal" ]; then
 		tmux a -t default -c "zsh && clear" || tmux new-session -s default -c "zsh && clear"
 		# tmux send-keys -t default "zsh" C-m
 		# tmux send-keys -t default "clear" C-m
