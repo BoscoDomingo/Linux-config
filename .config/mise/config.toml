@@ -11,6 +11,8 @@ dotnet = "latest"
 rust = "latest"
 "tldr++" = "latest"
 fx = "latest"
+stripe = "latest"
+dotenvx = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["go"]
@@ -18,3 +20,4 @@ idiomatic_version_file_enable_tools = ["go"]
 [alias]
 "tldr++" = "ubi:isacikgoz/tldr"
 tlrc = "cargo:tlrc"
+dotenvx = "ubi:dotenvx/dotenvx"
