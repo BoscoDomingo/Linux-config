@@ -240,6 +240,10 @@
 	},
 	"json.schemaDownload.enable": true,
 
+	"[toml]": {
+		"editor.defaultFormatter": "tamasfe.even-better-toml"
+	},
+
 	"[yaml]": {
 		"editor.defaultFormatter": "redhat.vscode-yaml"
 	},
@@ -564,40 +568,6 @@
 	"C_Cpp.autocomplete": "disabled",
 	"C_Cpp.errorSquiggles": "disabled",
 	"C_Cpp.intelliSenseEngine": "disabled",
-	"cSpell.language": "en,en-GB,en-US,es,es-ES",
-	"cSpell.enableFiletypes": [
-		"!erlang",
-		"!handlebars",
-		"!haskell",
-		"!php",
-		"!pug",
-		"!scala",
-		"!scss",
-		"biome_syntax_tree",
-		"bruno",
-		"dockerfile",
-		"dotenv",
-		"jsx",
-		"sql",
-		"terraform",
-		"tf",
-		"toml"
-	],
-	"cSpell.userWords": [
-		"dtos",
-		"fastify",
-		"FIRSTNAME",
-		"inequivocal",
-		"Kysely",
-		"LASTNAME",
-		"sortability",
-		"Supabase",
-		"typebox",
-		"Upserts",
-		"usecase",
-		"valueobject",
-		"valueobjects"
-	],
 
 	"debug.console.acceptSuggestionOnEnter": "on",
 
@@ -1181,6 +1151,28 @@
 	"git-graph.dialog.merge.noFastForward": false,
 
 	// MARK: - Other extensions
+	"cSpell.language": "en,en-GB,en-US,es,es-ES",
+	"cSpell.enableFiletypes": ["*"],
+	"cSpell.userWords": [
+		"dotnet",
+		"dtos",
+		"fastify",
+		"FIRSTNAME",
+		"inequivocal",
+		"Kysely",
+		"LASTNAME",
+		"neovim",
+		"sortability",
+		"Supabase",
+		"tldr",
+		"typebox",
+		"Upserts",
+		"usecase",
+		"valueobject",
+		"valueobjects"
+	],
+	"cSpell.caseSensitive": true,
+	"cSpell.minWordLength": 2,
 
 	"workbench.editor.autoLockGroups": {
 		"mainThreadWebview-markdown.preview": true
@@ -1295,7 +1287,5 @@
 		"typeparameter"
 	],
 	"harper.isolateEnglish": true,
-	"typos.diagnosticSeverity": "Information",
-	"cSpell.caseSensitive": true,
-	"cSpell.minWordLength": 2
+	"typos.diagnosticSeverity": "Information"
 }
