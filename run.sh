@@ -127,6 +127,9 @@ mise use -g tldr++@latest
 # mise use -g tlrc@latest
 # mise use -g tealdeer@latest
 
+# Better cp alternative
+sudo apt install gcp
+
 # Homebrew tools
 brew install cheat \
 	progress \

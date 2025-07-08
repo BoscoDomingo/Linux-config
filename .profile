@@ -170,3 +170,7 @@ if command -v tmux >/dev/null 2>&1; then
 		# tmux send-keys -t default "clear" C-m
 	fi
 fi
+
+
+unalias gcp
+unalias gbgd

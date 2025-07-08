@@ -6,6 +6,9 @@ alias rm="echo Use 'rip' instead of rm."
 alias df='df -h'
 alias du='du -h'
 
+# Better cp alternative
+alias cp='gcp'
+
 # ls
 alias le='eza -a -T -L=1 -1 -l --color auto --icons --group-directories-first --header --created --modified --time-style=long-iso --git'
 alias l='le --git-ignore'
@@ -30,7 +33,7 @@ alias gshp="git stash pop"
 
 alias git-delete-untracked-branches="LANG=en_US git branch -vv | awk '/: gone]/{print $1}' | xargs -p git branch -D"
 alias gdu="git-delete-untracked-branches"
-# This is because another source added this alias and I want to overwrite it
+# This is because zsh's git plugin added this alias and I want to overwrite it
 alias gbgd="git-delete-untracked-branches"
 
 alias gc="git commit --clean=strip"
