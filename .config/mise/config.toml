@@ -1,5 +1,5 @@
 [tools]
-node = "lts"
+node = "latest"
 bun = "latest"
 go = "latest"
 neovim = "latest"
