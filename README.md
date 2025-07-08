@@ -11,7 +11,7 @@
 	6. [oh-my-zsh](#oh-my-zsh)
 3. [Version managers](#version-managers)
 	1. [mise](#mise)
-			1. [Optional extras](#optional-extras)
+			1. [Installing from repos](#installing-from-repos)
 4. [Homebrew packages](#homebrew-packages)
 		1. [Deprecated](#deprecated)
 5. [GPG and commit signing](#gpg-and-commit-signing)
@@ -82,7 +82,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 Recommended since you can manage multiple language SDKs from here, not needing a version manager for each.
 
-It also works with [asdf plugins](https://github.com/asdf-vm/asdf-plugins), and a bunch of [other backends (github, vfox, etc)](https://mise.jdx.dev/dev-tools/backends/), so you can manage pretty much anything with it. Pretty neat!
+It also works directly with GitHub repos, [asdf plugins](https://github.com/asdf-vm/asdf-plugins), and a bunch of [other backends (aqua, vfox, etc)](https://mise.jdx.dev/dev-tools/backends/), so you can manage pretty much anything with it. Pretty neat!
 
 ```sh
 # Prerequisites
@@ -116,14 +116,14 @@ mise use -g node@lts
 npx pnpm i -g pnpm # To save pnpm to $PNPM_HOME so cache won't be lost on updates
 ```
 
-#### Optional extras
+Optional extras:
 
 * [ni](https://github.com/antfu/ni)
 `pnpm i -g @antfu/ni`
 * [taze](https://github.com/antfu-collective/taze)
 `npm i -g taze` - pnpm doesn't *need* it but it's still useful
 * [ncu](https://www.npmjs.com/package/npm-check-updates)
-`npm i -g npm-check-updates` - pnpm doesn't need it
+`npm i -g npm-check-updates` - pnpm doesn't need it. Taze is better, but always nice to have an alternative.
 
 </details>
 
@@ -182,6 +182,18 @@ mise use -g rust@latest
 ```
 </details>
 
+#### Installing from repos
+
+If a tool is not directly available in mise, you can install it from its GitHub repo.
+
+The easiest way is to add the `org_or_user/repo` slug to the `~/.config/mise/config.toml` file in the `[alias]` section.
+
+```toml
+[alias]
+"tldr++" = "ubi:isacikgoz/tldr"
+```
+
+and then run `mise use <alias>` to install it.
 
 # Homebrew packages
 
