@@ -51,7 +51,7 @@ if command -v ssh-add >/dev/null 2>&1; then
   if [ "$_ssh_add_rc" -eq 2 ]; then
     # No reachable agent at our socket; start one.
     mkdir -p "$HOME/.ssh/agent"
-    rm -f "$_ssh_agent_sock"
+    /usr/bin/rm -f "$_ssh_agent_sock"
     eval "$(ssh-agent -a "$_ssh_agent_sock" -s)" >/dev/null
     unset SSH_AGENT_PID
   fi
