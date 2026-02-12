@@ -278,10 +278,13 @@ zstyle ':fzf-tab:complete:*' fzf-preview '$HOME/bin/fzf-preview.sh $realpath'
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --tree --color=always --icons=always --git $realpath | head -200'
 zstyle ':fzf-tab:*' switch-group '<' '>'
 
-# Make Tab cycle through completions, keep fzf for directory navigation
-export FZF_COMPLETURE_TRIGGER_DEFAULT=";;"
+# Prevent ~ from being expanded when cycling completions
+# (zsh-autocomplete's custom _expand ignores keep-prefix, so remove it from the completer list)
+zstyle ':completion:*' completer _complete _complete:-fuzzy _correct _approximate _ignored
+
+# Tab cycles forward, Shift+Tab cycles backward
 bindkey '^I' menu-complete
-bindkey '^[[Z' reverse-menu-complete
+bindkey "$terminfo[kcbt]" reverse-menu-complete
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -335,5 +338,3 @@ $XDG_CONFIG_HOME/tmux/start-tmux.sh
 
 # opencode
 export PATH=/home/bosco/.opencode/bin:$PATH
-
-
