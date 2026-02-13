@@ -41,20 +41,23 @@ fi
 # gpgconf --launch gpg-agent
 
 # Prefer OpenSSH agent for Git/JJ SSH commit signing.
+# Use a fixed socket path so the agent survives shell reloads.
 if command -v ssh-add >/dev/null 2>&1; then
-  case "${SSH_AUTH_SOCK:-}" in
-  "$HOME/.ssh/agent/"*) ;;
-  *) unset SSH_AUTH_SOCK ;;
-  esac
+  _ssh_agent_sock="$HOME/.ssh/agent/agent.sock"
+  export SSH_AUTH_SOCK="$_ssh_agent_sock"
 
-  if ssh-add -l >/dev/null 2>&1; then
-    :
-  else
-    if [ $? -eq 2 ]; then
-      # No reachable SSH agent; start one for this session.
-      eval "$(ssh-agent -s)" >/dev/null
-    fi
+  ssh-add -l >/dev/null 2>&1
+  _ssh_add_rc=$?
+  if [ "$_ssh_add_rc" -eq 2 ]; then
+    # No reachable agent at our socket; start one.
+    mkdir -p "$HOME/.ssh/agent"
+    rm -f "$_ssh_agent_sock"
+    eval "$(ssh-agent -a "$_ssh_agent_sock" -s)" >/dev/null
+    unset SSH_AGENT_PID
   fi
+  unset _ssh_add_rc
+
+  unset _ssh_agent_sock
 fi
 
 # SSH signing

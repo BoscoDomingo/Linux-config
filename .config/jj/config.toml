@@ -9,6 +9,7 @@ behavior = "keep"
 backend = "ssh"
 key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBJ9uF4A1FF454eFAWhQab6uOuhtl6PVrvAez3AWuFLN Bosco Domingo"
 backends.ssh.allowed-signers = "~/.ssh/allowed_signers"
+backends.ssh.program = "ssh-sign"
 
 [diff]
 tool = "delta"

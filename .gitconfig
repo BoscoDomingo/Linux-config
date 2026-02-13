@@ -19,6 +19,7 @@
 
 [gpg "ssh"]
   allowedSignersFile = ~/.ssh/allowed_signers
+  program = ssh-sign
 
 [commit]
   gpgSign = true
