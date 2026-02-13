@@ -87,7 +87,7 @@
   c = commit --clean=strip
   cm = commit --clean=strip -m
 
-  clcd = f(){ git clone "$1" && cd "$(basename $1 .git)"; unset -f f; }; f
+  clcd = 'f(){ git clone "$1" && cd "$(basename $1 .git)"; unset -f f; }; f'
 
 # Show all local branches and their upstreams
   bv = branch -vv
@@ -101,3 +101,5 @@
   swd = switch develop
 
   dub=delete-untracked-branches
+[submodule]
+	recurse = true
