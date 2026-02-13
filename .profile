@@ -41,21 +41,21 @@ fi
 # gpgconf --launch gpg-agent
 
 # Prefer OpenSSH agent for Git/JJ SSH commit signing.
-# if command -v ssh-add >/dev/null 2>&1; then
-#   case "${SSH_AUTH_SOCK:-}" in
-#   "$HOME/.ssh/agent/"*) ;;
-#   *) unset SSH_AUTH_SOCK ;;
-#   esac
-# 
-#   if ssh-add -l >/dev/null 2>&1; then
-#     :
-#   else
-#     if [ $? -eq 2 ]; then
-#       # No reachable SSH agent; start one for this session.
-#       eval "$(ssh-agent -s)" >/dev/null
-#     fi
-#   fi
-# fi
+if command -v ssh-add >/dev/null 2>&1; then
+  case "${SSH_AUTH_SOCK:-}" in
+  "$HOME/.ssh/agent/"*) ;;
+  *) unset SSH_AUTH_SOCK ;;
+  esac
+
+  if ssh-add -l >/dev/null 2>&1; then
+    :
+  else
+    if [ $? -eq 2 ]; then
+      # No reachable SSH agent; start one for this session.
+      eval "$(ssh-agent -s)" >/dev/null
+    fi
+  fi
+fi
 
 # SSH signing
 export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=~/.ssh/known_hosts -o IdentitiesOnly=yes"
