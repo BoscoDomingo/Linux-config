@@ -34,52 +34,57 @@ fi
 printf "\n=== Config Files Setup ===\n"
 # Setup config files and backup existing ones
 CURRENT_DIR=$(pwd)
-read -p "Do you want to backup and link existing dotfiles? (Y/n): " backup_dotfiles
-if [ "$backup_dotfiles" != "n" ]; then
-  if [ -e ~/.profile ]; then
-    mv ~/.profile ~/.profile.bak
-  fi
-  ln -s $CURRENT_DIR/.profile $HOME
 
-  if [ -e ~/.aliases ]; then
-    mv ~/.aliases ~/.aliases.bak
-  fi
-  ln -s $CURRENT_DIR/.aliases $HOME
+ensure_link() {
+  src="${1%/}"
+  dst="$2"
 
-  if [ -e ~/.bashrc ]; then
-    mv ~/.bashrc ~/.bashrc.bak
+  if [ -L "$dst" ]; then
+    current_target=$(readlink "$dst")
+    current_target="${current_target%/}"
+    if [ "$current_target" = "$src" ]; then
+      return
+    fi
+    mv "$dst" "$dst.bak"
+  elif [ -e "$dst" ]; then
+    mv "$dst" "$dst.bak"
   fi
-  ln -s $CURRENT_DIR/.bashrc $HOME
 
-  if [ -e ~/.zshrc ]; then
-    mv ~/.zshrc ~/.zshrc.bak
-  fi
-  ln -s $CURRENT_DIR/.zshrc $HOME
+  ln -s "$src" "$dst"
+}
+
+read -p "Do you want to backup and link existing dotfiles? (Y/n): " setup_dotfiles
+if [ "$setup_dotfiles" != "n" ]; then
+  ensure_link "$CURRENT_DIR/.profile" "$HOME/.profile"
+  ensure_link "$CURRENT_DIR/.aliases" "$HOME/.aliases"
+  ensure_link "$CURRENT_DIR/.bashrc" "$HOME/.bashrc"
+  ensure_link "$CURRENT_DIR/.zshrc" "$HOME/.zshrc"
+  ensure_link "$CURRENT_DIR/.nanorc" "$HOME/.nanorc"
+  ensure_link "$CURRENT_DIR/.nirc" "$HOME/.nirc"
 
   if grep -q "Ubuntu" /etc/os-release 2>/dev/null; then
-    if [ -e ~/.zshenv ]; then
-      mv ~/.zshenv ~/.zshenv.bak
-    fi
-    ln -s $CURRENT_DIR/Ubuntu/.zshenv $HOME
+    ensure_link "$CURRENT_DIR/Ubuntu/.zshenv" "$HOME/.zshenv"
   fi
-  if [ -e ~/.gitconfig ]; then
-    mv ~/.gitconfig ~/.gitconfig.bak
-  fi
-  ln -s $CURRENT_DIR/.gitconfig $HOME
-  ln -s $CURRENT_DIR/.gitignore_global $HOME
+
+  ensure_link "$CURRENT_DIR/.gitconfig" "$HOME/.gitconfig"
+  ensure_link "$CURRENT_DIR/.gitignore_global" "$HOME/.gitignore_global"
 fi
 
-read -p "Do you want to symlink the config files? (Y/n): " link_files
-if [ "$link_files" != "n" ]; then
-  ln -s $CURRENT_DIR/.nanorc $HOME
-  ln -s $CURRENT_DIR/.nirc $HOME
-  ln -s $CURRENT_DIR/scripts $HOME/.local/bin/scripts
+read -p "Do you want to symlink the config files & scripts? (Y/n): " setup_config_files
+if [ "$setup_config_files" != "n" ]; then
+  mkdir -p "$HOME/.local/bin"
+  for script_path in "$CURRENT_DIR"/scripts/*; do
+    if [ -f "$script_path" ]; then
+      script_name=$(basename "$script_path")
+      ensure_link "$script_path" "$HOME/.local/bin/$script_name"
+    fi
+  done
 
   # Automatically link all subdirectories in .config to $XDG_CONFIG_HOME
   for config_dir in $CURRENT_DIR/.config/*/; do
     if [ -d "$config_dir" ]; then
       dir_name=$(basename "$config_dir")
-      ln -s "$config_dir" "$XDG_CONFIG_HOME/$dir_name"
+      ensure_link "$config_dir" "$XDG_CONFIG_HOME/$dir_name"
     fi
   done
 fi
@@ -87,39 +92,24 @@ fi
 printf "\n=== Cursor Settings Setup ===\n"
 read -p "Do you want to symlink the Cursor settings? (Y/n): " link_cursor_settings
 if [ "$link_cursor_settings" != "n" ]; then
-  # Link Cursor settings
-  mkdir -p $XDG_CONFIG_HOME/Cursor/User
-  if [ -e $XDG_CONFIG_HOME/Cursor/User/settings.json ]; then
-    mv $XDG_CONFIG_HOME/Cursor/User/settings.json $XDG_CONFIG_HOME/Cursor/User/settings.json.bak
-  fi
-  ln -s $CURRENT_DIR/vscode/settings.json $XDG_CONFIG_HOME/Cursor/User/settings.json
-  if [ -e $XDG_CONFIG_HOME/Cursor/User/keybindings.json ]; then
-    mv $XDG_CONFIG_HOME/Cursor/User/keybindings.json $XDG_CONFIG_HOME/Cursor/User/keybindings.json.bak
-  fi
-  ln -s $CURRENT_DIR/vscode/keybindings.json $XDG_CONFIG_HOME/Cursor/User/keybindings.json
+  mkdir -p "$XDG_CONFIG_HOME/Cursor/User"
+  ensure_link "$CURRENT_DIR/vscode/settings.json" "$XDG_CONFIG_HOME/Cursor/User/settings.json"
+  ensure_link "$CURRENT_DIR/vscode/keybindings.json" "$XDG_CONFIG_HOME/Cursor/User/keybindings.json"
 fi
 
 printf "\n=== SSH Config Setup ===\n"
 read -p "Do you want to symlink the SSH config? (Y/n): " link_ssh_config
 if [ "$link_ssh_config" != "n" ]; then
-  # Link SSH config
-  mkdir -p $HOME/.ssh
-  if [ -e $HOME/.ssh/config ]; then
-    mv $HOME/.ssh/config $HOME/.ssh/config.bak
-  fi
-  ln -s $CURRENT_DIR/.ssh/config $HOME/.ssh/config
+  mkdir -p "$HOME/.ssh"
+  ensure_link "$CURRENT_DIR/.ssh/config" "$HOME/.ssh/config"
 fi
 
 printf "\n=== GPG Config Setup ===\n"
 read -p "Do you want to symlink the GPG agent config? (y/N): " link_gpg_agent_config
 if [ "$link_gpg_agent_config" = "y" ]; then
-  # Link GPG agent config
-  mkdir -p $HOME/.gnupg
-  chmod 700 $HOME/.gnupg
-  if [ -e $HOME/.gnupg/gpg-agent.conf ]; then
-    mv $HOME/.gnupg/gpg-agent.conf $HOME/.gnupg/gpg-agent.conf.bak
-  fi
-  ln -s $CURRENT_DIR/gpg-agent.conf $HOME/.gnupg/gpg-agent.conf
+  mkdir -p "$HOME/.gnupg"
+  chmod 700 "$HOME/.gnupg"
+  ensure_link "$CURRENT_DIR/gpg-agent.conf" "$HOME/.gnupg/gpg-agent.conf"
 fi
 
 # Import GPG key and setup SSH authentication
@@ -169,8 +159,11 @@ fi
 
 # Install Homebrew and dependencies
 printf "\n=== Homebrew Setup ===\n"
-read -p "Do you want to install Homebrew or Zerobrew? (h/z/N): " brew_choice
+read -p "Install Homebrew and Zerobrew? (Y/n/h/z): " brew_choice
 case "$brew_choice" in
+  [nN]*)
+    echo "Skipping Homebrew/Zerobrew installation."
+    ;;
   [hH]*)
     echo "Installing Homebrew..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -179,13 +172,14 @@ case "$brew_choice" in
   [zZ]*)
     echo "Installing Zerobrew..."
     curl -sSL https://zerobrew.rs/install | bash
-    echo 'alias brew="zb"' >> ~/.bashrc
-    echo 'alias brew="zb"' >> ~/.zshrc
     echo 'source <(zb completion zsh)' >> ~/.zshrc
-    alias brew="zb"
     ;;
   *)
-    echo "Skipping Homebrew/Zerobrew installation."
+    echo "Installing Homebrew and Zerobrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    curl -sSL https://zerobrew.rs/install | bash
+    echo 'source <(zb completion zsh)' >> ~/.zshrc
     ;;
 esac
 
@@ -259,10 +253,10 @@ else
   echo "Skipping mise installation."
 fi
 
-read -p "Do you want to install global npm packages (pnpm, ni)? (Y/n): " install_npm_globals
+read -p "Do you want to install global npm packages (pnpm, ni, biome)? (Y/n): " install_npm_globals
 if [ "$install_npm_globals" != "n" ]; then
   npx pnpm i -g pnpm
-  pnpm i -g @antfu/ni
+  pnpm i -g @antfu/ni @biomejs/biome
 else
   echo "Skipping global npm packages installation."
 fi
