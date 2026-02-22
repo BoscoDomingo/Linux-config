@@ -1,13 +1,4 @@
-# This is the configuration file for Ghostty.
-#
-# This template file has been automatically created at the following
-# path since Ghostty couldn't find any existing config files on your system:
-#
-#   /Users/bosco/Library/Application Support/com.mitchellh.ghostty/config
-#
-# The template does not set any default options, since Ghostty ships
-# with sensible defaults for all options. Users should only need to set
-# options that they want to change from the default.
+# $XDG_CONFIG_HOME/ghostty/config
 #
 # Run `ghostty +show-config --default --docs` to view a list of
 # all available config options and their default values.
@@ -49,19 +40,47 @@
 # theme=Hardcore
 # theme=Molokai
 # theme=NightLion v2
-theme=Ayu Mirage
+theme = Ayu Mirage
 # theme=OneHalfDark
 
+# Shaders
+# custom-shader = /home/bosco/.config/ghostty/shaders/blaze_sparks.glsl
+# custom-shader = ~/.config/ghostty/shaders/cursor_blaze.glsl
+custom-shader = ~/.config/ghostty/shaders/cursor_border_1.glsl
+# custom-shader = /home/bosco/.config/ghostty/shaders/cursor_frozen.glsl # also slow, although cool af
+# custom-shader = ~/.config/ghostty/shaders/cursor_smear.glsl # Just a yellow smear
+# custom-shader = ~/.config/ghostty/shaders/cursor_smear_fade.glsl # A yellow smear with a gradient
+# custom-shader = ~/.config/ghostty/shaders/cursor_smear_fade_original.glsl
+# custom-shader = ~/.config/ghostty/shaders/cursor_smear_gradient.glsl # alternates between yellow and blue
+# custom-shader = ~/.config/ghostty/shaders/cursor_smear_gradient_original.glsl
+# custom-shader = ~/.config/ghostty/shaders/cursor_smear_rainbow.glsl
+custom-shader = ~/.config/ghostty/shaders/cursor_smear_rainbow_original.glsl
+# custom-shader = ~/.config/ghostty/shaders/debug_cursor_animated.glsl
+# custom-shader = /home/bosco/.config/ghostty/shaders/last_letter_zoom.glsl # doesn't work well
+# custom-shader = ~/.config/ghostty/shaders/manga_slash.glsl # doesn't work
+# custom-shader = /home/bosco/.config/ghostty/shaders/party_sparks.glsl # slow as shit
+# custom-shader = ~/.config/ghostty/shaders/shake.glsl
+custom-shader = ~/.config/ghostty/shaders/sparks.glsl
+# custom-shader = ~/.config/ghostty/shaders/test.glsl
+# custom-shader = ~/.config/ghostty/shaders/WIP.glsl # fairly cool, very similar to cursor_blaze but better
+# custom-shader = ~/.config/ghostty/shaders/zoom_and_aberration.glsl # reaaally cool effect
+
+
 # General
-cursor-style=bar
-background-opacity=.9
-background-blur=20
-link-url=true
-clipboard-trim-trailing-spaces=true
-cursor-click-to-move=true
-font-feature=calt,liga,dlig
-font-size=11
-font-family="Liga SFMono Nerd Font"
+cursor-style = bar
+cursor-style-blink = true
+cursor-click-to-move = true
+mouse-hide-while-typing = true
+
+background-opacity = 0.9
+background-blur = 20
+
+clipboard-trim-trailing-spaces = true
+
+link-url = true
+font-feature = calt,liga,dlig
+font-size = 11
+font-family = "Liga SFMono Nerd Font"
 
 # Keyboard bindings
 keybind = shift+insert=paste_from_clipboard
