@@ -23,6 +23,7 @@ gdu = "latest"
 yt-dlp = "latest"
 act = "latest"
 hyperfine = "latest"
+deno = "latest"
 zellij = "latest"
 
 [settings]
