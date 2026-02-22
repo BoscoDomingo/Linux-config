@@ -23,6 +23,7 @@ gdu = "latest"
 yt-dlp = "latest"
 act = "latest"
 hyperfine = "latest"
+zellij = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["go"]
