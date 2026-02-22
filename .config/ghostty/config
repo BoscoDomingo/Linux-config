@@ -66,6 +66,8 @@ font-family="Liga SFMono Nerd Font"
 # Keyboard bindings
 keybind = shift+insert=paste_from_clipboard
 keybind = control+insert=copy_to_clipboard
+keybind = performable:ctrl+c=copy_to_clipboard
+keybind = performable:ctrl+v=paste_from_clipboard
 
 # Overrides
 # In case the OS supplies its own Ghostty configs, we can let it override the default config.
