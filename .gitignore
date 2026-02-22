@@ -9,3 +9,6 @@
 .config/tmux/plugins
 *_secret
 .config/jj/repos/
+
+micro/
+!micro/*.json
