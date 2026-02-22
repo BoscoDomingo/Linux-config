@@ -328,13 +328,13 @@ export LANG="en_GB.UTF-8"
 export LC_ALL="en_GB.UTF-8"
 
 # MARK: Prompt
-eval "$(oh-my-posh init zsh --config ~/repos/Linux-config/themes/EliteSWE.omp.json)"
+eval "$(oh-my-posh init zsh --config ~/dotfiles/themes/EliteSWE.omp.json)"
 # eval "$(starship init zsh)"
 
 # echo -e "${BLUE}Done loading ${PINK}.zshrc${NC}"
 
-# MARK: Tmux
-$XDG_CONFIG_HOME/tmux/start-tmux.sh
-
 # opencode
 export PATH=/home/bosco/.opencode/bin:$PATH
+
+# MARK: Tmux
+$XDG_CONFIG_HOME/tmux/start-tmux.sh
