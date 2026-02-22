@@ -281,6 +281,13 @@ zstyle ':fzf-tab:*' switch-group '<' '>'
 # Prevent ~ from being expanded when cycling completions
 # (zsh-autocomplete's custom _expand ignores keep-prefix, so remove it from the completer list)
 zstyle ':completion:*' completer _complete _complete:-fuzzy _correct _approximate _ignored
+# Style options for autocomplete
+zstyle ':autocomplete:*' append-semicolon no
+zstyle ':autocomplete:*' min-input 3
+
+# Left and right arrow always edit current command, not search through history
+bindkey -M menuselect  '^[[D' .backward-char  '^[OD' .backward-char
+bindkey -M menuselect  '^[[C'  .forward-char  '^[OC'  .forward-char
 
 # Tab cycles forward, Shift+Tab cycles backward
 bindkey '^I' menu-complete
