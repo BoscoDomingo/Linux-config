@@ -10,6 +10,12 @@
 *_secret
 .config/jj/repos/
 
-micro/
-!micro/*.json
+# Micro writes themes, plugins, syntax files, backups, and buffers into its config dir.
+.config/micro/backups/
+.config/micro/buffers/
+.config/micro/colorschemes/
+.config/micro/plug/
+.config/micro/syntax/
+/micro/
+!/micro/*.json
 **/repos/
