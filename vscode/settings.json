@@ -124,24 +124,6 @@
 	"terminal.integrated.enableImages": true,
 	"terminal.integrated.altClickMovesCursor": true,
 	"terminal.integrated.profiles.windows": {
-		"PowerShell": {
-			"source": "PowerShell",
-			"icon": "terminal-powershell"
-		},
-		"Ubuntu (WSL)": {
-			"path": "ubuntu.exe"
-		},
-		"Command Prompt": {
-			"path": [
-				"${env:windir}\\Sysnative\\cmd.exe",
-				"${env:windir}\\System32\\cmd.exe"
-			],
-			"args": [],
-			"icon": "terminal-cmd"
-		},
-		"Git Bash": {
-			"source": "Git Bash"
-		}
 	},
 	"terminal.integrated.suggest.quickSuggestions": false,
 	"terminal.integrated.defaultProfile.linux": "zsh",
