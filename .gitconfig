@@ -75,6 +75,7 @@
   ls="log --oneline --graph --decorate --show-signature"
 
   st = status
+  sts = "status --short"
 
   sh = "stash -u"
   shp = stash pop
@@ -102,7 +103,7 @@
   bav = branch --all -vv
 
   rb = rebase
-  rbaa = rebase --autostash
+  rba = rebase --autostash
 
   sw = switch
   swm = switch main
