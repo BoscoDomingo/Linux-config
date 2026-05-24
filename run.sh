@@ -29,9 +29,9 @@ CURRENT_DIR="$SCRIPT_DIR"
 source "$SCRIPT_DIR/Setup/lib/helpers.sh"
 
 source "$SCRIPT_DIR/Setup/installers/symlinks.sh"
-source "$SCRIPT_DIR/Setup/installers/ai-agent-guards.sh"
 source "$SCRIPT_DIR/Setup/installers/gpg.sh"
 source "$SCRIPT_DIR/Setup/installers/packages.sh"
+source "$SCRIPT_DIR/Setup/installers/ai-agents.sh"
 source "$SCRIPT_DIR/Setup/installers/tools.sh"
 
 exec zsh

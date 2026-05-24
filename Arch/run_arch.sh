@@ -17,7 +17,7 @@ fi
 
 sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 
-pacman -S --noconfirm git openssh micro gnome-keyring
+pacman -S --noconfirm git openssh micro gnome-keyring curl ca-certificates file procps-ng
 
 # Uncomment en_US.UTF-8 and en_GB.UTF-8 in /etc/locale.gen and generate locales
 sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
