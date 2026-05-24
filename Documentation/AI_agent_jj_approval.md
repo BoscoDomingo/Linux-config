@@ -42,7 +42,7 @@ flowchart TD
 |---------------------------------------|-------------------------------------------------------------|
 | `AI/agent-guards/jj-approval`         | Shared classifier and provider response adapter             |
 | `AI/agent-guards/install`             | Idempotently installs/merges active user-level agent config |
-| `Setup/installers/ai-agent-guards.sh` | `run.sh` installer step                                     |
+| `Setup/installers/ai-agents.sh`       | `run.sh` AI-agent setup step; also handles user-global AI tooling |
 | `AI/cursor/rules/jj-ai-approval.mdc`  | Cursor instruction rule source                              |
 | `AI/cursor/hooks.json`                | Versioned Cursor hook template                              |
 | `.config/opencode/opencode.json`      | OpenCode permission defaults                                |

@@ -1,7 +1,7 @@
 #!/bin/bash
 # This script can be run manually, before cloning the repo. It will take care of cloning the actual repo and running the installer.
 
-sudo apt update && sudo apt upgrade && sudo apt install -y build-essential locales
+sudo apt update && sudo apt upgrade && sudo apt install -y build-essential locales git curl ca-certificates file procps
 
 # Install locales so character encoding works
 sudo locale-gen en_US.UTF-8
