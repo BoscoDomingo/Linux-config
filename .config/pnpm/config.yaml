@@ -1,0 +1,356 @@
+# pnpm 11 reads non-auth settings from YAML config, not .npmrc.
+# Defaults below are from pnpm 11.x docs; uncomment overrides as needed.
+
+# Dependency Resolution
+
+# overrides: {}
+# packageExtensions: {}
+# allowedDeprecatedVersions: {}
+# updateConfig:
+#   ignoreDependencies: []
+# supportedArchitectures:
+#   os: []
+#   cpu: []
+#   libc: []
+# ignoredOptionalDependencies: []
+
+# Default: 1440 minutes
+minimumReleaseAge: 2880
+
+# Default: undefined.
+# minimumReleaseAgeExclude: []
+
+# Default: true.
+# minimumReleaseAgeIgnoreMissingTime: true
+
+# Default: true when minimumReleaseAge is explicitly configured, false otherwise.
+minimumReleaseAgeStrict: false
+
+# Default: off.
+trustPolicy: no-downgrade
+
+# Default: [].
+# trustPolicyExclude: []
+
+# Default: undefined minutes.
+# trustPolicyIgnoreAfter: 525600
+
+# Default: false.
+# trustLockfile: false
+
+# Default: true.
+blockExoticSubdeps: true
+
+# Default: undefined. Project-level only; global scoped registries belong in .npmrc.
+# registries:
+#   default: https://registry.npmjs.org/
+#   "@jsr": https://npm.jsr.io/
+
+# Default: undefined.
+# namedRegistries: {}
+
+# Dependency Hoisting Settings
+
+# Default: true.
+# hoist: true
+
+# Default: true.
+# hoistWorkspacePackages: true
+
+# Default: ["*"].
+# hoistPattern:
+#   - "*"
+
+# Default: [].
+# publicHoistPattern: []
+
+# Default: false.
+# shamefullyHoist: false
+
+# Node-Modules Settings
+
+# Default: node_modules.
+# modulesDir: node_modules
+
+# Default: isolated. Values: isolated, hoisted, pnp.
+# nodeLinker: isolated
+
+# Default: true.
+# symlink: true
+
+# Default: true.
+# enableModulesDir: true
+
+# Default: node_modules/.pnpm.
+# virtualStoreDir: node_modules/.pnpm
+
+# Default: 120 on Linux/macOS, 60 on Windows.
+# virtualStoreDirMaxLength: 120
+
+# Default: false.
+# virtualStoreOnly: false
+
+# Default: auto. Values: auto, hardlink, copy, clone, clone-or-copy.
+# packageImportMethod: auto
+
+# Default: 10080 minutes.
+# modulesCacheMaxAge: 10080
+
+# Default: 1440 minutes.
+# dlxCacheMaxAge: 1440
+
+# Default: false. pnpm 11 enables this by default for global installs and dlx.
+# enableGlobalVirtualStore: false
+
+# Store Settings
+
+# Default: $PNPM_HOME/store, $XDG_DATA_HOME/pnpm/store, or platform default.
+# storeDir: ~/.local/share/pnpm/store
+
+# Default: true.
+# verifyStoreIntegrity: true
+
+# Default: false. Deprecated.
+# useRunningStoreServer: false
+
+# Default: true.
+# strictStorePkgContentCheck: true
+
+# Network Settings
+
+# Default: null.
+# httpsProxy: null
+
+# Default: null.
+# httpProxy: null
+
+# Default: null.
+# noProxy: null
+
+# Default: undefined.
+# localAddress: 127.0.0.1
+
+# Default: networkConcurrency x 3.
+# maxsockets: 48
+
+# Default: true.
+# strictSsl: true
+
+# Lockfile Settings
+
+# Default: true.
+# lockfile: true
+
+# Default: true.
+# preferFrozenLockfile: true
+
+# Default: false.
+# lockfileIncludeTarballUrl: false
+
+# Default: false.
+# gitBranchLockfile: false
+
+# Default: null.
+# mergeGitBranchLockfilesBranchPattern: null
+
+# Default: 1000.
+# peersSuffixMaxLength: 1000
+
+# Request Settings
+
+# Default: [github.com, gist.github.com, gitlab.com, bitbucket.com, bitbucket.org].
+# gitShallowHosts:
+#   - github.com
+#   - gist.github.com
+#   - gitlab.com
+#   - bitbucket.com
+#   - bitbucket.org
+
+# Default: auto, workers x 3 clamped to 16-64.
+# networkConcurrency: 64
+
+# Default: 2.
+# fetchRetries: 2
+
+# Default: 10.
+# fetchRetryFactor: 10
+
+# Default: 10000 ms.
+# fetchRetryMintimeout: 10000
+
+# Default: 60000 ms.
+# fetchRetryMaxtimeout: 60000
+
+# Default: 60000 ms.
+# fetchTimeout: 60000
+
+# Default: 10000 ms.
+# fetchWarnTimeoutMs: 10000
+
+# Default: 50 KiB/s.
+# fetchMinSpeedKiBps: 50
+
+# Peer Dependency Settings
+
+# Default: true.
+# autoInstallPeers: true
+
+# Default: true.
+# dedupePeerDependents: true
+
+# Default: false.
+# dedupePeers: false
+
+# Default: false.
+# strictPeerDependencies: false
+
+# Default: true.
+# resolvePeersFromWorkspaceRoot: true
+
+# peerDependencyRules:
+#   ignoreMissing: []
+#   allowedVersions: {}
+#   allowAny: []
+
+# CLI Settings
+
+# Default: auto. Values: auto, always, never.
+# color: auto
+
+# Default: info. Values: debug, info, warn, error.
+# loglevel: info
+
+# Default: false.
+# useBetaCli: false
+
+# Default: true.
+# recursiveInstall: true
+
+# Default: false.
+# engineStrict: false
+
+# Default: undefined.
+# npmPath: null
+
+# Default: download. Values: download, error, warn, ignore.
+# pmOnFail: download
+
+# Default: false.
+# ignoreWorkspaceRootCheck: false
+
+# Build Settings
+
+# Default: false.
+# ignoreScripts: false
+
+# Default: 5.
+# childConcurrency: 5
+
+# Default: true.
+# sideEffectsCache: true
+
+# Default: false.
+# sideEffectsCacheReadonly: false
+
+# Default: false if root, true otherwise.
+# unsafePerm: true
+
+# Default: null.
+# nodeOptions: null
+
+# Default: install. Values: install, warn, error, prompt, false.
+# verifyDepsBeforeRun: install
+
+# Default: true.
+# strictDepBuilds: true
+
+# Default: unlisted packages are disallowed/unreviewed.
+# allowBuilds: {}
+
+# Default: false.
+# dangerouslyAllowAllBuilds: false
+
+# Node.js Settings
+
+# Default: current node -v without the v prefix.
+# nodeVersion: 24.16.0
+
+# Default: undefined. Values: download, error, warn, ignore.
+# runtimeOnFail: null
+
+# Default: undefined.
+# nodeDownloadMirrors: {}
+
+# Other Settings
+
+# Default: "^". Values: "^", "~", "".
+# savePrefix: "^"
+
+# Default: latest.
+# tag: latest
+
+# Default: $XDG_DATA_HOME/pnpm/global or platform default.
+# globalDir: ~/.local/share/pnpm/global
+
+# Default: $XDG_DATA_HOME/pnpm/bin or platform default.
+# globalBinDir: ~/.local/share/pnpm/bin
+
+# Default: ~/.npmrc.
+# npmrcAuthFile: ~/.npmrc
+
+# Default: $XDG_STATE_HOME/pnpm or platform default.
+# stateDir: ~/.local/state/pnpm
+
+# Default: $XDG_CACHE_HOME/pnpm or platform default.
+# cacheDir: ~/.cache/pnpm
+
+# Default: false.
+# useStderr: false
+
+# Default: true.
+# updateNotifier: true
+
+# Default: true when nodeLinker is hoisted and system is POSIX.
+# preferSymlinkedExecutables: true
+
+# Default: false.
+# ignoreCompatibilityDb: false
+
+# Default: highest. Values: highest, time-based, lowest-direct.
+# resolutionMode: highest
+
+# Default: false.
+# registrySupportsTimeField: false
+
+# Default: true.
+# extendNodePath: true
+
+# Default: false.
+# deployAllFiles: false
+
+# Default: false.
+# dedupeDirectDeps: false
+
+# Default: true.
+# optimisticRepeatInstall: true
+
+# Default: undefined.
+# requiredScripts: []
+
+# Default: true. Global override is exported from .profile.
+# enablePrePostScripts: false
+
+# Default: null.
+# scriptShell: null
+
+# Default: false.
+# shellEmulator: false
+
+# Default: manual. Values: manual, strict, prefer.
+# catalogMode: manual
+
+# Default: true when environment is detected as CI.
+# ci: false
+
+# Default: false.
+# cleanupUnusedCatalogs: false
