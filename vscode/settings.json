@@ -1467,4 +1467,5 @@
 		"https://www.schemastore.org/": true
 	},
 	"coderabbit.region": "eu",
+	"powershell.promptToUpdatePowerShell": false,
 }
