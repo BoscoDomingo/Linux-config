@@ -11,9 +11,9 @@ printf "\n=== Config Files Setup ===\n"
 
 read -p "Do you want to backup and link existing dotfiles? (Y/n): " setup_dotfiles
 if [ "$setup_dotfiles" != "n" ]; then
-for config_file in [".profile" ".shellrc" ".aliases" ".bashrc" ".zshrc" ".zprofile" ".nanorc" ".nirc" ".npmrc" ".bunfig.toml", ".gitconfig", ".gitignore_global"]; do
-	ensure_link "$CURRENT_DIR/.$config_file" "$HOME/$config_file"
-done
+	for config_file in .profile .shellrc .aliases .bashrc .zshrc .zprofile .nanorc .nirc .npmrc .bunfig.toml .gitconfig .gitignore_global; do
+		ensure_link "$CURRENT_DIR/$config_file" "$HOME/$config_file"
+	done
 
 	if grep -q "Ubuntu" /etc/os-release 2>/dev/null; then
 		ensure_link "$CURRENT_DIR/Ubuntu/.zshenv" "$HOME/.zshenv"

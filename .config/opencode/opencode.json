@@ -1,24 +1,61 @@
 {
-  "$schema": "https://opencode.ai/config.json",
-  "permission": {
-    "bash": {
-      "jj *": "ask",
-      "jj status*": "allow",
-      "jj st*": "allow",
-      "jj diff*": "allow",
-      "jj d*": "allow",
-      "jj log*": "allow",
-      "jj l*": "allow",
-      "jj show*": "allow",
-      "jj sh*": "allow",
-      "jj op log*": "allow",
-      "jj oplog*": "allow",
-      "jj config get*": "allow",
-      "jj config list*": "allow",
-      "jj config path*": "allow",
-      "jj bookmark list*": "allow",
-      "jj git fetch*": "allow",
-      "jj gf*": "allow"
-    }
-  }
+	"$schema": "https://opencode.ai/config.json",
+	"autoupdate": "notify",
+	"shell": "/bin/zsh",
+	"snapshot": true,
+	"formatter": true,
+	"lsp": true,
+	"compaction": {
+		"auto": true,
+		"prune": true,
+		"tail_turns": 6
+	},
+	"watcher": {
+		"ignore": ["node_modules/**", ".git/**", "bun.lock"]
+	},
+	"reference": {
+		"dotfiles": {
+			"path": "~/dotfiles"
+		},
+		"opencode": {
+			"repository": "sst/opencode"
+		}
+	},
+	"permission": {
+		"edit": "ask",
+		"external_directory": {
+			"*": "ask"
+		},
+		"webfetch": "ask",
+		"bash": {
+			"*": "ask",
+			"jj *": "ask",
+			"jj status": "allow",
+			"jj status*": "allow",
+			"jj st": "allow",
+			"jj st*": "allow",
+			"jj diff": "allow",
+			"jj diff*": "allow",
+			"jj log": "allow",
+			"jj log*": "allow",
+			"jj show": "allow",
+			"jj show*": "allow",
+			"jj op log": "allow",
+			"jj op log*": "allow",
+			"jj oplog": "allow",
+			"jj oplog*": "allow",
+			"jj config get": "allow",
+			"jj config get*": "allow",
+			"jj config list": "allow",
+			"jj config list*": "allow",
+			"jj config path": "allow",
+			"jj config path*": "allow",
+			"jj bookmark list": "allow",
+			"jj bookmark list*": "allow",
+			"jj git fetch": "allow",
+			"jj git fetch*": "allow",
+			"jj gf": "allow",
+			"jj gf*": "allow"
+		}
+	}
 }
