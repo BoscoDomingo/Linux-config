@@ -1489,36 +1489,6 @@
 		}
 	},
 	{
-		"identifier": { "id": "mde.select-highlight-minimap" },
-		"version": "0.1.0",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/bosco/.cursor/extensions/mde.select-highlight-minimap-0.1.0",
-			"scheme": "file"
-		},
-		"relativeLocation": "mde.select-highlight-minimap-0.1.0",
-		"metadata": {
-			"installedTimestamp": 1773663937790,
-			"pinned": true,
-			"source": "vsix"
-		}
-	},
-	{
-		"identifier": { "id": "msyrus.go-doc" },
-		"version": "1.0.1",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/bosco/.cursor/extensions/msyrus.go-doc-1.0.1",
-			"scheme": "file"
-		},
-		"relativeLocation": "msyrus.go-doc-1.0.1",
-		"metadata": {
-			"installedTimestamp": 1773664041782,
-			"pinned": true,
-			"source": "vsix"
-		}
-	},
-	{
 		"identifier": { "id": "mxsdev.typescript-explorer" },
 		"version": "0.4.2",
 		"location": {
@@ -1561,21 +1531,6 @@
 		"relativeLocation": "jamesohortle.unicodehover-0.3.0",
 		"metadata": {
 			"installedTimestamp": 1773664234155,
-			"pinned": true,
-			"source": "vsix"
-		}
-	},
-	{
-		"identifier": { "id": "kricsleo.vscode-package-json-inspector" },
-		"version": "0.2.0",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/bosco/.cursor/extensions/kricsleo.vscode-package-json-inspector-0.2.0",
-			"scheme": "file"
-		},
-		"relativeLocation": "kricsleo.vscode-package-json-inspector-0.2.0",
-		"metadata": {
-			"installedTimestamp": 1773664294237,
 			"pinned": true,
 			"source": "vsix"
 		}
@@ -2929,13 +2884,58 @@
 		"version": "0.2.0",
 		"location": {
 			"$mid": 1,
-			"fsPath": "c:\\Users\\bosco\\.cursor\\extensions\\jackz.unicode-conversion-0.2.0",
-			"_sep": 1,
-			"external": "file:///c%3A/Users/bosco/.cursor/extensions/jackz.unicode-conversion-0.2.0",
 			"path": "/c:/Users/bosco/.cursor/extensions/jackz.unicode-conversion-0.2.0",
 			"scheme": "file"
 		},
 		"relativeLocation": "jackz.unicode-conversion-0.2.0",
 		"metadata": { "installedTimestamp": 1779563234141, "source": "vsix" }
+	},
+	{
+		"identifier": { "id": "mde.select-highlight-minimap" },
+		"version": "0.1.0",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/bosco/.cursor/extensions/mde.select-highlight-minimap-0.1.0",
+			"scheme": "file"
+		},
+		"relativeLocation": "mde.select-highlight-minimap-0.1.0",
+		"metadata": {
+			"installedTimestamp": 1779624255832,
+			"pinned": true,
+			"source": "vsix"
+		}
+	},
+	{
+		"identifier": { "id": "msyrus.go-doc" },
+		"version": "1.1.1",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/bosco/.cursor/extensions/msyrus.go-doc-1.1.1",
+			"scheme": "file"
+		},
+		"relativeLocation": "msyrus.go-doc-1.1.1",
+		"metadata": {
+			"installedTimestamp": 1779624324594,
+			"pinned": true,
+			"source": "vsix"
+		}
+	},
+	{
+		"identifier": { "id": "kricsleo.vscode-package-json-inspector" },
+		"version": "0.2.0",
+		"location": {
+			"$mid": 1,
+			"fsPath": "c:\\Users\\bosco\\.cursor\\extensions\\kricsleo.vscode-package-json-inspector-0.2.0",
+			"_sep": 1,
+			"external": "file:///c%3A/Users/bosco/.cursor/extensions/kricsleo.vscode-package-json-inspector-0.2.0",
+			"path": "/c:/Users/bosco/.cursor/extensions/kricsleo.vscode-package-json-inspector-0.2.0",
+			"scheme": "file"
+		},
+		"relativeLocation": "kricsleo.vscode-package-json-inspector-0.2.0",
+		"metadata": {
+			"installedTimestamp": 1779624331693,
+			"pinned": true,
+			"source": "vsix"
+		}
 	}
 ]
