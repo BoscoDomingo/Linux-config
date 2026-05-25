@@ -16,8 +16,19 @@ program = "ssh-sign"
 [[--scope]]
 --when.platforms = ["windows"]
 
+[--scope.signing]
+key = "~/.ssh/id_ed25519.pub"
+
 [--scope.signing.backends.ssh]
+allowed-signers = "~/.ssh/allowed_signers"
 program = "C:/Windows/System32/OpenSSH/ssh-keygen.exe"
+
+[--scope.aliases]
+sh = [
+  "show",
+  "--config=ui.diff-formatter=':git'",
+  "--config=ui.pager=[\"cmd\", \"/C\", \"set GIT_CONFIG_PARAMETERS='delta.side-by-side=false'&& diffnav\"]",
+]
 
 [git]
 # push-bookmark-prefix = "feat/"
