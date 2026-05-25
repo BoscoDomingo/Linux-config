@@ -32,6 +32,7 @@ alias j="jj"
 alias lj="lazyjj"
 alias cc="claude"
 alias oc="opencode"
+alias occ="opencode -c"
 
 # yt-dlp
 alias ytd="yt-dlp"
