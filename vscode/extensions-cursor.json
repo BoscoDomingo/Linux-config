@@ -395,32 +395,6 @@
 	},
 	{
 		"identifier": {
-			"id": "4ops.terraform",
-			"uuid": "b861aa84-146f-440f-b6be-76124b02b729"
-		},
-		"version": "0.2.1",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/bosco/.cursor/extensions/4ops.terraform-0.2.1-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "4ops.terraform-0.2.1-universal",
-		"metadata": {
-			"installedTimestamp": 1753120369004,
-			"pinned": false,
-			"source": "gallery",
-			"id": "b861aa84-146f-440f-b6be-76124b02b729",
-			"publisherId": "db4dabe0-34d0-481a-884f-371ffc5cb27f",
-			"publisherDisplayName": "4ops",
-			"targetPlatform": "universal",
-			"updated": false,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false
-		}
-	},
-	{
-		"identifier": {
 			"id": "tamasfe.even-better-toml",
 			"uuid": "b2215d5f-675e-4a2b-b6ac-1ca737518b78"
 		},
@@ -1193,6 +1167,32 @@
 	},
 	{
 		"identifier": {
+			"id": "lumirelle.shell-format-rev",
+			"uuid": "001d66a0-1d99-4845-ab01-a72b5a316e0c"
+		},
+		"version": "0.0.5",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/bosco/.cursor/extensions/lumirelle.shell-format-rev-0.0.5-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "lumirelle.shell-format-rev-0.0.5-universal",
+		"metadata": {
+			"installedTimestamp": 1773651015615,
+			"pinned": true,
+			"source": "gallery",
+			"id": "001d66a0-1d99-4845-ab01-a72b5a316e0c",
+			"publisherId": "5da09865-a497-4ca9-9c48-7e7fca29223d",
+			"publisherDisplayName": "lumirelle",
+			"targetPlatform": "universal",
+			"updated": false,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false
+		}
+	},
+	{
+		"identifier": {
 			"id": "naumovs.color-highlight",
 			"uuid": "121396ad-85a1-45ec-9fd1-d95028a847f5"
 		},
@@ -1404,14 +1404,40 @@
 		}
 	},
 	{
-		"identifier": { "id": "wraith13.zoombar-vscode" },
-		"version": "1.4.3",
+		"identifier": {
+			"id": "pkief.markdown-checkbox",
+			"uuid": "f0b7de7d-8e14-44df-998a-630ffdb32cf8"
+		},
+		"version": "1.10.0",
 		"location": {
 			"$mid": 1,
-			"path": "/c:/Users/bosco/.cursor/extensions/wraith13.zoombar-vscode-1.4.3",
+			"path": "/c:/Users/bosco/.cursor/extensions/pkief.markdown-checkbox-1.10.0-universal",
 			"scheme": "file"
 		},
-		"relativeLocation": "wraith13.zoombar-vscode-1.4.3",
+		"relativeLocation": "pkief.markdown-checkbox-1.10.0-universal",
+		"metadata": {
+			"installedTimestamp": 1773652286580,
+			"pinned": true,
+			"source": "gallery",
+			"id": "f0b7de7d-8e14-44df-998a-630ffdb32cf8",
+			"publisherId": "f9e5bc2f-fea1-4075-917f-d83e01e69f56",
+			"publisherDisplayName": "PKief",
+			"targetPlatform": "universal",
+			"updated": false,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false
+		}
+	},
+	{
+		"identifier": { "id": "wraith13.zoombar-vscode" },
+		"version": "1.4.4",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/bosco/.cursor/extensions/wraith13.zoombar-vscode-1.4.4",
+			"scheme": "file"
+		},
+		"relativeLocation": "wraith13.zoombar-vscode-1.4.4",
 		"metadata": {
 			"isApplicationScoped": false,
 			"isMachineScoped": false,
@@ -1508,6 +1534,23 @@
 		}
 	},
 	{
+		"identifier": {
+			"id": "hexzii.unicode-hovery"
+		},
+		"version": "0.1.2",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/bosco/.cursor/extensions/hexzii.unicode-hovery-0.1.2",
+			"scheme": "file"
+		},
+		"relativeLocation": "hexzii.unicode-hovery-0.1.2",
+		"metadata": {
+			"installedTimestamp": 1773664203536,
+			"pinned": true,
+			"source": "vsix"
+		}
+	},
+	{
 		"identifier": { "id": "jamesohortle.unicodehover" },
 		"version": "0.3.0",
 		"location": {
@@ -1533,6 +1576,23 @@
 		"relativeLocation": "kricsleo.vscode-package-json-inspector-0.2.0",
 		"metadata": {
 			"installedTimestamp": 1773664294237,
+			"pinned": true,
+			"source": "vsix"
+		}
+	},
+	{
+		"identifier": {
+			"id": "johnpapa.vscode-cloak"
+		},
+		"version": "0.5.0",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/bosco/.cursor/extensions/johnpapa.vscode-cloak-0.5.0",
+			"scheme": "file"
+		},
+		"relativeLocation": "johnpapa.vscode-cloak-0.5.0",
+		"metadata": {
+			"installedTimestamp": 1773664325101,
 			"pinned": true,
 			"source": "vsix"
 		}
@@ -1943,31 +2003,6 @@
 			"id": "34242035-cb47-46ef-9062-7776e69ead46",
 			"publisherId": "d47d3ab7-f246-4421-92ea-883e5a6349ba",
 			"publisherDisplayName": "Sycl",
-			"targetPlatform": "universal",
-			"updated": false,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "jayblack388.md-checkboxes",
-			"uuid": "bffa5210-f4cc-42f3-a164-eb6c714e7e46"
-		},
-		"version": "1.0.1",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/bosco/.cursor/extensions/jayblack388.md-checkboxes-1.0.1-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "jayblack388.md-checkboxes-1.0.1-universal",
-		"metadata": {
-			"installedTimestamp": 1779561509852,
-			"source": "gallery",
-			"id": "bffa5210-f4cc-42f3-a164-eb6c714e7e46",
-			"publisherId": "2cebbed8-2546-4651-85d6-470a7b473e47",
-			"publisherDisplayName": "jayblack388",
 			"targetPlatform": "universal",
 			"updated": false,
 			"private": false,
@@ -2714,84 +2749,6 @@
 	},
 	{
 		"identifier": {
-			"id": "mkhl.shfmt",
-			"uuid": "0c2ca002-79c2-4b79-95a5-61a5b188a4f7"
-		},
-		"version": "1.5.2",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/bosco/.cursor/extensions/mkhl.shfmt-1.5.2-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "mkhl.shfmt-1.5.2-universal",
-		"metadata": {
-			"installedTimestamp": 1779562519333,
-			"pinned": true,
-			"source": "gallery",
-			"id": "0c2ca002-79c2-4b79-95a5-61a5b188a4f7",
-			"publisherId": "577d6c37-7054-4ca5-b4ce-9250409f3903",
-			"publisherDisplayName": "mkhl",
-			"targetPlatform": "universal",
-			"updated": false,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "foxundermoon.shell-format",
-			"uuid": "5fb19573-2183-4cf2-b53d-0fb869dae7ae"
-		},
-		"version": "7.2.8",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/bosco/.cursor/extensions/foxundermoon.shell-format-7.2.8-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "foxundermoon.shell-format-7.2.8-universal",
-		"metadata": {
-			"installedTimestamp": 1779562523308,
-			"pinned": true,
-			"source": "gallery",
-			"id": "5fb19573-2183-4cf2-b53d-0fb869dae7ae",
-			"publisherId": "c5bb2216-aaba-47a1-962e-5561e40c03c5",
-			"publisherDisplayName": "foxundermoon",
-			"targetPlatform": "universal",
-			"updated": false,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "sldobri.bunker",
-			"uuid": "1256df07-e7c0-4e17-bd23-96b617cf21bc"
-		},
-		"version": "1.1.6",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/bosco/.cursor/extensions/sldobri.bunker-1.1.6-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "sldobri.bunker-1.1.6-universal",
-		"metadata": {
-			"installedTimestamp": 1779562696445,
-			"pinned": true,
-			"source": "gallery",
-			"id": "1256df07-e7c0-4e17-bd23-96b617cf21bc",
-			"publisherId": "688471b5-3365-4cd5-8597-783c039d84e3",
-			"publisherDisplayName": "sldobri",
-			"targetPlatform": "universal",
-			"updated": false,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false
-		}
-	},
-	{
-		"identifier": {
 			"id": "zhuangtongfa.material-theme",
 			"uuid": "26a529c9-2654-4b95-a63f-02f6a52429e6"
 		},
@@ -2946,6 +2903,23 @@
 		"relativeLocation": "adpyke.js-unicode-preview-1.1.4",
 		"metadata": {
 			"installedTimestamp": 1779562831594,
+			"pinned": true,
+			"source": "vsix"
+		}
+	},
+	{
+		"identifier": {
+			"id": "socheatsok78-lab.dotenv-vscode-stripped"
+		},
+		"version": "0.24.0",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/bosco/.cursor/extensions/socheatsok78-lab.dotenv-vscode-stripped-0.24.0",
+			"scheme": "file"
+		},
+		"relativeLocation": "socheatsok78-lab.dotenv-vscode-stripped-0.24.0",
+		"metadata": {
+			"installedTimestamp": 1773664023543,
 			"pinned": true,
 			"source": "vsix"
 		}
