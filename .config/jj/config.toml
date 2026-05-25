@@ -96,6 +96,7 @@ ci = ["commit", "--interactive"]
 s = ["squash"]
 si = ["squash", "--interactive"] # Edit a previous commit (empty for parent)
 sii = ["squash", "--interactive", "--ignore-immutable"] # Force edit a previous commit (empty for parent)
+sic = ["squash", "--ignore-immutable", "--from", "root()+::@- ~ root()+", "--into", "root()+", "--use-destination-message"] # Squash ALL commits descending from the root's first child. Essentially squash entire history into a single commit.
 er = ["squash", "-i", "-u", "-t"] # Edit target revision with current changes
 de = ["diffedit"] # Alternative to squash
 
