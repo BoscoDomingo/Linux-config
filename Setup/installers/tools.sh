@@ -3,6 +3,23 @@ printf "\n=== Oh My Posh Setup ===\n"
 read -p "Install Oh My Posh? (Y/n): " install_omz
 if [ "$install_omz" != "n" ]; then
 	curl -s https://ohmyposh.dev/install.sh | bash -s
+
+# MARK: - Cheat
+printf "\n=== Cheat Setup ===\n"
+read -p "Do you want to set up cheat (community cheatsheets)? (Y/n): " setup_cheat
+if [ "$setup_cheat" != "n" ]; then
+	CHEAT_COMMUNITY_URL="https://github.com/cheat/cheatsheets.git"
+	CHEAT_COMMUNITY_PATH="$XDG_CONFIG_HOME/cheat/cheatsheets/community"
+
+	ensure_link "$CURRENT_DIR/.config/cheat" "$XDG_CONFIG_HOME/cheat"
+
+	if [ -d "$CHEAT_COMMUNITY_PATH/.git" ]; then
+		if command -v cheat >/dev/null 2>&1; then
+			cheat --update
+		fi
+	else
+		git clone "$CHEAT_COMMUNITY_URL" "$CHEAT_COMMUNITY_PATH"
+	fi
 fi
 
 # MARK: - tmux
@@ -26,7 +43,7 @@ if [ "$install_tmux" != "n" ]; then
 else
 	echo "Skipping tmux installation."
 fi
-## mise doesn't work to handle tmux versions unfortunately
+## mise doesn't work unfortunately
 # mise use -g tmux@latest
 
 # MARK: - Micro themes
