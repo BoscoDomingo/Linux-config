@@ -14,14 +14,6 @@ _dotfiles_path_prepend_if_dir() {
 	esac
 }
 
-_dotfiles_path_prepend_if_dir "/home/linuxbrew/.linuxbrew/bin"
-_dotfiles_path_prepend_if_dir "$HOME/bin"
-_dotfiles_path_prepend_if_dir "$HOME/.local/bin"
-_dotfiles_path_prepend_if_dir "$HOME/.local/bin/scripts"
-_dotfiles_path_prepend_if_dir "$HOME/.local/share/mise/shims"
-_dotfiles_path_prepend_if_dir "$PNPM_HOME"
-_dotfiles_path_prepend_if_dir "$HOME/.opencode/bin"
-
 _dotfiles_path_dedupe() {
 	old_ifs="$IFS"
 	IFS=:
@@ -36,6 +28,16 @@ _dotfiles_path_dedupe() {
 	IFS="$old_ifs"
 	PATH="$deduped_path"
 }
+
+_dotfiles_path_prepend_if_dir "/home/linuxbrew/.linuxbrew/bin"
+_dotfiles_path_prepend_if_dir "$HOME/bin"
+_dotfiles_path_prepend_if_dir "$HOME/.local/bin"
+_dotfiles_path_prepend_if_dir "$HOME/.local/bin/scripts"
+_dotfiles_path_prepend_if_dir "$HOME/.local/share/mise/shims"
+# Put the real jj binary ahead of mise shims so jj extensions do not trip over untrusted project configs.
+_dotfiles_path_prepend_if_dir "$HOME/.local/share/mise/installs/jj/latest"
+_dotfiles_path_prepend_if_dir "$PNPM_HOME"
+_dotfiles_path_prepend_if_dir "$HOME/.opencode/bin"
 
 _dotfiles_path_dedupe
 export PATH
