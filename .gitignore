@@ -20,4 +20,7 @@
 !/micro/*.json
 **/repos/
 
+.config/opencode/*
+!.config/opencode/tui.jsonc
+!.config/opencode/opencode.json
 *package-lock.json
