@@ -4,6 +4,8 @@ First-time setup and any subsequent updates should be done by running the `run.s
 
 Any time a modification is made, ensure `run.sh` and the distro-specific setup scripts are updated to reflect the changes.
 
+For debugging requests phrased as investigation, diagnose first and report the root cause plus fix options. Ask before applying changes unless the user explicitly asks to fix, apply, or implement.
+
 Shell config is layered: `.profile` has non-interactive env/PATH setup (sourced by login shells), `.shellrc` has common interactive config (aliases, agent detection, utility functions), and `.zshrc`/`.bashrc` have shell-specific interactive config. Agent sessions (Cursor, Claude Code, OpenCode) get only `.profile` + tool activation (direnv, mise) -- no aliases, completions, prompt, or tmux.
 
 When making changes to these files, add a comment with a brief explanation why.
