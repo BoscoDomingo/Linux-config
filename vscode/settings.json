@@ -123,8 +123,7 @@
 	"terminal.integrated.hideOnStartup": "whenEmpty",
 	"terminal.integrated.enableImages": true,
 	"terminal.integrated.altClickMovesCursor": true,
-	"terminal.integrated.profiles.windows": {
-	},
+	"terminal.integrated.profiles.windows": {},
 	"terminal.integrated.suggest.quickSuggestions": false,
 	"terminal.integrated.defaultProfile.linux": "zsh",
 	"terminal.integrated.macOptionIsMeta": true,
@@ -1467,5 +1466,5 @@
 		"https://www.schemastore.org/": true
 	},
 	"coderabbit.region": "eu",
-	"powershell.promptToUpdatePowerShell": false,
+	"powershell.promptToUpdatePowerShell": false
 }
