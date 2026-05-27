@@ -216,7 +216,7 @@ if [[ -z "$_IS_AI_AGENT" && "$_DOTFILES_HAS_REAL_TTY" = "1" ]]; then
 	bindkey '^[r' .history-incremental-search-backward
 	bindkey '^[s' .history-incremental-search-forward
 	# Use one delete-capable history picker for Ctrl-R and Up arrow.
-	if (( $+widgets[fzf-history-widget] )) && command -v zsh-history-fzf >/dev/null 2>&1; then
+	if (($+widgets[fzf - history - widget])) && command -v zsh-history-fzf >/dev/null 2>&1; then
 		_dotfiles_history_widget() {
 			local command ret
 			setopt localoptions noglobsubst noposixbuiltins pipefail no_aliases 2>/dev/null
