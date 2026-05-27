@@ -1800,17 +1800,6 @@
 		}
 	},
 	{
-		"identifier": { "id": "tal7aouy.indent-colorizer" },
-		"version": "1.0.0",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/tal7aouy.indent-colorizer-1.0.0",
-			"scheme": "file"
-		},
-		"relativeLocation": "tal7aouy.indent-colorizer-1.0.0",
-		"metadata": { "installedTimestamp": 1777920137467, "source": "vsix" }
-	},
-	{
 		"identifier": {
 			"id": "jjk.jjk",
 			"uuid": "27fecc3e-093e-4ff1-b130-b3ccf371337d"
@@ -2687,8 +2676,6 @@
 		"version": "1.4.4",
 		"location": {
 			"$mid": 1,
-			"fsPath": "/home/bosco/.cursor-server/extensions/wraith13.zoombar-vscode-1.4.4",
-			"external": "file:///home/bosco/.cursor-server/extensions/wraith13.zoombar-vscode-1.4.4",
 			"path": "/home/bosco/.cursor-server/extensions/wraith13.zoombar-vscode-1.4.4",
 			"scheme": "file"
 		},
@@ -2697,6 +2684,31 @@
 			"installedTimestamp": 1779697742741,
 			"pinned": true,
 			"source": "vsix"
+		}
+	},
+	{
+		"identifier": { "id": "mkhl.shfmt" },
+		"version": "1.5.2",
+		"location": {
+			"$mid": 1,
+			"fsPath": "/home/bosco/.cursor-server/extensions/mkhl.shfmt-1.5.2-universal",
+			"external": "file:///home/bosco/.cursor-server/extensions/mkhl.shfmt-1.5.2-universal",
+			"path": "/home/bosco/.cursor-server/extensions/mkhl.shfmt-1.5.2-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "mkhl.shfmt-1.5.2-universal",
+		"metadata": {
+			"installedTimestamp": 1779865362156,
+			"pinned": true,
+			"source": "gallery",
+			"id": "0c2ca002-79c2-4b79-95a5-61a5b188a4f7",
+			"publisherId": "577d6c37-7054-4ca5-b4ce-9250409f3903",
+			"publisherDisplayName": "mkhl",
+			"targetPlatform": "universal",
+			"updated": false,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false
 		}
 	}
 ]
