@@ -23,12 +23,7 @@ fi
 read -p "Do you want to symlink the config files & scripts? (Y/n): " setup_config_files
 if [ "$setup_config_files" != "n" ]; then
 	mkdir -p "$HOME/.local/bin"
-	for script_path in "$CURRENT_DIR"/scripts/*; do
-		if [ -f "$script_path" ]; then
-			script_name=$(basename "$script_path")
-			ensure_link "$script_path" "$HOME/.local/bin/$script_name"
-		fi
-	done
+	ensure_link "$CURRENT_DIR/scripts" "$HOME/.local/bin/scripts"
 
 	# Automatically link all subdirectories in .config to $XDG_CONFIG_HOME
 	for config_dir in "$CURRENT_DIR"/.config/*/; do
@@ -86,5 +81,5 @@ read -p "Do you want to symlink the SSH config? (Y/n): " link_ssh_config
 if [ "$link_ssh_config" != "n" ]; then
 	mkdir -p "$HOME/.ssh"
 	ensure_link "$CURRENT_DIR/.ssh/config" "$HOME/.ssh/config"
-	ensure_link "$CURRENT_DIR/.ssh/allowed-signers" "$HOME/.ssh/allowed-signers"
+	ensure_link "$CURRENT_DIR/.ssh/allowed_signers" "$HOME/.ssh/allowed_signers"
 fi
