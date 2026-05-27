@@ -55,7 +55,20 @@
 			"jj git fetch": "allow",
 			"jj git fetch*": "allow",
 			"jj gf": "allow",
-			"jj gf*": "allow"
+			"jj gf*": "allow",
+			"git status": "allow",
+			"git diff": "allow",
+			"git commit*": "ask",
+			"git stash": "ask",
+			"git rm": "ask",
+			"command*": "allow",
+			"readlink*": "allow",
+			"rg": "allow"
 		}
-	}
+ 	},
+  "plugin": [
+    "opencode-devcontainers",
+    "@tarquinen/opencode-dcp@latest",
+    "envsitter-guard@latest",
+  ]
 }
