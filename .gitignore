@@ -24,3 +24,5 @@
 !.config/opencode/tui.jsonc
 !.config/opencode/opencode.json
 *package-lock.json
+
+.config/cheat/cheatsheets/community/
