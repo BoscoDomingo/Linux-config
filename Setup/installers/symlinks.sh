@@ -46,27 +46,32 @@ if [ "$link_cursor_settings" != "n" ]; then
 	mkdir -p "$XDG_CONFIG_HOME/Cursor/User"
 	mkdir -p "$HOME/.cursor/extensions"
 	mkdir -p "$HOME/.cursor-server/extensions"
-	# Cursor WSL can fall back to Windows PATH; expose user-managed tools to extensions.
+	mkdir -p "$HOME/.vscode-server"
+	# WSL IDE servers can fall back to Windows PATH; expose user-managed tools to extensions.
 	ensure_link "$CURRENT_DIR/vscode/server-env-setup" "$HOME/.cursor-server/server-env-setup"
-	# Cursor currently ignores server-env-setup here, so patch its server launcher to source it.
-	for cursor_server_bin in "$HOME"/.cursor-server/bin/*/bin/cursor-server; do
-		[ -f "$cursor_server_bin" ] || continue
-		if ! grep -q "DOTFILES_CURSOR_SERVER_ENV_SETUP" "$cursor_server_bin"; then
-			cp -p "$cursor_server_bin" "$cursor_server_bin.bak"
+	ensure_link "$CURRENT_DIR/vscode/server-env-setup" "$HOME/.vscode-server/server-env-setup"
+	# Cursor and VS Code can ignore server-env-setup here, so patch server launchers to source it.
+	for ide_server_bin in "$HOME"/.cursor-server/bin/*/bin/cursor-server "$HOME"/.vscode-server/bin/*/bin/code-server; do
+		[ -f "$ide_server_bin" ] || continue
+		if ! grep -q "DOTFILES_IDE_SERVER_ENV_SETUP" "$ide_server_bin" && ! grep -q "DOTFILES_CURSOR_SERVER_ENV_SETUP" "$ide_server_bin"; then
+			cp -p "$ide_server_bin" "$ide_server_bin.bak"
 			awk '
 				{
 					print
 					if ($0 ~ /^ROOT=/) {
 						print ""
-						print "# Load dotfiles-managed PATH before Cursor starts extension hosts."
-						print "DOTFILES_CURSOR_SERVER_ENV_SETUP=\"$HOME/.cursor-server/server-env-setup\""
-						print "if [ -r \"$DOTFILES_CURSOR_SERVER_ENV_SETUP\" ]; then"
-						print "\t. \"$DOTFILES_CURSOR_SERVER_ENV_SETUP\""
+						print "# Load dotfiles-managed PATH before IDE extension hosts start."
+						print "DOTFILES_IDE_SERVER_ENV_SETUP=\"$HOME/.cursor-server/server-env-setup\""
+						print "if [ ! -r \"$DOTFILES_IDE_SERVER_ENV_SETUP\" ]; then"
+						print "\tDOTFILES_IDE_SERVER_ENV_SETUP=\"$HOME/.vscode-server/server-env-setup\""
+						print "fi"
+						print "if [ -r \"$DOTFILES_IDE_SERVER_ENV_SETUP\" ]; then"
+						print "\t. \"$DOTFILES_IDE_SERVER_ENV_SETUP\""
 						print "fi"
 					}
 				}
-			' "$cursor_server_bin" >"$cursor_server_bin.tmp" && mv "$cursor_server_bin.tmp" "$cursor_server_bin"
-			chmod +x "$cursor_server_bin"
+			' "$ide_server_bin" >"$ide_server_bin.tmp" && mv "$ide_server_bin.tmp" "$ide_server_bin"
+			chmod +x "$ide_server_bin"
 		fi
 	done
 	ensure_link "$CURRENT_DIR/vscode/settings.json" "$XDG_CONFIG_HOME/Cursor/User/settings.json"
