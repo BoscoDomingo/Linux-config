@@ -31,6 +31,14 @@ if [ -z "$_IS_AI_AGENT" ] && [ "${_DOTFILES_HAS_REAL_TTY:-1}" = "1" ]; then
 			(brew update &>/dev/null &)
 		fi
 	fi
+
+	# OpenCode can leave Ghostty's cursor in block mode; restore the preferred bar cursor on exit.
+	opencode() {
+		command opencode "$@"
+		_opencode_status=$?
+		printf '\033[5 q'
+		return "$_opencode_status"
+	}
 fi
 
 # Lightweight utility functions
