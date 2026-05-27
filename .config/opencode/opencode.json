@@ -1,74 +1,82 @@
 {
-	"$schema": "https://opencode.ai/config.json",
-	"autoupdate": "notify",
-	"shell": "/bin/zsh",
-	"snapshot": true,
-	"formatter": true,
-	"lsp": true,
-	"compaction": {
-		"auto": true,
-		"prune": true,
-		"tail_turns": 6
-	},
-	"watcher": {
-		"ignore": ["node_modules/**", ".git/**", "bun.lock"]
-	},
-	"reference": {
-		"dotfiles": {
-			"path": "~/dotfiles"
-		},
-		"opencode": {
-			"repository": "sst/opencode"
-		}
-	},
-	"permission": {
-		"edit": "ask",
-		"external_directory": {
-			"*": "ask"
-		},
-		"webfetch": "ask",
-		"bash": {
-			"*": "ask",
-			"jj *": "ask",
-			"jj status": "allow",
-			"jj status*": "allow",
-			"jj st": "allow",
-			"jj st*": "allow",
-			"jj diff": "allow",
-			"jj diff*": "allow",
-			"jj log": "allow",
-			"jj log*": "allow",
-			"jj show": "allow",
-			"jj show*": "allow",
-			"jj op log": "allow",
-			"jj op log*": "allow",
-			"jj oplog": "allow",
-			"jj oplog*": "allow",
-			"jj config get": "allow",
-			"jj config get*": "allow",
-			"jj config list": "allow",
-			"jj config list*": "allow",
-			"jj config path": "allow",
-			"jj config path*": "allow",
-			"jj bookmark list": "allow",
-			"jj bookmark list*": "allow",
-			"jj git fetch": "allow",
-			"jj git fetch*": "allow",
-			"jj gf": "allow",
-			"jj gf*": "allow",
-			"git status": "allow",
-			"git diff": "allow",
-			"git commit*": "ask",
-			"git stash": "ask",
-			"git rm": "ask",
-			"command*": "allow",
-			"readlink*": "allow",
-			"rg": "allow"
-		}
- 	},
+  "$schema": "https://opencode.ai/config.json",
+  "autoupdate": "notify",
+  "shell": "/bin/zsh",
+  "snapshot": true,
+  "formatter": true,
+  "lsp": true,
+  "compaction": {
+    "auto": true,
+    "prune": true,
+    "tail_turns": 6
+  },
+  "watcher": {
+    "ignore": [
+      "node_modules/**",
+      ".git/**",
+      "bun.lock"
+    ]
+  },
+  "reference": {
+    "dotfiles": {
+      "path": "~/dotfiles"
+    },
+    "opencode": {
+      "repository": "sst/opencode"
+    }
+  },
+  "permission": {
+    "edit": "ask",
+    "external_directory": {
+      "*": "ask"
+    },
+    "webfetch": "ask",
+    "bash": {
+      "*": "ask",
+      "jj *": "ask",
+      "jj status": "allow",
+      "jj status*": "allow",
+      "jj st": "allow",
+      "jj st*": "allow",
+      "jj diff": "allow",
+      "jj diff*": "allow",
+      "jj log": "allow",
+      "jj log*": "allow",
+      "jj show": "allow",
+      "jj show*": "allow",
+      "jj op log": "allow",
+      "jj op log*": "allow",
+      "jj oplog": "allow",
+      "jj oplog*": "allow",
+      "jj config get": "allow",
+      "jj config get*": "allow",
+      "jj config list": "allow",
+      "jj config list*": "allow",
+      "jj config path": "allow",
+      "jj config path*": "allow",
+      "jj bookmark list": "allow",
+      "jj bookmark list*": "allow",
+      "jj git fetch": "allow",
+      "jj git fetch*": "allow",
+      "jj gf": "allow",
+      "jj gf*": "allow",
+      "git status *": "allow",
+      "git diff *": "allow",
+      "git commit*": "ask",
+      "git stash": "ask",
+      "git rm *": "ask",
+      "command**": "allow",
+      "readlink**": "allow",
+      "rg": "allow",
+      "jj d**": "allow",
+      "jj l**": "allow",
+      "jj sh**": "allow"
+    }
+  },
   "plugin": [
     "opencode-devcontainers",
     "@tarquinen/opencode-dcp@latest",
     "envsitter-guard@latest",
+    "@mailshieldai/opencode-canvas"
   ]
 }
