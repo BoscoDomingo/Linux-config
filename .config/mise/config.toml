@@ -21,6 +21,7 @@ ripgrep = "latest"
 # "tldr++" = "latest"
 tlrc = "latest"
 yt-dlp = "latest"
+tree-sitter = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["go"]
