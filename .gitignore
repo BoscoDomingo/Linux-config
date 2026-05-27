@@ -19,3 +19,5 @@
 /micro/
 !/micro/*.json
 **/repos/
+
+*package-lock.json
