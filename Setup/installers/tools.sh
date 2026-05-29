@@ -1,8 +1,13 @@
 # MARK: - Oh My Posh
 printf "\n=== Oh My Posh Setup ===\n"
-read -p "Install Oh My Posh? (Y/n): " install_omz
+read -p "Install/update Oh My Posh? (Y/n): " install_omz
 if [ "$install_omz" != "n" ]; then
-	curl -s https://ohmyposh.dev/install.sh | bash -s
+	if command -v oh-my-posh >/dev/null 2>&1; then
+		oh-my-posh --update
+	else
+		curl -s https://ohmyposh.dev/install.sh | bash -s
+	fi
+fi
 
 # MARK: - Cheat
 printf "\n=== Cheat Setup ===\n"
@@ -56,7 +61,11 @@ if [ "$download_catppuccin_themes" != "n" ]; then
 fi
 
 # MARK: - Oh My Zsh
-read -p "Do you want to install oh-my-zsh? (Y/n): " install_oh_my_zsh
+read -p "Do you want to install/update oh-my-zsh? (Y/n): " install_oh_my_zsh
 if [ "$install_oh_my_zsh" != "n" ]; then
-	sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+	if command -v omz >/dev/null 2>&1; then
+		omz update
+	else
+		sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+	fi
 fi
