@@ -23,6 +23,8 @@
 .config/opencode/*
 !.config/opencode/tui.jsonc
 !.config/opencode/opencode.json
+!.config/opencode/agent/
+!.config/opencode/agent/*.md
 *package-lock.json
 
 .config/cheat/cheatsheets/community/
