@@ -1,0 +1,223 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "when_closing_with_no_tabs": "close_window",
+  "agent": {
+    "dock": "right",
+    "sidebar_side": "right",
+    "favorite_models": [],
+    "model_parameters": []
+  },
+  "terminal": {
+    "font_size": 13.0,
+    "font_family": "JetBrainsMono Nerd Font",
+    "font_fallbacks": [
+      "GeistMono Nerd Font",
+      "ConsolasLigaturizedV3 Nerd Font",
+      "Consolasligaturizedv2 NF",
+      "Cascadia Code",
+      "Consolas",
+      "monospace"
+    ],
+    "cursor_shape": "bar",
+    "blinking": "on",
+    "option_as_meta": true,
+    "bell": "system"
+  },
+  "project_panel": {
+    "dock": "left",
+    "git_status": true
+  },
+  "outline_panel": {
+    "git_status": true
+  },
+  "git": {
+    "inline_blame": {
+      "enabled": true
+    }
+  },
+  "base_keymap": "VSCode",
+  "tabs": {
+    "git_status": true
+  },
+  "relative_line_numbers": "enabled",
+  "sticky_scroll": {
+    "enabled": true
+  },
+  "mouse_wheel_zoom": false,
+  "gutter": {
+    "line_numbers": true
+  },
+  "minimap": {
+    "show": "auto",
+    "thumb": "always"
+  },
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 1000
+    }
+  },
+  "buffer_font_fallbacks": [
+    "FragmentMono Nerd Font",
+    "Consolasligaturizedv2 NF",
+    "ConsolasLigaturizedV3 Nerd Font",
+    "72Monospace Nerd Font",
+    "FiraCode+Inconsolata NF g",
+    "0xProto v2 Ligaturised NF",
+    "0xProto v1.6 Ligaturised NF",
+    "72 Monospace",
+    "Code New Roman NF Ligaturized",
+    "FiraCode+Inconsolata NF",
+    "NotoSansM Nerd Font",
+    "InconsolataGo Nerd Font",
+    "SF Mono Ligatures",
+    "Cascadia Code",
+    "Consolas",
+    "monospace"
+  ],
+  "buffer_font_family": "Maple Mono v6 Ligaturised NF",
+  "file_types": {
+    "dotenv": [
+      ".env*"
+    ],
+    "terraform-vars": [
+      "*.tfvars"
+    ],
+    "shellscript": [
+      ".shellrc"
+    ],
+    "csv": [
+      "*.csv"
+    ],
+    "cpp": [
+      "*.inc",
+      "array",
+      "string",
+      "string_view",
+      "ranges",
+      "span",
+      "any",
+      "atomic",
+      "bit",
+      "*.tcc",
+      "bitset",
+      "cctype",
+      "cfenv",
+      "charconv",
+      "chrono",
+      "cinttypes",
+      "clocale",
+      "cmath",
+      "codecvt",
+      "compare",
+      "complex",
+      "concepts",
+      "condition_variable",
+      "csignal",
+      "cstdarg",
+      "cstddef",
+      "cstdint",
+      "cstdio",
+      "cstdlib",
+      "cstring",
+      "ctime",
+      "cwchar",
+      "cwctype",
+      "deque",
+      "forward_list",
+      "list",
+      "map",
+      "set",
+      "unordered_map",
+      "unordered_set",
+      "vector",
+      "exception",
+      "algorithm",
+      "functional",
+      "iterator",
+      "memory",
+      "memory_resource",
+      "numeric",
+      "optional",
+      "random",
+      "ratio",
+      "regex",
+      "system_error",
+      "tuple",
+      "type_traits",
+      "utility",
+      "fstream",
+      "future",
+      "initializer_list",
+      "iomanip",
+      "iosfwd",
+      "iostream",
+      "istream",
+      "limits",
+      "mutex",
+      "new",
+      "numbers",
+      "ostream",
+      "scoped_allocator",
+      "semaphore",
+      "shared_mutex",
+      "sstream",
+      "stdexcept",
+      "stop_token",
+      "streambuf",
+      "thread",
+      "typeindex",
+      "typeinfo",
+      "valarray",
+      "variant"
+    ]
+  },
+  "colorize_brackets": true,
+  "show_completions_on_input": true,
+  "show_edit_predictions": true,
+  "semantic_tokens": "full",
+  "line_ending": "prefer_lf",
+  "remove_trailing_whitespace_on_save": true,
+  "soft_wrap": "editor_width",
+  "hard_tabs": true,
+  "tab_size": 2,
+  "edit_predictions": {
+    "provider": "copilot",
+    "disabled_globs": [
+      "**/.env",
+      "**/credentials.json",
+      "**/credentials.*.json",
+      "**/secret.json",
+      "**/secrets.json",
+      "**/*.key",
+      "**/*.pem",
+      "**/*.pfx",
+      "**/*.p12",
+      "**/*.crt",
+      "**/*.cer",
+      "**/id_rsa",
+      "**/id_dsa",
+      "**/.ssh/id_*"
+    ]
+  },
+  "vim_mode": true,
+  "agent_servers": {
+    "github-copilot-cli": {
+      "type": "registry"
+    }
+  },
+  "icon_theme": "Zed (Default)",
+  "ui_font_size": 16,
+  "buffer_font_size": 13.0,
+  "theme": {
+    "mode": "dark",
+    "light": "One Light",
+    "dark": "One Dark",
+  },
+}
