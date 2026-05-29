@@ -30,9 +30,17 @@ alias of="onefetch"
 
 alias j="jj"
 alias lj="lazyjj"
+# AI Agents
+q() {
+  "${AI_AGENT:-pi}" -p "$@"
+}
 alias cc="claude"
+alias ccc="claude -c"
+
 alias oc="opencode"
 alias occ="opencode -c"
+
+alias pic="pi -c"
 
 # yt-dlp
 alias ytd="yt-dlp"
