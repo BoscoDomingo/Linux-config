@@ -77,6 +77,8 @@ _path_prepend_if_missing "$HOME/.local/bin"
 
 _path_prepend_if_missing "$HOME/.local/bin/scripts"
 
+_path_prepend_if_missing "$HOME/.cache/.bun/bin"
+
 # Homebrew
 if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
 	case ":$PATH:" in
@@ -87,10 +89,7 @@ fi
 
 # This is needed since mise is instantiated after VS Code is started,
 # and the VS Code extension for Go and C# don't work properly otherwise.
-case ":$PATH:" in
-*":$HOME/.local/share/mise/shims:"*) ;;
-*) export PATH="$HOME/.local/share/mise/shims:$PATH" ;;
-esac
+_path_prepend_if_missing "$HOME/.local/share/mise/shims"
 
 # pnpm
 export PNPM_HOME="$XDG_DATA_HOME/pnpm"
@@ -103,10 +102,7 @@ esac
 # pnpm end
 
 # opencode
-case ":$PATH:" in
-*":$HOME/.opencode/bin:"*) ;;
-*) export PATH="$HOME/.opencode/bin:$PATH" ;;
-esac
+_path_prepend_if_missing "$HOME/.opencode/bin"
 
 # rip2
 export RIP_GRAVEYARD="$HOME/.local/share/rip2/graveyard"
