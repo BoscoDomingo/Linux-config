@@ -300,16 +300,12 @@ if [[ -z "$_IS_AI_AGENT" && "$_DOTFILES_HAS_REAL_TTY" = "1" ]]; then
 	zstyle ':autocomplete:*' min-input 3
 
 	# Left and right arrow always edit current command, not search through history
-	bindkey -M menuselect '^[[D' .backward-char '^[OD' .backward-char
-	bindkey -M menuselect '^[[C' .forward-char '^[OC' .forward-char
+	# bindkey -M menuselect '^[[D' .backward-char '^[OD' .backward-char
+	# bindkey -M menuselect '^[[C' .forward-char '^[OC' .forward-char
 
 	# Tab cycles forward, Shift+Tab cycles backward
 	bindkey '^I' menu-complete
 	bindkey "$terminfo[kcbt]" reverse-menu-complete
-
-	# L/R Arrow keys should always move the cursor
-	bindkey -M menuselect '^[[D' .backward-char '^[OD' .backward-char
-	bindkey -M menuselect '^[[C' .forward-char '^[OC' .forward-char
 
 	# export MANPATH="/usr/local/man:$MANPATH"
 
