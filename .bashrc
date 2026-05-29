@@ -50,4 +50,7 @@ if [ -z "$_IS_AGENT" ]; then
 	eval "$(oh-my-posh init bash --config ~/dotfiles/themes/EliteSWE.omp.json)"
 fi
 
-[ -f "$HOME/.moon/bin/env" ] && . "$HOME/.moon/bin/env"
+# Load Moon shell env when installed without leaving startup with a failed file test.
+if [ -f "$HOME/.moon/bin/env" ]; then
+	. "$HOME/.moon/bin/env"
+fi
