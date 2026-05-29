@@ -28,7 +28,7 @@ else
 	eval "$(fzf --bash)"
 fi
 
-if [ -z "$_IS_AGENT" ]; then
+if [ -z "$_IS_AI_AGENT" ]; then
 	# Ensures VS Code terminal history is saved without `exit` command
 	PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a"
 
