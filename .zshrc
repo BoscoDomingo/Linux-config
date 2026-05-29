@@ -368,4 +368,7 @@ if [[ -z "$_IS_AI_AGENT" && "$_DOTFILES_HAS_REAL_TTY" = "1" ]]; then
 	fi
 fi
 
-[ -f "$HOME/.moon/bin/env" ] && . "$HOME/.moon/bin/env"
+# Load Moon shell env when installed without leaving startup with a failed file test.
+if [ -f "$HOME/.moon/bin/env" ]; then
+	. "$HOME/.moon/bin/env"
+fi
