@@ -75,6 +75,13 @@ if [ "$link_cursor_settings" != "n" ]; then
 	ensure_link "$CURRENT_DIR/vscode/extensions-cursor-wsl.json" "$HOME/.cursor-server/extensions/extensions.json"
 fi
 
+printf "\n=== Pi Agent Settings Setup ===\n"
+read -p "Do you want to symlink the Pi settings? (Y/n): " link_pi_settings
+if [ "$link_pi_settings" != "n" ]; then
+	mkdir -p "$HOME/.pi/agent"
+	ensure_link "$CURRENT_DIR/AI/pi/agent/settings.json" "$HOME/.pi/agent/settings.json"
+fi
+
 # MARK: - SSH Config Setup
 printf "\n=== SSH Config Setup ===\n"
 read -p "Do you want to symlink the SSH config? (Y/n): " link_ssh_config
