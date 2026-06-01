@@ -28,7 +28,8 @@
       "Consolasligaturizedv2 NF",
       "Cascadia Code",
       "Consolas",
-      "monospace"
+      "monospace",
+      ".ZedMono"
     ],
     "cursor_shape": "bar",
     "blinking": "on",
@@ -69,6 +70,7 @@
       "milliseconds": 1000
     }
   },
+  "buffer_font_family": "Maple Mono v6 Ligaturised NF",
   "buffer_font_fallbacks": [
     "FragmentMono Nerd Font",
     "Consolasligaturizedv2 NF",
@@ -87,7 +89,6 @@
     "Consolas",
     "monospace"
   ],
-  "buffer_font_family": "Maple Mono v6 Ligaturised NF",
   "file_types": {
     "dotenv": [
       ".env*"
