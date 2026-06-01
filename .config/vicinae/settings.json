@@ -14,11 +14,17 @@
    "search_files_in_root": true,
    "font": {
       "normal": {
+         "family": "Adwaita Sans",
          "size": 11
       }
    },
+   "theme": {
+      "dark": {
+         "name": "ayu-mirage"
+      }
+   },
    "launcher_window": {
-      "opacity": 0.95
+      "opacity": 0.9
    },
    "providers": {
       "applications": {
@@ -30,12 +36,22 @@
             ]
          }
       },
+      "clipboard": {
+         "entrypoints": {
+            "history": {
+               "alias": "paste"
+            }
+         }
+      },
       "raycast-compat": {
          "entrypoints": {
             "store": {
                "alias": "Extensions"
             }
          }
+      },
+      "shortcuts": {
+         "enabled": true
       }
    }
 }
