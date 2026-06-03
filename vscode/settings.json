@@ -1236,8 +1236,14 @@
 	"cursor.windowSwitcher.sidebarHoverCollapsed": true,
 	"cursor.composer.backspaceRemoveContext": false,
 	"cursor.composer.usageSummaryDisplay": "always",
+	"cursor.composer.editorConversationDensity": "compact-ungrouped",
 	"cursor.general.glassShowWarningNotifications": true,
 	"cursor.general.emailPrivacyEnabled": true,
+	"cursorpyright.analysis.autoImportCompletions": true,
+	"cursorpyright.analysis.inlayHints.callArgumentNames": "all",
+	"cursorpyright.analysis.inlayHints.functionReturnTypes": true,
+	"cursorpyright.analysis.inlayHints.variableTypes": true,
+	"cursorpyright.analysis.typeCheckingMode": "basic",
 
 	// MARK: - Claude Code
 	"claudeCode.selectedModel": "opusplan",
@@ -1466,5 +1472,5 @@
 		"https://www.schemastore.org/": true
 	},
 	"coderabbit.region": "eu",
-	"powershell.promptToUpdatePowerShell": false
+	"powershell.promptToUpdatePowerShell": false,
 }
