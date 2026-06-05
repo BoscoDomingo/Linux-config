@@ -79,6 +79,8 @@ pager = ["less", "-FR"] # Clear diff output after closing the pager.
 st = ["status"]
 # Use diffnav for commit inspection; delta's global side-by-side default must be hidden so `s` toggles unified view.
 sh = ["show", "--config=ui.diff-formatter=':git'", "--config=ui.pager=[\"env\", \"GIT_CONFIG_PARAMETERS='delta.side-by-side=false'\", \"diffnav\"]"]
+shp = ["show", "-r", "@-", "--config=ui.diff-formatter=':git'", "--config=ui.pager=[\"env\", \"GIT_CONFIG_PARAMETERS='delta.side-by-side=false'\", \"diffnav\"]"]
+
 d = ["diff"]
 l = ["log"]
 ls = ["log", "--summary"]
