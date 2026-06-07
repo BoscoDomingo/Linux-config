@@ -9,7 +9,7 @@
 	2. [Homebrew](#homebrew)
 	3. [Built-in package managers](#built-in-package-managers)
 5. [AI agent safety](#ai-agent-safety)
-6. [GPG, commit signing and authentication](#gpg-commit-signing-and-authentication)
+6. [GPG, commit signing and authentication (deprecated)](#gpg-commit-signing-and-authentication-deprecated)
 	1. [Importing keys](#importing-keys)
 	2. [SSH authentication with GPG](#ssh-authentication-with-gpg)
 	3. [WSL setup](#wsl-setup)
@@ -162,7 +162,10 @@ See [`Documentation/AI_agent_jj_approval.md`](Documentation/AI_agent_jj_approval
 
 ---
 
-# GPG, commit signing and authentication
+# GPG, commit signing and authentication (deprecated)
+
+> [!NOTE]
+> I have migrated to using SSH keys exclusively for this purpose. It's just easier. This is here for future reference
 
 GPG uses a main key that can have multiple subkeys with different purposes (Signing (SC), Encryption (E), and/or Authentication (A)).
 
