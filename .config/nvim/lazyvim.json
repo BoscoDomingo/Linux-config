@@ -1,24 +1,34 @@
 {
-	"extras": [
-		"lazyvim.plugins.extras.ai.copilot-chat",
-		"lazyvim.plugins.extras.ai.copilot-native",
-		"lazyvim.plugins.extras.coding.yanky",
-		"lazyvim.plugins.extras.editor.outline",
-		"lazyvim.plugins.extras.editor.telescope",
-		"lazyvim.plugins.extras.lang.go",
-		"lazyvim.plugins.extras.lang.markdown",
-		"lazyvim.plugins.extras.lang.python",
-		"lazyvim.plugins.extras.lang.toml",
-		"lazyvim.plugins.extras.lang.typescript",
-		"lazyvim.plugins.extras.lang.typescript.biome",
-		"lazyvim.plugins.extras.lang.yaml",
-		"lazyvim.plugins.extras.util.dot",
-		"lazyvim.plugins.extras.util.mini-hipatterns",
-		"lazyvim.plugins.extras.util.startuptime"
-	],
-	"install_version": 8,
-	"news": {
-		"NEWS.md": "11866"
-	},
-	"version": 8
+  "extras": [
+    "lazyvim.plugins.extras.ai.copilot",
+    "lazyvim.plugins.extras.ai.copilot-chat",
+    "lazyvim.plugins.extras.ai.copilot-native",
+    "lazyvim.plugins.extras.ai.sidekick",
+    "lazyvim.plugins.extras.coding.yanky",
+    "lazyvim.plugins.extras.editor.dial",
+    "lazyvim.plugins.extras.editor.inc-rename",
+    "lazyvim.plugins.extras.editor.outline",
+    "lazyvim.plugins.extras.editor.snacks_picker",
+    "lazyvim.plugins.extras.editor.telescope",
+    "lazyvim.plugins.extras.lang.go",
+    "lazyvim.plugins.extras.lang.json",
+    "lazyvim.plugins.extras.lang.markdown",
+    "lazyvim.plugins.extras.lang.python",
+    "lazyvim.plugins.extras.lang.toml",
+    "lazyvim.plugins.extras.lang.typescript",
+    "lazyvim.plugins.extras.lang.typescript.biome",
+    "lazyvim.plugins.extras.lang.typescript.oxc",
+    "lazyvim.plugins.extras.lang.typescript.tsgo",
+    "lazyvim.plugins.extras.lang.yaml",
+    "lazyvim.plugins.extras.test.core",
+    "lazyvim.plugins.extras.util.chezmoi",
+    "lazyvim.plugins.extras.util.dot",
+    "lazyvim.plugins.extras.util.mini-hipatterns",
+    "lazyvim.plugins.extras.util.startuptime"
+  ],
+  "install_version": 8,
+  "news": {
+    "NEWS.md": "11866"
+  },
+  "version": 8
 }
