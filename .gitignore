@@ -3,6 +3,8 @@
 *.log
 .DS_Store
 .aider*
+*.pyc
+__pycache__
 
 .config/ghostty/override_config
 # They should be installed in the system using Leader + I inside tmux
