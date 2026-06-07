@@ -1,3 +1,3 @@
 #!/bin/sh
 # Cursor adapter for the shared AI-only Jujutsu approval guard.
-exec "$HOME/.local/bin/ai-agent-guard-jj-approval" --provider cursor
+exec "$HOME/.local/bin/ai-agent-guard-jj-approval.py" --provider cursor
