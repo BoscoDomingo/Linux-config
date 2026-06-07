@@ -2,8 +2,6 @@
 
 AI agents must ask before running mutating Jujutsu commands. Human shell usage is unchanged: this is not a `jj` wrapper and does not intercept manual commands.
 
-Agent-specific guard code, hook templates, and tests live under `AI/`. OpenCode uses its normal dotfile config at `.config/opencode/opencode.json` because that file is settings/config and is not interpreted merely by opening this repository.
-
 ## What Is Protected
 
 Read-only inspection is allowed without prompting: `jj status`, `jj diff`, `jj log`, `jj show`, `jj op log`, `jj config list`, and equivalent local aliases.
@@ -21,7 +19,7 @@ flowchart TD
     provider -->|Codex PreToolUse| codex["~/.codex/hooks.json\n~/.codex/config.toml"]
     provider -->|OpenCode permission.bash| opencode["~/.config/opencode/opencode.json"]
 
-    cursor --> guard["~/.local/bin/ai-agent-guard-jj-approval"]
+    cursor --> guard["~/.local/bin/ai-agent-guard-jj-approval.py"]
     claude --> guard
     codex --> guard
     opencode --> ask["OpenCode native ask/allow rules"]
@@ -38,15 +36,14 @@ flowchart TD
 
 ## Files
 
-| Path                                  | Role                                                        |
-|---------------------------------------|-------------------------------------------------------------|
-| `AI/agent-guards/jj-approval`         | Shared classifier and provider response adapter             |
-| `AI/agent-guards/install`             | Idempotently installs/merges active user-level agent config |
+| Path                                  | Role                                                              |
+|---------------------------------------|-------------------------------------------------------------------|
+| `AI/agent-guards/jj-approval.py`      | Shared classifier and provider response adapter                   |
+| `AI/agent-guards/install.py`          | Idempotently installs/merges active user-level agent config       |
 | `Setup/installers/ai-agents.sh`       | `run.sh` AI-agent setup step; also handles user-global AI tooling |
-| `AI/cursor/rules/jj-ai-approval.mdc`  | Cursor instruction rule source                              |
-| `AI/cursor/hooks.json`                | Versioned Cursor hook template                              |
-| `.config/opencode/opencode.json`      | OpenCode permission defaults                                |
-| `AI/tests/test_jj_approval_guard.py`  | Guard behavior tests                                        |
+| `AI/.cursor/rules/jj-ai-approval.mdc` | Cursor instruction rule source                                    |
+| `AI/.cursor/hooks.json`               | Versioned Cursor hook template                                    |
+| `AI/tests/test_jj_approval_guard.py`  | Guard behavior tests                                              |
 
 ## Provider Behavior
 
@@ -64,12 +61,12 @@ Run the normal dotfiles installer:
 ./run.sh
 ```
 
-The installer calls `AI/agent-guards/install`, which creates the `~/.local/bin/ai-agent-guard-jj-approval` symlink and merges provider config without overwriting unrelated settings.
+The installer calls `AI/agent-guards/install.py`, which creates the `~/.local/bin/ai-agent-guard-jj-approval.py` symlink and merges provider config without overwriting unrelated settings.
 
 Manual re-run:
 
 ```sh
-AI/agent-guards/install
+AI/agent-guards/install.py
 ```
 
 ## Verification

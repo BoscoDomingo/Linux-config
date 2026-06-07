@@ -79,7 +79,7 @@ printf "\n=== Pi Agent Settings Setup ===\n"
 read -p "Do you want to symlink the Pi settings? (Y/n): " link_pi_settings
 if [ "$link_pi_settings" != "n" ]; then
 	mkdir -p "$HOME/.pi/agent"
-	ensure_link "$CURRENT_DIR/AI/pi/agent/settings.json" "$HOME/.pi/agent/settings.json"
+	ensure_link "$CURRENT_DIR/AI/.pi/agent/settings.json" "$HOME/.pi/agent/settings.json"
 fi
 
 # MARK: - SSH Config Setup

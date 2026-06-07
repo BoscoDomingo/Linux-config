@@ -21,11 +21,11 @@
 **/repos/
 
 # Pi
-AI/pi/agent/auth.json
-AI/pi/agent/*.bak
-AI/pi/agent/sessions/
-AI/pi/agent/npm/
-AI/pi/agent/git/
+AI/.pi/agent/auth.json
+AI/.pi/agent/*.bak
+AI/.pi/agent/sessions/
+AI/.pi/agent/npm/
+AI/.pi/agent/git/
 
 # Opencode
 .config/opencode/*

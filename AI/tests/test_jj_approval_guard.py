@@ -5,7 +5,7 @@ import unittest
 from pathlib import Path
 
 
-HOOK = Path(__file__).resolve().parents[1] / "agent-guards" / "jj-approval"
+HOOK = Path(__file__).resolve().parents[1] / "agent-guards" / "jj-approval.py"
 
 
 def run_hook(command: str, provider: str = "cursor") -> dict:
