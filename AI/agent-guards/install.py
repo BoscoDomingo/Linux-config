@@ -12,9 +12,9 @@ from typing import Any
 
 HOME = Path.home()
 REPO_ROOT = Path(__file__).resolve().parents[2]
-GUARD = "$HOME/.local/bin/ai-agent-guard-jj-approval"
-GUARD_SOURCE = Path(__file__).resolve().parent / "jj-approval"
-GUARD_TARGET = HOME / ".local" / "bin" / "ai-agent-guard-jj-approval"
+GUARD = "$HOME/.local/bin/ai-agent-guard-jj-approval.py"
+GUARD_SOURCE = Path(__file__).resolve().parent / "jj-approval.py"
+GUARD_TARGET = HOME / ".local" / "bin" / "ai-agent-guard-jj-approval.py"
 PYTHON = sys.executable
 CURSOR_JJ_MATCHER = r"(^|[\s;&|()'\"])jj([\s;&|()'\"]|$)"
 POLICY_MARKER = "<!-- dotfiles:jujutsu-ai-approval -->"
@@ -104,7 +104,7 @@ def append_policy(path: Path) -> None:
 
 def install_cursor() -> None:
     ensure_symlink(
-        REPO_ROOT / "AI" / "cursor" / "rules" / "jj-ai-approval.mdc",
+        REPO_ROOT / "AI" / ".cursor" / "rules" / "jj-ai-approval.mdc",
         HOME / ".cursor" / "rules" / "jj-ai-approval.mdc",
     )
 
