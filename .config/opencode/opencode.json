@@ -71,7 +71,10 @@
       "rg": "allow",
       "jj d**": "allow",
       "jj l**": "allow",
-      "jj sh**": "allow"
+      "jj sh**": "allow",
+      "jj d*": "allow",
+      "jj l*": "allow",
+      "jj sh*": "allow"
     }
   },
   "plugin": [
