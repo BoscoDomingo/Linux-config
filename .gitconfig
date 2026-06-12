@@ -91,7 +91,7 @@
 
   c = commit --clean=strip
   cm = commit --clean=strip -m
-  
+
   # Show all local branches and their upstreams
   bv = branch -vv
   bav = branch --all -vv
@@ -104,5 +104,3 @@
   swd = switch develop
 
   dub=delete-untracked-branches
-[url "git@github.com:"]
-	insteadOf = https://github.com/
