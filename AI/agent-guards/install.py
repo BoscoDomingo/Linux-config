@@ -49,17 +49,46 @@ def append_once(items: list[Any], item: dict[str, Any]) -> None:
         items.append(item)
 
 
+def is_guard_command(command: Any, provider: str) -> bool:
+    if not isinstance(command, str):
+        return False
+    return (
+        "ai-agent-guard-jj-approval" in command
+        and f"--provider {provider}" in command
+    )
+
+
 def remove_guard_command(items: list[Any], provider: str) -> None:
-    command = f"{GUARD} --provider {provider}"
-    python_command = guard_command(provider)
-    items[:] = [
-        item
-        for item in items
-        if not (
-            isinstance(item, dict)
-            and item.get("command") in {command, python_command}
-        )
-    ]
+    kept: list[Any] = []
+    for item in items:
+        if not isinstance(item, dict):
+            kept.append(item)
+            continue
+        if is_guard_command(item.get("command"), provider):
+            continue
+        if isinstance(item.get("hooks"), list):
+            item["hooks"] = [
+                hook
+                for hook in item["hooks"]
+                if not (
+                    isinstance(hook, dict)
+                    and is_guard_command(hook.get("command"), provider)
+                )
+            ]
+            if not item["hooks"]:
+                continue
+        kept.append(item)
+    items[:] = kept
+
+
+def guard_hook(provider: str, **extra: Any) -> dict[str, Any]:
+    hook: dict[str, Any] = {
+        "type": "command",
+        "command": guard_command(provider),
+        "statusMessage": "Checking Jujutsu approval",
+    }
+    hook.update(extra)
+    return hook
 
 
 def guard_command(provider: str) -> str:
@@ -132,17 +161,12 @@ def install_claude() -> None:
     data = load_json(path, {})
     hooks = data.setdefault("hooks", {})
     pre_tool = hooks.setdefault("PreToolUse", [])
+    remove_guard_command(pre_tool, "claude")
     append_once(
         pre_tool,
         {
             "matcher": "Bash",
-            "hooks": [
-                {
-                    "type": "command",
-                    "command": guard_command("claude"),
-                    "statusMessage": "Checking Jujutsu approval",
-                }
-            ],
+            "hooks": [guard_hook("claude")],
         },
     )
     write_json(path, data)
@@ -155,18 +179,12 @@ def install_codex() -> None:
     data = load_json(hooks_path, {"hooks": {}})
     hooks = data.setdefault("hooks", {})
     pre_tool = hooks.setdefault("PreToolUse", [])
+    remove_guard_command(pre_tool, "codex")
     append_once(
         pre_tool,
         {
             "matcher": "Bash",
-            "hooks": [
-                {
-                    "type": "command",
-                    "command": guard_command("codex"),
-                    "timeout": 30,
-                    "statusMessage": "Checking Jujutsu approval",
-                }
-            ],
+            "hooks": [guard_hook("codex", timeout=30)],
         },
     )
     write_json(hooks_path, data)
