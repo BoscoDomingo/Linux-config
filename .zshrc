@@ -358,8 +358,9 @@ if [[ -z "$_IS_AI_AGENT" && "$_DOTFILES_HAS_REAL_TTY" = "1" ]]; then
 	precmd_functions+=(_windows_terminal_cwd)
 
 	# MARK: - Tmux
-	# Windows Terminal handles tabs/session layout. Keep tmux available as opt-in.
-	if [[ -z "$WT_SESSION" || "$DOTFILES_AUTO_TMUX" = "1" ]]; then
+	# Default to native terminals; set DOTFILES_AUTO_TMUX=1 to opt into auto-attach.
+	: ${DOTFILES_AUTO_TMUX:=0}
+	if [[ "$DOTFILES_AUTO_TMUX" = "1" ]]; then
 		$XDG_CONFIG_HOME/tmux/start-tmux.sh
 	fi
 fi
