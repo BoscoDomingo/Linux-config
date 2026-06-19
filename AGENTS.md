@@ -2,7 +2,9 @@ This is a repo that contains dotfiles for Linux-like systems.
 
 First-time setup and any subsequent updates should be done by running the `run.sh` script (which may be called from the distro-specific setup script on the first run, e.g. `Arch/run_arch.sh`). It should be an idempotent operation.
 
-Any time a modification is made, ensure `run.sh` and the distro-specific setup scripts are updated to reflect the changes.
+Any time a dotfiles-managed modification is made, ensure `run.sh` and the distro-specific setup scripts are updated to reflect the changes.
+
+Do not assume every fix discovered while working in this repo should be added to the dotfiles. When scope is ambiguous, clarify first whether the user wants a current-device-only fix or a reusable dotfiles change.
 
 For debugging requests phrased as investigation, diagnose first and report the root cause plus fix options. Ask before applying changes unless the user explicitly asks to fix, apply, or implement.
 
