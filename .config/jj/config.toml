@@ -2,7 +2,7 @@
 
 [user]
 name = "Bosco Domingo"
-email = "boscodomingob@gmail.com"
+email = "bosco.domingo@iceye.com"
 
 [signing]
 behavior = "keep"
@@ -27,7 +27,8 @@ program = "C:/Windows/System32/OpenSSH/ssh-keygen.exe"
 sh = [
   "show",
   "--config=ui.diff-formatter=':git'",
-  "--config=ui.pager=[\"cmd\", \"/C\", \"set GIT_CONFIG_PARAMETERS='delta.side-by-side=false'&& diffnav\"]",
+  # Avoid diffnav on empty revisions because jj show still emits metadata without a diff.
+  "--config=ui.pager=[\"jj-diffnav-pager\"]",
 ]
 
 [git]
@@ -77,9 +78,9 @@ pager = ["less", "-FR"] # Clear diff output after closing the pager.
 [aliases]
 # Current state
 st = ["status"]
-# Use diffnav for commit inspection; delta's global side-by-side default must be hidden so `s` toggles unified view.
-sh = ["show", "--config=ui.diff-formatter=':git'", "--config=ui.pager=[\"env\", \"GIT_CONFIG_PARAMETERS='delta.side-by-side=false'\", \"diffnav\"]"]
-shp = ["show", "-r", "@-", "--config=ui.diff-formatter=':git'", "--config=ui.pager=[\"env\", \"GIT_CONFIG_PARAMETERS='delta.side-by-side=false'\", \"diffnav\"]"]
+# Use diffnav for commit inspection, but skip it when jj show has metadata without a diff.
+sh = ["show", "--config=ui.diff-formatter=':git'", "--config=ui.pager=[\"jj-diffnav-pager\"]"]
+shp = ["show", "-r", "@-", "--config=ui.diff-formatter=':git'", "--config=ui.pager=[\"jj-diffnav-pager\"]"]
 
 d = ["diff"]
 l = ["log"]

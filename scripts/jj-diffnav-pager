@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+# Only send real diffs to diffnav; jj show for empty revisions has metadata but no diff.
+
+tmp_file=$(mktemp)
+trap 'rm -f "$tmp_file"' EXIT HUP INT TERM
+
+cat >"$tmp_file"
+
+if grep -q 'diff --git ' "$tmp_file"; then
+	GIT_CONFIG_PARAMETERS='delta.side-by-side=false' diffnav <"$tmp_file"
+else
+	less -FR <"$tmp_file"
+fi
