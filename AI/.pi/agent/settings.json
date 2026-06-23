@@ -1,13 +1,21 @@
 {
-	"lastChangelogVersion": "0.78.1",
-	"defaultProvider": "github-copilot",
-	"defaultModel": "gpt-5.5",
-	"defaultThinkingLevel": "high",
-	"terminal": {
-		"showTerminalProgress": true
-	},
-	"npmCommand": ["mise", "exec", "-q", "pnpm@latest", "--", "pnpm"],
-	"hideThinkingBlock": true,
-	"collapseChangelog": true,
-	"enableInstallTelemetry": false
+  "lastChangelogVersion": "0.79.10",
+  "defaultProvider": "github-copilot",
+  "defaultModel": "gpt-5.5",
+  "defaultThinkingLevel": "high",
+  "terminal": {
+    "showTerminalProgress": true
+  },
+  "npmCommand": [
+    "mise",
+    "exec",
+    "-q",
+    "pnpm@latest",
+    "--",
+    "pnpm"
+  ],
+  "hideThinkingBlock": true,
+  "collapseChangelog": true,
+  "enableInstallTelemetry": false,
+  "theme": "dark"
 }
