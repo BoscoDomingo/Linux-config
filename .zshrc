@@ -205,6 +205,7 @@ if [[ -z "$_IS_AI_AGENT" && "$_DOTFILES_HAS_REAL_TTY" = "1" ]]; then
 	[ -n "$(command -v rip)" ] && source <(rip completions zsh)
 	[ -n "$(command -v fzf)" ] && source <(fzf --zsh)
 	[ -n "$(command -v fx)" ] && source <(fx --comp zsh)
+  [ -n "$(command -v qq)" ] && source <(qq completion zsh)
 
 	## Static/custom completions
 	# Files must be named `_<command>` in $XDG_CONFIG_HOME/zsh/completions.
@@ -256,6 +257,7 @@ if [[ -z "$_IS_AI_AGENT" && "$_DOTFILES_HAS_REAL_TTY" = "1" ]]; then
 	fi
 
 	unalias gcp
+  unalias gga
 	alias reload='source ~/.zshrc'
 	alias full_reload="exec zsh"
 	alias reload_w_tmux="DOTFILES_AUTO_TMUX=1 zsh"
