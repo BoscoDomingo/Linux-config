@@ -3,7 +3,8 @@
 	"workbench.startupEditor": "readme",
 	"workbench.commandPalette.history": 40,
 	"workbench.colorTheme": "Andromeda Bordered",
-	"workbench.iconTheme": "vscode-icons",
+	"workbench.iconTheme": "Monokai Classic Icons",
+	"workbench.activityBar.orientation": "vertical",
 	"workbench.settings.applyToAllProfiles": [
 		"editor.formatOnSave",
 		"editor.defaultFormatter",
@@ -21,7 +22,8 @@
 	"security.allowedUNCHosts": ["wsl.localhost"],
 	"security.workspace.trust.untrustedFiles": "open",
 	"remote.autoForwardPortsSource": "hybrid",
-	"extensions.autoUpdate": false,
+	"extensions.autoUpdate": "off",
+	"extensions.autoUpdateDelay": 24,
 
 	// MARK: General/Zoom
 	"window.zoomLevel": 0,
@@ -82,7 +84,7 @@
 	// MARK: General/Updates
 	"update.enableWindowsBackgroundUpdates": false,
 	"extensions.ignoreRecommendations": true,
-	"update.mode": "manual",
+	"update.mode": "start",
 
 	// MARK: General/Saving
 	"files.autoSave": "afterDelay",
@@ -124,7 +126,11 @@
 	"terminal.integrated.enableImages": true,
 	"terminal.integrated.altClickMovesCursor": true,
 	"terminal.integrated.profiles.windows": {},
-	"terminal.integrated.suggest.quickSuggestions": false,
+	"terminal.integrated.suggest.quickSuggestions": {
+		"arguments": "on",
+		"commands": "on",
+		"unknown": "on"
+	},
 	"terminal.integrated.defaultProfile.linux": "zsh",
 	"terminal.integrated.macOptionIsMeta": true,
 	"terminal.external.windowsExec": "C:\\Users\\Bosco\\AppData\\Local\\Microsoft\\WindowsApps\\wt.exe",
@@ -147,6 +153,7 @@
 	"editor.stickyScroll.enabled": true,
 	"editor.accessibilitySupport": "off",
 	"editor.acceptSuggestionOnEnter": "smart",
+	"editor.linkedEditing": true,
 	"accessibility.signals.terminalQuickFix": {
 		"sound": "on"
 	},
@@ -210,6 +217,7 @@
 	"markdown.extension.completion.enabled": true,
 	"markdown.extension.tableFormatter.normalizeIndentation": true,
 	"markdown.extension.toc.orderedList": true,
+	"markdown.extension.toc.updateOnSave": false,
 	"markdown.extension.print.theme": "dark",
 
 	"[css]": {
@@ -229,7 +237,6 @@
 	"[toml]": {
 		"editor.defaultFormatter": "tamasfe.even-better-toml"
 	},
-
 	"[just]": {
 		"editor.defaultFormatter": "nefrob.vscode-just-syntax"
 	},
@@ -293,7 +300,7 @@
 		"editor.defaultFormatter": "mkhl.shfmt"
 	},
 	"[github-actions-workflow]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
+		"editor.defaultFormatter": "redhat.vscode-yaml"
 	},
 	"files.associations": {
 		".env*": "dotenv",
@@ -392,21 +399,22 @@
 	"[typescript]": {
 		"editor.defaultFormatter": "biomejs.biome"
 	},
-	"javascript.updateImportsOnFileMove.enabled": "always",
-	"typescript.updateImportsOnFileMove.enabled": "always",
-	"javascript.inlayHints.functionLikeReturnTypes.enabled": true,
-	"javascript.inlayHints.parameterNames.enabled": "literals",
-	"javascript.inlayHints.parameterTypes.enabled": true,
-	"javascript.inlayHints.propertyDeclarationTypes.enabled": true,
-	"javascript.inlayHints.variableTypes.enabled": true,
-	"typescript.inlayHints.variableTypes.enabled": true,
-	"typescript.inlayHints.propertyDeclarationTypes.enabled": true,
-	"typescript.inlayHints.parameterTypes.enabled": true,
-	"typescript.inlayHints.parameterNames.enabled": "literals",
-	"typescript.inlayHints.functionLikeReturnTypes.enabled": true,
-	"javascript.inlayHints.enumMemberValues.enabled": true,
-	"typescript.inlayHints.enumMemberValues.enabled": true,
-	"typescript.preferences.preferTypeOnlyAutoImports": true,
+	"js/ts.updateImportsOnFileMove.enabled": "always",
+	"js/ts.inlayHints.functionLikeReturnTypes.enabled": true,
+	"js/ts.inlayHints.parameterNames.enabled": "literals",
+	"js/ts.inlayHints.parameterTypes.enabled": true,
+	"js/ts.inlayHints.propertyDeclarationTypes.enabled": true,
+	"js/ts.inlayHints.variableTypes.enabled": true,
+	"js/ts.inlayHints.enumMemberValues.enabled": true,
+	"js/ts.inlayHints.parameterNames.suppressWhenArgumentMatchesName": true,
+	"js/ts.inlayHints.variableTypes.suppressWhenTypeMatchesName": true,
+	"js/ts.autoClosingTags.enabled": true,
+	"js/ts.preferGoToSourceDefinition": true,
+	"js/ts.referencesCodeLens.enabled": true,
+	"js/ts.implementationsCodeLens.enabled": true,
+	"js/ts.preferences.useAliasesForRenames": false,
+	"js/ts.tsdk.promptToUseWorkspaceVersion": true,
+	"js/ts.preferences.preferTypeOnlyAutoImports": true,
 	"debug.javascript.autoAttachFilter": "smart",
 	"bun.debugTerminal.stopOnEntry": true,
 	"typescriptExplorer.typeTree.view.icons.colors.enable": false,
@@ -428,18 +436,20 @@
 	"[go.mod]": {
 		"editor.defaultFormatter": "golang.go"
 	},
+	"go.toolsManagement.autoUpdate": true,
 	"go.alternateTools": {
 		"go": "~/.local/share/mise/installs/go/latest/bin/go",
-		"customFormatter": "golangci-lint"
+		"customFormatter": "golangci-lint-v2"
 	},
 	"go.formatTool": "custom",
 	"go.formatFlags": ["fmt", "--stdin"],
-	"go.lintTool": "golangci-lint",
-	"go.lintFlags": ["--fast", "--skip-generated"],
+	"go.lintTool": "golangci-lint-v2",
+	"go.lintFlags": ["--path-mode=abs", "--fast-only"],
 	"gopls": {
 		"ui.semanticTokens": true,
-		"formatting.gofumpt": true,
-		"ui.navigation.importShortcut": "Definition"
+		// "formatting.gofumpt": true,
+		"ui.navigation.importShortcut": "Definition",
+		"ui.diagnostics.enabled": true
 	},
 	"go.inlayHints.assignVariableTypes": true,
 	"go.inlayHints.compositeLiteralFields": true,
@@ -448,10 +458,14 @@
 	"go.inlayHints.functionTypeParameters": true,
 	"go.inlayHints.parameterNames": true,
 	"go.inlayHints.rangeVariableTypes": true,
+	"go.inlayHints.ignoredError": true,
 	"go.hideErrorCases.errorCasesOpacity": 0.6,
+	"go.disableConcurrentTests": true,
+	"go.editorContextMenuCommands": {
+		"removeTags": true
+	},
 	"lowlightgoerrors.MediumOpacity": "0.65",
 	"lowlightgoerrors.LowOpacity": "0.3",
-	"go.toolsManagement.autoUpdate": true,
 
 	// MARK: C#
 	"[csharp]": {
@@ -1058,7 +1072,6 @@
 	"github.copilot.editor.enableCodeActions": true,
 	"github.copilot.nextEditSuggestions.enabled": true,
 	"chat.mcp.gallery.enabled": true,
-	"chat.viewSessions.orientation": "stacked",
 	"chat.tools.urls.autoApprove": {
 		"https://code.visualstudio.com": true,
 		"https://github.com/microsoft/vscode/wiki/*": true,
@@ -1234,13 +1247,13 @@
 		"**/.ssh/id_*"
 	],
 	"cursor.windowSwitcher.sidebarHoverCollapsed": true,
-	"cursor.composer.backspaceRemoveContext": false,
+	"cursor.composer.codeBlockWordWrap": true,
 	"cursor.composer.usageSummaryDisplay": "always",
 	"cursor.composer.editorConversationDensity": "compact-ungrouped",
 	"cursor.general.glassShowWarningNotifications": true,
 	"cursor.general.emailPrivacyEnabled": true,
 	"cursorpyright.analysis.autoImportCompletions": true,
-	"cursorpyright.analysis.inlayHints.callArgumentNames": "all",
+	"cursorpyright.analysis.inlayHints.callArgumentNames": true,
 	"cursorpyright.analysis.inlayHints.functionReturnTypes": true,
 	"cursorpyright.analysis.inlayHints.variableTypes": true,
 	"cursorpyright.analysis.typeCheckingMode": "basic",
@@ -1453,14 +1466,15 @@
 	],
 	"harper.isolateEnglish": true,
 	"typos.diagnosticSeverity": "Information",
-
 	"js-auto-backticks.enableRevert": true,
 	"[powershell]": {
 		"editor.defaultFormatter": "ms-vscode.powershell"
 	},
+	"powershell.promptToUpdatePowerShell": false,
 	"spellright.language": ["en", "es"],
 	"spellright.documentTypes": ["markdown", "latex", "plaintext", "jsonc"],
 	"json.schemaDownload.trustedDomains": {
+		"https://aka.ms/terminal-profiles-schema": true,
 		"https://biomejs.dev": true,
 		"https://developer.microsoft.com/json-schemas/": true,
 		"https://json-schema.org/": true,
@@ -1472,5 +1486,4 @@
 		"https://www.schemastore.org/": true
 	},
 	"coderabbit.region": "eu",
-	"powershell.promptToUpdatePowerShell": false,
 }
