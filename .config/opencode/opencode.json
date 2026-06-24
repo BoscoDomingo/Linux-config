@@ -29,7 +29,13 @@
   "permission": {
     "edit": "ask",
     "external_directory": {
-      "*": "ask"
+      "*": "ask",
+      "~/.config/opencode": "allow",
+      "~/.config/opencode/**": "allow",
+      ".tmp/**": "allow",
+      ".tmp": "allow",
+      "/tmp": "allow",
+      "/tmp/**": "allow"
     },
     "webfetch": "ask",
     "bash": {
