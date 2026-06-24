@@ -49,13 +49,13 @@ bookmark-list-sort-keys = ["committer-date"]
 conflict-marker-style = "snapshot"
 default-command = ["log", "--no-pager", "-n=5"]
 diff-editor = ":builtin"
-diff-formatter = "delta" # Use delta as the external diff formatter so syntax highlighting works for diff/show/log -p.
+diff-formatter = "delta"                        # Use delta as the external diff formatter so syntax highlighting works for diff/show/log -p.
 editor = "nvim"
 graph.style = "curved"
 wrapping = "word"
 log-word-wrap = true
-movement.edit = true # Useful if using `prev` and `next` and want to edit the parent directly
-pager = ["less", "-FRX"] # Keep non-diff output visible after closing the pager.
+movement.edit = true                            # Useful if using `prev` and `next` and want to edit the parent directly
+pager = ["less", "-FRX"]                        # Keep non-diff output visible after closing the pager.
 paginate = "auto"
 show-cryptographic-signatures = true
 
@@ -122,7 +122,7 @@ top = ["edit", "-r", "heads(@::)"]
 # Rebase
 rb = ["rebase"]
 rbb = ["rebase", "--branch"]
-rbm = ["rebase", "-d", "main", "-s"] # Rebase the chosen revision onto main
+rbm = ["rebase", "-d", "main", "-s"]        # Rebase the chosen revision onto main
 rbbm = ["rebase", "-d", "main", "--branch"] # Rebase the chosen branch onto main
 rbi = ["rebase", "--interactive"]
 
@@ -161,12 +161,18 @@ bsd = ["bookmark", "set", "develop"] # Set develop to the latest commit
 bsdp = ["bookmark", "set", "develop", "-r", "@-"] # set develop to the previous commit
 bsdo = ["bookmark", "set", "develop", "-r", "develop@origin", "--allow-backwards"] # Sync local develop to origin/develop
 
+# Workspaces
+w = ["workspace"]
+wa = ["workspace", "add"]
+wl = ["workspace", "list"]
+wu = ["workspace", "update-stale"]
+
 # Git
 g = ["git"]
 gf = ["git", "fetch"]
 gp = ["git", "push"]
 gpb = ["git", "push", "-b"]
-gpn = ["git", "push", "-N"] # Push only bookmarked changes
-gpt = ["git", "push", "--tracked"] # Pushes all tracked branches
-gpm = ["git", "push", "-b", "main"] # Push bookmarked changes to main
+gpn = ["git", "push", "-N"]            # Push only bookmarked changes
+gpt = ["git", "push", "--tracked"]     # Pushes all tracked branches
+gpm = ["git", "push", "-b", "main"]    # Push bookmarked changes to main
 gpd = ["git", "push", "-b", "develop"] # Push bookmarked changes to develop
