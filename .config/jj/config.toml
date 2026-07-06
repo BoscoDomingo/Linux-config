@@ -148,6 +148,7 @@ oplog = ["op", "log"]
 b = ["bookmark"]
 bc = ["bookmark", "create"]
 bcp = ["bookmark", "create", "-r", "@-"] # Create bookmark at parent
+bf = ["bookmark", "forget"]
 bs = ["bookmark", "set"] # Set bookmark. E.g. `jj bsp main -r @-` to update tracked main to the latest commit
 bsa = ["bookmark", "set", "--allow-backwards"] # Set bookmark. E.g. `jj bsa main -r @-` to update tracked main to the latest commit
 bsp = ["bookmark", "set", "-r", "@-"]
