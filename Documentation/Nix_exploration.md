@@ -392,7 +392,112 @@ Phase 0.
   independently valuable and reversible. If Nix stops paying off at Phase 2,
   you still have a materially more robust setup than today and can stop.
 
-## 8. Bottom line
+## 8. Per-machine identity & secrets (work vs personal)
+
+Your `.gitconfig` currently hardcodes `user.email` and `user.signingKey`, and
+commits them. That's the one thing that genuinely can't be shared across a work
+and a personal machine. It's very fixable, and worth separating into **three
+tiers**, because they're handled differently:
+
+| Tier | Example | Where it lives | Committed? |
+|------|---------|----------------|-----------|
+| 1. True secret | SSH **private** key | `~/.ssh/` per machine, generated per device | **Never** (not git, not `/nix/store`) |
+| 2. Per-machine identity | git email, which **public** signing key | small **untracked** file per machine | No (or encrypted) |
+| 3. Encrypted-at-rest | API tokens, etc. | `~/.profile_secret`, or sops/age | Only if encrypted |
+
+Tier 1 already behaves correctly here: the private key is never committed, and
+`scripts/ssh-sign` reads `SSH_SIGN_KEY_PATH` so each machine points at its own
+key. `.ssh/allowed_signers` holds *public* keys only, so it's fine to keep
+committing it. **Only tier 2 needs changing.**
+
+### 8.1 The tooling-independent fix: git `include` / `includeIf`
+
+This is worth doing **now**, regardless of the Nix decision. Drop the `[user]`
+block from the committed `.gitconfig` and pull identity from an untracked file:
+
+```gitconfig
+# committed .gitconfig — no identity here anymore
+[include]
+    path = ~/.config/git/local.gitconfig    # untracked, written once per machine
+```
+
+Each machine's `~/.config/git/local.gitconfig` (never committed) holds:
+
+```gitconfig
+[user]
+    email = bosco.domingo@iceye.com
+    signingKey = key::ssh-ed25519 AAAA…work-key…
+```
+
+Even better, if a **single** machine has both work and personal repos, use
+directory-conditional includes so the right key is chosen automatically:
+
+```gitconfig
+[includeIf "gitdir:~/work/"]
+    path = ~/.config/git/work.gitconfig
+[includeIf "gitdir:~/personal/"]
+    path = ~/.config/git/personal.gitconfig
+```
+
+Your `.gitignore` already ignores `*_secret`; add `local.gitconfig` (or name the
+files `*_secret`). This directly answers your question — the private bit is a
+plain local file you write once per machine, nothing leaves the box.
+
+### 8.2 In Nix / Home Manager
+
+Home Manager declares those same includes in Nix, still pointing at untracked
+local files, so no identity is baked into the (potentially public) repo:
+
+```nix
+programs.git = {
+  enable = true;
+  userName = "Bosco Domingo";
+  includes = [
+    { path = "~/.config/git/local.gitconfig"; }                    # per-machine default
+    { condition = "gitdir:~/work/";     path = "~/.config/git/work.gitconfig"; }
+    { condition = "gitdir:~/personal/"; path = "~/.config/git/personal.gitconfig"; }
+  ];
+};
+```
+
+Two ways to supply the private values:
+
+- **Local file (recommended, simplest):** the `include` above reads a file you
+  write once per machine — matches your existing `~/.profile_secret` habit,
+  zero extra infrastructure.
+- **Encrypted-in-repo (if you want it version-controlled):** `sops-nix` or
+  `agenix` decrypt secrets into place on `home-manager switch`, keyed to each
+  machine's SSH/age key. Use this only if you specifically want the values
+  tracked (encrypted) rather than living outside the repo.
+
+Non-secret per-machine values could alternatively live in the host module
+(`macbook.nix` = personal, a work host = work), but a public repo is a reason to
+prefer the local-file route for the work email. The SSH **private** key is never
+put in Nix — Home Manager only references its path; you generate/copy it per
+machine as today.
+
+### 8.3 In chezmoi
+
+Its native answer: a `.gitconfig.tmpl` templated from per-machine data
+(`.chezmoidata`, or a first-run prompt), with age/1Password for anything
+encrypted:
+
+```gitconfig
+[user]
+    email = {{ .git.email }}
+    signingKey = {{ .git.signingKey }}
+```
+
+### 8.4 Recommendation
+
+Use a **local untracked file per machine** (§8.1) — it's the least infrastructure,
+matches your `~/.profile_secret` pattern, and works identically whether you stay
+on shell, adopt Nix, or adopt chezmoi. Add `includeIf` if work and personal
+repos ever share a machine. Reach for sops-nix/agenix only if you want the
+secrets themselves committed (encrypted). The SSH private key stays per-machine
+and out of the repo in every case.
+
+## 9. Bottom line
 
 - **Is Nix viable?** Yes — Home Manager + flakes cleanly covers Arch, Ubuntu,
   macOS, and WSL, and is the only option that makes your setup *reproducible*

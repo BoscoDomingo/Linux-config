@@ -36,6 +36,12 @@ This directory is a **starting point for the Nix migration described in
 | `home/packages.nix` | The former Homebrew array, as a Nix package list |
 | `home/dotfiles.nix` | Out-of-store symlinks to your existing repo files (keeps them editable) |
 | `home/shell.nix` | Example native Home Manager modules (zsh/starship/fzf/direnv) |
+| `home/git.nix` | Opt-in: per-machine git identity (work vs personal) via `includeIf` |
 | `hosts/*.nix` | Per-machine / per-OS overrides |
+
+Per-machine identity (git email + signing key) and secrets are covered in
+exploration doc §8. The short version: keep them in an untracked
+`~/.config/git/local.gitconfig` per machine and `[include]` it — the SSH
+private key stays in `~/.ssh/` and is never committed.
 
 Start with `dotfiles.nix` (Phase 1) — it's the lowest-risk, highest-value part.

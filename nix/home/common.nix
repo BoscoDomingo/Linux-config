@@ -6,6 +6,10 @@
     ./packages.nix
     ./dotfiles.nix
     ./shell.nix
+    # ./git.nix  # opt-in: let Home Manager own git identity via includeIf.
+    #            # If you enable this, drop the .gitconfig symlink from
+    #            # dotfiles.nix to avoid both writing git config. The simpler
+    #            # path (§8.1) needs neither: just add [include] to .gitconfig.
   ];
 
   # mise is kept for per-project language versions (see the exploration doc).

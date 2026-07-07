@@ -24,6 +24,10 @@ in
     ".nirc".source = link "${repo}/.nirc";
     ".npmrc".source = link "${repo}/.npmrc";
     ".bunfig.toml".source = link "${repo}/.bunfig.toml";
+    # NOTE: for work/personal separation, the committed .gitconfig should drop
+    # its [user] block and instead `[include]` an untracked per-machine file
+    # (~/.config/git/local.gitconfig). See exploration doc §8.1. The symlink
+    # itself is unchanged.
     ".gitconfig".source = link "${repo}/.gitconfig";
     ".gitignore_global".source = link "${repo}/.gitignore_global";
 
