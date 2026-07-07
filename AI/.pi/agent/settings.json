@@ -1,21 +1,56 @@
 {
-  "lastChangelogVersion": "0.80.2",
+  "lastChangelogVersion": "0.80.3",
   "defaultProvider": "github-copilot",
   "defaultModel": "gpt-5.5",
   "defaultThinkingLevel": "high",
   "terminal": {
     "showTerminalProgress": true
   },
-  "npmCommand": [
-    "mise",
-    "exec",
-    "-q",
-    "pnpm@latest",
-    "--",
-    "pnpm"
-  ],
+  "npmCommand": ["mise", "exec", "-q", "pnpm@latest", "--", "pnpm"],
   "hideThinkingBlock": true,
   "collapseChangelog": true,
   "enableInstallTelemetry": false,
-  "theme": "dark"
+  "packages": [
+    "../../repos/The_Armoury/resources/ai_llm/plugins/pi/general-skills",
+    "../../repos/The_Armoury/resources/ai_llm/plugins/pi/iceye-workflow",
+    "../../repos/The_Armoury/resources/ai_llm/plugins/pi/rules",
+    "../../repos/The_Armoury/resources/ai_llm/plugins/pi/agents",
+    "npm:pi-web-access",
+    "npm:@juicesharp/rpiv-ask-user-question",
+    "npm:@tintinweb/pi-subagents",
+    "npm:@juicesharp/rpiv-todo",
+    "npm:pi-simplify",
+    "npm:@gotgenes/pi-permission-system",
+    "npm:pi-powerline-footer",
+    "npm:pi-cursor-sdk",
+    "npm:pi-agent-browser-native",
+    "npm:@firstpick/pi-package-webui",
+    "npm:pi-btw",
+    "npm:pi-rtk-optimizer",
+    "npm:@plannotator/pi-extension",
+    "npm:pi-lens"
+  ],
+  "theme": "dark",
+  "enabledModels": [
+    "anthropic/claude-fable-5",
+    "github-copilot/claude-sonnet-4.6",
+    "github-copilot/gpt-5.5",
+    "openai-codex/gpt-5.5",
+    "cursor/haiku-latest",
+    "cursor/claude-opus-4-8@300k",
+    "cursor/claude-opus-4-8@1m",
+    "cursor/opus-latest@300k",
+    "cursor/opus-latest@1m",
+    "cursor/sonnet-latest@200k",
+    "cursor/sonnet-latest@1m",
+    "cursor/composer-2.5",
+    "cursor/composer-latest",
+    "cursor/auto",
+    "cursor/gpt-5.5@272k",
+    "cursor/gpt-5.5@1m",
+    "cursor/gpt-latest@272k",
+    "cursor/gpt-latest@1m",
+    "cursor/gpt-5-5@272k",
+    "cursor/gpt-5-5@1m"
+  ]
 }
