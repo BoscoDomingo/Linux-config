@@ -1,31 +1,36 @@
-# `nix/` — proposal skeleton (inert)
+# `nix/` — Home Manager config (working, tested)
 
-This directory is a **starting point for the Nix migration described in
-[`../Documentation/Nix_exploration.md`](../Documentation/Nix_exploration.md)**.
+The Nix implementation of the migration described in
+[`../Documentation/Nix_exploration.md`](../Documentation/Nix_exploration.md).
+It is **not wired into `run.sh`** — it does nothing until you install Nix and
+invoke it deliberately, so it's safe to keep in the repo while you adopt it in
+phases. It has been **verified end-to-end on a clean machine**: see
+[`test/README.md`](test/README.md) (packages, out-of-store dotfile symlinks,
+per-machine + per-directory git identity overrides, and atomic rollback all
+pass).
 
-> ⚠️ It does nothing on its own. It is not wired into `run.sh`. Nothing here
-> runs until you install Nix and invoke `home-manager` deliberately. It is safe
-> to leave in the repo indefinitely while you evaluate.
+## Try it
 
-## Try it (Phase 0)
+On a normal network:
 
-1. Install Nix (flakes enabled by default):
-   ```sh
-   curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
-   ```
-2. Edit the placeholders marked `TODO` in `flake.nix` and `home/*.nix`
-   (your username, home dir, which host you're on, the repo checkout path).
-3. Dry-run, then apply for your host:
-   ```sh
-   cd ~/dotfiles/nix
-   nix run home-manager/master -- switch --flake .#arch-wsl -n   # -n = dry run
-   nix run home-manager/master -- switch --flake .#arch-wsl
-   ```
-4. Roll back if anything looks wrong:
-   ```sh
-   home-manager generations              # list
-   home-manager switch --rollback        # undo last switch
-   ```
+```sh
+HOST=ubuntu bash ~/dotfiles/nix/bootstrap.sh   # HOST = arch-wsl | ubuntu | macbook
+```
+
+That installs Nix (if missing) and runs `home-manager switch -b hm-bak`. Or do
+it by hand:
+
+```sh
+cd ~/dotfiles/nix
+nix run home-manager/master -- switch --flake .#ubuntu -n   # -n = dry run
+nix run home-manager/master -- switch -b hm-bak --flake .#ubuntu
+home-manager generations && home-manager switch --rollback  # undo if needed
+```
+
+Two things are genuinely per-user, left as `TODO` in `flake.nix`: your
+`username` and the repo checkout path (`dotfiles.nix` assumes `~/dotfiles`).
+For locked-down networks (blocked GitHub tarball fetch), see
+[`test/README.md`](test/README.md).
 
 ## Layout
 
@@ -38,6 +43,8 @@ This directory is a **starting point for the Nix migration described in
 | `home/shell.nix` | Example native Home Manager modules (zsh/starship/fzf/direnv) |
 | `home/git.nix` | Opt-in: per-machine git identity (work vs personal) via `includeIf` |
 | `hosts/*.nix` | Per-machine / per-OS overrides |
+| `bootstrap.sh` | One-command setup for a new machine (normal network) |
+| `test/verify.sh` | Post-switch sanity checks; `test/README.md` records the verified run |
 
 Per-machine identity (git email + signing key) and secrets are covered in
 exploration doc §8. The short version: keep them in an untracked

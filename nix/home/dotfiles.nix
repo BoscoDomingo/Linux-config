@@ -24,10 +24,10 @@ in
     ".nirc".source = link "${repo}/.nirc";
     ".npmrc".source = link "${repo}/.npmrc";
     ".bunfig.toml".source = link "${repo}/.bunfig.toml";
-    # NOTE: for work/personal separation, the committed .gitconfig should drop
-    # its [user] block and instead `[include]` an untracked per-machine file
-    # (~/.config/git/local.gitconfig). See exploration doc §8.1. The symlink
-    # itself is unchanged.
+    # Work/personal separation is handled inside .gitconfig itself: it keeps a
+    # baseline [user] and `[include]`s an untracked ~/.config/git/local.gitconfig
+    # (plus per-directory includeIf) that overrides it per machine. See
+    # exploration doc §8.1. The symlink here is unchanged.
     ".gitconfig".source = link "${repo}/.gitconfig";
     ".gitignore_global".source = link "${repo}/.gitignore_global";
 

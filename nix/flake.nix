@@ -1,5 +1,5 @@
 {
-  description = "BoscoDomingo dotfiles — Home Manager + flakes (proposal skeleton)";
+  description = "BoscoDomingo dotfiles — Home Manager + flakes";
 
   # Inputs are hash-locked in flake.lock once you run `nix flake update`.
   # That lock file is the reproducibility guarantee: identical versions on

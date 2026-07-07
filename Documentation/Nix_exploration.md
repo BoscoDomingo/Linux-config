@@ -511,5 +511,10 @@ and out of the repo in every case.
   brew/mise workflow.
 - **Either way**, keep mise for per-project toolchains.
 
-The `nix/` directory in this branch is a working starting point for Phase 0.
-Nothing there runs until you install Nix and invoke it deliberately.
+The `nix/` directory in this branch is a **working, tested** Home Manager
+config — not just a sketch. It was verified end-to-end on a clean machine:
+packages install and run, dotfiles become out-of-store symlinks to the live
+repo (still editable in place), the per-machine and per-directory git identity
+overrides resolve correctly, and rollback is atomic. The full record is in
+[`../nix/test/README.md`](../nix/test/README.md). Nothing there runs until you
+install Nix and invoke it deliberately (`nix/bootstrap.sh`).
