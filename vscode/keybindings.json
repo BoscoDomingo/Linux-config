@@ -469,5 +469,29 @@
 		"key": "ctrl+shift+o",
 		"command": "-go-to-folder.openFolder",
 		"when": "editorTextFocus || !inputFocus"
+	},
+	{
+		"key": "ctrl+oem_comma",
+		"command": "workbench.action.openGlobalSettings"
+	},
+	{
+		"key": "ctrl+oem_comma",
+		"command": "-aiSettings.action.open",
+		"when": "cursor.cmdCommaOpensCursorSettings"
+	},
+	{
+		"key": "ctrl+alt+i",
+		"command": "workbench.action.toggleUnifiedSidebarFromKeyboard",
+		"when": "!isAuxiliaryWindowFocusedContext"
+	},
+	{
+		"key": "ctrl+alt+u",
+		"command": "-workbench.action.toggleUnifiedSidebarFromKeyboard",
+		"when": "!isAuxiliaryWindowFocusedContext"
+	},
+	{
+		"key": "ctrl+alt+s",
+		"command": "workbench.action.toggleAgentsFromKeyboard",
+		"when": "!isAuxiliaryWindowFocusedContext && !isGlass"
 	}
 ]
