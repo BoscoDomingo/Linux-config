@@ -7,6 +7,10 @@ packages), including **per-machine local overrides**. It passed.
 - [`verify.sh`](verify.sh) — reusable post-switch checks (packages, out-of-store
   symlinks, git identity overrides, rollback targets). Run it after any switch:
   `bash ~/dotfiles/nix/test/verify.sh`.
+- [`container-test.sh`](container-test.sh) — one command to prove the whole
+  thing in a throwaway Docker container (host untouched). Ubuntu by default;
+  `DISTRO=arch bash nix/test/container-test.sh` for Arch. It installs Nix,
+  clones this branch, seeds a work identity, runs `bootstrap.sh`, then `verify.sh`.
 
 ## What was verified (and the result)
 
