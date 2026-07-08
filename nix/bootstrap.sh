@@ -6,6 +6,7 @@
 # HOST must match an entry in flake.nix `homeConfigurations` (arch-wsl | ubuntu
 # | macbook). Idempotent: safe to re-run to apply changes.
 #
+# INSTALL_BREW=1 also installs Homebrew (escape hatch for tools not in nixpkgs).
 # Where GitHub tarball fetch is blocked, use the --override-input technique in
 # test/README.md instead.
 set -euo pipefail
@@ -24,7 +25,15 @@ if ! command -v nix >/dev/null 2>&1; then
     . "$HOME/.nix-profile/etc/profile.d/nix.sh"
 fi
 
-# 2. -b makes activation back up any pre-existing dotfile to *.hm-bak instead
+# 2. Optional Homebrew (opt-in per machine via INSTALL_BREW=1). .profile picks
+#    up /home/linuxbrew on PATH; the shell tolerates its absence otherwise.
+if [ "${INSTALL_BREW:-0}" = "1" ] && ! command -v brew >/dev/null 2>&1; then
+  echo "== Installing Homebrew (INSTALL_BREW=1) =="
+  NONINTERACTIVE=1 /bin/bash -c \
+    "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
+# 3. -b makes activation back up any pre-existing dotfile to *.hm-bak instead
 #    of failing when it wants to own that path.
 echo "== home-manager switch --flake $REPO/nix#$HOST =="
 nix run home-manager/master -- switch -b hm-bak --flake "$REPO/nix#$HOST"

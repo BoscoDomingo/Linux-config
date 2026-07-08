@@ -15,8 +15,9 @@ pass).
 HOST=ubuntu bash ~/dotfiles/nix/bootstrap.sh   # HOST = arch-wsl | ubuntu | macbook
 ```
 
-That installs Nix (if missing) and runs `home-manager switch -b hm-bak`. Or do
-it by hand:
+That installs Nix (if missing) and runs `home-manager switch -b hm-bak`. Add
+`INSTALL_BREW=1` to also install Homebrew (the escape hatch for tools not in
+nixpkgs; off by default). Or do it by hand:
 
 ```sh
 cd ~/dotfiles/nix
