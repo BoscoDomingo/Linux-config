@@ -27,43 +27,22 @@ fi
 read -p "Do you want to install Homebrew packages? (Y/n): " install_homebrew_packages
 if [ "$install_homebrew_packages" != "n" ]; then
 	if command -v brew >/dev/null 2>&1; then
+		# NOTE: the CLI toolbox that used to live here has moved to Nix /
+		# Home Manager (nix/home/packages.nix), which pins versions and installs
+		# them identically on every machine. Homebrew is now only for macOS GUI
+		# casks, and those are declared via nix-darwin's `homebrew` module
+		# (nix/hosts/macbook.nix) -- not installed imperatively here.
+		# See Documentation/Nix_exploration.md §4/§6. This whole run.sh installer
+		# is slated for retirement once the remaining installers are ported.
 		packages=(
-			gcc
-			cheat
-			progress
-			bottom
-			eza
-			bfs
-			fd
-			fx
-			fzf
-			bat
-			# tailspin
-			zsh-autosuggestions
-			zsh-fast-syntax-highlighting
-			zsh-autocomplete
-			zsh-completions
-			trippy
-			# ugrep
-			ripgrep
-			gping
-			hyperfine
-			# superfile
-			httpstat
-			btop
-			duf
-			rip2
-			sshs
-			# ggh
-			git-delta
-			# dlvhdr/formulae/diffnav
-			fastfetch
-			onefetch
-			witr
-			lazyjj
+			# (empty -- formulae moved to nix/home/packages.nix)
 		)
-		echo "Installing ${#packages[@]} package(s) via Homebrew..."
-		brew install "${packages[@]}"
+		if [ "${#packages[@]}" -gt 0 ]; then
+			echo "Installing ${#packages[@]} package(s) via Homebrew..."
+			brew install "${packages[@]}"
+		else
+			echo "No Homebrew formulae to install (managed by Nix now)."
+		fi
 	else
 		echo "Homebrew is not available yet. Skipping package installation."
 	fi

@@ -1,41 +1,48 @@
 { pkgs, ... }:
-# The former Homebrew array (Setup/installers/packages.sh), as a Nix list.
-# Every package here is pinned by flake.lock and installed identically on
-# every machine by `home-manager switch` — no prompts, no `curl | bash`.
+# The global CLI toolbox — Nix owns this (replaces the Homebrew formula array
+# in Setup/installers/packages.sh).
 #
-# Package names are nixpkgs attribute names, which occasionally differ from
-# the Homebrew formula name (noted inline). Search: https://search.nixos.org
+# OWNERSHIP RULES (see Documentation/Nix_exploration.md §4/§6):
+#   • Nix (this file) — stable, global CLI tools. Pinned by flake.lock,
+#     installed identically on every machine by `home-manager switch`.
+#   • mise (.config/mise/config.toml) — language runtimes (node/go/python/
+#     rust/bun/pnpm) and dev tools you want on `latest`/per-project
+#     (jj, neovim, opencode, pi, biome, golangci-lint, act, …).
+#   • Homebrew — macOS GUI casks only, declared via nix-darwin's `homebrew`
+#     module (see hosts/macbook.nix). On Linux, brew is no longer needed.
+# A tool lives in exactly ONE of these. No duplicates across systems.
+#
+# Package names are nixpkgs attributes (differ from brew names occasionally,
+# noted inline). Search: https://search.nixos.org
 {
   home.packages = with pkgs; [
-    # --- direct equivalents of the current brew list ---
     gcc
     cheat
+    progress
     bottom # `btm`
+    btop
     eza
+    bfs
     fd
+    fx
     fzf
     bat
-    ripgrep
+    ripgrep # also removed from mise — Nix is the single owner
     delta # brew: git-delta
     fastfetch
     onefetch
     duf
     gping
-    hyperfine
+    hyperfine # also removed from mise — Nix is the single owner
     trippy # `trip`
     sshs
-    rip2 # nixpkgs: rip2 (aka rm-improved)
+    rip2 # brew: rip2 (rm-improved)
+    httpstat
+    lazyjj
+    witr
     zsh-autosuggestions
     zsh-fast-syntax-highlighting
     zsh-completions
-    # progress          # coreutils progress viewer
-    # httpstat
-    # witr / lazyjj / diffnav → may come from flake inputs or be pending in
-    #   nixpkgs; check search.nixos.org, else keep on brew/mise for now.
-
-    # --- things previously installed via curl | bash or mise, if you want
-    #     Nix to own them instead (optional; can stay on their installers) ---
-    # starship        # or use programs.starship in shell.nix
-    # oh-my-posh
+    zsh-autocomplete
   ];
 }
