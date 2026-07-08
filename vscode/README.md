@@ -14,8 +14,6 @@ Use the built-in Profile Manager to export files. However, it may not work perfe
 
 ## Windows
 
-Powershell:
-
 ```powershell
 # Cursor
 $LinuxConfigPath = "\\wsl.localhost\archlinux\home\bosco\dotfiles"
