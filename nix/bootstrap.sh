@@ -24,8 +24,8 @@ if ! command -v nix >/dev/null 2>&1; then
     . "$HOME/.nix-profile/etc/profile.d/nix.sh"
 fi
 
-# 2. First activation backs up any pre-existing dotfiles to *.hm-bak instead of
-#    failing (replaces Setup/lib/helpers.sh backup logic).
+# 2. -b makes activation back up any pre-existing dotfile to *.hm-bak instead
+#    of failing when it wants to own that path.
 echo "== home-manager switch --flake $REPO/nix#$HOST =="
 nix run home-manager/master -- switch -b hm-bak --flake "$REPO/nix#$HOST"
 
@@ -34,8 +34,8 @@ bash "$REPO/nix/test/verify.sh" || true
 
 cat <<EOF
 
-Done. Per-machine identity (work vs personal) is NOT in the repo — create it now
-if this is a work machine:
+Done. Per-machine identity (work vs personal) is NOT in the repo. On a work
+machine, create it:
 
   mkdir -p ~/.config/git
   cat > ~/.config/git/local.gitconfig <<'GITEOF'

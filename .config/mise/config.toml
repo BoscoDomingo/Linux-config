@@ -7,8 +7,8 @@ pnpm = "latest"
 python = "latest"
 rust = "latest"
 
-# Moved to Nix (nix/home/packages.nix): ripgrep, hyperfine, jj, neovim,
-# opencode, yt-dlp, act, tree-sitter
+# Managed by Nix, not mise (nix/home/packages.nix): ripgrep, hyperfine, jj,
+# neovim, opencode, yt-dlp, act, tree-sitter
 biome = "latest"
 diffnav = "latest"
 dotenvx = "latest"

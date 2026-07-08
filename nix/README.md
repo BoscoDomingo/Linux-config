@@ -42,6 +42,7 @@ For locked-down networks (blocked GitHub tarball fetch), see
 | `home/dotfiles.nix` | Out-of-store symlinks to your existing repo files (keeps them editable) |
 | `home/shell.nix` | Example native Home Manager modules (zsh/starship/fzf/direnv) |
 | `home/git.nix` | Opt-in: per-machine git identity (work vs personal) via `includeIf` |
+| `home/tools.nix` | Activation steps for git-cloned/curled frameworks (oh-my-zsh, tpm, cheat sheets, micro themes, jj guards) |
 | `hosts/*.nix` | Per-machine / per-OS overrides |
 | `bootstrap.sh` | One-command setup for a new machine (normal network) |
 | `test/verify.sh` | Post-switch sanity checks; `test/README.md` records the verified run |

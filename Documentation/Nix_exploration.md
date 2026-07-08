@@ -527,18 +527,19 @@ mechanism; it can be deleted once all are ported:
 | `symlinks.sh` | `home/dotfiles.nix` (`mkOutOfStoreSymlink`) | ✅ done |
 | `packages.sh` | `home/packages.nix` (Nix); Homebrew kept on all platforms as a fallback + macOS casks via nix-darwin | ✅ done |
 | `gpg.sh` | Deprecated (SSH signing now); optional prompts, nothing to port | ✅ n/a |
-| `tools.sh` → oh-my-posh | mise already manages it (`[tool_alias]`) or a Nix pkg | ✅ covered |
-| `tools.sh` → oh-my-zsh | `programs.zsh.oh-my-zsh` (HM); replaces the `.zshrc` symlink | ⬜ Phase 3 |
-| `tools.sh` → tmux + tpm | `programs.tmux` with `plugins = [ … ]` (HM builds them) | ⬜ Phase 3 |
-| `tools.sh` → cheat sheets, micro themes | `home.activation` fetch / `home.file` | ⬜ Phase 3 |
-| `ai-agents.sh` → jj approval guards | `home.activation` running the existing `AI/agent-guards/install.py` | ⬜ Phase 3 |
+| `tools.sh` → oh-my-posh | mise manages it (`[tool_alias]`) or a Nix pkg | ✅ done |
+| `tools.sh` → oh-my-zsh | `home/tools.nix` activation clone to `~/.oh-my-zsh` | ✅ done |
+| `tools.sh` → tmux + tpm | `tmux` in `home/packages.nix`; tpm cloned in `home/tools.nix` | ✅ done |
+| `tools.sh` → cheat sheets, micro themes | `home/tools.nix` activation (git clone / curl) | ✅ done |
+| `ai-agents.sh` → jj approval guards | `home/tools.nix` activation runs `AI/agent-guards/install.py` | ✅ done |
 | `ai-agents.sh` → gentle-ai | Stays on its Homebrew tap, installed on **Linux + macOS** (not in nixpkgs) | ✅ unchanged |
 | `run.sh` (entrypoint) | `nix/bootstrap.sh` | ✅ done |
 | `Arch/run_arch.sh`, `Ubuntu/run_ubuntu.sh` | Shrink to: install prerequisites + Nix, clone, run `bootstrap.sh` | ⬜ Phase 4 |
 
-The ⬜ items are the remaining work before `run.sh` can be removed. They're all
-Phase 3–4 in §6 and independently shippable — none blocks the packages/dotfiles
-core that's already working.
+Only the distro bootstrap scripts (⬜ Phase 4) remain before `run.sh` itself can
+be deleted; they install the prerequisites (zsh, git, curl, Nix) that a package
+manager, not `run.sh`, is responsible for. The activation steps in
+`home/tools.nix` are best-effort, so a network hiccup never bricks a switch.
 
 ## 10. Bottom line
 

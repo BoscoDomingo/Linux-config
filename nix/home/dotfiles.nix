@@ -1,11 +1,10 @@
 { config, ... }:
-# Declarative replacement for Setup/installers/symlinks.sh.
+# Declarative dotfile symlinks.
 #
-# `mkOutOfStoreSymlink` links straight to the files in THIS repo checkout,
-# so you keep editing .zshrc / .config/* in place exactly as you do today —
-# the files are NOT copied read-only into /nix/store. Home Manager owns the
-# link set: it creates them atomically and removes links it no longer manages
-# (no more stray *.bak files).
+# `mkOutOfStoreSymlink` links straight to the files in this repo checkout, so
+# .zshrc / .config/* stay editable in place — the files are not copied
+# read-only into /nix/store. Home Manager owns the link set: it creates them
+# atomically and prunes links dropped from this set.
 let
   # TODO: point at where this repo is cloned on the machine.
   repo = "${config.home.homeDirectory}/dotfiles";
@@ -53,7 +52,9 @@ in
     "lsd".source = link "${repo}/.config/lsd";
     "opencode".source = link "${repo}/.config/opencode";
     "zed".source = link "${repo}/.config/zed";
-    # … remaining dirs: MangoHud bottom cheat diffnav direnv fastfetch hypr
-    #   micro pnpm superfile tealdeer tmux-powerline vicinae zellij zsh
+    "cheat".source = link "${repo}/.config/cheat"; # community sheets land in a gitignored subdir
+    "micro".source = link "${repo}/.config/micro"; # colorschemes land in a gitignored subdir
+    # … remaining dirs: MangoHud bottom diffnav direnv fastfetch hypr
+    #   pnpm superfile tealdeer tmux-powerline vicinae zellij zsh
   };
 }

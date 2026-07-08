@@ -2,8 +2,9 @@
 # Per-machine git identity (work vs personal) without baking it into the repo.
 # See Documentation/Nix_exploration.md §8.
 #
-# The committed .gitconfig should NO LONGER contain a [user] block. Identity
-# comes from untracked local files that you write once per machine:
+# When this module is used, drop the .gitconfig symlink from dotfiles.nix so
+# Home Manager owns git config. Identity comes from untracked local files you
+# write per machine:
 #   ~/.config/git/local.gitconfig   (this machine's default identity)
 #   ~/.config/git/work.gitconfig    (optional, for ~/work/** repos)
 #   ~/.config/git/personal.gitconfig(optional, for ~/personal/** repos)

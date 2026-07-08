@@ -1,5 +1,5 @@
 { config, ... }:
-# OPTIONAL (Phase 3): native Home Manager modules for tools with first-class
+# OPTIONAL: native Home Manager modules for tools with first-class
 # support. These generate config AND manage the package together, so you can
 # drop the corresponding symlink from dotfiles.nix if you adopt them.
 #

@@ -1,16 +1,15 @@
 { pkgs, ... }:
-# The global CLI toolbox — Nix owns this (replaces the Homebrew formula array
-# in Setup/installers/packages.sh).
+# The stable global CLI toolbox, managed by Nix.
 #
 # OWNERSHIP RULES (see Documentation/Nix_exploration.md §4/§6):
 #   • Nix (this file) — stable, global CLI tools. Pinned by flake.lock,
 #     installed identically on every machine by `home-manager switch`.
 #   • mise (.config/mise/config.toml) — language runtimes (node/go/python/
-#     rust/bun/pnpm) and dev tools you want on `latest`/per-project
-#     (jj, neovim, opencode, pi, biome, golangci-lint, act, …).
-#   • Homebrew — macOS GUI casks only, declared via nix-darwin's `homebrew`
-#     module (see hosts/macbook.nix). On Linux, brew is no longer needed.
-# A tool lives in exactly ONE of these. No duplicates across systems.
+#     rust/bun/pnpm) and dev tools tracked on `latest`/per-project
+#     (biome, golangci-lint, pi, …).
+#   • Homebrew — an escape hatch on any platform for tools not in nixpkgs, plus
+#     macOS GUI casks declared via nix-darwin's `homebrew` module (hosts/macbook.nix).
+# A tool lives in exactly ONE of these — no duplicates across systems.
 #
 # Package names are nixpkgs attributes (differ from brew names occasionally,
 # noted inline). Search: https://search.nixos.org
@@ -27,16 +26,16 @@
     fx
     fzf
     bat
-    ripgrep # also removed from mise — Nix is the single owner
+    ripgrep
     delta # brew: git-delta
     fastfetch
     onefetch
     duf
     gping
-    hyperfine # also removed from mise — Nix is the single owner
+    hyperfine
     trippy # `trip`
     sshs
-    rip2 # brew: rip2 (rm-improved)
+    rip2 # rm-improved
     httpstat
     lazyjj
     witr
@@ -45,15 +44,22 @@
     zsh-completions
     zsh-autocomplete
 
-    # Moved out of mise — these are stable enough to pin with the rest of the
-    # toolbox. (Their config still lives in .config/* via dotfiles.nix.)
+    # Dev tools stable enough to pin with the toolbox; their config lives in
+    # .config/* via dotfiles.nix.
     jujutsu # `jj`
     neovim
     opencode
     yt-dlp
     act
     tree-sitter
-    # NOTE: `pi` stays in mise (not in nixpkgs). `gentle-ai` stays on Homebrew
-    # (not in nixpkgs) and is installed on Linux + macOS via Setup/installers.
+
+    # Shell foundation tools referenced unconditionally by .profile/.bashrc/
+    # .zshrc, so Nix keeps the binaries present. mise manages language runtimes
+    # and floating dev tools on top.
+    mise
+    direnv
+    tmux
+    # `pi` and `gentle-ai` are not in nixpkgs: `pi` stays in mise, `gentle-ai`
+    # stays on its Homebrew tap (Linux + macOS) via Setup/installers.
   ];
 }

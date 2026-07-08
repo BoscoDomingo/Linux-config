@@ -27,22 +27,20 @@ fi
 read -p "Do you want to install Homebrew packages? (Y/n): " install_homebrew_packages
 if [ "$install_homebrew_packages" != "n" ]; then
 	if command -v brew >/dev/null 2>&1; then
-		# NOTE: the CLI toolbox that used to live here has moved to Nix /
-		# Home Manager (nix/home/packages.nix), which pins versions and installs
-		# them identically on every machine. Homebrew stays available on ALL
-		# platforms (incl. Linux) as an escape hatch for anything not in nixpkgs;
-		# the default formula list below is just empty now. On macOS, GUI casks
-		# are declared via nix-darwin's `homebrew` module (nix/hosts/macbook.nix).
+		# The CLI toolbox is managed by Nix / Home Manager (nix/home/packages.nix),
+		# which pins versions and installs them identically on every machine.
+		# Homebrew stays available on all platforms (incl. Linux) as an escape
+		# hatch for tools not in nixpkgs; macOS GUI casks are declared via
+		# nix-darwin's `homebrew` module (nix/hosts/macbook.nix).
 		# See Documentation/Nix_exploration.md §4/§6.
 		packages=(
-			# (empty -- toolbox moved to nix/home/packages.nix; add ad-hoc
-			#  formulae here only for tools that aren't in nixpkgs)
+			# Add ad-hoc formulae here only for tools that aren't in nixpkgs.
 		)
 		if [ "${#packages[@]}" -gt 0 ]; then
 			echo "Installing ${#packages[@]} package(s) via Homebrew..."
 			brew install "${packages[@]}"
 		else
-			echo "No Homebrew formulae to install (managed by Nix now)."
+			echo "No Homebrew formulae to install (the toolbox is managed by Nix)."
 		fi
 	else
 		echo "Homebrew is not available yet. Skipping package installation."
