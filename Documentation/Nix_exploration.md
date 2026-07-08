@@ -433,9 +433,9 @@ Even better, if a **single** machine has both work and personal repos, use
 directory-conditional includes so the right key is chosen automatically:
 
 ```gitconfig
-[includeIf "gitdir:~/work/"]
+[includeIf "gitdir:~/repos/work/"]
     path = ~/.config/git/work.gitconfig
-[includeIf "gitdir:~/personal/"]
+[includeIf "gitdir:~/repos/personal/"]
     path = ~/.config/git/personal.gitconfig
 ```
 
@@ -454,8 +454,8 @@ programs.git = {
   userName = "Bosco Domingo";
   includes = [
     { path = "~/.config/git/local.gitconfig"; }                    # per-machine default
-    { condition = "gitdir:~/work/";     path = "~/.config/git/work.gitconfig"; }
-    { condition = "gitdir:~/personal/"; path = "~/.config/git/personal.gitconfig"; }
+    { condition = "gitdir:~/repos/work/";     path = "~/.config/git/work.gitconfig"; }
+    { condition = "gitdir:~/repos/personal/"; path = "~/.config/git/personal.gitconfig"; }
   ];
 };
 ```

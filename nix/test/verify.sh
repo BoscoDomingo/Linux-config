@@ -37,14 +37,14 @@ echo "  baseline (repo .gitconfig): $(git -C "$REPO" config --file "$REPO/.gitco
 if [ -f "$HOME/.config/git/local.gitconfig" ]; then
   echo "  effective in \$HOME:         $(cd "$HOME" && git config user.email)"
 fi
-# includeIf "gitdir:~/work/" only triggers inside a repo under ~/work, so
-# descend into an actual repo (not the parent dir) to see the effective value.
+# includeIf "gitdir:~/repos/work/" only triggers inside a repo under that path,
+# so descend into an actual repo (not the parent dir) to see the effective value.
 email_in_repo(){ # $1 = base dir
   local repo; repo=$(find "$1" -maxdepth 2 -name .git -type d 2>/dev/null | head -1)
   [ -n "$repo" ] && (cd "$(dirname "$repo")" && git config user.email)
 }
-[ -d "$HOME/work" ]     && echo "  effective in a ~/work repo:     $(email_in_repo "$HOME/work" || echo 'n/a (no repo)')"
-[ -d "$HOME/personal" ] && echo "  effective in a ~/personal repo: $(email_in_repo "$HOME/personal" || echo 'n/a (no repo)')"
+[ -d "$HOME/repos/work" ]     && echo "  effective in a ~/repos/work repo:     $(email_in_repo "$HOME/repos/work" || echo 'n/a (no repo)')"
+[ -d "$HOME/repos/personal" ] && echo "  effective in a ~/repos/personal repo: $(email_in_repo "$HOME/repos/personal" || echo 'n/a (no repo)')"
 
 echo
 echo "== home-manager generations (rollback targets) =="

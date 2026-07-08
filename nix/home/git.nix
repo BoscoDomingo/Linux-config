@@ -1,17 +1,17 @@
 { ... }:
 # Per-machine git identity (work vs personal) without baking it into the repo.
-# See Documentation/Nix_exploration.md §8.
+# See [the migration doc](../../Documentation/Nix_exploration.md#8-per-machine-identity--secrets-work-vs-personal).
 #
 # When this module is used, drop the .gitconfig symlink from dotfiles.nix so
 # Home Manager owns git config. Identity comes from untracked local files you
 # write per machine:
-#   ~/.config/git/local.gitconfig   (this machine's default identity)
-#   ~/.config/git/work.gitconfig    (optional, for ~/work/** repos)
-#   ~/.config/git/personal.gitconfig(optional, for ~/personal/** repos)
+#   ~/.config/git/local.gitconfig    (this machine's default identity)
+#   ~/.config/git/work.gitconfig     (optional, for ~/repos/work/** repos)
+#   ~/.config/git/personal.gitconfig (optional, for ~/repos/personal/** repos)
 #
 # Example ~/.config/git/local.gitconfig (never committed):
 #   [user]
-#       email = bosco.domingo@iceye.com
+#       email = you@work.example
 #       signingKey = key::ssh-ed25519 AAAA…work-key…
 {
   programs.git = {
@@ -23,27 +23,20 @@
     includes = [
       { path = "~/.config/git/local.gitconfig"; }
       {
-        condition = "gitdir:~/work/";
+        condition = "gitdir:~/repos/work/";
         path = "~/.config/git/work.gitconfig";
       }
       {
-        condition = "gitdir:~/personal/";
+        condition = "gitdir:~/repos/personal/";
         path = "~/.config/git/personal.gitconfig";
       }
     ];
 
-    # Everything else can either be ported here from .gitconfig, or you can keep
-    # the .gitconfig symlink (dotfiles.nix) as the source of truth for the
-    # non-identity settings and use this module only for the identity includes.
-    #
+    # Non-identity settings either move here or stay in the symlinked .gitconfig.
     # extraConfig = {
     #   commit.gpgSign = true;
     #   gpg.format = "ssh";
     #   "gpg \"ssh\"".program = "ssh-sign";
     # };
   };
-
-  # The SSH *private* key is never managed by Nix. It stays in ~/.ssh/ per
-  # machine; scripts/ssh-sign already selects it via SSH_SIGN_KEY_PATH, so a
-  # work box and a personal box each point at their own key with no repo change.
 }

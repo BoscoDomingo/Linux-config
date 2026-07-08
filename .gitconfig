@@ -117,7 +117,7 @@
 # private key itself never lives in this repo.
 [include]
   path = ~/.config/git/local.gitconfig
-[includeIf "gitdir:~/work/"]
+[includeIf "gitdir:~/repos/work/"]
   path = ~/.config/git/work.gitconfig
-[includeIf "gitdir:~/personal/"]
+[includeIf "gitdir:~/repos/personal/"]
   path = ~/.config/git/personal.gitconfig

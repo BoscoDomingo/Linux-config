@@ -59,4 +59,4 @@ nix build .#homeConfigurations.ubuntu.activationPackage \
 ./result/activate
 ```
 
-On a normal network you skip all of that — see [`../bootstrap.sh`](../bootstrap.sh).
+Otherwise you skip all of that — see [`../bootstrap.sh`](../bootstrap.sh).

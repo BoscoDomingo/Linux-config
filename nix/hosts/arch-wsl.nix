@@ -8,8 +8,8 @@
     wslu # provides wslview etc. — used by BROWSER=wslview in .profile
   ];
 
-  # The DBus/gnome-keyring bootstrap currently in .profile's WSL branch can be
-  # re-homed here as a Home Manager activation script if you want Nix to own it:
+  # The DBus/gnome-keyring bootstrap in .profile's WSL branch can be re-homed
+  # here as a Home Manager activation script if you want Nix to own it:
   #
   # home.activation.wslKeyring = lib.hm.dag.entryAfter ["writeBoundary"] ''
   #   ...

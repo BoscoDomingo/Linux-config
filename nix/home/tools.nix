@@ -2,8 +2,7 @@
 # Idempotent activation steps for the git-cloned / curled frameworks that
 # aren't plain nixpkgs packages. They run on `home-manager switch` without
 # prompts, and are best-effort (`|| true`) so a network hiccup never bricks a
-# switch. The hand-written configs these use are symlinked via dotfiles.nix;
-# the tmux binary is a Nix package in packages.nix.
+# switch. The hand-written configs these use are symlinked via dotfiles.nix.
 let
   repo = "${config.home.homeDirectory}/dotfiles";
   git = "${pkgs.git}/bin/git";

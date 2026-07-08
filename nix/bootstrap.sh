@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-# Bootstrap this Home Manager config on a NEW machine (normal network).
+# Bootstrap this Home Manager config on a new machine.
 #
 #   HOST=ubuntu bash ~/dotfiles/nix/bootstrap.sh
 #
 # HOST must match an entry in flake.nix `homeConfigurations` (arch-wsl | ubuntu
 # | macbook). Idempotent: safe to re-run to apply changes.
 #
-# For locked-down networks where GitHub tarball fetch is blocked, use the
-# --override-input technique in test/README.md instead.
+# Where GitHub tarball fetch is blocked, use the --override-input technique in
+# test/README.md instead.
 set -euo pipefail
 
 REPO="${DOTFILES_REPO:-$HOME/dotfiles}"

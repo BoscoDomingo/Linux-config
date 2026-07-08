@@ -21,7 +21,6 @@
 
   outputs = { nixpkgs, home-manager, nix-darwin, ... }:
     let
-      # TODO: set these to your real values.
       username = "bosco";
       homeDir = system:
         if nixpkgs.lib.hasSuffix "darwin" system
@@ -53,7 +52,7 @@
         };
         "ubuntu" = mkHome {
           system = "x86_64-linux";
-          hostModule = ./hosts/ubuntu.nix;
+          hostModule = ./home/common.nix;
         };
         "macbook" = mkHome {
           system = "aarch64-darwin";

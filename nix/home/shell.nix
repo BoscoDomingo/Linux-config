@@ -19,7 +19,6 @@ in
     '';
   };
 
-  programs.starship.enable = true; # reads .config/starship.toml (symlinked)
   programs.fzf.enable = true;
   programs.direnv = {
     enable = true;

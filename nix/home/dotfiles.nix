@@ -6,12 +6,10 @@
 # read-only into /nix/store. Home Manager owns the link set: it creates them
 # atomically and prunes links dropped from this set.
 let
-  # TODO: point at where this repo is cloned on the machine.
-  repo = "${config.home.homeDirectory}/dotfiles";
+  repo = "${config.home.homeDirectory}/dotfiles"; # repo checkout location
   link = config.lib.file.mkOutOfStoreSymlink;
 in
 {
-  # Root-level dotfiles (the loop in symlinks.sh).
   home.file = {
     ".profile".source = link "${repo}/.profile";
     ".shellrc".source = link "${repo}/.shellrc";
@@ -23,38 +21,43 @@ in
     ".nirc".source = link "${repo}/.nirc";
     ".npmrc".source = link "${repo}/.npmrc";
     ".bunfig.toml".source = link "${repo}/.bunfig.toml";
-    # Work/personal separation is handled inside .gitconfig itself: it keeps a
-    # baseline [user] and `[include]`s an untracked ~/.config/git/local.gitconfig
-    # (plus per-directory includeIf) that overrides it per machine. See
-    # exploration doc §8.1. The symlink here is unchanged.
+    # Work/personal separation is handled inside .gitconfig itself.
     ".gitconfig".source = link "${repo}/.gitconfig";
     ".gitignore_global".source = link "${repo}/.gitignore_global";
 
-    # scripts/ → ~/.local/bin/scripts (matches symlinks.sh)
     ".local/bin/scripts".source = link "${repo}/scripts";
 
-    # SSH config (SSH keys themselves stay out of the repo)
     ".ssh/config".source = link "${repo}/.ssh/config";
     ".ssh/allowed_signers".source = link "${repo}/.ssh/allowed_signers";
   };
 
-  # The `.config/*/` loop, declaratively. One line per config dir; add/remove
-  # freely. (25 dirs today — a representative subset shown here.)
   xdg.configFile = {
     "starship.toml".source = link "${repo}/.config/starship.toml";
-    "ghostty".source = link "${repo}/.config/ghostty";
-    "nvim".source = link "${repo}/.config/nvim";
-    "mise".source = link "${repo}/.config/mise";
-    "jj".source = link "${repo}/.config/jj";
-    "tmux".source = link "${repo}/.config/tmux";
+    "starship_catpuccin.toml".source = link "${repo}/.config/starship_catpuccin.toml";
+    "MangoHud".source = link "${repo}/.config/MangoHud";
     "bat".source = link "${repo}/.config/bat";
+    "bottom".source = link "${repo}/.config/bottom";
     "btop".source = link "${repo}/.config/btop";
+    "cheat".source = link "${repo}/.config/cheat";
+    "diffnav".source = link "${repo}/.config/diffnav";
+    "direnv".source = link "${repo}/.config/direnv";
+    "fastfetch".source = link "${repo}/.config/fastfetch";
+    "ghostty".source = link "${repo}/.config/ghostty";
+    "hypr".source = link "${repo}/.config/hypr";
+    "jj".source = link "${repo}/.config/jj";
     "lsd".source = link "${repo}/.config/lsd";
+    "micro".source = link "${repo}/.config/micro";
+    "mise".source = link "${repo}/.config/mise";
+    "nvim".source = link "${repo}/.config/nvim";
     "opencode".source = link "${repo}/.config/opencode";
+    "pnpm".source = link "${repo}/.config/pnpm";
+    "superfile".source = link "${repo}/.config/superfile";
+    "tealdeer".source = link "${repo}/.config/tealdeer";
+    "tmux".source = link "${repo}/.config/tmux";
+    "tmux-powerline".source = link "${repo}/.config/tmux-powerline";
+    "vicinae".source = link "${repo}/.config/vicinae";
     "zed".source = link "${repo}/.config/zed";
-    "cheat".source = link "${repo}/.config/cheat"; # community sheets land in a gitignored subdir
-    "micro".source = link "${repo}/.config/micro"; # colorschemes land in a gitignored subdir
-    # … remaining dirs: MangoHud bottom diffnav direnv fastfetch hypr
-    #   pnpm superfile tealdeer tmux-powerline vicinae zellij zsh
+    "zellij".source = link "${repo}/.config/zellij";
+    "zsh".source = link "${repo}/.config/zsh";
   };
 }

@@ -11,8 +11,6 @@ pass).
 
 ## Try it
 
-On a normal network:
-
 ```sh
 HOST=ubuntu bash ~/dotfiles/nix/bootstrap.sh   # HOST = arch-wsl | ubuntu | macbook
 ```
@@ -27,10 +25,9 @@ nix run home-manager/master -- switch -b hm-bak --flake .#ubuntu
 home-manager generations && home-manager switch --rollback  # undo if needed
 ```
 
-Two things are genuinely per-user, left as `TODO` in `flake.nix`: your
-`username` and the repo checkout path (`dotfiles.nix` assumes `~/dotfiles`).
-For locked-down networks (blocked GitHub tarball fetch), see
-[`test/README.md`](test/README.md).
+`flake.nix` sets `username = "bosco"` and `dotfiles.nix` assumes the repo is at
+`~/dotfiles`; adjust both if either differs. Where GitHub tarball fetch is
+blocked, see [`test/README.md`](test/README.md).
 
 ## Layout
 
@@ -44,7 +41,7 @@ For locked-down networks (blocked GitHub tarball fetch), see
 | `home/git.nix` | Opt-in: per-machine git identity (work vs personal) via `includeIf` |
 | `home/tools.nix` | Activation steps for git-cloned/curled frameworks (oh-my-zsh, tpm, cheat sheets, micro themes, jj guards) |
 | `hosts/*.nix` | Per-machine / per-OS overrides |
-| `bootstrap.sh` | One-command setup for a new machine (normal network) |
+| `bootstrap.sh` | One-command setup for a new machine |
 | `test/verify.sh` | Post-switch sanity checks; `test/README.md` records the verified run |
 
 Per-machine identity (git email + signing key) and secrets are covered in

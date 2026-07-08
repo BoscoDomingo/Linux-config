@@ -32,7 +32,7 @@ if [ "$install_homebrew_packages" != "n" ]; then
 		# Homebrew stays available on all platforms (incl. Linux) as an escape
 		# hatch for tools not in nixpkgs; macOS GUI casks are declared via
 		# nix-darwin's `homebrew` module (nix/hosts/macbook.nix).
-		# See Documentation/Nix_exploration.md §4/§6.
+		# See ../../Documentation/Nix_exploration.md#9-tool-ownership--retiring-runsh
 		packages=(
 			# Add ad-hoc formulae here only for tools that aren't in nixpkgs.
 		)

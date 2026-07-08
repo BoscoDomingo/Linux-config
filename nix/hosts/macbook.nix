@@ -13,16 +13,12 @@
   # home.file."Library/KeyBindings/DefaultKeyBinding.dict".source =
   #   config.lib.file.mkOutOfStoreSymlink "${repo}/MacOS/DefaultKeyBinding.dict";
 
-  # macOS GUI casks — declared (not installed by run.sh) via nix-darwin's
-  # homebrew module in the system config (see ../flake.nix darwinConfigurations):
+  # macOS GUI casks — declared via nix-darwin's homebrew module in the system
+  # config (see ../flake.nix darwinConfigurations):
   #
   #   homebrew = {
   #     enable = true;
   #     onActivation.cleanup = "zap";   # remove casks not listed here
   #     casks = [ "ghostty" "cursor" "firefox" ];
   #   };
-  #
-  # NOTE: `gentle-ai` is NOT here — it's a cross-platform CLI (Linux + macOS)
-  # that isn't in nixpkgs, so it stays on its Homebrew tap and is installed by
-  # Setup/installers/ai-agents.sh on both OSes.
 }

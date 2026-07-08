@@ -7,27 +7,16 @@ pnpm = "latest"
 python = "latest"
 rust = "latest"
 
-# Managed by Nix, not mise (nix/home/packages.nix): ripgrep, hyperfine, jj,
-# neovim, opencode, yt-dlp, act, tree-sitter
 biome = "latest"
-diffnav = "latest"
-dotenvx = "latest"
-gdu = "latest"
 golangci-lint = "latest"
-navi = "latest"
 pi = "latest"
-# "tldr++" = "latest"
-tlrc = "latest"
-herdr = "latest"
 engram = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["go"]
 
 [tool_alias]
-diffnav = "github:dlvhdr/diffnav"
+engram = "github:Gentleman-Programming/engram"
 go-blueprint = "github:Melkeydev/go-blueprint"
 oh-my-posh = "github:JanDeDobbeleer/oh-my-posh"
 "tldr++" = "github:isacikgoz/tldr"
-tlrc = "cargo:tlrc"
-engram = "github:Gentleman-Programming/engram"
