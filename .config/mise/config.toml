@@ -7,23 +7,17 @@ pnpm = "latest"
 python = "latest"
 rust = "latest"
 
-act = "latest"
+# Moved to Nix (nix/home/packages.nix): ripgrep, hyperfine, jj, neovim,
+# opencode, yt-dlp, act, tree-sitter
 biome = "latest"
 diffnav = "latest"
 dotenvx = "latest"
 gdu = "latest"
 golangci-lint = "latest"
-jj = "latest"
 navi = "latest"
-neovim = "latest"
-opencode = "latest"
 pi = "latest"
-# ripgrep and hyperfine moved to Nix (nix/home/packages.nix) — the stable
-# global toolbox has a single owner. mise keeps runtimes + floating dev tools.
 # "tldr++" = "latest"
 tlrc = "latest"
-yt-dlp = "latest"
-tree-sitter = "latest"
 herdr = "latest"
 engram = "latest"
 

@@ -506,15 +506,16 @@ one owner. Nothing is installed by more than one system.
 
 | System | Owns | Examples |
 |--------|------|----------|
-| **Nix / Home Manager** | Stable global CLI tools; dotfile symlinks | rg, bat, fd, eza, fzf, delta, bottom, btop, duf, gping, hyperfine, trippy, sshs, rip2, fastfetch, onefetch, lazyjj, witr, zsh plugins |
-| **mise** | Language runtimes + floating/per-project dev tools | node, go, python, rust, bun, pnpm, jj, neovim, opencode, pi, biome, golangci-lint, act, tree-sitter, yt-dlp |
-| **Homebrew** (macOS only) | GUI casks + the odd tap-only CLI, declared via **nix-darwin's `homebrew` module** | ghostty, cursor, firefox casks; `gentle-ai` tap |
+| **Nix / Home Manager** | Stable global CLI tools; dotfile symlinks | rg, bat, fd, eza, fzf, delta, bottom, btop, duf, gping, hyperfine, trippy, sshs, rip2, fastfetch, onefetch, lazyjj, witr, zsh plugins, **jj, neovim, opencode, yt-dlp, act, tree-sitter** |
+| **mise** | Language runtimes + floating/per-project dev tools; tools not in nixpkgs | node, go, python, rust, bun, pnpm, biome, golangci-lint, navi, diffnav, dotenvx, gdu, **pi** |
+| **Homebrew** | An escape hatch on **all platforms** for anything not in nixpkgs; on macOS also GUI casks (declared via **nix-darwin's `homebrew` module**) | `gentle-ai` (tap, Linux + macOS); ghostty/cursor/firefox casks (macOS) |
 
-Applied in this branch: the whole brew formula array moved to
-`nix/home/packages.nix`; `ripgrep`/`hyperfine` were removed from mise (Nix owns
-them); `Setup/installers/packages.sh` no longer installs formulae; casks are
-shown declaratively in `nix/hosts/macbook.nix`. On Linux, Homebrew is no longer
-needed at all.
+Applied in this branch: the whole brew formula array plus jj/neovim/opencode/
+yt-dlp/act/tree-sitter moved to `nix/home/packages.nix`; `ripgrep`/`hyperfine`
+and those tools were removed from mise (Nix owns them). `pi` stays in mise and
+`gentle-ai` stays on Homebrew — neither is in nixpkgs. `Setup/installers/packages.sh`
+no longer installs a formula list but **keeps Homebrew installed on Linux too**
+as a fallback; casks are shown declaratively in `nix/hosts/macbook.nix`.
 
 ### 9.2 `run.sh` → Nix replacement map
 
@@ -524,14 +525,14 @@ mechanism; it can be deleted once all are ported:
 | `run.sh` installer | Replacement | Status |
 |--------------------|-------------|--------|
 | `symlinks.sh` | `home/dotfiles.nix` (`mkOutOfStoreSymlink`) | ✅ done |
-| `packages.sh` | `home/packages.nix` (Nix) + mise + nix-darwin `homebrew` (casks) | ✅ done |
-| `gpg.sh` | Deprecated (SSH signing now); nothing to port | ✅ n/a |
+| `packages.sh` | `home/packages.nix` (Nix); Homebrew kept on all platforms as a fallback + macOS casks via nix-darwin | ✅ done |
+| `gpg.sh` | Deprecated (SSH signing now); optional prompts, nothing to port | ✅ n/a |
 | `tools.sh` → oh-my-posh | mise already manages it (`[tool_alias]`) or a Nix pkg | ✅ covered |
 | `tools.sh` → oh-my-zsh | `programs.zsh.oh-my-zsh` (HM); replaces the `.zshrc` symlink | ⬜ Phase 3 |
 | `tools.sh` → tmux + tpm | `programs.tmux` with `plugins = [ … ]` (HM builds them) | ⬜ Phase 3 |
 | `tools.sh` → cheat sheets, micro themes | `home.activation` fetch / `home.file` | ⬜ Phase 3 |
 | `ai-agents.sh` → jj approval guards | `home.activation` running the existing `AI/agent-guards/install.py` | ⬜ Phase 3 |
-| `ai-agents.sh` → gentle-ai | nix-darwin `homebrew.brews`/`taps` (macOS) | ⬜ Phase 3 |
+| `ai-agents.sh` → gentle-ai | Stays on its Homebrew tap, installed on **Linux + macOS** (not in nixpkgs) | ✅ unchanged |
 | `run.sh` (entrypoint) | `nix/bootstrap.sh` | ✅ done |
 | `Arch/run_arch.sh`, `Ubuntu/run_ubuntu.sh` | Shrink to: install prerequisites + Nix, clone, run `bootstrap.sh` | ⬜ Phase 4 |
 

@@ -44,5 +44,16 @@
     zsh-fast-syntax-highlighting
     zsh-completions
     zsh-autocomplete
+
+    # Moved out of mise — these are stable enough to pin with the rest of the
+    # toolbox. (Their config still lives in .config/* via dotfiles.nix.)
+    jujutsu # `jj`
+    neovim
+    opencode
+    yt-dlp
+    act
+    tree-sitter
+    # NOTE: `pi` stays in mise (not in nixpkgs). `gentle-ai` stays on Homebrew
+    # (not in nixpkgs) and is installed on Linux + macOS via Setup/installers.
   ];
 }

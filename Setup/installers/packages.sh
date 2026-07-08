@@ -29,13 +29,14 @@ if [ "$install_homebrew_packages" != "n" ]; then
 	if command -v brew >/dev/null 2>&1; then
 		# NOTE: the CLI toolbox that used to live here has moved to Nix /
 		# Home Manager (nix/home/packages.nix), which pins versions and installs
-		# them identically on every machine. Homebrew is now only for macOS GUI
-		# casks, and those are declared via nix-darwin's `homebrew` module
-		# (nix/hosts/macbook.nix) -- not installed imperatively here.
-		# See Documentation/Nix_exploration.md §4/§6. This whole run.sh installer
-		# is slated for retirement once the remaining installers are ported.
+		# them identically on every machine. Homebrew stays available on ALL
+		# platforms (incl. Linux) as an escape hatch for anything not in nixpkgs;
+		# the default formula list below is just empty now. On macOS, GUI casks
+		# are declared via nix-darwin's `homebrew` module (nix/hosts/macbook.nix).
+		# See Documentation/Nix_exploration.md §4/§6.
 		packages=(
-			# (empty -- formulae moved to nix/home/packages.nix)
+			# (empty -- toolbox moved to nix/home/packages.nix; add ad-hoc
+			#  formulae here only for tools that aren't in nixpkgs)
 		)
 		if [ "${#packages[@]}" -gt 0 ]; then
 			echo "Installing ${#packages[@]} package(s) via Homebrew..."
