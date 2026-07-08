@@ -25,6 +25,7 @@ tlrc = "latest"
 yt-dlp = "latest"
 tree-sitter = "latest"
 herdr = "latest"
+engram = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["go"]
@@ -35,3 +36,4 @@ go-blueprint = "github:Melkeydev/go-blueprint"
 oh-my-posh = "github:JanDeDobbeleer/oh-my-posh"
 "tldr++" = "github:isacikgoz/tldr"
 tlrc = "cargo:tlrc"
+engram = "github:Gentleman-Programming/engram"
