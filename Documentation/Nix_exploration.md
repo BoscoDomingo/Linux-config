@@ -511,7 +511,7 @@ one owner. Nothing is installed by more than one system.
 | **Homebrew** | On-demand escape hatch on any platform for tools not in nixpkgs (opt-in via `INSTALL_BREW=1`); on macOS also GUI casks (declared via **nix-darwin's `homebrew` module**) | ghostty/cursor/firefox casks (macOS) |
 
 `pi` and `engram` are the only agent tools not in nixpkgs; both install via mise
-(`ubi:` backend from GitHub releases). Homebrew installs a formula list no
+(`github:` backend, from GitHub releases). Homebrew installs a formula list no
 longer — it stays available on Linux as a fallback only when opted into.
 `engram` registers with each detected coding agent through
 `scripts/engram-setup` (run by `home/tools.nix` and by `ai-agents.sh`).

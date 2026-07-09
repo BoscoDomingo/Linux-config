@@ -7,6 +7,7 @@
 # | macbook). Idempotent: safe to re-run to apply changes.
 #
 # INSTALL_BREW=1 also installs Homebrew (escape hatch for tools not in nixpkgs).
+# SKIP_MISE=1 skips `mise install` (language runtimes + engram/pi), e.g. in CI.
 # Where GitHub tarball fetch is blocked, use the --override-input technique in
 # test/README.md instead.
 set -euo pipefail
@@ -37,6 +38,19 @@ fi
 #    of failing when it wants to own that path.
 echo "== home-manager switch --flake $REPO/nix#$HOST =="
 nix run home-manager/master -- switch -b hm-bak --flake "$REPO/nix#$HOST"
+
+# 4. Populate mise-managed tools (language runtimes, engram, pi). mise itself is
+#    installed by Home Manager above. Skip with SKIP_MISE=1.
+if [ "${SKIP_MISE:-0}" != "1" ]; then
+  mise_bin="$HOME/.nix-profile/bin/mise"
+  [ -x "$mise_bin" ] || mise_bin="$(command -v mise 2>/dev/null || true)"
+  if [ -n "$mise_bin" ]; then
+    echo "== mise install =="
+    "$mise_bin" install || true
+    # engram exists now → register it with each detected coding agent.
+    [ -x "$REPO/scripts/engram-setup" ] && bash "$REPO/scripts/engram-setup" || true
+  fi
+fi
 
 echo "== verify =="
 bash "$REPO/nix/test/verify.sh" || true

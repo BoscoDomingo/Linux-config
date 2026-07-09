@@ -51,6 +51,6 @@
     mise
     direnv
     tmux
-    # `pi` and `engram` are not in nixpkgs; both come from mise (ubi backend).
+    # `pi` and `engram` are not in nixpkgs; both come from mise.
   ];
 }
