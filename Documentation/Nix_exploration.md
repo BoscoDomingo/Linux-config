@@ -506,16 +506,15 @@ one owner. Nothing is installed by more than one system.
 
 | System | Owns | Examples |
 |--------|------|----------|
-| **Nix / Home Manager** | Stable global CLI tools; dotfile symlinks | rg, bat, fd, eza, fzf, delta, bottom, btop, duf, gping, hyperfine, trippy, sshs, rip2, fastfetch, onefetch, lazyjj, witr, zsh plugins, **jj, neovim, opencode, yt-dlp, act, tree-sitter** |
-| **mise** | Language runtimes + floating/per-project dev tools; tools not in nixpkgs | node, go, python, rust, bun, pnpm, biome, golangci-lint, navi, diffnav, dotenvx, gdu, **pi** |
-| **Homebrew** | An escape hatch on **all platforms** for anything not in nixpkgs; on macOS also GUI casks (declared via **nix-darwin's `homebrew` module**) | `gentle-ai` (tap, Linux + macOS); ghostty/cursor/firefox casks (macOS) |
+| **Nix / Home Manager** | Stable global CLI tools; dotfile symlinks | rg, bat, fd, eza, fzf, delta, bottom, btop, duf, gping, hyperfine, trippy, sshs, rip2, fastfetch, onefetch, lazyjj, witr, zsh plugins, jj, neovim, opencode, yt-dlp, act, tree-sitter, gdu, navi, tlrc, dotenvx, herdr, diffnav, mise, direnv, tmux |
+| **mise** | Language runtimes + tools not in nixpkgs | node, go, python, rust, bun, pnpm, biome, golangci-lint, **pi**, **engram** |
+| **Homebrew** | On-demand escape hatch on any platform for tools not in nixpkgs (opt-in via `INSTALL_BREW=1`); on macOS also GUI casks (declared via **nix-darwin's `homebrew` module**) | ghostty/cursor/firefox casks (macOS) |
 
-Applied in this branch: the whole brew formula array plus jj/neovim/opencode/
-yt-dlp/act/tree-sitter moved to `nix/home/packages.nix`; `ripgrep`/`hyperfine`
-and those tools were removed from mise (Nix owns them). `pi` stays in mise and
-`gentle-ai` stays on Homebrew — neither is in nixpkgs. `Setup/installers/packages.sh`
-no longer installs a formula list but **keeps Homebrew installed on Linux too**
-as a fallback; casks are shown declaratively in `nix/hosts/macbook.nix`.
+`pi` and `engram` are the only agent tools not in nixpkgs; both install via mise
+(`ubi:` backend from GitHub releases). Homebrew installs a formula list no
+longer — it stays available on Linux as a fallback only when opted into.
+`engram` registers with each detected coding agent through
+`scripts/engram-setup` (run by `home/tools.nix` and by `ai-agents.sh`).
 
 ### 9.2 `run.sh` → Nix replacement map
 
@@ -532,7 +531,7 @@ mechanism; it can be deleted once all are ported:
 | `tools.sh` → tmux + tpm | `tmux` in `home/packages.nix`; tpm cloned in `home/tools.nix` | ✅ done |
 | `tools.sh` → cheat sheets, micro themes | `home/tools.nix` activation (git clone / curl) | ✅ done |
 | `ai-agents.sh` → jj approval guards | `home/tools.nix` activation runs `AI/agent-guards/install.py` | ✅ done |
-| `ai-agents.sh` → gentle-ai | Stays on its Homebrew tap, installed on **Linux + macOS** (not in nixpkgs) | ✅ unchanged |
+| `ai-agents.sh` → engram | `engram` via mise; `scripts/engram-setup` registers it with autodiscovered agents (run by `home/tools.nix`) | ✅ done |
 | `run.sh` (entrypoint) | `nix/bootstrap.sh` | ✅ done |
 | `Arch/run_arch.sh`, `Ubuntu/run_ubuntu.sh` | Shrink to: install prerequisites + Nix, clone, run `bootstrap.sh` | ⬜ Phase 4 |
 

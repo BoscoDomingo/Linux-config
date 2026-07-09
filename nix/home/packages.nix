@@ -51,6 +51,6 @@
     mise
     direnv
     tmux
-    # `pi` (mise) and `gentle-ai` (Homebrew tap) are not in nixpkgs.
+    # `pi` and `engram` are not in nixpkgs; both come from mise (ubi backend).
   ];
 }

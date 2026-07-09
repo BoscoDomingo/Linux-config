@@ -51,4 +51,12 @@ in
       run ${pkgs.python3}/bin/python3 "${repo}/AI/agent-guards/install.py" || true
     fi
   '';
+
+  # Register engram (agent memory) with every coding agent detected on the
+  # machine. engram is installed via mise; the script no-ops if it's absent.
+  home.activation.engram = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    if [ -x "${repo}/scripts/engram-setup" ]; then
+      run ${pkgs.bash}/bin/bash "${repo}/scripts/engram-setup" || true
+    fi
+  '';
 }

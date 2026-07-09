@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Register engram with every coding agent detected on this system.
+# engram has no auto-discovery, so probe well-known config dirs / binaries and
+# run `engram setup <id>` for each agent that is present. Idempotent.
+set -u
+
+engram="$(command -v engram 2>/dev/null || true)"
+[ -z "$engram" ] && [ -x "$HOME/.local/share/mise/shims/engram" ] && engram="$HOME/.local/share/mise/shims/engram"
+[ -z "$engram" ] && [ -x "$HOME/go/bin/engram" ] && engram="$HOME/go/bin/engram"
+if [ -z "$engram" ]; then
+	echo "engram not found; install it first (mise use -g engram) then re-run."
+	exit 0
+fi
+
+setup() {
+	if "$engram" setup "$1" >/dev/null 2>&1; then
+		echo "  engram setup $1"
+	else
+		echo "  engram setup $1 (skipped/failed)"
+	fi
+}
+
+# id ← detection (config dir or binary on PATH)
+{ [ -d "$HOME/.claude" ] || command -v claude >/dev/null 2>&1; } && setup claude-code
+{ [ -d "$HOME/.cursor" ] || [ -d "$HOME/.cursor-server" ] || command -v cursor >/dev/null 2>&1; } && setup cursor
+{ [ -d "$HOME/.vscode" ] || [ -d "$HOME/.vscode-server" ] || command -v code >/dev/null 2>&1; } && setup vscode-copilot
+{ [ -d "$HOME/.config/opencode" ] || command -v opencode >/dev/null 2>&1; } && setup opencode
+{ [ -d "$HOME/.pi" ] || command -v pi >/dev/null 2>&1; } && setup pi
+command -v gemini >/dev/null 2>&1 && setup gemini-cli
+command -v codex >/dev/null 2>&1 && setup codex
+command -v windsurf >/dev/null 2>&1 && setup windsurf
+command -v qwen >/dev/null 2>&1 && setup qwen
+command -v kiro >/dev/null 2>&1 && setup kiro
+command -v antigravity >/dev/null 2>&1 && setup antigravity-cli
+command -v kilocode >/dev/null 2>&1 && setup kilocode
+
+exit 0
