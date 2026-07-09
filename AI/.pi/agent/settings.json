@@ -6,7 +6,14 @@
   "terminal": {
     "showTerminalProgress": true
   },
-  "npmCommand": ["mise", "exec", "-q", "pnpm@latest", "--", "pnpm"],
+  "npmCommand": [
+    "mise",
+    "exec",
+    "-q",
+    "pnpm@latest",
+    "--",
+    "pnpm"
+  ],
   "hideThinkingBlock": true,
   "collapseChangelog": true,
   "enableInstallTelemetry": false,
@@ -28,7 +35,9 @@
     "npm:pi-btw",
     "npm:pi-rtk-optimizer",
     "npm:@plannotator/pi-extension",
-    "npm:pi-lens"
+    "npm:pi-lens",
+    "npm:gentle-engram@0.1.8",
+    "npm:pi-mcp-adapter"
   ],
   "theme": "dark",
   "enabledModels": [
