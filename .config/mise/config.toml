@@ -25,7 +25,6 @@ tlrc = "latest"
 yt-dlp = "latest"
 tree-sitter = "latest"
 herdr = "latest"
-engram = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["go"]
