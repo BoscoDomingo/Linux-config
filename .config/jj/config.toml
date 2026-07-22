@@ -27,8 +27,16 @@ program = "C:/Windows/System32/OpenSSH/ssh-keygen.exe"
 sh = [
   "show",
   "--config=ui.diff-formatter=':git'",
-  # Avoid diffnav on empty revisions because jj show still emits metadata without a diff.
-  "--config=ui.pager=[\"jj-diffnav-pager\"]",
+  # Use the Windows cmd shim in Windows-config/Scripts; Windows process lookup doesn't resolve the extensionless POSIX helper.
+  "--config=ui.pager=[\"jj-diffnav-pager.cmd\"]",
+]
+shp = [
+  "show",
+  "-r",
+  "@-",
+  "--config=ui.diff-formatter=':git'",
+  # Use the Windows cmd shim in Windows-config/Scripts; Windows process lookup doesn't resolve the extensionless POSIX helper.
+  "--config=ui.pager=[\"jj-diffnav-pager.cmd\"]",
 ]
 
 [git]
