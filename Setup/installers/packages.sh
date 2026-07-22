@@ -61,6 +61,7 @@ if [ "$install_homebrew_packages" != "n" ]; then
 			onefetch
 			witr
 			lazyjj
+			jjui
 		)
 		echo "Installing ${#packages[@]} package(s) via Homebrew..."
 		brew install "${packages[@]}"
