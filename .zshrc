@@ -206,6 +206,7 @@ if [[ -z "$_IS_AI_AGENT" && "$_DOTFILES_HAS_REAL_TTY" = "1" ]]; then
 	[ -n "$(command -v fzf)" ] && source <(fzf --zsh)
 	[ -n "$(command -v fx)" ] && source <(fx --comp zsh)
   [ -n "$(command -v qq)" ] && source <(qq completion zsh)
+  [ -n "$(command -v herdr)" ] && source <(herdr completion zsh)
 
 	## Static/custom completions
 	# Files must be named `_<command>` in $XDG_CONFIG_HOME/zsh/completions.
