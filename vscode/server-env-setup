@@ -30,6 +30,9 @@ _dotfiles_path_dedupe() {
 }
 
 _dotfiles_path_prepend_if_dir "/home/linuxbrew/.linuxbrew/bin"
+# Nix-managed CLI toolbox (Home Manager profile). Above Homebrew because Nix is
+# the source of truth for the toolbox; brew is only a fallback.
+_dotfiles_path_prepend_if_dir "$HOME/.nix-profile/bin"
 _dotfiles_path_prepend_if_dir "$HOME/bin"
 _dotfiles_path_prepend_if_dir "$HOME/.local/bin"
 _dotfiles_path_prepend_if_dir "$HOME/.local/bin/scripts"

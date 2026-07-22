@@ -27,9 +27,18 @@
 
 # Installation
 
-You can try running the [`./run.sh`](run.sh) file directly (or if a distro-specific script exists, use that instead), although it is untested and will likely not work.
+Setup is managed by Nix (Home Manager). On a fresh machine, run the distro-specific bootstrap, which installs prerequisites, clones this repo, and hands off to the Nix setup:
 
-Otherwise, just run the commands manually.
+- Arch (incl. WSL): [`Arch/run_arch.sh`](Arch/run_arch.sh)
+- Ubuntu (incl. WSL): [`Ubuntu/run_ubuntu.sh`](Ubuntu/run_ubuntu.sh)
+
+On a machine that already has the repo cloned, run the Nix bootstrap directly:
+
+```sh
+bash ~/dotfiles/nix/bootstrap.sh   # auto-detects arch vs arch-wsl; override with HOST=<arch|arch-wsl|ubuntu|macbook>
+```
+
+See [`nix/README.md`](nix/README.md) for how it's structured and [`Documentation/Nix_exploration.md`](Documentation/Nix_exploration.md) for the full design and tool-ownership split.
 
 ---
 
@@ -146,7 +155,7 @@ and then run `mise use <alias>` to install it.
 This is better than using `mise use -g ubi:<org_or_user>/<repo>` because the name won't be polluted with the `ubi:` prefix.
 ## Homebrew
 
-See [`./run.sh`](run.sh) for a list of tools installed with Homebrew.
+The CLI toolbox is managed by Nix ([`nix/home/packages.nix`](nix/home/packages.nix)); Homebrew stays available on all platforms as an escape hatch for tools not in nixpkgs (opt in via `INSTALL_BREW=1` when running `nix/bootstrap.sh`), and declares macOS GUI casks via nix-darwin. See [`Documentation/Nix_exploration.md`](Documentation/Nix_exploration.md#9-tool-ownership--retiring-runsh).
 
 ## Built-in package managers
 
