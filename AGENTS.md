@@ -1,8 +1,8 @@
 This is a repo that contains dotfiles for Linux-like systems.
 
-First-time setup and any subsequent updates should be done by running the `run.sh` script (which may be called from the distro-specific setup script on the first run, e.g. `Arch/run_arch.sh`). It should be an idempotent operation.
+Setup is managed by Nix (Home Manager). First-time setup and subsequent updates run `nix/bootstrap.sh` (idempotent), which installs Nix and runs `home-manager switch`. On a brand-new machine the distro-specific script (`Arch/run_arch.sh` or `Ubuntu/run_ubuntu.sh`) installs prerequisites, clones the repo, and calls `nix/bootstrap.sh`.
 
-Any time a dotfiles-managed modification is made, ensure `run.sh` and the distro-specific setup scripts are updated to reflect the changes.
+Any time a dotfiles-managed modification is made, ensure the Nix config under `nix/` reflects it: dotfile symlinks in `nix/home/dotfiles.nix`, packages in `nix/home/packages.nix`, and git-cloned/curled frameworks in `nix/home/tools.nix`. Tool ownership (Nix vs mise vs Homebrew) is documented in `Documentation/Nix_exploration.md`.
 
 Do not assume every fix discovered while working in this repo should be added to the dotfiles. When scope is ambiguous, clarify first whether the user wants a current-device-only fix or a reusable dotfiles change.
 

@@ -1,25 +1,30 @@
 #!/bin/bash
-# This script can be run manually, before cloning the repo. It will take care of cloning the actual repo and running the installer.
+# First-run bootstrap for a fresh Ubuntu box (incl. WSL). Run as your normal
+# sudo user before the repo is cloned:
+#
+#   sudo apt-get update && sudo apt-get install -y git \
+#     && git clone https://github.com/BoscoDomingo/Linux-config.git \
+#     && bash Linux-config/Ubuntu/run_ubuntu.sh
+#
+# It installs the prerequisites a package manager owns (zsh, git, locales, plus
+# the build deps mise needs to compile language runtimes), makes zsh the login
+# shell, clones the repo, and hands off to nix/bootstrap.sh, which installs Nix
+# and runs `home-manager switch`. Everything else lives in the Nix config.
+set -euo pipefail
 
-sudo apt update && sudo apt upgrade && sudo apt install -y build-essential locales git curl ca-certificates file procps
+sudo apt-get update
+sudo apt-get install -y \
+	zsh git openssh-client curl ca-certificates file procps locales xz-utils \
+	build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
+	libsqlite3-dev libncursesw5-dev tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
 
-# Install locales so character encoding works
-sudo locale-gen en_US.UTF-8
-sudo locale-gen en_GB.UTF-8
+# Locales, so character encoding works.
+sudo locale-gen en_US.UTF-8 en_GB.UTF-8
 
-if [ ! -d "$HOME/dotfiles" ]; then
-	git clone https://github.com/BoscoDomingo/Linux-config.git "$HOME/dotfiles"
-fi
+# Make zsh the login shell (the Nix config drives the interactive setup).
+zsh_bin="$(command -v zsh)"
+[ "$SHELL" = "$zsh_bin" ] || chsh -s "$zsh_bin" || echo "Could not change the default shell automatically."
 
-# Mise dependencies
-sudo apt install build-essential ca-certificates libssl-dev zlib1g-dev \
-	libbz2-dev libreadline-dev libsqlite3-dev curl \
-	libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
-
-sudo apt install -y zsh gcp direnv
-# direnv alternative
-# curl -sfL https://direnv.net/install.sh | bash
-
-cd "$HOME/dotfiles"
-printf "\nLaunching the dotfiles installer...\n"
-./run.sh
+# Clone the repo and hand off to the Nix bootstrap.
+[ -d "$HOME/dotfiles" ] || git clone https://github.com/BoscoDomingo/Linux-config.git "$HOME/dotfiles"
+HOST=ubuntu bash "$HOME/dotfiles/nix/bootstrap.sh"

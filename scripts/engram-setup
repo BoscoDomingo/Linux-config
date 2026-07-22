@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+# Register engram with every coding agent detected on this system.
+# engram has no auto-discovery, so probe well-known config dirs / binaries and
+# run `engram setup <id>` for each agent that is present. Idempotent.
+set -u
+
+engram="$(command -v engram 2>/dev/null || true)"
+[ -z "$engram" ] && [ -x "$HOME/.local/share/mise/shims/engram" ] && engram="$HOME/.local/share/mise/shims/engram"
+[ -z "$engram" ] && [ -x "$HOME/go/bin/engram" ] && engram="$HOME/go/bin/engram"
+if [ -z "$engram" ]; then
+	echo "engram not found; install it first (mise use -g engram) then re-run."
+	exit 0
+fi
+
+setup() {
+	if "$engram" setup "$1" >/dev/null 2>&1; then
+		echo "  engram setup $1"
+	else
+		echo "  engram setup $1 (skipped/failed)"
+	fi
+}
+
+# probe <engram-id> <binary> [config-dir ...]
+# Register the agent if its binary is on PATH, or any config dir (relative to
+# $HOME) exists. One line of data per agent instead of a hand-written check.
+probe() {
+	id="$1" bin="$2"
+	shift 2
+	for dir in "$@"; do
+		[ -d "$HOME/$dir" ] && { setup "$id"; return; }
+	done
+	command -v "$bin" >/dev/null 2>&1 && setup "$id"
+}
+
+probe claude-code     claude      .claude
+probe cursor          cursor      .cursor .cursor-server
+probe vscode-copilot  code        .vscode .vscode-server
+probe opencode        opencode    .config/opencode
+probe pi              pi          .pi
+probe gemini-cli      gemini
+probe codex           codex
+probe windsurf        windsurf
+probe qwen            qwen
+probe kiro            kiro
+probe antigravity-cli antigravity
+probe kilocode        kilocode
+
+exit 0

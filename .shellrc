@@ -26,7 +26,7 @@ if [ -z "$_IS_AI_AGENT" ] && [ "${_DOTFILES_HAS_REAL_TTY:-1}" = "1" ]; then
 	# Run once a day
 	if [ ! -e "/tmp/$(date -I).sem" ]; then
 		touch "/tmp/$(date -I).sem"
-		fastfetch
+		command -v fastfetch >/dev/null 2>&1 && fastfetch
 		if [ -n "$(command -v brew)" ]; then
 			(brew update &>/dev/null &)
 		fi

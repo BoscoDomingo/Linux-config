@@ -7,32 +7,15 @@ pnpm = "latest"
 python = "latest"
 rust = "latest"
 
-act = "latest"
 biome = "latest"
-diffnav = "latest"
-dotenvx = "latest"
-gdu = "latest"
 golangci-lint = "latest"
-hyperfine = "latest"
-jj = "latest"
-navi = "latest"
-neovim = "latest"
-opencode = "latest"
 pi = "latest"
-ripgrep = "latest"
-# "tldr++" = "latest"
-tlrc = "latest"
-yt-dlp = "latest"
-tree-sitter = "latest"
-herdr = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["go"]
 
 [tool_alias]
-diffnav = "github:dlvhdr/diffnav"
+engram = "github:Gentleman-Programming/engram"
 go-blueprint = "github:Melkeydev/go-blueprint"
 oh-my-posh = "github:JanDeDobbeleer/oh-my-posh"
 "tldr++" = "github:isacikgoz/tldr"
-tlrc = "cargo:tlrc"
-engram = "github:Gentleman-Programming/engram"
