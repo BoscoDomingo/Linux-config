@@ -80,6 +80,10 @@ read -p "Do you want to symlink the Pi settings? (Y/n): " link_pi_settings
 if [ "$link_pi_settings" != "n" ]; then
 	mkdir -p "$HOME/.pi/agent"
 	ensure_link "$CURRENT_DIR/AI/.pi/agent/" "$HOME/.pi/agent/"
+
+	# Keep Pi permission defaults in dotfiles while preserving the extension's expected path.
+	mkdir -p "$HOME/.pi/agent/extensions/pi-permission-system"
+	ensure_link "$CURRENT_DIR/AI/.pi/agent/extensions/pi-permission-system/config.json" "$HOME/.pi/agent/extensions/pi-permission-system/config.json"
 fi
 
 # MARK: - SSH Config Setup
