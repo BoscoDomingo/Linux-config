@@ -69,31 +69,6 @@
 	},
 	{
 		"identifier": {
-			"id": "bradlc.vscode-tailwindcss",
-			"uuid": "4db62a7c-7d70-419c-96d2-6c3a4dc77ea5"
-		},
-		"version": "0.14.28",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/bradlc.vscode-tailwindcss-0.14.28-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "bradlc.vscode-tailwindcss-0.14.28-universal",
-		"metadata": {
-			"installedTimestamp": 1770816242121,
-			"source": "gallery",
-			"id": "4db62a7c-7d70-419c-96d2-6c3a4dc77ea5",
-			"publisherId": "84722833-669b-4c7d-920e-b60e43fae19a",
-			"publisherDisplayName": "bradlc",
-			"targetPlatform": "universal",
-			"updated": false,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false
-		}
-	},
-	{
-		"identifier": {
 			"id": "chrisdias.vscode-opennewinstance",
 			"uuid": "d1232d17-9a0f-4fda-9cf0-e4bf18d567ae"
 		},
@@ -160,31 +135,6 @@
 			"id": "bffa5210-f4cc-42f3-a164-eb6c714e7e46",
 			"publisherId": "2cebbed8-2546-4651-85d6-470a7b473e47",
 			"publisherDisplayName": "jayblack388",
-			"targetPlatform": "universal",
-			"updated": false,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "yzane.markdown-pdf",
-			"uuid": "f015bc3c-a098-4245-8765-615e002e09ab"
-		},
-		"version": "1.5.0",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/yzane.markdown-pdf-1.5.0-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "yzane.markdown-pdf-1.5.0-universal",
-		"metadata": {
-			"installedTimestamp": 1770816251840,
-			"source": "gallery",
-			"id": "f015bc3c-a098-4245-8765-615e002e09ab",
-			"publisherId": "86794f67-46a8-4137-a5a4-1415a0e41e7d",
-			"publisherDisplayName": "yzane",
 			"targetPlatform": "universal",
 			"updated": false,
 			"private": false,
@@ -982,31 +932,6 @@
 	},
 	{
 		"identifier": {
-			"id": "usernamehw.errorlens",
-			"uuid": "9d8c32ab-354c-4daf-a9bf-20b633734435"
-		},
-		"version": "3.26.0",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/usernamehw.errorlens-3.26.0-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "usernamehw.errorlens-3.26.0-universal",
-		"metadata": {
-			"installedTimestamp": 1772565533645,
-			"source": "gallery",
-			"id": "9d8c32ab-354c-4daf-a9bf-20b633734435",
-			"publisherId": "151820df-5dc5-4c97-8751-eb84643203fa",
-			"publisherDisplayName": "usernamehw",
-			"targetPlatform": "universal",
-			"updated": false,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false
-		}
-	},
-	{
-		"identifier": {
 			"id": "mikestead.dotenv",
 			"uuid": "532533c9-a894-4a58-9eee-bbfbe7c06f71"
 		},
@@ -1132,31 +1057,6 @@
 	},
 	{
 		"identifier": {
-			"id": "mtxr.sqltools",
-			"uuid": "6a2bbab0-d8f0-43fa-9b26-e6a3b7892a0b"
-		},
-		"version": "0.28.5",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/mtxr.sqltools-0.28.5-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "mtxr.sqltools-0.28.5-universal",
-		"metadata": {
-			"installedTimestamp": 1772565681499,
-			"source": "gallery",
-			"id": "6a2bbab0-d8f0-43fa-9b26-e6a3b7892a0b",
-			"publisherId": "952fc94a-735a-4caa-92ce-e1011fbc9780",
-			"publisherDisplayName": "mtxr",
-			"targetPlatform": "universal",
-			"updated": false,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false
-		}
-	},
-	{
-		"identifier": {
 			"id": "mohammadbaqer.better-folding",
 			"uuid": "bda65566-5654-42e8-a130-73b026ead59f"
 		},
@@ -1232,31 +1132,6 @@
 	},
 	{
 		"identifier": {
-			"id": "golang.go",
-			"uuid": "d6f6cfea-4b6f-41f4-b571-6ad2ab7918da"
-		},
-		"version": "0.52.2",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/golang.go-0.52.2-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "golang.go-0.52.2-universal",
-		"metadata": {
-			"installedTimestamp": 1772565759603,
-			"source": "gallery",
-			"id": "d6f6cfea-4b6f-41f4-b571-6ad2ab7918da",
-			"publisherId": "dbf6ae0a-da75-4167-ac8b-75b4512f2153",
-			"publisherDisplayName": "golang",
-			"targetPlatform": "universal",
-			"updated": false,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false
-		}
-	},
-	{
-		"identifier": {
 			"id": "jeronimoekerdt.color-picker-universal",
 			"uuid": "46b636f1-e583-455c-89ab-f5782fa902de"
 		},
@@ -1300,32 +1175,6 @@
 			"id": "09388e71-c498-458b-b514-54c3ed31a36e",
 			"publisherId": "f20453fe-720b-4a02-8838-84ab3fdc1b74",
 			"publisherDisplayName": "antfu",
-			"targetPlatform": "universal",
-			"updated": false,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "codeandstuff.package-json-upgrade",
-			"uuid": "1f59cde6-3a8c-47e4-b40b-355c1641721a"
-		},
-		"version": "3.5.1",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/codeandstuff.package-json-upgrade-3.5.1-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "codeandstuff.package-json-upgrade-3.5.1-universal",
-		"metadata": {
-			"installedTimestamp": 1772711863235,
-			"pinned": true,
-			"source": "gallery",
-			"id": "1f59cde6-3a8c-47e4-b40b-355c1641721a",
-			"publisherId": "31d03940-ac40-40ee-bd05-fefb4d01ab50",
-			"publisherDisplayName": "codeandstuff",
 			"targetPlatform": "universal",
 			"updated": false,
 			"private": false,
@@ -1801,36 +1650,6 @@
 	},
 	{
 		"identifier": {
-			"id": "jjk.jjk",
-			"uuid": "27fecc3e-093e-4ff1-b130-b3ccf371337d"
-		},
-		"version": "0.10.0",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/jjk.jjk-0.10.0-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "jjk.jjk-0.10.0-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1775659795936,
-			"pinned": true,
-			"source": "gallery",
-			"id": "27fecc3e-093e-4ff1-b130-b3ccf371337d",
-			"publisherId": "8a38bc31-626a-4853-9ef7-91fe4f1486f4",
-			"publisherDisplayName": "jjk",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
 			"id": "yoavbls.pretty-ts-errors",
 			"uuid": "1e149c89-8f97-447e-863d-1146f0ad1b70"
 		},
@@ -2154,36 +1973,6 @@
 	},
 	{
 		"identifier": {
-			"id": "github.vscode-github-actions",
-			"uuid": "04f49bfc-8330-4eee-8237-ea938fb755ef"
-		},
-		"version": "0.31.5",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/github.vscode-github-actions-0.31.5-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "github.vscode-github-actions-0.31.5-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1776870453542,
-			"pinned": true,
-			"source": "gallery",
-			"id": "04f49bfc-8330-4eee-8237-ea938fb755ef",
-			"publisherId": "7c1c19cd-78eb-4dfb-8999-99caf7679002",
-			"publisherDisplayName": "GitHub",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
 			"id": "fogio.inline-go-struct-tags-syntax-highlight",
 			"uuid": "63529134-957b-47ec-85d8-61db81da27a5"
 		},
@@ -2204,36 +1993,6 @@
 			"id": "63529134-957b-47ec-85d8-61db81da27a5",
 			"publisherId": "9e499b24-f282-4d4d-8a97-a7597e2b38e1",
 			"publisherDisplayName": "fogio",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "vscode-icons-team.vscode-icons",
-			"uuid": "9ccc1dd7-7ec4-4a46-bd4f-7d7b8b9d322a"
-		},
-		"version": "12.18.0",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/vscode-icons-team.vscode-icons-12.18.0-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "vscode-icons-team.vscode-icons-12.18.0-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1776870455078,
-			"pinned": true,
-			"source": "gallery",
-			"id": "9ccc1dd7-7ec4-4a46-bd4f-7d7b8b9d322a",
-			"publisherId": "652ad61d-3a6a-48ca-ab1a-80dc8953b2b6",
-			"publisherDisplayName": "vscode-icons-team",
 			"targetPlatform": "universal",
 			"updated": true,
 			"private": false,
@@ -2274,96 +2033,6 @@
 	},
 	{
 		"identifier": {
-			"id": "ms-azuretools.vscode-containers",
-			"uuid": "2cd1d691-3d69-4d2d-ae39-fda4bc4cfd3d"
-		},
-		"version": "2.4.4",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/ms-azuretools.vscode-containers-2.4.4-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "ms-azuretools.vscode-containers-2.4.4-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1778071166234,
-			"pinned": true,
-			"source": "gallery",
-			"id": "2cd1d691-3d69-4d2d-ae39-fda4bc4cfd3d",
-			"publisherId": "52b787f2-79a9-4f32-99b4-393afe3005d3",
-			"publisherDisplayName": "ms-azuretools",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "elijah-potter.harper",
-			"uuid": "67361f9a-6018-4ea8-9fd2-37b4de177c4e"
-		},
-		"version": "2.1.0",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/elijah-potter.harper-2.1.0-linux-x64",
-			"scheme": "file"
-		},
-		"relativeLocation": "elijah-potter.harper-2.1.0-linux-x64",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1778071166570,
-			"pinned": true,
-			"source": "gallery",
-			"id": "67361f9a-6018-4ea8-9fd2-37b4de177c4e",
-			"publisherId": "a098746b-cc7e-4534-b8ee-6834fcb649b0",
-			"publisherDisplayName": "elijah-potter",
-			"targetPlatform": "linux-x64",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "vitest.explorer",
-			"uuid": "ab3534a7-eaae-4f75-9735-62bfd758b220"
-		},
-		"version": "1.50.4",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/vitest.explorer-1.50.4-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "vitest.explorer-1.50.4-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1778071172468,
-			"pinned": true,
-			"source": "gallery",
-			"id": "ab3534a7-eaae-4f75-9735-62bfd758b220",
-			"publisherId": "b2d5dee9-71a4-4649-b9ca-610bade91331",
-			"publisherDisplayName": "vitest",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
 			"id": "bierner.markdown-mermaid",
 			"uuid": "f8d0ffc4-66bb-4a9c-8149-ef8f043691a1"
 		},
@@ -2384,62 +2053,6 @@
 			"id": "f8d0ffc4-66bb-4a9c-8149-ef8f043691a1",
 			"publisherId": "f164f116-e2aa-496b-84dc-2451248e8beb",
 			"publisherDisplayName": "bierner",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "nefrob.vscode-just-syntax",
-			"uuid": "4d059c6e-aaea-42e3-97f5-f4fd35b70d3d"
-		},
-		"version": "0.10.1",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/nefrob.vscode-just-syntax-0.10.1-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "nefrob.vscode-just-syntax-0.10.1-universal",
-		"metadata": {
-			"installedTimestamp": 1778166555883,
-			"pinned": true,
-			"source": "gallery",
-			"id": "4d059c6e-aaea-42e3-97f5-f4fd35b70d3d",
-			"publisherId": "8f57d1e0-1e7b-4637-9542-855528d4cdc0",
-			"publisherDisplayName": "nefrob",
-			"targetPlatform": "universal",
-			"updated": false,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "coderabbit.coderabbit-vscode",
-			"uuid": "0b15b6fc-4458-4546-8b5e-bba85e07df24"
-		},
-		"version": "0.19.2",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/coderabbit.coderabbit-vscode-0.19.2-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "coderabbit.coderabbit-vscode-0.19.2-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1778685405844,
-			"pinned": true,
-			"source": "gallery",
-			"id": "0b15b6fc-4458-4546-8b5e-bba85e07df24",
-			"publisherId": "ec914036-1f35-472e-97e3-dd81bf619c9a",
-			"publisherDisplayName": "CodeRabbit",
 			"targetPlatform": "universal",
 			"updated": true,
 			"private": false,
@@ -2479,199 +2092,6 @@
 		}
 	},
 	{
-		"identifier": {
-			"id": "redhat.vscode-yaml",
-			"uuid": "2061917f-f76a-458a-8da9-f162de22b97e"
-		},
-		"version": "1.23.0",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/redhat.vscode-yaml-1.23.0-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "redhat.vscode-yaml-1.23.0-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1778685408700,
-			"pinned": true,
-			"source": "gallery",
-			"id": "2061917f-f76a-458a-8da9-f162de22b97e",
-			"publisherId": "455da6bb-00aa-4f13-91a3-9fa4780cadaa",
-			"publisherDisplayName": "Red Hat",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "jj-view.jj-view",
-			"uuid": "9218ea3e-b964-494e-a2af-4f64dfddfac9"
-		},
-		"version": "1.28.0",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/jj-view.jj-view-1.28.0-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "jj-view.jj-view-1.28.0-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1779694817864,
-			"pinned": true,
-			"source": "gallery",
-			"id": "9218ea3e-b964-494e-a2af-4f64dfddfac9",
-			"publisherId": "55e7875a-2c3e-4f5f-a5df-68605dea8ada",
-			"publisherDisplayName": "jj-view",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "anthropic.claude-code",
-			"uuid": "3c13ae49-babe-45fe-8c48-5e45077a62bf"
-		},
-		"version": "2.1.150",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/anthropic.claude-code-2.1.150-linux-x64",
-			"scheme": "file"
-		},
-		"relativeLocation": "anthropic.claude-code-2.1.150-linux-x64",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1779694816396,
-			"pinned": true,
-			"source": "gallery",
-			"id": "3c13ae49-babe-45fe-8c48-5e45077a62bf",
-			"publisherId": "89769da0-cc4b-40b0-8216-93ffb5a96b56",
-			"publisherDisplayName": "Anthropic",
-			"targetPlatform": "linux-x64",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "visualjj.visualjj",
-			"uuid": "338d7429-21f3-449d-acdf-8518eae43a72"
-		},
-		"version": "0.29.0",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/visualjj.visualjj-0.29.0-linux-x64",
-			"scheme": "file"
-		},
-		"relativeLocation": "visualjj.visualjj-0.29.0-linux-x64",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1779694819781,
-			"pinned": true,
-			"source": "gallery",
-			"id": "338d7429-21f3-449d-acdf-8518eae43a72",
-			"publisherId": "828fee6d-3c80-4fdc-9b0e-a9a8d09fb856",
-			"publisherDisplayName": "visualjj",
-			"targetPlatform": "linux-x64",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": { "id": "iceye.syl" },
-		"version": "1.0.4",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/iceye.syl-1.0.4",
-			"scheme": "file"
-		},
-		"relativeLocation": "iceye.syl-1.0.4",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": true,
-			"isBuiltin": false,
-			"installedTimestamp": 1779361836406,
-			"pinned": true,
-			"source": "vsix"
-		}
-	},
-	{
-		"identifier": {
-			"id": "openai.chatgpt",
-			"uuid": "90b52117-6fd1-4f1c-9e14-256bd6e21d79"
-		},
-		"version": "26.519.32039",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/openai.chatgpt-26.519.32039-linux-x64",
-			"scheme": "file"
-		},
-		"relativeLocation": "openai.chatgpt-26.519.32039-linux-x64",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1779694817376,
-			"pinned": true,
-			"source": "gallery",
-			"id": "90b52117-6fd1-4f1c-9e14-256bd6e21d79",
-			"publisherId": "c0a8460b-1d33-4e44-9cf5-9874a65dd334",
-			"publisherDisplayName": "openai",
-			"targetPlatform": "linux-x64",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "biomejs.biome",
-			"uuid": "2c992d35-3965-4369-856e-fdfbb0af2ce2"
-		},
-		"version": "3.6.1",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/biomejs.biome-3.6.1-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "biomejs.biome-3.6.1-universal",
-		"metadata": {
-			"installedTimestamp": 1779695668208,
-			"source": "gallery",
-			"id": "2c992d35-3965-4369-856e-fdfbb0af2ce2",
-			"publisherId": "570e4e26-7e71-4308-8299-d18166119ce7",
-			"publisherDisplayName": "biomejs",
-			"targetPlatform": "universal",
-			"updated": false,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false
-		}
-	},
-	{
 		"identifier": { "id": "wraith13.zoombar-vscode" },
 		"version": "1.4.4",
 		"location": {
@@ -2687,12 +2107,13 @@
 		}
 	},
 	{
-		"identifier": { "id": "mkhl.shfmt" },
+		"identifier": {
+			"id": "mkhl.shfmt",
+			"uuid": "0c2ca002-79c2-4b79-95a5-61a5b188a4f7"
+		},
 		"version": "1.5.2",
 		"location": {
 			"$mid": 1,
-			"fsPath": "/home/bosco/.cursor-server/extensions/mkhl.shfmt-1.5.2-universal",
-			"external": "file:///home/bosco/.cursor-server/extensions/mkhl.shfmt-1.5.2-universal",
 			"path": "/home/bosco/.cursor-server/extensions/mkhl.shfmt-1.5.2-universal",
 			"scheme": "file"
 		},
@@ -2709,6 +2130,767 @@
 			"private": false,
 			"isPreReleaseVersion": false,
 			"hasPreReleaseVersion": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "ms-toolsai.jupyter-keymap",
+			"uuid": "9f6dc8db-620c-4844-b8c5-e74914f1be27"
+		},
+		"version": "1.1.2",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/ms-toolsai.jupyter-keymap-1.1.2-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "ms-toolsai.jupyter-keymap-1.1.2-universal",
+		"metadata": {
+			"installedTimestamp": 1780390610520,
+			"pinned": true,
+			"source": "gallery",
+			"id": "9f6dc8db-620c-4844-b8c5-e74914f1be27",
+			"publisherId": "ac8eb7c9-3e59-4b39-8040-f0484d8170ce",
+			"publisherDisplayName": "ms-toolsai",
+			"targetPlatform": "universal",
+			"updated": false,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "ms-toolsai.vscode-jupyter-slideshow",
+			"uuid": "e153ca70-b543-4865-b4c5-b31d34185948"
+		},
+		"version": "0.1.6",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/ms-toolsai.vscode-jupyter-slideshow-0.1.6-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "ms-toolsai.vscode-jupyter-slideshow-0.1.6-universal",
+		"metadata": {
+			"installedTimestamp": 1780390610534,
+			"pinned": true,
+			"source": "gallery",
+			"id": "e153ca70-b543-4865-b4c5-b31d34185948",
+			"publisherId": "ac8eb7c9-3e59-4b39-8040-f0484d8170ce",
+			"publisherDisplayName": "ms-toolsai",
+			"targetPlatform": "universal",
+			"updated": false,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "ms-toolsai.vscode-jupyter-cell-tags",
+			"uuid": "ab4fb32a-befb-4102-adf9-1652d0cd6a5e"
+		},
+		"version": "0.1.9",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/ms-toolsai.vscode-jupyter-cell-tags-0.1.9-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "ms-toolsai.vscode-jupyter-cell-tags-0.1.9-universal",
+		"metadata": {
+			"installedTimestamp": 1780390610526,
+			"pinned": true,
+			"source": "gallery",
+			"id": "ab4fb32a-befb-4102-adf9-1652d0cd6a5e",
+			"publisherId": "ac8eb7c9-3e59-4b39-8040-f0484d8170ce",
+			"publisherDisplayName": "ms-toolsai",
+			"targetPlatform": "universal",
+			"updated": false,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "ms-toolsai.jupyter",
+			"uuid": "6c2f1801-1e7f-45b2-9b5c-7782f1e076e8"
+		},
+		"version": "2025.9.1",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/ms-toolsai.jupyter-2025.9.1-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "ms-toolsai.jupyter-2025.9.1-universal",
+		"metadata": {
+			"installedTimestamp": 1780390610510,
+			"pinned": true,
+			"source": "gallery",
+			"id": "6c2f1801-1e7f-45b2-9b5c-7782f1e076e8",
+			"publisherId": "ac8eb7c9-3e59-4b39-8040-f0484d8170ce",
+			"publisherDisplayName": "ms-toolsai",
+			"targetPlatform": "universal",
+			"updated": false,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "ms-toolsai.jupyter-renderers",
+			"uuid": "b15c72f8-d5fe-421a-a4f7-27ed9f6addbf"
+		},
+		"version": "1.3.0",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/ms-toolsai.jupyter-renderers-1.3.0-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "ms-toolsai.jupyter-renderers-1.3.0-universal",
+		"metadata": {
+			"installedTimestamp": 1780390610514,
+			"pinned": true,
+			"source": "gallery",
+			"id": "b15c72f8-d5fe-421a-a4f7-27ed9f6addbf",
+			"publisherId": "ac8eb7c9-3e59-4b39-8040-f0484d8170ce",
+			"publisherDisplayName": "ms-toolsai",
+			"targetPlatform": "universal",
+			"updated": false,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "ms-python.debugpy",
+			"uuid": "4bd5d2c9-9d65-401a-b0b2-7498d9f17615"
+		},
+		"version": "2026.6.0",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/ms-python.debugpy-2026.6.0-linux-x64",
+			"scheme": "file"
+		},
+		"relativeLocation": "ms-python.debugpy-2026.6.0-linux-x64",
+		"metadata": {
+			"installedTimestamp": 1780574601549,
+			"pinned": true,
+			"source": "gallery",
+			"id": "4bd5d2c9-9d65-401a-b0b2-7498d9f17615",
+			"publisherId": "998b010b-e2af-44a5-a6cd-0b5fd3b9b6f8",
+			"publisherDisplayName": "ms-python",
+			"targetPlatform": "linux-x64",
+			"updated": false,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "ms-azuretools.vscode-containers",
+			"uuid": "2cd1d691-3d69-4d2d-ae39-fda4bc4cfd3d"
+		},
+		"version": "2.4.5",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/ms-azuretools.vscode-containers-2.4.5-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "ms-azuretools.vscode-containers-2.4.5-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1781021937839,
+			"pinned": true,
+			"source": "gallery",
+			"id": "2cd1d691-3d69-4d2d-ae39-fda4bc4cfd3d",
+			"publisherId": "52b787f2-79a9-4f32-99b4-393afe3005d3",
+			"publisherDisplayName": "ms-azuretools",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "jjk.jjk",
+			"uuid": "27fecc3e-093e-4ff1-b130-b3ccf371337d"
+		},
+		"version": "0.11.0",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/jjk.jjk-0.11.0-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "jjk.jjk-0.11.0-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1781021941598,
+			"pinned": true,
+			"source": "gallery",
+			"id": "27fecc3e-093e-4ff1-b130-b3ccf371337d",
+			"publisherId": "8a38bc31-626a-4853-9ef7-91fe4f1486f4",
+			"publisherDisplayName": "jjk",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "anysphere.cursorpyright",
+			"uuid": "d7f9f831-2239-4783-9d06-18d27f285818"
+		},
+		"version": "1.0.12",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/anysphere.cursorpyright-1.0.12",
+			"scheme": "file"
+		},
+		"relativeLocation": "anysphere.cursorpyright-1.0.12",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1781021944539,
+			"pinned": true,
+			"source": "gallery",
+			"id": "d7f9f831-2239-4783-9d06-18d27f285818",
+			"publisherId": "c16ea17f-2629-4893-9064-35c0fd9add4c",
+			"publisherDisplayName": "Anysphere",
+			"targetPlatform": "undefined",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "codeandstuff.package-json-upgrade",
+			"uuid": "1f59cde6-3a8c-47e4-b40b-355c1641721a"
+		},
+		"version": "3.7.0",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/codeandstuff.package-json-upgrade-3.7.0-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "codeandstuff.package-json-upgrade-3.7.0-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1781716264229,
+			"pinned": true,
+			"source": "gallery",
+			"id": "1f59cde6-3a8c-47e4-b40b-355c1641721a",
+			"publisherId": "31d03940-ac40-40ee-bd05-fefb4d01ab50",
+			"publisherDisplayName": "codeandstuff",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "nefrob.vscode-just-syntax",
+			"uuid": "4d059c6e-aaea-42e3-97f5-f4fd35b70d3d"
+		},
+		"version": "0.10.2",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/nefrob.vscode-just-syntax-0.10.2-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "nefrob.vscode-just-syntax-0.10.2-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1781716268597,
+			"pinned": true,
+			"source": "gallery",
+			"id": "4d059c6e-aaea-42e3-97f5-f4fd35b70d3d",
+			"publisherId": "8f57d1e0-1e7b-4637-9542-855528d4cdc0",
+			"publisherDisplayName": "nefrob",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "biomejs.biome",
+			"uuid": "2c992d35-3965-4369-856e-fdfbb0af2ce2"
+		},
+		"version": "3.7.1",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/biomejs.biome-3.7.1-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "biomejs.biome-3.7.1-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1782292951050,
+			"pinned": true,
+			"source": "gallery",
+			"id": "2c992d35-3965-4369-856e-fdfbb0af2ce2",
+			"publisherId": "570e4e26-7e71-4308-8299-d18166119ce7",
+			"publisherDisplayName": "biomejs",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": { "id": "iceye.syl" },
+		"version": "1.2.1",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/iceye.syl-1.2.1",
+			"scheme": "file"
+		},
+		"relativeLocation": "iceye.syl-1.2.1",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": true,
+			"isBuiltin": false,
+			"installedTimestamp": 1782305439500,
+			"pinned": true,
+			"source": "vsix"
+		}
+	},
+	{
+		"identifier": {
+			"id": "elijah-potter.harper",
+			"uuid": "67361f9a-6018-4ea8-9fd2-37b4de177c4e"
+		},
+		"version": "2.6.0",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/elijah-potter.harper-2.6.0-linux-x64",
+			"scheme": "file"
+		},
+		"relativeLocation": "elijah-potter.harper-2.6.0-linux-x64",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1782465741894,
+			"pinned": true,
+			"source": "gallery",
+			"id": "67361f9a-6018-4ea8-9fd2-37b4de177c4e",
+			"publisherId": "a098746b-cc7e-4534-b8ee-6834fcb649b0",
+			"publisherDisplayName": "elijah-potter",
+			"targetPlatform": "linux-x64",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "usernamehw.errorlens",
+			"uuid": "9d8c32ab-354c-4daf-a9bf-20b633734435"
+		},
+		"version": "3.28.0",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/usernamehw.errorlens-3.28.0",
+			"scheme": "file"
+		},
+		"relativeLocation": "usernamehw.errorlens-3.28.0",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1783324263753,
+			"pinned": false,
+			"source": "vsix",
+			"id": "9d8c32ab-354c-4daf-a9bf-20b633734435",
+			"publisherDisplayName": "usernamehw",
+			"publisherId": "151820df-5dc5-4c97-8751-eb84643203fa",
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "yzane.markdown-pdf",
+			"uuid": "f015bc3c-a098-4245-8765-615e002e09ab"
+		},
+		"version": "2.1.0",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/yzane.markdown-pdf-2.1.0",
+			"scheme": "file"
+		},
+		"relativeLocation": "yzane.markdown-pdf-2.1.0",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1783324266142,
+			"pinned": false,
+			"source": "vsix",
+			"id": "f015bc3c-a098-4245-8765-615e002e09ab",
+			"publisherDisplayName": "yzane",
+			"publisherId": "86794f67-46a8-4137-a5a4-1415a0e41e7d",
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "cdfzo.mizu",
+			"uuid": "0c8ee4d8-bb07-49ab-83dd-a88a5cf8c08e"
+		},
+		"version": "2.10.1",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/cdfzo.mizu-2.10.1-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "cdfzo.mizu-2.10.1-universal",
+		"metadata": {
+			"installedTimestamp": 1783325824816,
+			"pinned": false,
+			"source": "gallery",
+			"id": "0c8ee4d8-bb07-49ab-83dd-a88a5cf8c08e",
+			"publisherId": "eb2289e2-8262-4e14-8696-14238570d35d",
+			"publisherDisplayName": "cdfzo",
+			"targetPlatform": "universal",
+			"updated": false,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "mtxr.sqltools",
+			"uuid": "6a2bbab0-d8f0-43fa-9b26-e6a3b7892a0b"
+		},
+		"version": "0.28.6",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/mtxr.sqltools-0.28.6-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "mtxr.sqltools-0.28.6-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1783437087571,
+			"pinned": false,
+			"source": "gallery",
+			"id": "6a2bbab0-d8f0-43fa-9b26-e6a3b7892a0b",
+			"publisherId": "952fc94a-735a-4caa-92ce-e1011fbc9780",
+			"publisherDisplayName": "mtxr",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "redhat.vscode-yaml",
+			"uuid": "2061917f-f76a-458a-8da9-f162de22b97e"
+		},
+		"version": "1.24.0",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/redhat.vscode-yaml-1.24.0-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "redhat.vscode-yaml-1.24.0-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1783533528118,
+			"pinned": true,
+			"source": "gallery",
+			"id": "2061917f-f76a-458a-8da9-f162de22b97e",
+			"publisherId": "1deab481-4801-4170-8a64-801999f5ee73",
+			"publisherDisplayName": "Red Hat",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "ms-python.python",
+			"uuid": "f1f59ae4-9318-4f3c-a9b5-81b2eaa5f8a5"
+		},
+		"version": "2025.4.0",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/ms-python.python-2025.4.0",
+			"scheme": "file"
+		},
+		"relativeLocation": "ms-python.python-2025.4.0",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1783533529972,
+			"pinned": true,
+			"source": "gallery",
+			"id": "f1f59ae4-9318-4f3c-a9b5-81b2eaa5f8a5",
+			"publisherId": "998b010b-e2af-44a5-a6cd-0b5fd3b9b6f8",
+			"publisherDisplayName": "ms-python",
+			"targetPlatform": "undefined",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "bradlc.vscode-tailwindcss",
+			"uuid": "4db62a7c-7d70-419c-96d2-6c3a4dc77ea5"
+		},
+		"version": "0.16.0",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/bradlc.vscode-tailwindcss-0.16.0-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "bradlc.vscode-tailwindcss-0.16.0-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1784621799495,
+			"pinned": false,
+			"source": "gallery",
+			"id": "4db62a7c-7d70-419c-96d2-6c3a4dc77ea5",
+			"publisherId": "84722833-669b-4c7d-920e-b60e43fae19a",
+			"publisherDisplayName": "bradlc",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "github.vscode-github-actions",
+			"uuid": "04f49bfc-8330-4eee-8237-ea938fb755ef"
+		},
+		"version": "0.32.3",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/github.vscode-github-actions-0.32.3-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "github.vscode-github-actions-0.32.3-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1784719240131,
+			"pinned": true,
+			"source": "gallery",
+			"id": "04f49bfc-8330-4eee-8237-ea938fb755ef",
+			"publisherId": "7c1c19cd-78eb-4dfb-8999-99caf7679002",
+			"publisherDisplayName": "GitHub",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "golang.go",
+			"uuid": "d6f6cfea-4b6f-41f4-b571-6ad2ab7918da"
+		},
+		"version": "0.56.0",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/golang.go-0.56.0-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "golang.go-0.56.0-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1784719242050,
+			"pinned": true,
+			"source": "gallery",
+			"id": "d6f6cfea-4b6f-41f4-b571-6ad2ab7918da",
+			"publisherId": "dbf6ae0a-da75-4167-ac8b-75b4512f2153",
+			"publisherDisplayName": "golang",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "jj-view.jj-view",
+			"uuid": "9218ea3e-b964-494e-a2af-4f64dfddfac9"
+		},
+		"version": "2.4.0",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/jj-view.jj-view-2.4.0-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "jj-view.jj-view-2.4.0-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1784719243605,
+			"pinned": true,
+			"source": "gallery",
+			"id": "9218ea3e-b964-494e-a2af-4f64dfddfac9",
+			"publisherId": "55e7875a-2c3e-4f5f-a5df-68605dea8ada",
+			"publisherDisplayName": "jj-view",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "visualjj.visualjj",
+			"uuid": "338d7429-21f3-449d-acdf-8518eae43a72"
+		},
+		"version": "0.32.1",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/visualjj.visualjj-0.32.1-linux-x64",
+			"scheme": "file"
+		},
+		"relativeLocation": "visualjj.visualjj-0.32.1-linux-x64",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1784719244373,
+			"pinned": true,
+			"source": "gallery",
+			"id": "338d7429-21f3-449d-acdf-8518eae43a72",
+			"publisherId": "828fee6d-3c80-4fdc-9b0e-a9a8d09fb856",
+			"publisherDisplayName": "visualjj",
+			"targetPlatform": "linux-x64",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "vitest.explorer",
+			"uuid": "ab3534a7-eaae-4f75-9735-62bfd758b220"
+		},
+		"version": "1.50.8",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/vitest.explorer-1.50.8-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "vitest.explorer-1.50.8-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1784719245708,
+			"pinned": true,
+			"source": "gallery",
+			"id": "ab3534a7-eaae-4f75-9735-62bfd758b220",
+			"publisherId": "b2d5dee9-71a4-4649-b9ca-610bade91331",
+			"publisherDisplayName": "vitest",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": { "id": "vscode-icons-team.vscode-icons" },
+		"version": "12.19.0",
+		"location": {
+			"$mid": 1,
+			"fsPath": "/home/bosco/.cursor-server/extensions/vscode-icons-team.vscode-icons-12.19.0-universal",
+			"external": "file:///home/bosco/.cursor-server/extensions/vscode-icons-team.vscode-icons-12.19.0-universal",
+			"path": "/home/bosco/.cursor-server/extensions/vscode-icons-team.vscode-icons-12.19.0-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "vscode-icons-team.vscode-icons-12.19.0-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1784719246645,
+			"pinned": true,
+			"source": "gallery",
+			"id": "9ccc1dd7-7ec4-4a46-bd4f-7d7b8b9d322a",
+			"publisherId": "652ad61d-3a6a-48ca-ab1a-80dc8953b2b6",
+			"publisherDisplayName": "vscode-icons-team",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
 		}
 	}
 ]
