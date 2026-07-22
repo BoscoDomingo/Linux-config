@@ -3,7 +3,7 @@
 	"workbench.startupEditor": "readme",
 	"workbench.commandPalette.history": 40,
 	"workbench.colorTheme": "Andromeda Bordered",
-	"workbench.iconTheme": "Monokai Classic Icons",
+	"workbench.iconTheme": "vscode-icons",
 	"workbench.activityBar.orientation": "vertical",
 	"workbench.settings.applyToAllProfiles": [
 		"editor.formatOnSave",
@@ -273,6 +273,14 @@
 		"!Split",
 		"!Split sequence"
 	],
+	"yaml.disableSchemaDetection": [
+		"**/.github/workflows/*.yml",
+		"**/.github/workflows/*.yaml",
+		"**/.gitea/workflows/*.yml",
+		"**/.gitea/workflows/*.yaml",
+		"**/.forgejo/workflows/*.yml",
+		"**/.forgejo/workflows/*.yaml"
+	],
 
 	"[dockercompose]": {
 		"editor.defaultFormatter": "ms-azuretools.vscode-docker"
@@ -505,7 +513,7 @@
 			"source.unusedImports": "explicit"
 		}
 	},
-	"python.languageServer": "Default",
+	"python.languageServer": "None",
 	"python.formatting.autopep8Args": ["--max-line-length", "90"],
 	"python.analysis.indexing": true,
 	"python.analysis.importFormat": "absolute",
@@ -1071,7 +1079,24 @@
 	},
 	"github.copilot.editor.enableCodeActions": true,
 	"github.copilot.nextEditSuggestions.enabled": true,
+	"github.copilot.chat.githubMcpServer.enabled": true,
+	"github.copilot.chat.githubMcpServer.readonly": true,
 	"chat.mcp.gallery.enabled": true,
+	"chat.checkpoints.showFileChanges": true,
+	"chat.agent.sandbox.enabled": "on",
+	"chat.agent.sandbox.allowNetwork": true,
+	"chat.agent.sandbox.enabledWindows": "on",
+	"chat.editor.wordWrap": "on",
+	"chat.editing.explainChanges.enabled": true,
+	"chat.unifiedAgentsBar.enabled": true,
+	"chat.viewProgressBadge.enabled": true,
+	"chat.useNestedAgentsMdFiles": true,
+	"chat.viewSessions.orientation": "stacked",
+	"chat.mcp.collisionBehavior": "suffix",
+	"chat.mcp.discovery.enabled": {
+		"cursor-global": true,
+		"cursor-workspace": true
+	},
 	"chat.tools.urls.autoApprove": {
 		"https://code.visualstudio.com": true,
 		"https://github.com/microsoft/vscode/wiki/*": true,
@@ -1485,5 +1510,5 @@
 		"https://schemastore.azurewebsites.net/": true,
 		"https://www.schemastore.org/": true
 	},
-	"coderabbit.region": "eu",
+	"coderabbit.region": "eu"
 }
