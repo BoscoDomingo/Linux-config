@@ -9,8 +9,10 @@ fi
 # Load common interactive config (agent detection, aliases, etc.)
 [ -r "$HOME/.shellrc" ] && . "$HOME/.shellrc"
 
-eval "$(direnv hook bash)"
-eval "$(mise activate bash)"
+# Guard tool init so an absent tool (minimal shell, agent session) doesn't emit
+# "command not found".
+command -v direnv >/dev/null 2>&1 && eval "$(direnv hook bash)"
+command -v mise >/dev/null 2>&1 && eval "$(mise activate bash)"
 
 # Programmable completion
 if ! shopt -oq posix; then
@@ -24,7 +26,7 @@ fi
 # fzf
 if [ -f ~/.local/.fzf.bash ]; then
 	source ~/.local/.fzf.bash
-else
+elif command -v fzf >/dev/null 2>&1; then
 	eval "$(fzf --bash)"
 fi
 
@@ -47,7 +49,7 @@ if [ -z "$_IS_AI_AGENT" ]; then
 	#if [ "$TERM" != "linux" ] && [ -f "$GOPATH/bin/powerline-go" ]; then
 	#    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
 	#fi
-	eval "$(oh-my-posh init bash --config ~/dotfiles/themes/EliteSWE.omp.json)"
+	command -v oh-my-posh >/dev/null 2>&1 && eval "$(oh-my-posh init bash --config ~/dotfiles/themes/EliteSWE.omp.json)"
 fi
 
 # Load Moon shell env when installed without leaving startup with a failed file test.

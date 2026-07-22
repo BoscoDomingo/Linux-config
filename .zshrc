@@ -23,8 +23,10 @@ if [[ ! -o login ]] && [[ -r ~/.profile ]]; then
 fi
 [[ -r ~/.shellrc ]] && source ~/.shellrc
 
-eval "$(direnv hook zsh)"
-eval "$(mise activate zsh)"
+# Guard tool init so an absent tool (minimal shell, agent session) doesn't emit
+# "command not found".
+command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
+command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh)"
 
 # Everything below is non-agent, real-terminal UI only
 if [[ -z "$_IS_AI_AGENT" && "$_DOTFILES_HAS_REAL_TTY" = "1" ]]; then
@@ -142,15 +144,29 @@ if [[ -z "$_IS_AI_AGENT" && "$_DOTFILES_HAS_REAL_TTY" = "1" ]]; then
 
 	zsh_plugin_prefix=""
 	zsh_autocomplete_plugin=""
-	if [ -n "$(command -v brew)" ]; then
+	# Prefer the Nix profile (which provides the zsh plugins), then fall back to
+	# Homebrew, then to oh-my-zsh custom plugins. Nix and brew use different
+	# share/ layouts, so each plugin below checks both candidate paths.
+	if [ -d "$HOME/.nix-profile/share/zsh-autosuggestions" ]; then
+		zsh_plugin_prefix="$HOME/.nix-profile"
+	elif [ -n "$(command -v brew)" ]; then
 		zsh_plugin_prefix="$(brew --prefix)"
 	fi
 
 	if [ -n "$zsh_plugin_prefix" ]; then
 		[ -f "$zsh_plugin_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ] && source "$zsh_plugin_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-		# [ -f "$zsh_plugin_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ] && source "$zsh_plugin_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-		[ -f "$zsh_plugin_prefix/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh" ] && source "$zsh_plugin_prefix/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
-		[ -d "$zsh_plugin_prefix/share/zsh-completions" ] && fpath+=("$zsh_plugin_prefix/share/zsh-completions")
+		# fast-syntax-highlighting: brew layout, then nix layout
+		if [ -f "$zsh_plugin_prefix/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh" ]; then
+			source "$zsh_plugin_prefix/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+		elif [ -f "$zsh_plugin_prefix/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh" ]; then
+			source "$zsh_plugin_prefix/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+		fi
+		# zsh-completions: brew ships a dedicated dir; nix drops them in site-functions
+		if [ -d "$zsh_plugin_prefix/share/zsh-completions" ]; then
+			fpath+=("$zsh_plugin_prefix/share/zsh-completions")
+		elif [ -d "$zsh_plugin_prefix/share/zsh/site-functions" ]; then
+			fpath+=("$zsh_plugin_prefix/share/zsh/site-functions")
+		fi
 		[ -f "$zsh_plugin_prefix/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh" ] && zsh_autocomplete_plugin="$zsh_plugin_prefix/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 	else
 		zsh_custom_dir="${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}"
@@ -348,7 +364,7 @@ if [[ -z "$_IS_AI_AGENT" && "$_DOTFILES_HAS_REAL_TTY" = "1" ]]; then
 	}
 
 	# MARK: - Prompt
-	eval "$(oh-my-posh init zsh --config ~/dotfiles/themes/EliteSWE.omp.json)"
+	command -v oh-my-posh >/dev/null 2>&1 && eval "$(oh-my-posh init zsh --config ~/dotfiles/themes/EliteSWE.omp.json)"
 
 	# MARK: - Windows Terminal
 	_windows_terminal_cwd() {
