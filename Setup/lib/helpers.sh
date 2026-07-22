@@ -26,6 +26,13 @@ ensure_link() {
 		fi
 		backup_existing "$dst"
 	elif [ -e "$dst" ]; then
+		# Avoid backing up files that are already provided through a symlinked parent directory.
+		current_target=$(readlink -f "$dst" 2>/dev/null || printf '%s\n' "$dst")
+		current_target="${current_target%/}"
+		normalized_src="${normalized_src%/}"
+		if [ "$current_target" = "$normalized_src" ]; then
+			return
+		fi
 		backup_existing "$dst"
 	fi
 
