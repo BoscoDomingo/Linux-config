@@ -35,6 +35,9 @@ AI/.pi/agent/git/
 !.config/opencode/opencode.json
 !.config/opencode/agent/
 !.config/opencode/agent/*.md
+!.config/opencode/package.json
+!.config/opencode/plugins/
+!.config/opencode/plugins/**
 *package-lock.json
 
 .config/cheat/cheatsheets/community/
