@@ -62,6 +62,7 @@ if [ "$install_homebrew_packages" != "n" ]; then
 			witr
 			lazyjj
 			jjui
+			gentleman-programming/tap/engram
 		)
 		echo "Installing ${#packages[@]} package(s) via Homebrew..."
 		brew install "${packages[@]}"
