@@ -7,6 +7,22 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "auto_install_extensions": {
+    "html": true
+  },
+  "wsl_connections": [
+    {
+      "distro_name": "archlinux",
+      "user": null,
+      "projects": [
+        {
+          "paths": [
+           "/home/bosco/repos/utils"
+          ]
+        }
+      ]
+    }
+  ],
   "git_panel": {
     "file_icons": true,
     "tree_view": true
@@ -214,9 +230,6 @@
   },
   "vim_mode": true,
   "agent_servers": {
-    "pi-acp": {
-      "type": "registry"
-    },
     "opencode": {
       "default_config_options": {
         "model": "github-copilot/gpt-5.5",
