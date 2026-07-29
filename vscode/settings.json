@@ -22,7 +22,7 @@
 	"security.allowedUNCHosts": ["wsl.localhost"],
 	"security.workspace.trust.untrustedFiles": "open",
 	"remote.autoForwardPortsSource": "hybrid",
-	"extensions.autoUpdate": "off",
+	"extensions.autoUpdate": false,
 	"extensions.autoUpdateDelay": 24,
 
 	// MARK: General/Zoom
@@ -204,112 +204,6 @@
 
 	// MARK: - Language-specific configs
 	"editor.defaultFormatter": "biomejs.biome",
-
-	"[markdown]": {
-		"editor.defaultFormatter": "fcrespo82.markdown-table-formatter"
-	},
-	"markdown-preview-enhanced.enableExtendedTableSyntax": true,
-	"markdown-preview-enhanced.breakOnSingleNewLine": false,
-	"markdown-preview-enhanced.alwaysShowBacklinksInPreview": true,
-	"markdown.links.openLocation": "beside",
-	"markdown.updateLinksOnFileMove.enabled": "always",
-	"markdown.preview.typographer": true,
-	"markdown.extension.completion.enabled": true,
-	"markdown.extension.tableFormatter.normalizeIndentation": true,
-	"markdown.extension.toc.orderedList": true,
-	"markdown.extension.toc.updateOnSave": false,
-	"markdown.extension.print.theme": "dark",
-
-	"[css]": {
-		"editor.defaultFormatter": "biomejs.biome"
-	},
-	"[html]": {
-		"editor.defaultFormatter": "vscode.html-language-features"
-	},
-	"[jsonc]": {
-		"editor.defaultFormatter": "biomejs.biome"
-	},
-	"[json]": {
-		"editor.defaultFormatter": "biomejs.biome"
-	},
-	"json.schemaDownload.enable": true,
-
-	"[toml]": {
-		"editor.defaultFormatter": "tamasfe.even-better-toml"
-	},
-	"[just]": {
-		"editor.defaultFormatter": "nefrob.vscode-just-syntax"
-	},
-
-	"[yaml]": {
-		"editor.defaultFormatter": "redhat.vscode-yaml"
-	},
-	"yaml.customTags": [
-		"!And",
-		"!And sequence",
-		"!If",
-		"!If sequence",
-		"!Not",
-		"!Not sequence",
-		"!Equals",
-		"!Equals sequence",
-		"!Or",
-		"!Or sequence",
-		"!FindInMap",
-		"!FindInMap sequence",
-		"!Base64",
-		"!Join",
-		"!Join sequence",
-		"!Cidr",
-		"!Ref",
-		"!Sub",
-		"!Sub sequence",
-		"!GetAtt",
-		"!GetAZs",
-		"!ImportValue",
-		"!ImportValue sequence",
-		"!Select",
-		"!Select sequence",
-		"!Split",
-		"!Split sequence"
-	],
-	"yaml.disableSchemaDetection": [
-		"**/.github/workflows/*.yml",
-		"**/.github/workflows/*.yaml",
-		"**/.gitea/workflows/*.yml",
-		"**/.gitea/workflows/*.yaml",
-		"**/.forgejo/workflows/*.yml",
-		"**/.forgejo/workflows/*.yaml"
-	],
-
-	"[dockercompose]": {
-		"editor.defaultFormatter": "ms-azuretools.vscode-docker"
-	},
-	"[dockerfile]": {
-		"editor.defaultFormatter": "ms-azuretools.vscode-docker"
-	},
-	"[terraform]": {
-		"editor.formatOnSave": true,
-		"editor.defaultFormatter": "hashicorp.terraform",
-		"editor.tabSize": 2
-	},
-	"[terraform-vars]": {
-		"editor.tabSize": 2,
-		"editor.defaultFormatter": "hashicorp.terraform"
-	},
-	"[dotenv]": {
-		"editor.defaultFormatter": "lumirelle.shell-format-rev"
-	},
-	"dotenv.enableAutocloaking": false,
-	"[xml]": {
-		"editor.defaultFormatter": "mikeburgh.xml-format"
-	},
-	"[shellscript]": {
-		"editor.defaultFormatter": "mkhl.shfmt"
-	},
-	"[github-actions-workflow]": {
-		"editor.defaultFormatter": "redhat.vscode-yaml"
-	},
 	"files.associations": {
 		".env*": "dotenv",
 		"*.csv": "csv",
@@ -397,11 +291,128 @@
 		".shellrc": "shellscript"
 	},
 
+	"[markdown]": {
+		"editor.defaultFormatter": "fcrespo82.markdown-table-formatter"
+	},
+	"markdown-preview-enhanced.enableExtendedTableSyntax": true,
+	"markdown-preview-enhanced.breakOnSingleNewLine": false,
+	"markdown-preview-enhanced.alwaysShowBacklinksInPreview": true,
+	"markdown.links.openLocation": "beside",
+	"markdown.updateLinksOnFileMove.enabled": "always",
+	"markdown.preview.typographer": true,
+	"markdown.extension.completion.enabled": true,
+	"markdown.extension.tableFormatter.normalizeIndentation": true,
+	"markdown.extension.toc.orderedList": true,
+	"markdown.extension.toc.updateOnSave": false,
+	"markdown.extension.print.theme": "dark",
+
+	"[css]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[html]": {
+		"editor.defaultFormatter": "vscode.html-language-features"
+	},
+	"[jsonc]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"json.schemaDownload.enable": true,
+	"json.schemaDownload.trustedDomains": {
+		"https://aka.ms/terminal-profiles-schema": true,
+		"https://biomejs.dev": true,
+		"https://developer.microsoft.com/json-schemas/": true,
+		"https://json-schema.org/": true,
+		"https://json.schemastore.org/": true,
+		"https://raw.githubusercontent.com/devcontainers/spec/": true,
+		"https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json": true,
+		"https://raw.githubusercontent.com/microsoft/vscode/": true,
+		"https://schemastore.azurewebsites.net/": true,
+		"https://www.schemastore.org/": true
+	},
+	"[toml]": {
+		"editor.defaultFormatter": "tamasfe.even-better-toml"
+	},
+	"[just]": {
+		"editor.defaultFormatter": "nefrob.vscode-just-syntax"
+	},
+	"[yaml]": {
+		"editor.defaultFormatter": "redhat.vscode-yaml"
+	},
+	"yaml.customTags": [
+		"!And",
+		"!And sequence",
+		"!If",
+		"!If sequence",
+		"!Not",
+		"!Not sequence",
+		"!Equals",
+		"!Equals sequence",
+		"!Or",
+		"!Or sequence",
+		"!FindInMap",
+		"!FindInMap sequence",
+		"!Base64",
+		"!Join",
+		"!Join sequence",
+		"!Cidr",
+		"!Ref",
+		"!Sub",
+		"!Sub sequence",
+		"!GetAtt",
+		"!GetAZs",
+		"!ImportValue",
+		"!ImportValue sequence",
+		"!Select",
+		"!Select sequence",
+		"!Split",
+		"!Split sequence"
+	],
+	"yaml.disableSchemaDetection": [
+		"**/.github/workflows/*.yml",
+		"**/.github/workflows/*.yaml",
+		"**/.gitea/workflows/*.yml",
+		"**/.gitea/workflows/*.yaml",
+		"**/.forgejo/workflows/*.yml",
+		"**/.forgejo/workflows/*.yaml"
+	],
+	"[dockercompose]": {
+		"editor.defaultFormatter": "ms-azuretools.vscode-docker"
+	},
+	"[dockerfile]": {
+		"editor.defaultFormatter": "ms-azuretools.vscode-docker"
+	},
+	"[terraform]": {
+		"editor.formatOnSave": true,
+		"editor.defaultFormatter": "hashicorp.terraform",
+		"editor.tabSize": 2
+	},
+	"[terraform-vars]": {
+		"editor.tabSize": 2,
+		"editor.defaultFormatter": "hashicorp.terraform"
+	},
+	"[dotenv]": {
+		"editor.defaultFormatter": "lumirelle.shell-format-rev"
+	},
+	"dotenv.enableAutocloaking": false,
+	"[xml]": {
+		"editor.defaultFormatter": "mikeburgh.xml-format"
+	},
+	"[shellscript]": {
+		"editor.defaultFormatter": "mkhl.shfmt"
+	},
+	"bashBeautify.tabSize": 2,
+	"[powershell]": {
+		"editor.defaultFormatter": "ms-vscode.powershell"
+	},
 	"powershell.codeFormatting.trimWhitespaceAroundPipe": true,
 	"powershell.codeFormatting.whitespaceBetweenParameters": true,
 	"powershell.integratedConsole.showOnStartup": false,
 	"powershell.integratedConsole.suppressStartupBanner": true,
-	"bashBeautify.tabSize": 2,
+	"[github-actions-workflow]": {
+		"editor.defaultFormatter": "redhat.vscode-yaml"
+	},
 
 	// MARK: JS/TS
 	"[typescript]": {
@@ -428,6 +439,7 @@
 	"typescriptExplorer.typeTree.view.icons.colors.enable": false,
 	"typescriptExplorer.typeTree.view.show.baseClass": false,
 	"typescriptExplorer.typeTree.view.show.typeParameters": false,
+	"js-auto-backticks.enableRevert": true,
 	"exportall.config.quote": "\"",
 	"exportall.config.message": "Automatically generated file",
 	"exportall.config.relExclusion": [],
@@ -457,7 +469,7 @@
 		"ui.semanticTokens": true,
 		// "formatting.gofumpt": true,
 		"ui.navigation.importShortcut": "Definition",
-		"ui.diagnostics.enabled": true
+		"ui.diagnostic.analysisProgressReporting": true
 	},
 	"go.inlayHints.assignVariableTypes": true,
 	"go.inlayHints.compositeLiteralFields": true,
@@ -1491,24 +1503,17 @@
 	],
 	"harper.isolateEnglish": true,
 	"typos.diagnosticSeverity": "Information",
-	"js-auto-backticks.enableRevert": true,
-	"[powershell]": {
-		"editor.defaultFormatter": "ms-vscode.powershell"
-	},
+
 	"powershell.promptToUpdatePowerShell": false,
 	"spellright.language": ["en", "es"],
 	"spellright.documentTypes": ["markdown", "latex", "plaintext", "jsonc"],
-	"json.schemaDownload.trustedDomains": {
-		"https://aka.ms/terminal-profiles-schema": true,
-		"https://biomejs.dev": true,
-		"https://developer.microsoft.com/json-schemas/": true,
-		"https://json-schema.org/": true,
-		"https://json.schemastore.org/": true,
-		"https://raw.githubusercontent.com/devcontainers/spec/": true,
-		"https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json": true,
-		"https://raw.githubusercontent.com/microsoft/vscode/": true,
-		"https://schemastore.azurewebsites.net/": true,
-		"https://www.schemastore.org/": true
-	},
-	"coderabbit.region": "eu"
+
+	"coderabbit.region": "eu",
+	"sonarlint.connectedMode.connections.sonarcloud": [
+		{
+			"organizationKey": "iceye",
+			"connectionId": "iceye",
+			"region": "EU"
+		}
+	]
 }
