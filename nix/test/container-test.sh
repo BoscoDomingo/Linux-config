@@ -73,7 +73,7 @@ git init -q \$HOME/repos/work/acme
 git init -q \$HOME/repos/personal/blog
 
 # SKIP_MISE keeps this fast: a full mise install builds node/python/rust and is
-# off-purpose for a Nix-layer check. Drop it to also install engram + runtimes.
+# off-purpose for a Nix-layer check. Drop it to also install mise-owned tools.
 HOST="$HOST" SKIP_MISE=1 bash \$HOME/dotfiles/nix/bootstrap.sh
 echo; echo "==> generations (rollback targets):"
 home-manager generations || true

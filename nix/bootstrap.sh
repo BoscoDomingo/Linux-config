@@ -42,6 +42,10 @@ if [ "${INSTALL_BREW:-0}" = "1" ] && ! command -v brew >/dev/null 2>&1; then
   NONINTERACTIVE=1 /bin/bash -c \
     "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
+if command -v brew >/dev/null 2>&1 && [ -f "$REPO/Brewfile" ]; then
+  echo "== brew bundle =="
+  brew bundle --file "$REPO/Brewfile"
+fi
 
 # 3. -b makes activation back up any pre-existing dotfile to *.hm-bak instead
 #    of failing when it wants to own that path.

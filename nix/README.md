@@ -16,8 +16,9 @@ bash ~/dotfiles/nix/bootstrap.sh   # auto-detects arch vs arch-wsl; override wit
 ```
 
 That installs Nix (if missing) and runs `home-manager switch -b hm-bak`. Add
-`INSTALL_BREW=1` to also install Homebrew (the escape hatch for tools not in
-nixpkgs; off by default). Or do it by hand:
+`INSTALL_BREW=1` to also install Homebrew; when Homebrew is available,
+bootstrap installs the repository `Brewfile` (Engram and httpstat). Or do it by
+hand:
 
 ```sh
 cd ~/dotfiles/nix

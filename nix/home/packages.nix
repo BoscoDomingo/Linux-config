@@ -26,7 +26,6 @@
     trippy # `trip`
     sshs
     rip2 # rm-improved
-    httpstat
     lazyjj
     witr
     zsh-autosuggestions

@@ -155,7 +155,7 @@ and then run `mise use <alias>` to install it.
 This is better than using `mise use -g ubi:<org_or_user>/<repo>` because the name won't be polluted with the `ubi:` prefix.
 ## Homebrew
 
-The CLI toolbox is managed by Nix ([`nix/home/packages.nix`](nix/home/packages.nix)); Homebrew stays available on all platforms as an escape hatch for tools not in nixpkgs (opt in via `INSTALL_BREW=1` when running `nix/bootstrap.sh`), and declares macOS GUI casks via nix-darwin. See [`Documentation/Nix_exploration.md`](Documentation/Nix_exploration.md#9-tool-ownership--retiring-runsh).
+The CLI toolbox is primarily managed by Nix ([`nix/home/packages.nix`](nix/home/packages.nix)); Homebrew manages exceptions from the repository [`Brewfile`](Brewfile), including Engram and httpstat. Opt in to installing Homebrew via `INSTALL_BREW=1` when running `nix/bootstrap.sh`; macOS GUI casks remain declared via nix-darwin. See [`Documentation/Nix_exploration.md`](Documentation/Nix_exploration.md#9-tool-ownership--retiring-runsh).
 
 ## Built-in package managers
 

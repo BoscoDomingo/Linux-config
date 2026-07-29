@@ -507,16 +507,19 @@ one owner. Nothing is installed by more than one system.
 
 | System | Owns | Examples |
 |--------|------|----------|
-| **Nix / Home Manager** | Stable global CLI tools; dotfile symlinks | rg, bat, fd, eza, fzf, delta, bottom, btop, duf, gping, hyperfine, trippy, sshs, rip2, fastfetch, onefetch, lazyjj, jjui, witr, zsh plugins, jj, neovim, opencode, yt-dlp, act, tree-sitter, gdu, navi, tlrc, dotenvx, herdr, diffnav, mise, direnv, tmux |
-| **mise** | Language runtimes + tools not in nixpkgs | node, go, python, rust, bun, pnpm, biome, golangci-lint, **pi** |
-| **Homebrew** | On-demand escape hatch on any platform for tools not in nixpkgs (opt-in via `INSTALL_BREW=1`); on macOS also GUI casks (declared via **nix-darwin's `homebrew` module**) | **engram**, ghostty/cursor/firefox casks (macOS) |
+| **Nix / Home Manager** | Stable global CLI tools; dotfile symlinks | rg, bat, jj, neovim, mise, direnv, tmux... |
+| **mise** | Language runtimes + tools not in nixpkgs | pi, node, go, python, rust, bun, pnpm... |
+| **Homebrew** | Tools whose Nix/mise packages are unsuitable; on macOS also GUI casks (declared via **nix-darwin's `homebrew` module**) | engram, httpstat, ghostty/cursor/firefox casks (macOS) |
 
 `pi` is the only agent tool installed via mise (`github:` backend, from GitHub
-releases). `engram` is installed via Homebrew and as a pi extension
+releases).
+`engram` is installed via Homebrew and as a pi extension
 (`.config/opencode/opencode.json`, `AI/.pi/agent/settings.json`), not by mise;
 `scripts/engram-setup` (run by `home/tools.nix` and `bootstrap.sh`) registers it
-with each detected coding agent. Homebrew installs no formula list — it stays
-available on Linux as a fallback only when opted into.
+with each detected coding agent.
+The repository `Brewfile` declares Engram and
+httpstat; bootstrap installs Homebrew itself only when `INSTALL_BREW=1`, then
+runs the bundle whenever Homebrew is available.
 
 ### 9.2 `run.sh` → Nix replacement map
 

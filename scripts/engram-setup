@@ -5,10 +5,8 @@
 set -u
 
 engram="$(command -v engram 2>/dev/null || true)"
-[ -z "$engram" ] && [ -x "$HOME/.local/share/mise/shims/engram" ] && engram="$HOME/.local/share/mise/shims/engram"
-[ -z "$engram" ] && [ -x "$HOME/go/bin/engram" ] && engram="$HOME/go/bin/engram"
 if [ -z "$engram" ]; then
-	echo "engram not found; install it first (mise use -g engram) then re-run."
+	echo "engram not found; install the repository Brewfile then re-run."
 	exit 0
 fi
 
