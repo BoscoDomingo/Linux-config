@@ -106,15 +106,16 @@ ci = ["commit", "--interactive"]
 # Edit commits
 s = ["squash"]
 si = ["squash", "--interactive"] # Edit a previous commit (empty for parent)
-sii = ["squash", "--interactive", "--ignore-immutable"] # Force edit a previous commit (empty for parent)
+sif = ["squash", "--interactive", "--ignore-immutable"] # Force edit a previous commit (empty for parent)
 sic = ["squash", "--ignore-immutable", "--from", "root()+::@- ~ root()+", "--into", "root()+", "--use-destination-message"] # Squash ALL commits descending from the root's first child. Essentially squash entire history into a single commit.
 er = ["squash", "-i", "-u", "-t"] # Edit target revision with current changes
 de = ["diffedit"] # Alternative to squash
 
 u = ["undo"]
 
-a = ["absorb"]
-aa = ["absorb", "--ignore-immutable", "-t", "immutable()"] # absorb disregarding immutability (such as bookmarked changes)
+a = ["absorb", "-i"]
+aa = ["absorb"]
+af = ["absorb", "--ignore-immutable", "-t", "immutable()"] # absorb disregarding immutability (such as bookmarked changes)
 
 # Navigation
 m = ["rebase", "-r", "@", "-d"] # move current revision only to the chosen destination
@@ -152,15 +153,15 @@ ane = ["abandon", "-r", "empty() & mutable()"]
 slv = ["resolve"]
 oplog = ["op", "log"]
 
-# Branches/bookmarks
+# Bookmarks (branches or tags)
 b = ["bookmark"]
 bc = ["bookmark", "create"]
 bcp = ["bookmark", "create", "-r", "@-"] # Create bookmark at parent
 bf = ["bookmark", "forget"]
 bs = ["bookmark", "set"] # Set bookmark. E.g. `jj bsp main -r @-` to update tracked main to the latest commit
-bsa = ["bookmark", "set", "--allow-backwards"] # Set bookmark. E.g. `jj bsa main -r @-` to update tracked main to the latest commit
+bsf = ["bookmark", "set", "--allow-backwards"] # Set bookmark. E.g. `jj bsa main -r @-` to update tracked main to the latest commit
 bsp = ["bookmark", "set", "-r", "@-"]
-bspa = ["bookmark", "set", "-r", "@-", "--allow-backwards"]
+bspf = ["bookmark", "set", "-r", "@-", "--allow-backwards"]
 ba = ["bookmark", "advance"]
 bap = ["bookmark", "advance", "-t", "@-"]
 bsm = ["bookmark", "set", "main"] # Set main to the latest commit
@@ -181,7 +182,8 @@ g = ["git"]
 gf = ["git", "fetch"]
 gp = ["git", "push"]
 gpb = ["git", "push", "-b"]
-gpn = ["git", "push", "-N"]            # Push only bookmarked changes
-gpt = ["git", "push", "--tracked"]     # Pushes all tracked branches
-gpm = ["git", "push", "-b", "main"]    # Push bookmarked changes to main
-gpd = ["git", "push", "-b", "develop"] # Push bookmarked changes to develop
+gpa = ["git", "push", "--all"]
+gpt = ["git", "push", "--tracked"]
+gprm = ["git", "push", "--deleted"]
+gpm = ["git", "push", "-b", "main"]
+gpd = ["git", "push", "-b", "develop"]
