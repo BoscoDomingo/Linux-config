@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 # Idempotent activation steps for the git-cloned / curled frameworks that
-# aren't plain nixpkgs packages. They run on `home-manager switch` without
+# aren't plain nixpkgs packages. They run during Home Manager activation without
 # prompts, and are best-effort (`|| true`) so a network hiccup never bricks a
 # switch. The hand-written configs these use are symlinked via dotfiles.nix.
 let
@@ -53,11 +53,12 @@ in
   '';
 
   # Register engram (agent memory) with every coding agent detected on the
-  # machine. engram is installed via Homebrew / as a pi extension; the script
-  # no-ops if it's absent.
+  # machine. Activation uses a restricted PATH, so include both supported
+  # Homebrew prefixes where this repository declares Engram ownership.
   home.activation.engram = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
     if [ -x "${repo}/scripts/engram-setup" ]; then
-      run ${pkgs.bash}/bin/bash "${repo}/scripts/engram-setup" || true
+      run env PATH="/home/linuxbrew/.linuxbrew/bin:/opt/homebrew/bin:$PATH" \
+        ${pkgs.bash}/bin/bash "${repo}/scripts/engram-setup" || true
     fi
   '';
 }

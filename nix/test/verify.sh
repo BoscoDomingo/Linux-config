@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Post-switch sanity checks for the Home Manager config.
-# Run AFTER `home-manager switch --flake ~/dotfiles/nix#<host>`.
+# Run after activating `homeConfigurations.<host>.activationPackage`.
 #
 #   bash ~/dotfiles/nix/test/verify.sh
 #
@@ -13,18 +13,28 @@ pass=0; fail=0
 ok(){ printf '  \033[32mPASS\033[0m  %s\n' "$1"; pass=$((pass+1)); }
 no(){ printf '  \033[31mFAIL\033[0m  %s\n' "$1"; fail=$((fail+1)); }
 
-echo "== packages on PATH (from ~/.nix-profile) =="
-for bin in rg bat eza fd fzf delta fastfetch duf gping hyperfine trip sshs cheat rip; do
-  p=$(command -v "$bin" 2>/dev/null || true)
+echo "== packages owned by Home Manager (from ~/.nix-profile) =="
+for bin in rg bat eza fd fzf delta fastfetch duf gping hyperfine trip sshs cheat rip \
+  jj nvim opencode mise direnv tmux diffnav herdr; do
+  # Ignore shell functions created by `mise activate`; verify the executable.
+  p=$(type -P "$bin" 2>/dev/null || true)
   case "$p" in
     *"/.nix-profile/"*) ok "$bin -> $p" ;;
+    "$HOME/.local/bin/mise")
+      resolved=$(readlink -f "$p" 2>/dev/null || true)
+      case "$resolved" in
+        /nix/store/*-mise-*/bin/mise) ok "$bin -> $p -> $resolved" ;;
+        *) no "$bin -> $p -> $resolved (expected Nix-owned mise)" ;;
+      esac
+      ;;
     "")                 no "$bin missing" ;;
-    *)                  ok "$bin -> $p (not nix profile)" ;;
+    *)                  no "$bin -> $p (expected ~/.nix-profile)" ;;
   esac
 done
 
 echo "== dotfiles symlinked to the live repo (out-of-store) =="
-for f in .zshrc .profile .aliases .gitconfig .config/starship.toml .config/nvim; do
+for f in .bash_profile .zshrc .profile .aliases .gitconfig .ssh/allowed_signers \
+  .config/starship.toml .config/nvim; do
   tgt=$(readlink -f "$HOME/$f" 2>/dev/null || true)
   case "$tgt" in
     "$REPO"/*) ok "$f -> $tgt" ;;

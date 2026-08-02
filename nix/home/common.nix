@@ -21,6 +21,7 @@
     # ./git.nix
   ];
 
-  # mise manages language runtimes and floating dev tools; Nix manages the
-  # stable global toolbox. mise's own config is symlinked via dotfiles.nix.
+  # mise manages language runtimes plus explicitly declared floating tools
+  # (currently Pi and Zellij); Nix manages the stable global toolbox. mise's
+  # own config is symlinked via dotfiles.nix.
 }

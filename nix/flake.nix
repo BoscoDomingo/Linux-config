@@ -43,8 +43,8 @@
         };
     in
     {
-      # One entry per machine. Invoke with:
-      #   home-manager switch --flake .#arch-wsl
+      # One entry per machine. Build and activate with the commands documented
+      # in Documentation/Nix_cheatsheet.md.
       homeConfigurations = {
         "arch" = mkHome {
           system = "x86_64-linux";

@@ -186,11 +186,8 @@ but you fix pain points #1, #2, #4, and #6 this weekend.
 
 ### Keep mise regardless
 
-Whatever you pick, **keep mise for per-project language/tool versions.** mise +
-`.tool-versions`/`mise.toml` + direnv is a better developer workflow than Nix
-devshells for polyglot project work, and it composes cleanly with both options
-(§4.3). Nix owns the *global, stable* toolbox; mise owns *per-project, floating*
-toolchains.
+The implemented split keeps mise for language runtimes plus explicitly declared
+floating tools (currently Pi and Zellij). Nix owns the stable global toolbox.
 
 ## 5. What the Nix version would look like
 
@@ -324,57 +321,24 @@ modules (`nix/hosts/*.nix`):
 }
 ```
 
-### 5.6 Daily workflow, before and after
+### 5.6 Daily workflow
 
-| Task | Today | With Nix |
-|------|-------|----------|
-| New machine | run distro script, then babysit `run.sh` prompts | install Nix, `git clone`, `home-manager switch --flake .#macbook` |
-| Add a package | edit bash array, re-run installer | add one line to `packages.nix`, `switch` |
-| Update everything | `brew upgrade` + `mise up` + re-`curl` | `nix flake update && home-manager switch` |
-| A change broke my shell | manually undo, restore `.bak` | `home-manager switch --rollback` |
-| "Do my two laptops match?" | hope | identical `flake.lock` guarantees it |
+The migration is complete. Use [`Nix_cheatsheet.md`](Nix_cheatsheet.md) for
+locked activation, updates, verification, rollback, and cleanup commands.
 
-## 6. Migration plan (phased, low-risk)
+## 6. Migration outcome
 
-Each phase is independently useful and reversible. Stop at any phase if the
-value/effort trade stops making sense — this is the whole point of not
-big-banging it.
+The migration was executed progressively on Arch WSL: first a minimal Home
+Manager lifecycle probe, then packages, passive config, shell files, identity
+and IDE integration, mutable config, and finally activation hooks. Each stage
+was built, dry-run, activated, and verified before advancing. The final state
+uses the compact canonical host outputs in `nix/flake.nix`; temporary stage
+outputs were removed.
 
-**Phase 0 — Spike (½ day).** Install Nix (Determinate Systems installer) on one
-non-critical machine or the WSL box. Get a minimal `flake.nix` + `home.nix` that
-installs *one* package (`ripgrep`) and symlinks *one* file (`.aliases`). Goal:
-confirm the toolchain and that `home-manager switch` / `--rollback` work for
-you. **Deliverable:** the `nix/` skeleton in this branch, adapted to one host.
-
-**Phase 1 — Dotfiles under Home Manager (1–2 days).** Move all symlinking from
-`symlinks.sh` into `dotfiles.nix` using `mkOutOfStoreSymlink` (§5.3). Your files
-don't move; only the linking mechanism changes. Retire `Setup/installers/symlinks.sh`.
-**Now #1, #4, #6 are solved for configs and you're still editing files normally.**
-
-**Phase 2 — CLI packages (2–3 days).** Port the Homebrew array to
-`packages.nix` (§5.2). Keep Homebrew installed as a fallback for anything not
-in nixpkgs (macOS casks especially). Delete the ported entries from
-`packages.sh`. **Now versions are pinned and reproducible (#2, #3, #5).**
-
-**Phase 3 — Native modules, opportunistically (ongoing).** Convert
-high-value tools (zsh, starship, git, direnv, fzf, tmux) to HM `programs.*`
-(§5.4). Leave the rest as symlinks. No deadline.
-
-**Phase 4 — Per-OS system config (optional).** Add `nix-darwin` for the Mac
-(replaces manual macOS defaults) and/or NixOS-WSL. Fold `MacOS/` and the WSL
-branches of `.profile` into host modules.
-
-**What you keep, permanently:**
-
-- **mise** for per-project language versions + `curl`-installed dev tools that
-  are painful in Nix.
-- This repo's structure and your `.zshrc`/`.config` files (linked, not rewritten).
-- `run.sh` can stay as a thin bootstrap that installs Nix and runs
-  `home-manager switch`, or be retired.
-
-**Rough effort:** a usable Phase 0–1 state in a weekend; a machine you'd trust
-to reproduce in ~1 week of evenings. The learning curve is front-loaded in
-Phase 0.
+The repository now owns dotfile links and stable global CLI packages through
+Home Manager. Homebrew is retained only for Engram and httpstat, while mise
+owns language runtimes plus Pi and Zellij. Pi's mutable agent directory remains
+machine-local.
 
 ## 7. Honest risks and downsides of Nix
 
@@ -387,18 +351,16 @@ Phase 0.
   brew/apt). Your `curl | bash` agent tools (Gentle-AI, oh-my-posh) may be
   easier left on their current installers initially.
 - **WSL specifics.** Works well, but the DBus/gnome-keyring and IDE-server
-  patching you do in `.profile`/`symlinks.sh` will need re-homing into HM
-  activation scripts.
-- **It's not all-or-nothing, and that's the mitigation.** Every phase above is
-  independently valuable and reversible. If Nix stops paying off at Phase 2,
-  you still have a materially more robust setup than today and can stop.
+  environment integration is handled by the WSL host module and managed
+  `server-env-setup` links.
+- **It was not all-or-nothing.** The progressive rollout isolated failures and
+  preserved a preceding Home Manager generation at every consequential step.
 
 ## 8. Per-machine identity & secrets (work vs personal)
 
-Your `.gitconfig` currently hardcodes `user.email` and `user.signingKey`, and
-commits them. That's the one thing that genuinely can't be shared across a work
-and a personal machine. It's very fixable, and worth separating into **three
-tiers**, because they're handled differently:
+The committed `.gitconfig` provides a personal baseline. Work devices can
+override the email and public signing key through an untracked include. The
+identity model has three tiers:
 
 | Tier | Example | Where it lives | Committed? |
 |------|---------|----------------|-----------|
@@ -408,25 +370,25 @@ tiers**, because they're handled differently:
 
 Tier 1 already behaves correctly here: the private key is never committed, and
 `scripts/ssh-sign` reads `SSH_SIGN_KEY_PATH` so each machine points at its own
-key. `.ssh/allowed_signers` holds *public* keys only, so it's fine to keep
-committing it. **Only tier 2 needs changing.**
+key. `.ssh/allowed_signers` holds public keys only, so it is safe to commit.
+Tier 2 is overridden only on machines that need a non-personal identity.
 
 ### 8.1 The tooling-independent fix: git `include` / `includeIf`
 
-This is worth doing **now**, regardless of the Nix decision. Drop the `[user]`
-block from the committed `.gitconfig` and pull identity from an untracked file:
+On a work machine, override the committed personal baseline from an untracked
+file:
 
 ```gitconfig
-# committed .gitconfig — no identity here anymore
+# committed .gitconfig already contains the personal [user] baseline
 [include]
-    path = ~/.config/git/local.gitconfig    # untracked, written once per machine
+    path = ~/.config/git/local.gitconfig    # optional untracked override
 ```
 
 Each machine's `~/.config/git/local.gitconfig` (never committed) holds:
 
 ```gitconfig
 [user]
-    email = bosco.domingo@iceye.com
+    email = you@work.example
     signingKey = key::ssh-ed25519 AAAA…work-key…
 ```
 
@@ -446,8 +408,8 @@ plain local file you write once per machine, nothing leaves the box.
 
 ### 8.2 In Nix / Home Manager
 
-Home Manager declares those same includes in Nix, still pointing at untracked
-local files, so no identity is baked into the (potentially public) repo:
+The active setup symlinks `.gitconfig`, whose include blocks point at untracked
+local files. `home/git.nix` remains an opt-in native alternative:
 
 ```nix
 programs.git = {
@@ -491,12 +453,10 @@ encrypted:
 
 ### 8.4 Recommendation
 
-Use a **local untracked file per machine** (§8.1) — it's the least infrastructure,
-matches your `~/.profile_secret` pattern, and works identically whether you stay
-on shell, adopt Nix, or adopt chezmoi. Add `includeIf` if work and personal
-repos ever share a machine. Reach for sops-nix/agenix only if you want the
-secrets themselves committed (encrypted). The SSH private key stays per-machine
-and out of the repo in every case.
+Keep the committed personal baseline and use a **local untracked override** on
+work machines (§8.1). Add `includeIf` when work and personal repositories share
+a machine. Reach for sops-nix/agenix only if encrypted secrets must be tracked.
+The SSH private key stays per-machine and out of the repo in every case.
 
 ## 9. Tool ownership & retiring `run.sh`
 
@@ -508,13 +468,12 @@ one owner. Nothing is installed by more than one system.
 | System | Owns | Examples |
 |--------|------|----------|
 | **Nix / Home Manager** | Stable global CLI tools; dotfile symlinks | rg, bat, jj, neovim, mise, direnv, tmux... |
-| **mise** | Language runtimes + tools not in nixpkgs | pi, node, go, python, rust, bun, pnpm... |
-| **Homebrew** | Tools whose Nix/mise packages are unsuitable; on macOS also GUI casks (declared via **nix-darwin's `homebrew` module**) | engram, httpstat, ghostty/cursor/firefox casks (macOS) |
+| **mise** | Language runtimes + explicitly declared floating tools | pi, zellij, node, go, python, rust, bun, pnpm... |
+| **Homebrew** | Tools whose Nix/mise packages are unsuitable | engram, httpstat |
 
-`pi` is the only agent tool installed via mise (`github:` backend, from GitHub
-releases).
-`engram` is installed via Homebrew and as a pi extension
-(`.config/opencode/opencode.json`, `AI/.pi/agent/settings.json`), not by mise;
+Pi and Zellij are installed via mise. Pi's mutable agent directory is kept
+machine-local rather than managed as one Home Manager link.
+`engram` is installed via Homebrew, not by mise;
 `scripts/engram-setup` (run by `home/tools.nix` and `bootstrap.sh`) registers it
 with each detected coding agent.
 The repository `Brewfile` declares Engram and
@@ -529,15 +488,15 @@ mechanism; it can be deleted once all are ported:
 | `run.sh` installer | Replacement | Status |
 |--------------------|-------------|--------|
 | `symlinks.sh` | `home/dotfiles.nix` (`mkOutOfStoreSymlink`) | ✅ done |
-| `packages.sh` | `home/packages.nix` (Nix); Homebrew kept on all platforms as a fallback + macOS casks via nix-darwin | ✅ done |
+| `packages.sh` | `home/packages.nix` (Nix); Homebrew kept only for declared exceptions | ✅ done |
 | `gpg.sh` | Deprecated (SSH signing now); optional prompts, nothing to port | ✅ n/a |
-| `tools.sh` → oh-my-posh | mise manages it (`[tool_alias]`) or a Nix pkg | ✅ done |
+| `tools.sh` → oh-my-posh | Existing standalone install; shell init tolerates absence | ✅ retained |
 | `tools.sh` → oh-my-zsh | `home/tools.nix` activation clone to `~/.oh-my-zsh` | ✅ done |
 | `tools.sh` → tmux + tpm | `tmux` in `home/packages.nix`; tpm cloned in `home/tools.nix` | ✅ done |
 | `tools.sh` → cheat sheets, micro themes | `home/tools.nix` activation (git clone / curl) | ✅ done |
 | `ai-agents.sh` → jj approval guards | `home/tools.nix` activation runs `AI/agent-guards/install.py` | ✅ done |
-| `ai-agents.sh` → engram | engram via Homebrew + pi extension; `scripts/engram-setup` registers it with autodiscovered agents (run by `home/tools.nix`) | ✅ done |
-| `symlinks.sh` → editor/agent config (Cursor settings, extensions, `server-env-setup`, Pi agent) | `home/dotfiles.nix` symlinks | ✅ done |
+| `ai-agents.sh` → engram | Engram via Homebrew; `scripts/engram-setup` registers it with autodiscovered agents (run by `home/tools.nix`) | ✅ done |
+| `symlinks.sh` → editor/agent config (Cursor settings, extensions, `server-env-setup`) | `home/dotfiles.nix` symlinks; Pi state remains local | ✅ done |
 | `gpg.sh` (if still needed) | Optional standalone `scripts/gpg-setup` | ✅ done |
 | `run.sh` (entrypoint) | `nix/bootstrap.sh` | ✅ done |
 | `Arch/run_arch.sh`, `Ubuntu/run_ubuntu.sh` | Install prerequisites, clone, run `bootstrap.sh` | ✅ done |
@@ -545,7 +504,7 @@ mechanism; it can be deleted once all are ported:
 `run.sh` and the `Setup/` installers are gone. The distro scripts install the
 prerequisites (zsh, git, curl, locales, mise build deps) that a package
 manager, not the dotfiles, is responsible for, then hand off to `bootstrap.sh`,
-which installs Nix and runs `home-manager switch`. The activation steps in
+which installs Nix and activates the generation pinned by `flake.lock`. The activation steps in
 `home/tools.nix` are best-effort, so a network hiccup never bricks a switch.
 
 ## 10. Bottom line
@@ -554,18 +513,16 @@ which installs Nix and runs `home-manager switch`. The activation steps in
   macOS, and WSL, and is the only option that makes your setup *reproducible*
   (pinned versions) and *reversible* (atomic rollback). Those two properties are
   the real meaning of "robust," and nothing else on the list delivers them.
-- **Is it the right call for you?** Yes *if* you're willing to spend ~a week on
-  the learning curve for a permanently lower-maintenance, reproducible setup,
-  and you migrate in phases rather than all at once.
-- **If not**, chezmoi is the pragmatic runner-up: most of the robustness, a
-  fraction of the learning curve, and it plays nicely with your existing
-  brew/mise workflow.
-- **Either way**, keep mise for per-project toolchains.
+- **Was it the right call?** Yes. The progressive live rollout proved package,
+  dotfile, shell, IDE, hook, and rollback behavior before the compact final
+  configuration was adopted.
+- **Keep mise** for the declared runtime and floating-tool layer.
 
 The `nix/` directory in this branch is a **working, tested** Home Manager
-config — not just a sketch. It was verified end-to-end on a clean machine:
+config — not just a sketch. It was verified end-to-end on clean containers and
+the live Arch WSL host:
 packages install and run, dotfiles become out-of-store symlinks to the live
 repo (still editable in place), the per-machine and per-directory git identity
 overrides resolve correctly, and rollback is atomic. The full record is in
-[`../nix/test/README.md`](../nix/test/README.md). Nothing there runs until you
-install Nix and invoke it deliberately (`nix/bootstrap.sh`).
+[`../nix/test/README.md`](../nix/test/README.md). Apply it with
+`nix/bootstrap.sh`; daily commands are in [`Nix_cheatsheet.md`](Nix_cheatsheet.md).

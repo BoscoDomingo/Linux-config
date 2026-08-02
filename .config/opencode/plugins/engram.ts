@@ -23,7 +23,6 @@ const ENGRAM_URL = `http://127.0.0.1:${ENGRAM_PORT}`;
 const ENGRAM_BIN =
   process.env.ENGRAM_BIN ??
   Bun.which("engram") ??
-  "/home/bosco/.local/share/mise/installs/engram/1.18.0/engram" ??
   "/home/linuxbrew/.linuxbrew/bin/engram";
 
 // Engram's own MCP tools — don't count these as "tool calls" for session stats

@@ -7,8 +7,8 @@
 #
 # It installs the prerequisites a package manager owns (a sudo user, zsh, git,
 # locales, plus the build deps mise needs to compile language runtimes), clones
-# the repo, and hands off to nix/bootstrap.sh, which installs Nix and runs
-# `home-manager switch`. Everything else lives in the Nix config.
+# the repo, and hands off to nix/bootstrap.sh, which installs Nix and activates
+# the generation pinned by nix/flake.lock. Everything else lives in Nix config.
 set -euo pipefail
 
 # Detect WSL once: bare-metal Arch (e.g. CachyOS) gets none of the WSL bits.

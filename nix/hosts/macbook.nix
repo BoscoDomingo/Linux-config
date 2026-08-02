@@ -13,8 +13,8 @@
   # home.file."Library/KeyBindings/DefaultKeyBinding.dict".source =
   #   config.lib.file.mkOutOfStoreSymlink "${repo}/MacOS/DefaultKeyBinding.dict";
 
-  # macOS GUI casks — declared via nix-darwin's homebrew module in the system
-  # config (see ../flake.nix darwinConfigurations):
+  # macOS GUI casks are not managed yet. A future nix-darwin system config can
+  # declare them through its Homebrew module:
   #
   #   homebrew = {
   #     enable = true;

@@ -8,14 +8,14 @@
 #
 # Overridable via env:
 #   DISTRO   ubuntu | arch        (default: ubuntu)
-#   BRANCH   git branch to test   (default: claude/dotfiles-nix-exploration-b4ot2i)
+#   BRANCH   git branch to test   (default: main)
 #   HOST     flake host to build  (default: per-distro; ubuntu or arch)
 #   IMAGE    base image           (default: per-distro)
 #   REPO_URL clone URL            (default: https://github.com/BoscoDomingo/Linux-config)
 set -euo pipefail
 
 DISTRO="${DISTRO:-ubuntu}"
-BRANCH="${BRANCH:-claude/dotfiles-nix-exploration-b4ot2i}"
+BRANCH="${BRANCH:-main}"
 REPO_URL="${REPO_URL:-https://github.com/BoscoDomingo/Linux-config}"
 
 case "$DISTRO" in

@@ -51,8 +51,7 @@
     mise
     direnv
     tmux
-    # `pi` is not in nixpkgs; it comes from mise. `engram` is installed via
-    # Homebrew and as a pi extension (see .config/opencode + AI/.pi/agent),
-    # not by Nix; scripts/engram-setup registers it with detected agents.
+    # Pi and Zellij come from mise. Engram comes from Homebrew, not Nix;
+    # scripts/engram-setup registers it with detected coding agents.
   ];
 }

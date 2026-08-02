@@ -2,8 +2,10 @@
 
 The Nix implementation of the migration described in
 [`../Documentation/Nix_exploration.md`](../Documentation/Nix_exploration.md).
-It is the setup path for this repo: `bootstrap.sh` installs Nix and runs
-`home-manager switch`, and the distro scripts (`../Arch/run_arch.sh`,
+The daily commands and update boundaries are documented in the
+[`Nix + Home Manager cheatsheet`](../Documentation/Nix_cheatsheet.md).
+It is the setup path for this repo: `bootstrap.sh` installs Nix and activates
+the pinned Home Manager configuration, and the distro scripts (`../Arch/run_arch.sh`,
 `../Ubuntu/run_ubuntu.sh`) hand off to it on a fresh machine. It has been
 **verified end-to-end on a clean machine**: see [`test/README.md`](test/README.md)
 (packages, out-of-store dotfile symlinks, per-machine + per-directory git
@@ -12,20 +14,16 @@ identity overrides, and atomic rollback all pass).
 ## Try it
 
 ```sh
-bash ~/dotfiles/nix/bootstrap.sh   # auto-detects arch vs arch-wsl; override with HOST=<arch|arch-wsl|ubuntu|macbook>
+bash ~/dotfiles/nix/bootstrap.sh   # auto-detects the host; override with HOST=<arch|arch-wsl|ubuntu|macbook>
 ```
 
-That installs Nix (if missing) and runs `home-manager switch -b hm-bak`. Add
+That installs Nix (if missing) and runs the pinned activation package. Add
 `INSTALL_BREW=1` to also install Homebrew; when Homebrew is available,
 bootstrap installs the repository `Brewfile` (Engram and httpstat). Or do it by
 hand:
 
-```sh
-cd ~/dotfiles/nix
-nix run home-manager/master -- switch --flake .#arch -n   # -n = dry run
-nix run home-manager/master -- switch -b hm-bak --flake .#arch
-home-manager generations && home-manager switch --rollback  # undo if needed
-```
+For manual build, dry-run, activation, update, and rollback commands, use the
+[`cheatsheet`](../Documentation/Nix_cheatsheet.md).
 
 `flake.nix` sets `username = "bosco"` and `dotfiles.nix` assumes the repo is at
 `~/dotfiles`; adjust both if either differs. Where GitHub tarball fetch is
@@ -52,4 +50,4 @@ The short version: keep them in an untracked
 `~/.config/git/local.gitconfig` per machine and `[include]` it — the SSH
 private key stays in `~/.ssh/` and is never committed.
 
-Start with `dotfiles.nix` (Phase 1) — it's the lowest-risk, highest-value part.
+The migration is active; use the cheatsheet for routine updates and rollback.

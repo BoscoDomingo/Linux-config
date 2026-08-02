@@ -9,7 +9,8 @@
 # It installs the prerequisites a package manager owns (zsh, git, locales, plus
 # the build deps mise needs to compile language runtimes), makes zsh the login
 # shell, clones the repo, and hands off to nix/bootstrap.sh, which installs Nix
-# and runs `home-manager switch`. Everything else lives in the Nix config.
+# and activates the generation pinned by nix/flake.lock. Everything else lives
+# in the Nix config.
 set -euo pipefail
 
 sudo apt-get update

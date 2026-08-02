@@ -4,13 +4,14 @@ This directory documents an end-to-end test of the `nix/` Home Manager config
 on a **clean machine** (a fresh Linux user with no prior Nix, dotfiles, or
 packages), including **per-machine local overrides**. It passed.
 
-- [`verify.sh`](verify.sh) — reusable post-switch checks (packages, out-of-store
+- [`verify.sh`](verify.sh) — reusable post-activation checks (packages, out-of-store
   symlinks, git identity overrides, rollback targets). Run it after any switch:
   `bash ~/dotfiles/nix/test/verify.sh`.
 - [`container-test.sh`](container-test.sh) — one command to prove the whole
   thing in a throwaway Docker container (host untouched). Ubuntu by default;
   `DISTRO=arch bash nix/test/container-test.sh` for Arch. It installs Nix,
-  clones this branch, seeds a work identity, runs `bootstrap.sh`, then `verify.sh`.
+  clones the selected branch, seeds a work identity, runs `bootstrap.sh`, then
+  `verify.sh`.
 
 ## What was verified (and the result)
 
@@ -18,14 +19,14 @@ packages), including **per-machine local overrides**. It passed.
 |---|----------|--------|
 | 1 | `nix build` of `homeConfigurations.<host>.activationPackage` **evaluates and builds** from the pinned inputs | ✅ built the generation (packages fetched from `cache.nixos.org`) |
 | 2 | `home-manager` activation creates the profile + symlinks on a clean `$HOME` | ✅ `Creating home file links` / `installPackages` succeeded |
-| 3 | Nix-installed CLIs are on `PATH` and runnable | ✅ 14/14 (`rg 15.1.0`, `bat 0.26.1`, `eza`, `fd`, `fzf`, `delta`, `fastfetch`, `duf`, `gping`, `hyperfine`, `trip`, `sshs`, `cheat`, `rip`) |
+| 3 | Nix-installed CLIs are on `PATH` and runnable | ✅ verification enforces Nix provenance for the declared global toolbox |
 | 4 | Dotfiles are **out-of-store symlinks to the live repo** (still editable in place) | ✅ `~/.zshrc → ~/dotfiles/.zshrc`; editing the repo file is visible immediately through the link |
 | 5 | Pre-existing files are backed up, not clobbered | ✅ `.profile`/`.bashrc` → `*.hm-bak` (equivalent to `home-manager -b`) |
-| 6 | **Per-machine git identity** via untracked `~/.config/git/local.gitconfig` overrides the committed baseline | ✅ neutral `$HOME` → `bosco.domingo@iceye.com` (+ work signing key), baseline stays `boscodomingob@gmail.com` |
+| 6 | **Per-machine git identity** via untracked `~/.config/git/local.gitconfig` overrides the committed baseline | ✅ work override wins; baseline stays `boscodomingob@gmail.com` |
 | 7 | **Per-directory git identity** via `includeIf` | ✅ repo under `~/work` → work email; repo under `~/personal` → personal email |
 | 8 | **Atomic rollback** between generations | ✅ gen2 added `tree` (on `PATH`); rollback to gen1 removed it while dotfiles stayed linked; generations recorded as `home-manager-{1,2,3}-link` |
 
-`verify.sh` final line on the test machine: **`result: 20 passed, 0 failed`**.
+The current live-host verification checks 30 package and symlink invariants.
 
 The SSH **private** key was never placed in the repo or the Nix store at any
 point — only its path is referenced (via `scripts/ssh-sign` / `SSH_SIGN_KEY_PATH`).

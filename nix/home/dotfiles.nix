@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 # Declarative dotfile symlinks.
 #
 # `mkOutOfStoreSymlink` links straight to the files in this repo checkout, so
@@ -15,6 +15,7 @@ in
     ".shellrc".source = link "${repo}/.shellrc";
     ".aliases".source = link "${repo}/.aliases";
     ".bashrc".source = link "${repo}/.bashrc";
+    ".bash_profile".source = link "${repo}/.bash_profile";
     ".zshrc".source = link "${repo}/.zshrc";
     ".zprofile".source = link "${repo}/.zprofile";
     ".nanorc".source = link "${repo}/.nanorc";
@@ -26,13 +27,17 @@ in
     ".gitignore_global".source = link "${repo}/.gitignore_global";
 
     ".local/bin/scripts".source = link "${repo}/scripts";
+    # Keep mise's conventional installer path as a compatibility link while
+    # Nix remains the single owner of the executable and its version.
+    ".local/bin/mise".source = "${pkgs.mise}/bin/mise";
 
     ".ssh/config".source = link "${repo}/.ssh/config";
+    # Public signing trust follows the shared personal key; private key material
+    # remains machine-local under ~/.ssh.
     ".ssh/allowed_signers".source = link "${repo}/.ssh/allowed_signers";
 
-    # Pi agent config lives under AI/ in the repo so the checkout isn't
-    # auto-loaded as agent context when opened.
-    ".pi/agent".source = link "${repo}/AI/.pi/agent";
+    # Keep Pi's whole agent directory unmanaged because it mixes declarative
+    # config with credentials, sessions, downloaded packages, and local state.
 
     # Bare-metal Cursor / VS Code editor config (the repo keeps it in vscode/).
     # WSL-only IDE-server links live in hosts/arch-wsl.nix.

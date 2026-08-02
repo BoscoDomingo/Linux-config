@@ -94,19 +94,10 @@ On a WSL machine with Cursor and/or VS Code:
    terminals, not extension hosts, so it does **not** solve this on its own —
    noted here so nobody wastes time on it.
 
-## Open question (unrelated but adjacent)
-
-`vscode/server-env-setup` still pins `~/.local/share/mise/installs/jj/latest`
-"ahead of mise shims". `jj` is now Nix-owned (in
-[`../nix/home/packages.nix`](../nix/home/packages.nix)), so that mise path won't
-exist post-migration and `jj` resolves from `~/.nix-profile/bin`. The pin is
-harmless (guarded by `[ -d ]`, no-ops when absent) but is dead weight. Leave or
-drop — undecided.
-
 ## Relevant paths
 
 - [`../vscode/server-env-setup`](../vscode/server-env-setup) — the PATH script
 - [`../nix/hosts/arch-wsl.nix`](../nix/hosts/arch-wsl.nix) — symlinks it into place (WSL host only)
 - [`../vscode/README.md`](../vscode/README.md) — editor settings sync notes
-- Git history: `Setup/installers/symlinks.sh` (the original patch), commits on
-  branch `claude/dotfiles-nix-exploration-b4ot2i`.
+- Git history contains `Setup/installers/symlinks.sh`, the original binary-patch
+  implementation that this managed environment hook replaced.

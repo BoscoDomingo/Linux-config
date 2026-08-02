@@ -79,13 +79,15 @@ _path_prepend_if_missing "$HOME/.local/bin/scripts"
 
 _path_prepend_if_missing "$HOME/.cache/.bun/bin"
 
-# Homebrew
-if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
-	case ":$PATH:" in
-	*":/home/linuxbrew/.linuxbrew/bin:"*) ;;
-	*) eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" ;;
-	esac
-fi
+# Homebrew uses different prefixes on Linux and macOS; initialize the first
+# available one while tolerating machines where Homebrew is intentionally absent.
+for _brew_bin in /home/linuxbrew/.linuxbrew/bin/brew /opt/homebrew/bin/brew /usr/local/bin/brew; do
+	if [ -x "$_brew_bin" ]; then
+		eval "$("$_brew_bin" shellenv)"
+		break
+	fi
+done
+unset _brew_bin
 
 # This is needed since mise is instantiated after VS Code is started,
 # and the VS Code extension for Go and C# don't work properly otherwise.
@@ -100,9 +102,6 @@ case ":$PATH:" in
 *) export PATH="$PNPM_HOME/bin:$PATH" ;;
 esac
 # pnpm end
-
-# opencode
-_path_prepend_if_missing "$HOME/.opencode/bin"
 
 # rip2
 export RIP_GRAVEYARD="$HOME/.local/share/rip2/graveyard"
