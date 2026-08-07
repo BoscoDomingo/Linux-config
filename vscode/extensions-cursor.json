@@ -883,36 +883,6 @@
 	},
 	{
 		"identifier": {
-			"id": "golang.go",
-			"uuid": "d6f6cfea-4b6f-41f4-b571-6ad2ab7918da"
-		},
-		"version": "0.52.2",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/golang.go-0.52.2-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "golang.go-0.52.2-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1773649417702,
-			"pinned": true,
-			"source": "gallery",
-			"id": "d6f6cfea-4b6f-41f4-b571-6ad2ab7918da",
-			"publisherId": "dbf6ae0a-da75-4167-ac8b-75b4512f2153",
-			"publisherDisplayName": "golang",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
 			"id": "orta.vscode-twoslash-queries",
 			"uuid": "fd2c2092-c30c-4c43-b41f-b4dfbec3276f"
 		},
@@ -1340,9 +1310,7 @@
 		}
 	},
 	{
-		"identifier": {
-			"id": "wraith13.zoombar-vscode"
-		},
+		"identifier": { "id": "wraith13.zoombar-vscode" },
 		"version": "1.4.4",
 		"location": {
 			"$mid": 1,
@@ -1386,9 +1354,7 @@
 		}
 	},
 	{
-		"identifier": {
-			"id": "mxsdev.typescript-explorer"
-		},
+		"identifier": { "id": "mxsdev.typescript-explorer" },
 		"version": "0.4.2",
 		"location": {
 			"$mid": 1,
@@ -1403,9 +1369,7 @@
 		}
 	},
 	{
-		"identifier": {
-			"id": "hexzii.unicode-hovery"
-		},
+		"identifier": { "id": "hexzii.unicode-hovery" },
 		"version": "0.1.2",
 		"location": {
 			"$mid": 1,
@@ -1420,9 +1384,7 @@
 		}
 	},
 	{
-		"identifier": {
-			"id": "jamesohortle.unicodehover"
-		},
+		"identifier": { "id": "jamesohortle.unicodehover" },
 		"version": "0.3.0",
 		"location": {
 			"$mid": 1,
@@ -1437,9 +1399,7 @@
 		}
 	},
 	{
-		"identifier": {
-			"id": "johnpapa.vscode-cloak"
-		},
+		"identifier": { "id": "johnpapa.vscode-cloak" },
 		"version": "0.5.0",
 		"location": {
 			"$mid": 1,
@@ -1506,9 +1466,7 @@
 		}
 	},
 	{
-		"identifier": {
-			"id": "jzmstrjp.color-the-tag-name"
-		},
+		"identifier": { "id": "jzmstrjp.color-the-tag-name" },
 		"version": "0.24.0",
 		"location": {
 			"$mid": 1,
@@ -1523,9 +1481,7 @@
 		}
 	},
 	{
-		"identifier": {
-			"id": "vitaliymaz.vscode-svg-previewer"
-		},
+		"identifier": { "id": "vitaliymaz.vscode-svg-previewer" },
 		"version": "0.7.0",
 		"location": {
 			"$mid": 1,
@@ -1862,62 +1818,6 @@
 	},
 	{
 		"identifier": {
-			"id": "biomejs.biome",
-			"uuid": "2c992d35-3965-4369-856e-fdfbb0af2ce2"
-		},
-		"version": "3.6.1",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/biomejs.biome-3.6.1-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "biomejs.biome-3.6.1-universal",
-		"metadata": {
-			"installedTimestamp": 1779561681768,
-			"pinned": true,
-			"source": "gallery",
-			"id": "2c992d35-3965-4369-856e-fdfbb0af2ce2",
-			"publisherId": "570e4e26-7e71-4308-8299-d18166119ce7",
-			"publisherDisplayName": "biomejs",
-			"targetPlatform": "universal",
-			"updated": false,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "ms-azuretools.vscode-containers",
-			"uuid": "2cd1d691-3d69-4d2d-ae39-fda4bc4cfd3d"
-		},
-		"version": "2.4.4",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/ms-azuretools.vscode-containers-2.4.4-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "ms-azuretools.vscode-containers-2.4.4-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1779561727614,
-			"pinned": true,
-			"source": "gallery",
-			"id": "2cd1d691-3d69-4d2d-ae39-fda4bc4cfd3d",
-			"publisherId": "52b787f2-79a9-4f32-99b4-393afe3005d3",
-			"publisherDisplayName": "ms-azuretools",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
 			"id": "janisdd.vscode-edit-csv",
 			"uuid": "72e9b049-d75d-415c-96e1-d6e74f0e3074"
 		},
@@ -1938,36 +1838,6 @@
 			"id": "72e9b049-d75d-415c-96e1-d6e74f0e3074",
 			"publisherId": "58bd5644-7810-46e8-9e77-98e658298b7d",
 			"publisherDisplayName": "janisdd",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "github.vscode-github-actions",
-			"uuid": "04f49bfc-8330-4eee-8237-ea938fb755ef"
-		},
-		"version": "0.31.5",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/github.vscode-github-actions-0.31.5-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "github.vscode-github-actions-0.31.5-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1779561731619,
-			"pinned": true,
-			"source": "gallery",
-			"id": "04f49bfc-8330-4eee-8237-ea938fb755ef",
-			"publisherId": "7c1c19cd-78eb-4dfb-8999-99caf7679002",
-			"publisherDisplayName": "GitHub",
 			"targetPlatform": "universal",
 			"updated": true,
 			"private": false,
@@ -2038,66 +1908,6 @@
 	},
 	{
 		"identifier": {
-			"id": "jj-view.jj-view",
-			"uuid": "9218ea3e-b964-494e-a2af-4f64dfddfac9"
-		},
-		"version": "1.28.0",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/jj-view.jj-view-1.28.0-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "jj-view.jj-view-1.28.0-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1779561839455,
-			"pinned": true,
-			"source": "gallery",
-			"id": "9218ea3e-b964-494e-a2af-4f64dfddfac9",
-			"publisherId": "55e7875a-2c3e-4f5f-a5df-68605dea8ada",
-			"publisherDisplayName": "jj-view",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "jjk.jjk",
-			"uuid": "27fecc3e-093e-4ff1-b130-b3ccf371337d"
-		},
-		"version": "0.10.0",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/jjk.jjk-0.10.0-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "jjk.jjk-0.10.0-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1779561842374,
-			"pinned": true,
-			"source": "gallery",
-			"id": "27fecc3e-093e-4ff1-b130-b3ccf371337d",
-			"publisherId": "8a38bc31-626a-4853-9ef7-91fe4f1486f4",
-			"publisherDisplayName": "jjk",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
 			"id": "bierner.markdown-mermaid",
 			"uuid": "f8d0ffc4-66bb-4a9c-8149-ef8f043691a1"
 		},
@@ -2148,36 +1958,6 @@
 			"id": "07fc4a0a-11fc-4121-ba9a-f0d534c729d8",
 			"publisherId": "7955ff1e-ae4f-4c47-a690-71f4d32e829c",
 			"publisherDisplayName": "pflannery",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "redhat.vscode-yaml",
-			"uuid": "2061917f-f76a-458a-8da9-f162de22b97e"
-		},
-		"version": "1.23.0",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/redhat.vscode-yaml-1.23.0-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "redhat.vscode-yaml-1.23.0-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1779562182996,
-			"pinned": true,
-			"source": "gallery",
-			"id": "2061917f-f76a-458a-8da9-f162de22b97e",
-			"publisherId": "455da6bb-00aa-4f13-91a3-9fa4780cadaa",
-			"publisherDisplayName": "Red Hat",
 			"targetPlatform": "universal",
 			"updated": true,
 			"private": false,
@@ -2412,32 +2192,6 @@
 	},
 	{
 		"identifier": {
-			"id": "yzane.markdown-pdf",
-			"uuid": "f015bc3c-a098-4245-8765-615e002e09ab"
-		},
-		"version": "1.5.0",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/yzane.markdown-pdf-1.5.0-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "yzane.markdown-pdf-1.5.0-universal",
-		"metadata": {
-			"installedTimestamp": 1779562348846,
-			"pinned": true,
-			"source": "gallery",
-			"id": "f015bc3c-a098-4245-8765-615e002e09ab",
-			"publisherId": "86794f67-46a8-4137-a5a4-1415a0e41e7d",
-			"publisherDisplayName": "yzane",
-			"targetPlatform": "universal",
-			"updated": false,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false
-		}
-	},
-	{
-		"identifier": {
 			"id": "bierner.color-info",
 			"uuid": "0f8bd812-5d52-4fff-bd1c-6b0a7ee9cad9"
 		},
@@ -2567,9 +2321,7 @@
 		}
 	},
 	{
-		"identifier": {
-			"id": "enkeldigital.relative-goto"
-		},
+		"identifier": { "id": "enkeldigital.relative-goto" },
 		"version": "0.5.4",
 		"location": {
 			"$mid": 1,
@@ -2584,9 +2336,7 @@
 		}
 	},
 	{
-		"identifier": {
-			"id": "adpyke.js-unicode-preview"
-		},
+		"identifier": { "id": "adpyke.js-unicode-preview" },
 		"version": "1.1.4",
 		"location": {
 			"$mid": 1,
@@ -2601,9 +2351,7 @@
 		}
 	},
 	{
-		"identifier": {
-			"id": "socheatsok78-lab.dotenv-vscode-stripped"
-		},
+		"identifier": { "id": "socheatsok78-lab.dotenv-vscode-stripped" },
 		"version": "0.24.0",
 		"location": {
 			"$mid": 1,
@@ -2618,9 +2366,7 @@
 		}
 	},
 	{
-		"identifier": {
-			"id": "jackz.unicode-conversion"
-		},
+		"identifier": { "id": "jackz.unicode-conversion" },
 		"version": "0.2.0",
 		"location": {
 			"$mid": 1,
@@ -2628,15 +2374,10 @@
 			"scheme": "file"
 		},
 		"relativeLocation": "jackz.unicode-conversion-0.2.0",
-		"metadata": {
-			"installedTimestamp": 1779563234141,
-			"source": "vsix"
-		}
+		"metadata": { "installedTimestamp": 1779563234141, "source": "vsix" }
 	},
 	{
-		"identifier": {
-			"id": "mde.select-highlight-minimap"
-		},
+		"identifier": { "id": "mde.select-highlight-minimap" },
 		"version": "0.1.0",
 		"location": {
 			"$mid": 1,
@@ -2651,9 +2392,7 @@
 		}
 	},
 	{
-		"identifier": {
-			"id": "msyrus.go-doc"
-		},
+		"identifier": { "id": "msyrus.go-doc" },
 		"version": "1.1.1",
 		"location": {
 			"$mid": 1,
@@ -2668,9 +2407,7 @@
 		}
 	},
 	{
-		"identifier": {
-			"id": "kricsleo.vscode-package-json-inspector"
-		},
+		"identifier": { "id": "kricsleo.vscode-package-json-inspector" },
 		"version": "0.2.0",
 		"location": {
 			"$mid": 1,
@@ -2682,32 +2419,6 @@
 			"installedTimestamp": 1779624331693,
 			"pinned": true,
 			"source": "vsix"
-		}
-	},
-	{
-		"identifier": {
-			"id": "anysphere.remote-containers",
-			"uuid": "94d8b289-9db0-4c3c-b4f3-a3294c789678"
-		},
-		"version": "1.0.37",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/anysphere.remote-containers-1.0.37",
-			"scheme": "file"
-		},
-		"relativeLocation": "anysphere.remote-containers-1.0.37",
-		"metadata": {
-			"installedTimestamp": 1781098488632,
-			"pinned": true,
-			"source": "gallery",
-			"id": "94d8b289-9db0-4c3c-b4f3-a3294c789678",
-			"publisherId": "c16ea17f-2629-4893-9064-35c0fd9add4c",
-			"publisherDisplayName": "Anysphere",
-			"targetPlatform": "undefined",
-			"updated": false,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false
 		}
 	},
 	{
@@ -3004,29 +2715,297 @@
 	},
 	{
 		"identifier": {
-			"id": "anysphere.remote-ssh"
+			"id": "anysphere.remote-ssh",
+			"uuid": "73a45d83-83c7-4b22-bebf-c9130b0ab3f3"
 		},
-		"version": "1.1.12",
+		"version": "1.1.13",
 		"location": {
 			"$mid": 1,
-			"fsPath": "c:\\Users\\BoscoDomingoBenito\\.cursor\\extensions\\anysphere.remote-ssh-1.1.12",
-			"_sep": 1,
-			"external": "file:///c%3A/Users/BoscoDomingoBenito/.cursor/extensions/anysphere.remote-ssh-1.1.12",
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/anysphere.remote-ssh-1.1.12",
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/anysphere.remote-ssh-1.1.13",
 			"scheme": "file"
 		},
-		"relativeLocation": "anysphere.remote-ssh-1.1.12",
+		"relativeLocation": "anysphere.remote-ssh-1.1.13",
 		"metadata": {
 			"isApplicationScoped": true,
 			"isMachineScoped": false,
 			"isBuiltin": false,
-			"installedTimestamp": 1784621799280,
+			"installedTimestamp": 1784798100427,
 			"pinned": false,
 			"source": "gallery",
 			"id": "73a45d83-83c7-4b22-bebf-c9130b0ab3f3",
 			"publisherId": "c16ea17f-2629-4893-9064-35c0fd9add4c",
 			"publisherDisplayName": "Anysphere",
 			"targetPlatform": "undefined",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "anysphere.remote-containers",
+			"uuid": "94d8b289-9db0-4c3c-b4f3-a3294c789678"
+		},
+		"version": "1.0.38",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/anysphere.remote-containers-1.0.38",
+			"scheme": "file"
+		},
+		"relativeLocation": "anysphere.remote-containers-1.0.38",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1785508645404,
+			"pinned": false,
+			"source": "gallery",
+			"id": "94d8b289-9db0-4c3c-b4f3-a3294c789678",
+			"publisherId": "c16ea17f-2629-4893-9064-35c0fd9add4c",
+			"publisherDisplayName": "Anysphere",
+			"targetPlatform": "undefined",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "jj-view.jj-view",
+			"uuid": "9218ea3e-b964-494e-a2af-4f64dfddfac9"
+		},
+		"version": "2.5.1",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/jj-view.jj-view-2.5.1-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "jj-view.jj-view-2.5.1-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1786026960301,
+			"pinned": true,
+			"source": "gallery",
+			"id": "9218ea3e-b964-494e-a2af-4f64dfddfac9",
+			"publisherId": "55e7875a-2c3e-4f5f-a5df-68605dea8ada",
+			"publisherDisplayName": "jj-view",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "jjk.jjk",
+			"uuid": "27fecc3e-093e-4ff1-b130-b3ccf371337d"
+		},
+		"version": "0.11.0",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/jjk.jjk-0.11.0-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "jjk.jjk-0.11.0-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1786026961386,
+			"pinned": true,
+			"source": "gallery",
+			"id": "27fecc3e-093e-4ff1-b130-b3ccf371337d",
+			"publisherId": "8a38bc31-626a-4853-9ef7-91fe4f1486f4",
+			"publisherDisplayName": "jjk",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "redhat.vscode-yaml",
+			"uuid": "2061917f-f76a-458a-8da9-f162de22b97e"
+		},
+		"version": "1.24.0",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/redhat.vscode-yaml-1.24.0-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "redhat.vscode-yaml-1.24.0-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1786026962795,
+			"pinned": true,
+			"source": "gallery",
+			"id": "2061917f-f76a-458a-8da9-f162de22b97e",
+			"publisherId": "1deab481-4801-4170-8a64-801999f5ee73",
+			"publisherDisplayName": "Red Hat",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "biomejs.biome",
+			"uuid": "2c992d35-3965-4369-856e-fdfbb0af2ce2"
+		},
+		"version": "3.7.1",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/biomejs.biome-3.7.1-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "biomejs.biome-3.7.1-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1786026964116,
+			"pinned": true,
+			"source": "gallery",
+			"id": "2c992d35-3965-4369-856e-fdfbb0af2ce2",
+			"publisherId": "570e4e26-7e71-4308-8299-d18166119ce7",
+			"publisherDisplayName": "biomejs",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "yzane.markdown-pdf",
+			"uuid": "f015bc3c-a098-4245-8765-615e002e09ab"
+		},
+		"version": "2.2.0",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/yzane.markdown-pdf-2.2.0-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "yzane.markdown-pdf-2.2.0-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1786026962102,
+			"pinned": true,
+			"source": "gallery",
+			"id": "f015bc3c-a098-4245-8765-615e002e09ab",
+			"publisherId": "86794f67-46a8-4137-a5a4-1415a0e41e7d",
+			"publisherDisplayName": "yzane",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "ms-azuretools.vscode-containers",
+			"uuid": "2cd1d691-3d69-4d2d-ae39-fda4bc4cfd3d"
+		},
+		"version": "2.4.5",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/ms-azuretools.vscode-containers-2.4.5-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "ms-azuretools.vscode-containers-2.4.5-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1786026965092,
+			"pinned": true,
+			"source": "gallery",
+			"id": "2cd1d691-3d69-4d2d-ae39-fda4bc4cfd3d",
+			"publisherId": "52b787f2-79a9-4f32-99b4-393afe3005d3",
+			"publisherDisplayName": "ms-azuretools",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "github.vscode-github-actions",
+			"uuid": "04f49bfc-8330-4eee-8237-ea938fb755ef"
+		},
+		"version": "0.32.3",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/github.vscode-github-actions-0.32.3-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "github.vscode-github-actions-0.32.3-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1786026965641,
+			"pinned": true,
+			"source": "gallery",
+			"id": "04f49bfc-8330-4eee-8237-ea938fb755ef",
+			"publisherId": "7c1c19cd-78eb-4dfb-8999-99caf7679002",
+			"publisherDisplayName": "GitHub",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": { "id": "golang.go" },
+		"version": "0.56.0",
+		"location": {
+			"$mid": 1,
+			"fsPath": "c:\\Users\\BoscoDomingoBenito\\.cursor\\extensions\\golang.go-0.56.0-universal",
+			"_sep": 1,
+			"external": "file:///c%3A/Users/BoscoDomingoBenito/.cursor/extensions/golang.go-0.56.0-universal",
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/golang.go-0.56.0-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "golang.go-0.56.0-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1786026966043,
+			"pinned": true,
+			"source": "gallery",
+			"id": "d6f6cfea-4b6f-41f4-b571-6ad2ab7918da",
+			"publisherId": "dbf6ae0a-da75-4167-ac8b-75b4512f2153",
+			"publisherDisplayName": "golang",
+			"targetPlatform": "universal",
 			"updated": true,
 			"private": false,
 			"isPreReleaseVersion": false,

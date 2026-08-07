@@ -22,7 +22,7 @@
 	"security.allowedUNCHosts": ["wsl.localhost"],
 	"security.workspace.trust.untrustedFiles": "open",
 	"remote.autoForwardPortsSource": "hybrid",
-	"extensions.autoUpdate": false,
+	"extensions.autoUpdate": "off",
 	"extensions.autoUpdateDelay": 24,
 
 	// MARK: General/Zoom
@@ -1103,7 +1103,6 @@
 	"chat.unifiedAgentsBar.enabled": true,
 	"chat.viewProgressBadge.enabled": true,
 	"chat.useNestedAgentsMdFiles": true,
-	"chat.viewSessions.orientation": "stacked",
 	"chat.mcp.collisionBehavior": "suffix",
 	"chat.mcp.discovery.enabled": {
 		"cursor-global": true,
@@ -1129,7 +1128,18 @@
 			"approveRequest": false,
 			"approveResponse": true
 		},
-		"https://docs.npmjs.com": true
+		"https://docs.npmjs.com": true,
+		"https://cursor.com/docs/context/skills": true,
+		"https://cursor.com/docs/context": true,
+		"https://cursor.com/docs": true,
+		"https://cursor.com": true,
+		"https://docs.anthropic.com/en/docs/claude-code/skills": true,
+		"https://docs.anthropic.com/en/docs/claude-code": true,
+		"https://docs.anthropic.com/en/docs": true,
+		"https://docs.anthropic.com/en": true,
+		"https://docs.anthropic.com": true,
+		"https://*.anthropic.com": true,
+		"https://code.claude.com/docs/en/skills": true
 	},
 	"chat.tools.terminal.autoApprove": {
 		"JJ_PAGER=cat jj diff --stat": true,
@@ -1515,5 +1525,8 @@
 			"connectionId": "iceye",
 			"region": "EU"
 		}
-	]
+	],
+	"syl.burnRateSpikeSensitivity": "relaxed",
+	"syl.allowEnvironmentCursorTokenFallback": true,
+	"cursor.composer.conversationDensity": "compact-ungrouped",
 }
