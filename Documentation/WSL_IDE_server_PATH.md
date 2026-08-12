@@ -1,116 +1,47 @@
-# Experiment: WSL IDE-server PATH for extension hosts
+# WSL IDE-server PATH for extension hosts
 
-Status: **verified for Cursor on Arch WSL; VS Code remains untested.**
+On WSL, Cursor and VS Code launch their server (`cursor-server` / `code-server`)
+via `wsl.exe`. That process is not a login shell, so it never sources `.profile`
+and never gets Nix, mise, or `~/.local/bin` on `PATH`. Extension hosts then
+fail to find tools that work in an interactive terminal.
 
-## The problem
+Bare-metal Linux does not have this gap: the editor snapshots the login-shell
+environment for extension hosts.
 
-On WSL, Cursor and VS Code run a "server" (`cursor-server` / `code-server`) that
-is launched by `wsl.exe` from the Windows side. The server spawns the extension
-hosts (formatters, linters, language servers). That server process is **not**
-started through a login shell, so it never sources `.profile` / `.zprofile` —
-which means the PATH additions those files make (Nix profile, mise shims,
-`~/.local/bin`, …) are invisible to the extension hosts. Tools like `node`,
-`biome`, `rg`, `jj` then fail to resolve inside the IDE even though they work
-fine in an interactive terminal.
+## Fix
 
-On a non-WSL Linux box this doesn't happen: the editors resolve the extension
-host environment by running the user's login shell and snapshotting its env, so
-`.profile` PATH setup "just works" and no hook is needed.
+[`../vscode/server-env-setup`](../vscode/server-env-setup) is a PATH-only script.
+The WSL host module [`../nix/hosts/arch-wsl.nix`](../nix/hosts/arch-wsl.nix)
+symlinks it to:
 
-## The intended fix: `server-env-setup`
+- `~/.cursor-server/server-env-setup`
+- `~/.vscode-server/server-env-setup`
 
-Cursor/VS Code servers are supposed to source `~/.cursor-server/server-env-setup`
-(and `~/.vscode-server/server-env-setup`) on startup — a PATH-only script that
-gives the extension hosts the tools they need without interactive shell setup.
+The bare-metal `arch` host does not create these links.
 
-- Source file: [`../vscode/server-env-setup`](../vscode/server-env-setup)
-- Symlinked into place by the WSL host [`../nix/hosts/arch-wsl.nix`](../nix/hosts/arch-wsl.nix)
-  (`.cursor-server/server-env-setup`, `.vscode-server/server-env-setup`) — WSL
-  only, so the bare-metal `arch` host doesn't create them.
+The script prepends linuxbrew, `~/.local/bin`, mise shims, and pnpm, then puts
+`~/.nix-profile/bin` first and dedupes so Nix wins over stale mise paths.
 
-It prepends linuxbrew, `~/.local/bin`, mise shims, and pnpm, then places the
-**Nix profile** (`~/.nix-profile/bin`) first and dedupes. Nix must win over
-stale direct mise paths for tools whose ownership moved to Home Manager.
+Verified for Cursor on Arch WSL. Plain `server-env-setup` is enough; do not
+patch server launcher binaries.
 
-## Observed result
+`terminal.integrated.env.linux` affects only the integrated terminal, not
+extension hosts.
 
-After restarting Cursor's WSL server, the server and extension hosts contained
-both the Nix profile and mise shims. The plain `server-env-setup` symlink was
-therefore honored; launcher patching is not required for this Cursor build.
+## After PATH changes
 
-Cursor can reuse a cached login-shell environment for extension hosts. That
-cache may retain direct mise installation paths ahead of the server PATH until
-the Windows Cursor process is fully restarted. Keep migrated tools on a
-known-good mise target until that restart, then verify the effective executable
-with `readlink -f "$(command -v <tool>)"`.
+1. Confirm the symlinks:
+   `ls -l ~/.cursor-server/server-env-setup ~/.vscode-server/server-env-setup`
+2. Kill and reconnect the WSL server (Command Palette → *WSL: Kill VS Code
+   Server for WSL*, or `pkill -f cursor-server; pkill -f vscode-server`).
+3. Check extension-host `PATH` (Developer Tools → Console → `process.env.PATH`)
+   or run a formatter/LSP that needs a tool on `PATH`.
 
-## History (why there's doubt it works)
+A full restart of the Windows Cursor process may be needed if a cached
+login-shell env still prefers old mise paths. Confirm with
+`readlink -f "$(command -v <tool>)"`.
 
-The retired `Setup/installers/symlinks.sh` did **two** things for this: it
-symlinked `server-env-setup` **and** patched the server launcher binaries (with
-`awk`, idempotently, guarded by a `DOTFILES_IDE_SERVER_ENV_SETUP` marker) to
-force them to source it. Its own comment said:
+## Related
 
-> Cursor and VS Code can ignore `server-env-setup` here, so patch server
-> launchers to source it.
-
-The repo owner confirms (as of ~2026-05) that **both** Cursor and VS Code were
-ignoring the plain `server-env-setup` file, which is why the binary patch
-existed. The patch was deliberately **dropped** during the `run.sh` retirement
-because mutating vendored binaries on every server update is fragile (leaves
-`.bak` files, re-runs on each IDE update, imperative). We want to know whether
-the plain symlink is enough on current IDE versions before reintroducing any
-workaround. The owner's expectation is that the failure is **systemic**
-(architectural, per "The problem" above), so it likely still fails — but this
-has not been re-tested on current builds.
-
-## The test to run
-
-On a WSL machine with Cursor and/or VS Code:
-
-1. Apply the branch: `HOST=arch-wsl bash ~/dotfiles/nix/bootstrap.sh`
-   (or `HOST=ubuntu`). Confirm the symlinks resolve into the repo:
-   `ls -l ~/.cursor-server/server-env-setup ~/.vscode-server/server-env-setup`.
-2. **Kill the server** so it restarts and re-reads the file — a running server
-   will not pick it up. Command Palette → *"WSL: Kill VS Code Server for WSL"*,
-   or from WSL: `pkill -f cursor-server; pkill -f vscode-server`. Then reconnect.
-3. Check whether the extension host got the PATH:
-   - **Direct:** Command Palette → *"Developer: Toggle Developer Tools"* →
-     Console → `process.env.PATH`. Success = it contains `~/.nix-profile/bin`
-     and `~/.local/share/mise/shims`.
-   - **Practical:** open a project whose formatter/LSP needs a tool (Biome, a
-     node-based LSP) and see whether it runs or errors with "command not found".
-
-## Decision tree
-
-- ✅ Nix/mise paths present / formatter works → the hook is honored now; the
-  binary patch was legacy. Done — nothing more to add.
-- ❌ Still missing → confirmed systemic. Reintroduce a workaround, but evaluate
-  options first (below) rather than defaulting to the binary patch.
-
-## Fallback options if the symlink is ignored
-
-1. **Binary patch (the old approach).** Patch `cursor-server` / `code-server`
-   launchers to source `server-env-setup`. Works, but fragile: re-patches after
-   every server update, mutates vendored binaries, leaves `.bak` files. If
-   revived, it belongs in a standalone script invoked by a best-effort
-   `home.activation` step in `nix/home/tools.nix` (not inline in the `.nix`),
-   mirroring the `engram-setup` pattern. The original `awk` logic is in git
-   history (`Setup/installers/symlinks.sh`) and was briefly present in this
-   branch as `scripts/patch-ide-servers` (removed) — recover from git log.
-2. **Cleaner hook, if one exists now.** Investigate whether current
-   Cursor/VS Code expose a supported WSL env hook that didn't exist when the
-   patch was written (the WSL server env resolution has changed over time).
-   Prefer this over patching binaries. Check `code`/`cursor` remote-server
-   docs and release notes before committing to an approach.
-3. **Editor setting.** `terminal.integrated.env.linux` only affects integrated
-   terminals, not extension hosts, so it does **not** solve this on its own —
-   noted here so nobody wastes time on it.
-
-## Relevant paths
-
-- [`../vscode/server-env-setup`](../vscode/server-env-setup) — the PATH script
-- [`../nix/hosts/arch-wsl.nix`](../nix/hosts/arch-wsl.nix) — symlinks it into place (WSL host only)
-- [`../vscode/README.md`](../vscode/README.md) — editor settings sync notes
-- Git history contains `Setup/installers/symlinks.sh`, the original binary-patch
-  implementation that this managed environment hook replaced.
+- [`../vscode/README.md`](../vscode/README.md) — editor settings sync
+- [`Nix_exploration.md`](Nix_exploration.md) — WSL host ownership note

@@ -201,7 +201,8 @@ scattered shell `if` branches. Shared config is `home/common.nix`.
   software may need workarounds (`buildFHSEnv`) or stay on brew/apt/standalone
   installers.
 - **WSL specifics.** DBus/gnome-keyring and IDE-server environment integration
-  belong in the WSL host module and managed `server-env-setup` links.
+  belong in the WSL host module and managed `server-env-setup` links. See
+  [`WSL_IDE_server_PATH.md`](WSL_IDE_server_PATH.md).
 
 ## 7. Where to look
 
