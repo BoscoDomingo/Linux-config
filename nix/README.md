@@ -1,15 +1,16 @@
 # `nix/` — Home Manager config (working, tested)
 
-The Nix implementation of the migration described in
+Rationale, alternatives, and tool ownership:
 [`../Documentation/Nix_exploration.md`](../Documentation/Nix_exploration.md).
-The daily commands and update boundaries are documented in the
+Daily commands and update boundaries:
 [`Nix + Home Manager cheatsheet`](../Documentation/Nix_cheatsheet.md).
-It is the setup path for this repo: `bootstrap.sh` installs Nix and activates
-the pinned Home Manager configuration, and the distro scripts (`../Arch/run_arch.sh`,
-`../Ubuntu/run_ubuntu.sh`) hand off to it on a fresh machine. It has been
-**verified end-to-end on a clean machine**: see [`test/README.md`](test/README.md)
-(packages, out-of-store dotfile symlinks, per-machine + per-directory git
-identity overrides, and atomic rollback all pass).
+
+This is the setup path for the repo: `bootstrap.sh` installs Nix and activates
+the pinned Home Manager configuration, and the distro scripts
+(`../Arch/run_arch.sh`, `../Ubuntu/run_ubuntu.sh`) hand off to it on a fresh
+machine. Verified end-to-end on a clean machine: see
+[`test/README.md`](test/README.md) (packages, out-of-store dotfile symlinks,
+per-machine + per-directory git identity overrides, and atomic rollback).
 
 ## Try it
 
@@ -48,4 +49,4 @@ Per-machine identity and device-only packages live in the gitignored
 [`overrides/`](../Documentation/machine-overrides.md) tree (`git`, `jj`,
 `mise`, `brew`). The SSH private key stays in `~/.ssh/` and is never committed.
 
-The migration is active; use the cheatsheet for routine updates and rollback.
+Use the cheatsheet for routine updates and rollback.

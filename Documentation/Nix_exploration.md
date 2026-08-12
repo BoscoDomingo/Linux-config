@@ -1,145 +1,108 @@
-# Making dotfiles reproducible: Nix vs. the alternatives
+# Nix setup: rationale and ownership
 
-> Status: **implemented**. The `nix/` directory is the setup path for this
-> repo; `run.sh` and the old `Setup/` installers have been retired. This
-> document is both the rationale for the migration and a map of where each
-> former responsibility now lives.
+> Status: **implemented**. Setup lives under [`nix/`](../nix/). This document
+> records why Nix was chosen, how it compares to the alternatives, and which
+> system owns each class of tool.
 
-## 1. The problem, stated precisely
+Daily commands: [`Nix_cheatsheet.md`](Nix_cheatsheet.md).
+Per-machine identity and secrets: [`machine-overrides.md`](machine-overrides.md).
 
-Today the repo is synced across machines with:
+## 1. The problem
 
-- **Bootstrap scripts** per distro (`Arch/run_arch.sh`, `Ubuntu/run_ubuntu.sh`)
-  that clone the repo and call `run.sh`.
-- **`run.sh`**, which sources five imperative installers
-  (`symlinks`, `gpg`, `packages`, `ai-agents`, `tools`).
-- **Symlinking** via a home-grown `ensure_link` helper (`Setup/lib/helpers.sh`)
-  that backs up existing files to `*.bak`.
-- **Packages** spread across four systems: Homebrew (a ~35-entry bash array),
-  mise (`.config/mise/config.toml`), pnpm/bun globals, and a handful of
-  `curl | bash` installers (oh-my-posh, oh-my-zsh, Homebrew itself, mise).
+A personal dotfiles repo needs to sync config and tools across Arch, Ubuntu,
+macOS, and WSL without a babysitting session on every new machine.
 
-The README says it plainly: *"You can try running `./run.sh` directly … although
-it is untested and will likely not work. Otherwise, just run the commands
-manually."* That single sentence is the whole problem. The concrete pain points:
+The old imperative path (`run.sh` and per-distro installers) failed that bar:
 
-| # | Pain point                                                                              | Why it hurts syncing                                                                        |
-|---|-----------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
-| 1 | The installer is interactive (`read -p` at every step) and self-described as unreliable | Can't run unattended; a new machine is a babysitting session                                |
-| 2 | No single source of truth for "what is installed"                                       | Package intent lives in a bash array, a TOML file, and several inline `curl` calls          |
-| 3 | No atomicity or rollback                                                                | A failure halfway through leaves a half-configured machine with no clean way back           |
-| 4 | No drift detection                                                                      | Nothing tells you machine A and machine B have diverged, or that a machine matches the repo |
-| 5 | Non-idempotent `curl \| bash` steps                                                     | Re-running is not guaranteed safe; versions float                                           |
-| 6 | Symlink logic is bespoke and must be maintained                                         | Edge cases (WSL IDE servers, `.bak` collisions) are your code to debug                      |
+| # | Pain point                                        | Why it hurts syncing                                  |
+|---|---------------------------------------------------|-------------------------------------------------------|
+| 1 | Interactive, unreliable installer                 | Cannot run unattended                                 |
+| 2 | No single source of truth for "what is installed" | Intent split across bash, TOML, and `curl` installers |
+| 3 | No atomicity or rollback                          | A mid-run failure leaves a half-configured machine    |
+| 4 | No drift detection                                | Nothing shows that two machines diverge from the repo |
+| 5 | Non-idempotent `curl \| bash` steps               | Re-runs are unsafe; versions float                    |
+| 6 | Bespoke symlink logic                             | Edge cases are local code to maintain                 |
 
-"More robust" means fixing as many of 1–6 as the effort is worth. Keep that
-table in mind — it's the scorecard every option below is graded against.
+"Robust" means fixing as many of these as the effort is worth.
 
-## 2. What "robust" actually requires
+## 2. What "robust" requires
 
-Four properties, in rough priority order for your setup:
+In priority order for this setup:
 
-1. **Declarative** — one description of the desired state; the tool makes the
-   machine match it. (kills #2, #4)
-2. **Idempotent & unattended** — running twice equals running once; no prompts.
-   (kills #1, #5)
-3. **Reproducible** — same inputs produce the same machine, including *versions*,
-   next month and on the next laptop. (the strong form of #4)
-4. **Reversible** — a bad change can be rolled back atomically. (kills #3)
+1. **Declarative** — one description of desired state; the tool makes the machine match it. (kills #2, #4)
+2. **Idempotent and unattended** — run twice equals run once; no prompts. (kills #1, #5)
+3. **Reproducible** — same inputs produce the same machine, including versions. (strong form of #4)
+4. **Reversible** — a bad change rolls back atomically. (kills #3)
 
-Dotfile managers give you 1–2 for *config files*. Nix is currently the only
-mainstream option that gives you all four for *both config files and the
-packages/toolchain*.
+Dotfile managers give you 1–2 for config files. Nix is the mainstream option
+that gives all four for both config files and the package/toolchain layer.
 
-## 3. The options
+## 3. Alternatives
 
 ### 3.1 GNU Stow — symlink farm only
 
-Replaces exactly one thing: `ensure_link`. You reorganise the repo into
-"packages" (`stow zsh` symlinks `zsh/.zshrc` → `~/.zshrc`) and Stow manages the
-links. ~20 lines of Perl-driven convention instead of your bash.
+Replaces bespoke symlink helpers with package-oriented link conventions.
 
-- ✅ Trivial to learn; solves the symlink-maintenance chore (#6).
-- ❌ Does nothing for packages, versions, idempotent installs, or rollback
-  (#1–#5 untouched). You'd still keep `run.sh` for everything else.
+- Solves symlink maintenance (#6).
+- Does nothing for packages, versions, idempotent installs, or rollback (#1–#5).
 
-**Verdict:** a tidy-up, not a solution. Only worth it if you decide Nix/chezmoi
-are too much and you just want the symlink code gone.
+**Verdict:** a tidy-up, not a solution. Only worth it if Nix/chezmoi are too
+much and the only goal is to delete custom symlink code.
 
-### 3.2 chezmoi — the serious dotfile manager
+### 3.2 chezmoi — serious dotfile manager
 
-Go binary, single `chezmoi apply`, cross-platform. Its real advantages over
-Stow are the things your repo already hacks around by hand:
+Single `chezmoi apply`, cross-platform. Stronger than Stow for this repo:
 
-- **Templating**: one `.zshrc` with `{{ if eq .chezmoi.os "darwin" }}` blocks
-  instead of branching logic scattered across files. Your WSL/macOS/Arch/Ubuntu
-  divergence becomes data-driven.
-- **Machine-specific data**: `.chezmoidata` / prompts fill in per-host values.
-- **Secrets**: first-class integration with age, gpg, 1Password, Bitwarden —
-  a real answer for `.profile_secret`.
-- **`run_` scripts**: hashed/once scripts let it *also* drive package installs
-  (it can call brew/mise/apt), so it can subsume most of `run.sh`.
+- Templating and machine-specific data for OS/host divergence.
+- First-class secrets integration (age, gpg, 1Password, Bitwarden, …).
+- `run_` scripts can drive brew/mise/apt installs.
 
-- ✅ Solves #1, #2 (for configs), #4 (drift via `chezmoi diff/status`), #6.
-- ⚠️ Package installs run through `run_` scripts — better organised than today,
-  but still imperative shell underneath, so #3 (version reproducibility) and #5
-  are only partially addressed.
-- ❌ No atomic rollback of the whole system (#3-reversibility).
+- Solves #1, #2 (for configs), #4, #6.
+- Package installs stay imperative under `run_` scripts, so version
+  reproducibility (#3) and #5 are only partial.
+- No atomic whole-system rollback.
 
 **Verdict:** the pragmatic 80/20. Biggest robustness gain for the least new
-concepts, and it maps cleanly onto how you already think (files + scripts).
+concepts if Nix's learning cost is not worth it.
 
-### 3.3 Ansible — imperative-but-idempotent, config-management style
+### 3.3 Ansible — idempotent config management
 
-Playbooks (YAML) describe tasks; modules are idempotent; works over
-Linux/macOS. Heavier syntax, designed for fleets of servers more than one
-person's laptops.
+Playbooks describe tasks; modules are idempotent; works on Linux/macOS.
 
-- ✅ Idempotent, unattended, one source of truth, handles packages *and* files.
-- ❌ Verbose; no true rollback; version pinning is manual; overkill for a
-  personal dotfiles repo. You'd trade bash for YAML and gain less than Nix.
+- Idempotent, unattended, one source of truth for packages and files.
+- Verbose; no true rollback; version pinning is manual; heavy for one person's
+  laptops.
 
-**Verdict:** possible, but it's the enterprise answer to a personal-laptop
-question. Not recommended here.
+**Verdict:** possible, but the enterprise answer to a personal-laptop question.
+Not recommended here.
 
 ### 3.4 Nix — Home Manager + flakes (+ nix-darwin)
 
 The only option that delivers all four robustness properties for the whole
-machine. The relevant pieces:
+user environment.
 
-- **Nix + flakes** — a pinned, hash-locked description of every input
-  (`flake.lock`). "Reproducible" in the strong sense: the exact same package
-  *versions* on every machine until you choose to `nix flake update`.
-- **Home Manager** — manages your user environment on *any* Linux or macOS:
-  dotfiles, CLI packages, shell config, services. This is the cross-platform
-  workhorse and the piece that would replace both `symlinks.sh` and most of
-  `packages.sh`.
-- **nix-darwin** *(optional, macOS only)* — manages macOS system defaults
-  (Dock, keyboard, Homebrew casks via `nix-homebrew`). Complements your
-  `MacOS/` dir.
-- **NixOS-WSL** *(optional)* — a full NixOS under WSL, or just install Nix into
-  your existing WSL distro and run Home Manager there like any other Linux.
+- **Nix + flakes** — hash-locked inputs (`flake.lock`). Same package versions
+  on every machine until you choose to update.
+- **Home Manager** — user environment on Linux or macOS: dotfiles, CLI
+  packages, shell config, services. Replaces bespoke symlink and package
+  installers.
+- **nix-darwin** *(optional, macOS)* — system defaults and Homebrew casks Nix
+  cannot build cleanly.
+- **Nix on WSL** — Home Manager in the existing distro, or optionally NixOS-WSL.
 
-How it scores:
+Scores:
 
-- ✅ Declarative, idempotent, **reproducible with version pinning**, and
-  **atomically reversible** — `home-manager switch` builds a new "generation";
-  `--rollback` instantly restores the previous one. Kills #1–#6.
-- ✅ One `flake.nix` is the single source of truth for packages *and* dotfiles
-  *and* their versions, across Arch, Ubuntu, macOS, and WSL.
-- ⚠️ **Learning curve is real.** The Nix language is unusual (lazy, functional),
-  error messages can be cryptic, and the flakes/Home Manager mental model takes
-  a week or two to click.
-- ⚠️ **It wants to own package management.** Its value comes from replacing
-  `curl | bash`, and ideally Homebrew/mise, with Nix packages. That's the
-  migration cost — see §5 for how to do it *gradually* rather than all at once.
-- ⚠️ Some tools you use (mise, pnpm/bun global installs) overlap conceptually
-  with Nix. They coexist fine (§4.3), but you'll want a clear rule for which
-  system owns what.
+- Declarative, idempotent, version-pinned, and atomically reversible
+  (`home-manager` generations / `--rollback`). Addresses #1–#6.
+- One flake is the source of truth for packages, dotfiles, and versions across
+  Arch, Ubuntu, macOS, and WSL.
+- Learning curve is real (Nix language, flakes, Home Manager).
+- Value comes from owning package management; coexistence with mise/Homebrew
+  needs a clear ownership rule (see §5).
 
-**Verdict:** the maximal-robustness answer, and genuinely viable for your
-cross-platform setup. The question is not *can* Nix do this (it can) but whether
-the reproducibility/rollback payoff is worth the learning curve for you.
+**Verdict:** maximal robustness, and viable for this multi-OS setup. The open
+question was only whether reproducibility and rollback justified the learning
+curve.
 
 ### 3.5 Scorecard
 
@@ -154,240 +117,37 @@ the reproducibility/rollback payoff is worth the learning curve for you.
 | Drift detection                      |    ❌    |      ✅      |    ⚠️    |          ✅          |
 | Cross-platform (Arch/Ubuntu/mac/WSL) |    ✅    |      ✅      |    ✅    |          ✅          |
 | Learning curve                       | trivial |     low     | medium  |      **high**       |
-| Keeps your current workflow          | mostly  |   mostly    |   no    |       rewrite       |
+| Keeps prior workflow                 | mostly  |   mostly    |   no    |       rewrite       |
 
-## 4. Recommendation
+## 4. Decision
 
-**Two defensible choices, depending on your appetite:**
+**Chosen:** Nix (Home Manager + flakes), adopted gradually rather than as a
+big-bang rewrite.
 
-### Recommended: Nix (Home Manager + flakes), migrated in phases
+Home Manager can symlink existing repo files with `mkOutOfStoreSymlink`, so
+dotfiles stay editable in this checkout. That property made a gradual migration
+practical.
 
-If your goal is genuinely "robust" in the full sense — reproducible versions and
-one-command rollback — Nix is the only option that delivers it, and your
-multi-OS setup is squarely in Home Manager's wheelhouse. The catch is the
-learning curve, so **do not big-bang it.** Adopt Home Manager for dotfiles first
-(where it's basically a better symlink manager), then migrate packages tool by
-tool. Details and code in §5–§6.
+**Fallback if reconsidering:** chezmoi. It delivers unattended, declarative,
+drift-detected, secret-aware dotfiles with a lower learning cost. It does not
+deliver Nix-grade version reproducibility or atomic rollback.
 
-Crucially, Home Manager can symlink your *existing, unchanged* dotfiles back
-into place using `mkOutOfStoreSymlink`, so you keep editing `.zshrc` in this
-repo exactly as you do now — you are not forced to rewrite everything into the
-Nix language on day one. That property is what makes a gradual migration real
-rather than aspirational.
+**Keep mise** for language runtimes and other tools that should float outside
+the Nix lock. Nix owns the stable global CLI toolbox.
 
-### Pragmatic fallback: chezmoi
+## 5. Design rules
 
-If a week of fighting the Nix language sounds worse than the problem it solves,
-**chezmoi** gets you unattended, declarative, drift-detected, secret-aware
-dotfiles with a fraction of the learning cost — and it can orchestrate your
-existing brew/mise installs through `run_` scripts. You lose version
-reproducibility and atomic rollback (the two properties only Nix really nails),
-but you fix pain points #1, #2, #4, and #6 this weekend.
+### 5.1 Tool ownership
 
-### Keep mise regardless
+Each responsibility has one owner. Nothing is installed by more than one system.
 
-The implemented split keeps mise for language runtimes plus explicitly declared
-floating tools (currently Pi and Zellij). Nix owns the stable global toolbox.
+| System                 | Owns                                                   | Examples                           |
+|------------------------|--------------------------------------------------------|------------------------------------|
+| **Nix / Home Manager** | Stable global CLI tools; dotfile symlinks              | rg, jj, neovim, mise, direnv, tmux |
+| **mise**               | Language runtimes + explicitly declared floating tools | node, go, python, rust, bun, pnpm  |
+| **Homebrew**           | Tools whose Nix/mise packages are unsuitable           | engram, httpstat                   |
 
-## 5. What the Nix version would look like
-
-A concrete mapping from what you have today to Home Manager, using your real
-files. Full runnable skeleton is in [`nix/`](../nix/).
-
-### 5.1 Repository layout
-
-```
-nix/
-├── flake.nix              # inputs (nixpkgs, home-manager, nix-darwin) + host outputs
-├── flake.lock            # pinned versions — the reproducibility guarantee
-├── home/
-│   ├── common.nix         # everything shared across all machines
-│   ├── packages.nix       # the former Homebrew array, as a Nix list
-│   ├── shell.nix          # zsh/starship/fzf via Home Manager programs.*
-│   └── dotfiles.nix       # symlinks to your existing repo files (out-of-store)
-└── hosts/
-    ├── arch.nix          # bare-metal Arch (CachyOS, …)
-    ├── arch-wsl.nix      # arch.nix + WSL-only bits
-    ├── ubuntu.nix
-    └── macbook.nix       # imports nix-darwin for system defaults
-```
-
-Your existing `.zshrc`, `.config/*`, `scripts/` etc. **stay exactly where they
-are.** Nix references them; it doesn't replace them.
-
-### 5.2 Packages: the bash array becomes a Nix list
-
-Today (`Setup/installers/packages.sh`):
-
-```bash
-packages=( gcc cheat bottom eza fd fzf bat ripgrep git-delta fastfetch lazyjj ... )
-brew install "${packages[@]}"
-```
-
-With Home Manager (`nix/home/packages.nix`) — same intent, but pinned and
-cross-platform:
-
-```nix
-{ pkgs, ... }:
-{
-  home.packages = with pkgs; [
-    gcc cheat bottom eza fd fzf bat ripgrep delta fastfetch onefetch
-    duf gping hyperfine trippy sshs
-    zsh-autosuggestions zsh-fast-syntax-highlighting
-    # lazyjj, diffnav → from flake inputs or nixpkgs when available
-  ];
-}
-```
-
-`home-manager switch` installs all of them, at versions locked in `flake.lock`,
-identically on every machine. No `read -p`, no "likely won't work".
-
-### 5.3 Dotfiles: `ensure_link` becomes declarative — and stays editable
-
-Your `ensure_link` loop symlinks repo files into `$HOME`. Home Manager does the
-same declaratively. To keep files **live-editable in this repo** (not copied
-read-only into `/nix/store`), use `mkOutOfStoreSymlink` (`nix/home/dotfiles.nix`):
-
-```nix
-{ config, ... }:
-let
-  repo = "${config.home.homeDirectory}/dotfiles";   # this repo's checkout
-  link = config.lib.file.mkOutOfStoreSymlink;
-in {
-  home.file = {
-    ".zshrc".source        = link "${repo}/.zshrc";
-    ".profile".source      = link "${repo}/.profile";
-    ".shellrc".source      = link "${repo}/.shellrc";
-    ".aliases".source      = link "${repo}/.aliases";
-    ".gitconfig".source    = link "${repo}/.gitconfig";
-  };
-
-  # The .config/*/ loop from symlinks.sh, declaratively:
-  xdg.configFile = {
-    "starship.toml".source = link "${repo}/.config/starship.toml";
-    "ghostty".source       = link "${repo}/.config/ghostty";
-    "nvim".source          = link "${repo}/.config/nvim";
-    "mise".source          = link "${repo}/.config/mise";
-    # … one line per config dir (25 of them today)
-  };
-}
-```
-
-This is a strict upgrade over `ensure_link`: same live-editing workflow, but the
-link set is declared in one place, applied atomically, and Home Manager cleans
-up links it no longer manages (no more orphaned `.bak` files).
-
-### 5.4 Some tools get *native* Home Manager modules (better than symlinks)
-
-For tools with first-class HM support you can drop the config file entirely and
-declare intent — HM generates the config and manages the package together:
-
-```nix
-programs.zsh = {
-  enable = true;
-  oh-my-zsh.enable = true;
-  # plugins/aliases as Nix data, or point initExtra at your .shellrc
-};
-programs.starship.enable = true;
-programs.fzf.enable = true;
-programs.direnv = { enable = true; nix-direnv.enable = true; };
-programs.git.enable = true;   # can import your existing .gitconfig
-```
-
-You'd migrate these opportunistically — there's no need to convert all 25
-config dirs. Keep the ones you like as-is via §5.3 symlinks; convert the ones
-where HM's module adds value.
-
-### 5.5 Per-machine and per-OS differences
-
-The WSL/macOS/Arch/Ubuntu branching currently done in shell becomes host
-modules (`nix/hosts/*.nix`):
-
-```nix
-# hosts/arch-wsl.nix
-{ pkgs, ... }: {
-  imports = [ ../home/common.nix ];
-  home.packages = with pkgs; [ wslu ];        # wslview etc. for WSL
-  # WSL-specific env that .profile currently sets behind an `if`
-}
-```
-
-```nix
-# hosts/macbook.nix  (with nix-darwin for system defaults)
-{ pkgs, ... }: {
-  imports = [ ../home/common.nix ];
-  # nix-darwin: system.defaults.dock.autohide = true;  etc.
-  # nix-homebrew: casks Nix can't build (GUI apps)
-}
-```
-
-### 5.6 Daily workflow
-
-The migration is complete. Use [`Nix_cheatsheet.md`](Nix_cheatsheet.md) for
-locked activation, updates, verification, rollback, and cleanup commands.
-
-## 6. Migration outcome
-
-The migration was executed progressively on Arch WSL: first a minimal Home
-Manager lifecycle probe, then packages, passive config, shell files, identity
-and IDE integration, mutable config, and finally activation hooks. Each stage
-was built, dry-run, activated, and verified before advancing. The final state
-uses the compact canonical host outputs in `nix/flake.nix`; temporary stage
-outputs were removed.
-
-The repository now owns dotfile links and stable global CLI packages through
-Home Manager. Homebrew is retained only for Engram and httpstat, while mise
-owns language runtimes plus Pi and Zellij. Pi's mutable agent directory remains
-machine-local.
-
-## 7. Honest risks and downsides of Nix
-
-- **Learning curve.** The language is the tax. Budget real time for it; the
-  first week is frustrating.
-- **Disk usage.** `/nix/store` grows; `nix-collect-garbage` manages it, but it's
-  more disk than brew/mise.
-- **Some tools fight it.** GUI apps, proprietary binaries, and things expecting
-  FHS paths can need workarounds (`buildFHSEnv`, or just leave them to
-  brew/apt). Your `curl | bash` agent tools (Gentle-AI, oh-my-posh) may be
-  easier left on their current installers initially.
-- **WSL specifics.** Works well, but the DBus/gnome-keyring and IDE-server
-  environment integration is handled by the WSL host module and managed
-  `server-env-setup` links.
-- **It was not all-or-nothing.** The progressive rollout isolated failures and
-  preserved a preceding Home Manager generation at every consequential step.
-
-## 8. Per-machine identity & secrets (work vs personal)
-
-Committed baselines stay personal. Work email, path-scoped identities, and
-device-only brew/mise packages live in the gitignored `overrides/` tree at the
-repo root.
-
-**Canonical docs:** [machine-overrides.md](./machine-overrides.md)
-
-| Tier                   | Example                           | Where                            | Committed?        |
-|------------------------|-----------------------------------|----------------------------------|-------------------|
-| 1. True secret         | SSH **private** key               | `~/.ssh/`                        | **Never**         |
-| 2. Per-machine overlay | work email, extra brew/mise tools | `overrides/`                     | No                |
-| 3. Encrypted-at-rest   | API tokens                        | `~/.profile_secret`, or sops/age | Only if encrypted |
-
-Tier 1: `scripts/ssh-sign` + `SSH_SIGN_KEY_PATH`; `.ssh/allowed_signers` is
-public keys only. For sops-nix/agenix or chezmoi templating alternatives, see
-the machine-overrides doc and older notes in git history if needed.
-
-## 9. Tool ownership & retiring `run.sh`
-
-The end state is that **`run.sh` goes away** and each responsibility has exactly
-one owner. Nothing is installed by more than one system.
-
-### 9.1 Who owns what
-
-| System                 | Owns                                                   | Examples                              |
-|------------------------|--------------------------------------------------------|---------------------------------------|
-| **Nix / Home Manager** | Stable global CLI tools; dotfile symlinks              | rg, jj, neovim, mise, direnv, tmux... |
-| **mise**               | Language runtimes + explicitly declared floating tools | node, go, python, rust, bun, pnpm...  |
-| **Homebrew**           | Tools whose Nix/mise packages are unsuitable           | engram, httpstat                      |
-
-Per-machine extras (not synced) use the shared `overrides/` tree — see
+Per-machine extras (not synced) use the gitignored `overrides/` tree — see
 [machine-overrides.md](./machine-overrides.md):
 
 | Layer        | Synced baseline            | Untracked overlay               |
@@ -397,63 +157,60 @@ Per-machine extras (not synced) use the shared `overrides/` tree — see
 | **Homebrew** | `Brewfile`                 | `overrides/brew/Brewfile.local` |
 | **mise**     | `.config/mise/config.toml` | `overrides/mise/config.toml`    |
 
-`scripts/brew-bundle` (called from `bootstrap.sh`) concatenates the Brewfile and
+`scripts/brew-bundle` (from `bootstrap.sh`) concatenates the Brewfile and
 optional local overlay, then runs `brew bundle`. Mise merges
 `~/.mise/config.toml` (symlinked to `overrides/mise/config.toml`) on top of the
-synced global config — declare device-only tools there and run `mise install`.
+synced global config.
 
-Pi and Zellij are installed via mise. Pi's mutable agent directory is kept
-machine-local rather than managed as one Home Manager link.
-`engram` is installed via Homebrew, not by mise;
-`scripts/engram-setup` (run by `home/tools.nix` and `bootstrap.sh`) registers it
-with each detected coding agent.
-The repository `Brewfile` declares Engram and
-httpstat; bootstrap installs Homebrew itself only when `INSTALL_BREW=1`, then
-runs the bundle whenever Homebrew is available.
+`engram` is installed via Homebrew; `scripts/engram-setup` (from
+`home/tools.nix` and `bootstrap.sh`) registers it with each detected coding
+agent. Bootstrap installs Homebrew itself only when `INSTALL_BREW=1`, then runs
+the bundle when Homebrew is available.
 
-### 9.2 `run.sh` → Nix replacement map
+The old `run.sh` / `Setup/` installers are gone. Distro scripts install host
+prerequisites, clone the repo, and hand off to `nix/bootstrap.sh`, which
+installs Nix and activates the generation pinned by `flake.lock`. Activation
+hooks in `home/tools.nix` are best-effort so a network hiccup does not brick a
+switch.
 
-`run.sh` does more than install packages. Each of its installers maps to a Nix
-mechanism; it can be deleted once all are ported:
+### 5.2 Dotfiles stay live-editable
 
-| `run.sh` installer                                                                    | Replacement                                                                                                   | Status     |
-|---------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------|------------|
-| `symlinks.sh`                                                                         | `home/dotfiles.nix` (`mkOutOfStoreSymlink`)                                                                   | ✅ done     |
-| `packages.sh`                                                                         | `home/packages.nix` (Nix); Homebrew kept only for declared exceptions                                         | ✅ done     |
-| `gpg.sh`                                                                              | Deprecated (SSH signing now); optional prompts, nothing to port                                               | ✅ n/a      |
-| `tools.sh` → oh-my-posh                                                               | Existing standalone install; shell init tolerates absence                                                     | ✅ retained |
-| `tools.sh` → oh-my-zsh                                                                | `home/tools.nix` activation clone to `~/.oh-my-zsh`                                                           | ✅ done     |
-| `tools.sh` → tmux + tpm                                                               | `tmux` in `home/packages.nix`; tpm cloned in `home/tools.nix`                                                 | ✅ done     |
-| `tools.sh` → cheat sheets, micro themes                                               | `home/tools.nix` activation (git clone / curl)                                                                | ✅ done     |
-| `ai-agents.sh` → jj approval guards                                                   | `home/tools.nix` activation runs `AI/agent-guards/install.py`                                                 | ✅ done     |
-| `ai-agents.sh` → engram                                                               | Engram via Homebrew; `scripts/engram-setup` registers it with autodiscovered agents (run by `home/tools.nix`) | ✅ done     |
-| `symlinks.sh` → editor/agent config (Cursor settings, extensions, `server-env-setup`) | `home/dotfiles.nix` symlinks; Pi state remains local                                                          | ✅ done     |
-| `gpg.sh` (if still needed)                                                            | Optional standalone `scripts/gpg-setup`                                                                       | ✅ done     |
-| `run.sh` (entrypoint)                                                                 | `nix/bootstrap.sh`                                                                                            | ✅ done     |
-| `Arch/run_arch.sh`, `Ubuntu/run_ubuntu.sh`                                            | Install prerequisites, clone, run `bootstrap.sh`                                                              | ✅ done     |
+`home/dotfiles.nix` uses `mkOutOfStoreSymlink` so Home Manager links into the
+repo checkout instead of copying files into `/nix/store`. Edit `.zshrc` (and
+peers) in place; `home-manager switch` applies the link set atomically and
+removes links it no longer manages.
 
-`run.sh` and the `Setup/` installers are gone. The distro scripts install the
-prerequisites (zsh, git, curl, locales, mise build deps) that a package
-manager, not the dotfiles, is responsible for, then hand off to `bootstrap.sh`,
-which installs Nix and activates the generation pinned by `flake.lock`. The activation steps in
-`home/tools.nix` are best-effort, so a network hiccup never bricks a switch.
+### 5.3 Native Home Manager modules are optional
 
-## 10. Bottom line
+Tools with first-class `programs.*` modules can generate config from Nix
+instead of a symlinked file. Adopt those opportunistically: import the module
+and drop the matching symlink from `dotfiles.nix`. Home Manager refuses to
+manage the same path twice. See `home/shell.nix` (not imported by default).
 
-- **Is Nix viable?** Yes — Home Manager + flakes cleanly covers Arch, Ubuntu,
-  macOS, and WSL, and is the only option that makes your setup *reproducible*
-  (pinned versions) and *reversible* (atomic rollback). Those two properties are
-  the real meaning of "robust," and nothing else on the list delivers them.
-- **Was it the right call?** Yes. The progressive live rollout proved package,
-  dotfile, shell, IDE, hook, and rollback behavior before the compact final
-  configuration was adopted.
-- **Keep mise** for the declared runtime and floating-tool layer.
+### 5.4 Host modules own OS differences
 
-The `nix/` directory in this branch is a **working, tested** Home Manager
-config — not just a sketch. It was verified end-to-end on clean containers and
-the live Arch WSL host:
-packages install and run, dotfiles become out-of-store symlinks to the live
-repo (still editable in place), the per-machine and per-directory git identity
-overrides resolve correctly, and rollback is atomic. The full record is in
-[`../nix/test/README.md`](../nix/test/README.md). Apply it with
-`nix/bootstrap.sh`; daily commands are in [`Nix_cheatsheet.md`](Nix_cheatsheet.md).
+WSL / macOS / Arch / Ubuntu differences live in `nix/hosts/*.nix`, not in
+scattered shell `if` branches. Shared config is `home/common.nix`.
+
+## 6. Risks and downsides
+
+- **Learning curve.** The language and mental model take real time.
+- **Disk usage.** `/nix/store` grows; use `nix-collect-garbage` (see the
+  cheatsheet).
+- **Some tools fight it.** GUI apps, proprietary binaries, and FHS-expecting
+  software may need workarounds (`buildFHSEnv`) or stay on brew/apt/standalone
+  installers.
+- **WSL specifics.** DBus/gnome-keyring and IDE-server environment integration
+  belong in the WSL host module and managed `server-env-setup` links.
+
+## 7. Where to look
+
+| Need                                     | Location                                       |
+|------------------------------------------|------------------------------------------------|
+| Flake, hosts, Home Manager modules       | [`nix/`](../nix/)                              |
+| Apply / update / rollback / GC           | [`Nix_cheatsheet.md`](Nix_cheatsheet.md)       |
+| Work vs personal identity, secrets tiers | [`machine-overrides.md`](machine-overrides.md) |
+| Verification record                      | [`nix/test/README.md`](../nix/test/README.md)  |
+
+Apply with `nix/bootstrap.sh`. Host outputs and package lists in `nix/` are the
+source of truth for what is installed.

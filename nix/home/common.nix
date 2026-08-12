@@ -11,7 +11,7 @@
     # programs.zsh/… generate the same files dotfiles.nix symlinks, and Home
     # Manager refuses to manage a file twice. To adopt one, import it here AND
     # drop the matching symlink from dotfiles.nix. See
-    # [the migration doc](../../Documentation/Nix_exploration.md#54-some-tools-get-native-home-manager-modules-better-than-symlinks).
+    # [Nix rationale](../../Documentation/Nix_exploration.md#53-native-home-manager-modules-are-optional).
     # ./shell.nix
     #
     # Home Manager-owned git config. The symlinked .gitconfig handles per-machine
@@ -22,7 +22,7 @@
     # ./git.nix
   ];
 
-  # mise manages language runtimes plus explicitly declared floating tools
-  # (currently Pi and Zellij); Nix manages the stable global toolbox. mise's
-  # own config is symlinked via dotfiles.nix.
+  # mise manages language runtimes plus explicitly declared floating tools;
+  # Nix manages the stable global toolbox. mise's own config is symlinked via
+  # dotfiles.nix.
 }

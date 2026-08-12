@@ -1,7 +1,7 @@
 { pkgs, ... }:
 # Stable global CLI tools, managed by Nix. The ownership split (Nix vs mise vs
 # Homebrew) is documented in
-# [the migration doc](../../Documentation/Nix_exploration.md#9-tool-ownership--retiring-runsh).
+# [Nix rationale](../../Documentation/Nix_exploration.md#51-tool-ownership).
 # Package names are nixpkgs attributes. Search: https://search.nixos.org
 let
   # nixpkgs-unstable currently ships diffnav 0.12.0, which is broken here.
@@ -73,7 +73,7 @@ in
     mise
     direnv
     tmux
-    # Pi and Zellij come from mise. Engram comes from Homebrew, not Nix;
-    # scripts/engram-setup registers it with detected coding agents.
+    # Engram comes from Homebrew, not Nix; scripts/engram-setup registers it
+    # with detected coding agents.
   ];
 }
