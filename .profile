@@ -103,6 +103,10 @@ case ":$PATH:" in
 esac
 # pnpm end
 
+# Nix owns the stable global toolbox, so its profile must precede mise shims
+# that may remain for tools no longer declared in mise.
+_path_prepend_if_missing "$HOME/.nix-profile/bin"
+
 # rip2
 export RIP_GRAVEYARD="$HOME/.local/share/rip2/graveyard"
 if ! [ -d "$RIP_GRAVEYARD" ]; then

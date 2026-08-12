@@ -75,6 +75,10 @@ activation=$(nix build --no-link --print-out-paths \
   "$REPO/nix#homeConfigurations.$HOST.activationPackage")
 HOME_MANAGER_BACKUP_EXT=hm-bak "$activation/activate"
 
+# brew shellenv prepends legacy Brew tools earlier in this process. Restore the
+# Home Manager profile as the stable-tool owner before mise and verification.
+export PATH="$HOME/.nix-profile/bin:$PATH"
+
 # 4. Populate mise-managed tools (language runtimes, pi). mise itself is
 #    installed by Home Manager above. Skip with SKIP_MISE=1.
 if [ "${SKIP_MISE:-0}" != "1" ]; then
