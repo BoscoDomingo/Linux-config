@@ -140,6 +140,15 @@ bash "$REPO/nix/bootstrap.sh"
 Avoid `nix profile install` for permanent tools: it creates imperative state
 outside this repository's declarative package list.
 
+### diffnav version pin
+
+`nix/home/packages.nix` temporarily overrides `pkgs.diffnav` to **0.11.0**
+because nixpkgs-unstable currently ships a broken 0.12.0 build. mise may still
+declare `diffnav = "0.11.0"` as a fallback until the Nix candidate is verified;
+remove the mise entry once `bash nix/test/verify.sh` reports the Nix store
+path. When upstream fixes land, delete the override in `packages.nix` and use
+plain `pkgs.diffnav` again after `nix flake update nixpkgs`.
+
 ## Temporary environments
 
 Open a shell containing temporary packages:

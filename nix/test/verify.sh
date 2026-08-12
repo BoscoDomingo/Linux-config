@@ -32,6 +32,13 @@ for bin in rg bat eza fd fzf delta fastfetch duf gping hyperfine trip sshs cheat
   esac
 done
 
+diffnav_path=$(readlink -f "$(type -P diffnav 2>/dev/null || true)")
+case "$diffnav_path" in
+  /nix/store/*diffnav-0.11.0*/bin/diffnav) ok "diffnav pinned -> $diffnav_path" ;;
+  "")                                       no "diffnav missing (expected Nix-owned 0.11.0)" ;;
+  *)                                        no "diffnav -> $diffnav_path (expected diffnav-0.11.0)" ;;
+esac
+
 echo "== dotfiles symlinked to the live repo (out-of-store) =="
 for f in .bash_profile .zshrc .profile .aliases .gitconfig .ssh/allowed_signers \
   .config/starship.toml .config/nvim; do
