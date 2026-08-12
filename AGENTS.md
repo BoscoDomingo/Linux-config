@@ -20,6 +20,10 @@ If using mise-installed tools, prefer using the `latest` tag instead of a specif
 
 Always verify symlinks are correct to ensure any changes to files here are applied. Since I also use WSL in some cases, issues may arise from the Windows side of things, so check that too (especially for Cursor, VS Code, and other such tools I will have installed on Windows but have WSL support).
 
+For outputs only:
+1. Avoid the use of em- and en-dashes. Use punctuation, regular dashes and other alternatives instead.
+2. Use ASD-STE100 Simplified Technical English
+
 ## Note on contributing to this repo
 
 All commits must be performed using personal email, never anything else. Signature can be done with any key as long as it is added to GitHub profile.
