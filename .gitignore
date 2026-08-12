@@ -11,8 +11,12 @@ __pycache__
 .config/tmux/plugins
 *_secret
 # Machine-local overlays (git, jj, mise, brew). See Documentation/machine-overrides.md.
+# Un-ignore directories first; otherwise *.example under /overrides/** stays ignored.
 /overrides/**
+!/overrides/
+!/overrides/*/
 !/overrides/.gitkeep
+!/overrides/*/*.example
 
 # Legacy paths (pre-overrides/ tree); keep ignoring in case a checkout still has them.
 .config/jj/repos/
