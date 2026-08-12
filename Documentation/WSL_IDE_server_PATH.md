@@ -1,6 +1,6 @@
 # Experiment: WSL IDE-server PATH for extension hosts
 
-Status: **open — awaiting a test on a real WSL + Cursor/VS Code machine.**
+Status: **verified for Cursor on Arch WSL; VS Code remains untested.**
 
 ## The problem
 
@@ -28,8 +28,21 @@ gives the extension hosts the tools they need without interactive shell setup.
   (`.cursor-server/server-env-setup`, `.vscode-server/server-env-setup`) — WSL
   only, so the bare-metal `arch` host doesn't create them.
 
-It prepends linuxbrew, the **Nix profile** (`~/.nix-profile/bin`), `~/.local/bin`,
-mise shims, pnpm, and opencode to PATH, then dedupes.
+It prepends linuxbrew, `~/.local/bin`, mise shims, and pnpm, then places the
+**Nix profile** (`~/.nix-profile/bin`) first and dedupes. Nix must win over
+stale direct mise paths for tools whose ownership moved to Home Manager.
+
+## Observed result
+
+After restarting Cursor's WSL server, the server and extension hosts contained
+both the Nix profile and mise shims. The plain `server-env-setup` symlink was
+therefore honored; launcher patching is not required for this Cursor build.
+
+Cursor can reuse a cached login-shell environment for extension hosts. That
+cache may retain direct mise installation paths ahead of the server PATH until
+the Windows Cursor process is fully restarted. Keep migrated tools on a
+known-good mise target until that restart, then verify the effective executable
+with `readlink -f "$(command -v <tool>)"`.
 
 ## History (why there's doubt it works)
 
