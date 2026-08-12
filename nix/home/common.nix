@@ -15,9 +15,10 @@
     # ./shell.nix
     #
     # Home Manager-owned git config. The symlinked .gitconfig handles per-machine
-    # identity via [include], so this is only for owning git config entirely in
-    # Nix (then drop the .gitconfig symlink from dotfiles.nix). See
-    # [the migration doc](../../Documentation/Nix_exploration.md#8-per-machine-identity--secrets-work-vs-personal).
+    # identity via overrides/ (jj/mise/brew share that tree), so this is only
+    # for owning git config entirely in Nix (then drop the .gitconfig
+    # symlink from dotfiles.nix). See
+    # [machine-overrides.md](../../Documentation/machine-overrides.md).
     # ./git.nix
   ];
 

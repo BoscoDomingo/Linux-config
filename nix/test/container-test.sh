@@ -19,21 +19,26 @@ BRANCH="${BRANCH:-main}"
 REPO_URL="${REPO_URL:-https://github.com/BoscoDomingo/Linux-config}"
 
 case "$DISTRO" in
-  ubuntu)
-    IMAGE="${IMAGE:-ubuntu:24.04}"
-    HOST="${HOST:-ubuntu}"
-    PREP='export DEBIAN_FRONTEND=noninteractive; apt-get update -qq && apt-get install -y -qq curl xz-utils git ca-certificates sudo >/dev/null'
-    ;;
-  arch)
-    IMAGE="${IMAGE:-archlinux:latest}"
-    HOST="${HOST:-arch}"
-    PREP='pacman -Syu --noconfirm --needed curl xz git ca-certificates sudo which >/dev/null'
-    ;;
-  *)
-    echo "unknown DISTRO: $DISTRO (use ubuntu | arch)"; exit 1 ;;
+ubuntu)
+	IMAGE="${IMAGE:-ubuntu:24.04}"
+	HOST="${HOST:-ubuntu}"
+	PREP='export DEBIAN_FRONTEND=noninteractive; apt-get update -qq && apt-get install -y -qq curl xz-utils git ca-certificates sudo >/dev/null'
+	;;
+arch)
+	IMAGE="${IMAGE:-archlinux:latest}"
+	HOST="${HOST:-arch}"
+	PREP='pacman -Syu --noconfirm --needed curl xz git ca-certificates sudo which >/dev/null'
+	;;
+*)
+	echo "unknown DISTRO: $DISTRO (use ubuntu | arch)"
+	exit 1
+	;;
 esac
 
-command -v docker >/dev/null 2>&1 || { echo "docker not found on PATH"; exit 1; }
+command -v docker >/dev/null 2>&1 || {
+	echo "docker not found on PATH"
+	exit 1
+}
 
 echo "==> Testing $REPO_URL@$BRANCH (distro: $DISTRO, host: $HOST) in $IMAGE"
 
@@ -64,13 +69,18 @@ echo "experimental-features = nix-command flakes" > \$HOME/.config/nix/nix.conf
 
 git clone -b "$BRANCH" "$REPO_URL" \$HOME/dotfiles
 
-# Seed a per-machine WORK identity + repos so verify.sh exercises the override.
-mkdir -p \$HOME/.config/git \$HOME/repos/work \$HOME/repos/personal
-printf '[user]\n\temail = you@work.example\n'     > \$HOME/.config/git/local.gitconfig
-printf '[user]\n\temail = you@work.example\n'     > \$HOME/.config/git/work.gitconfig
-printf '[user]\n\temail = you@personal.example\n' > \$HOME/.config/git/personal.gitconfig
-git init -q \$HOME/repos/work/acme
-git init -q \$HOME/repos/personal/blog
+# Seed per-machine WORK identity + path-scoped repos so verify.sh exercises
+# the overrides/ tree. HM activation creates the conf.d / mise symlinks.
+mkdir -p \$HOME/dotfiles/overrides/{git,jj,mise,brew} \$HOME/repos \$HOME/personal
+printf '[user]\n\temail = you@work.example\n'     > \$HOME/dotfiles/overrides/git/local.gitconfig
+printf '[user]\n\temail = you@work.example\n'     > \$HOME/dotfiles/overrides/git/work.gitconfig
+printf '[user]\n\temail = you@personal.example\n' > \$HOME/dotfiles/overrides/git/personal.gitconfig
+printf '[user]\nemail = "you@work.example"\n'     > \$HOME/dotfiles/overrides/jj/local.toml
+printf '--when.repositories = ["~/repos"]\n\n[user]\nemail = "you@work.example"\n' > \$HOME/dotfiles/overrides/jj/work.toml
+printf '--when.repositories = ["~/dotfiles", "~/personal"]\n\n[user]\nemail = "you@personal.example"\n' > \$HOME/dotfiles/overrides/jj/personal.toml
+printf '[tools]\n' > \$HOME/dotfiles/overrides/mise/config.toml
+git init -q \$HOME/repos/acme
+git init -q \$HOME/personal/blog
 
 # SKIP_MISE keeps this fast: a full mise install builds node/python/rust and is
 # off-purpose for a Nix-layer check. Drop it to also install mise-owned tools.

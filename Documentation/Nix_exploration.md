@@ -23,14 +23,14 @@ The README says it plainly: *"You can try running `./run.sh` directly … althou
 it is untested and will likely not work. Otherwise, just run the commands
 manually."* That single sentence is the whole problem. The concrete pain points:
 
-| # | Pain point | Why it hurts syncing |
-|---|------------|----------------------|
-| 1 | The installer is interactive (`read -p` at every step) and self-described as unreliable | Can't run unattended; a new machine is a babysitting session |
-| 2 | No single source of truth for "what is installed" | Package intent lives in a bash array, a TOML file, and several inline `curl` calls |
-| 3 | No atomicity or rollback | A failure halfway through leaves a half-configured machine with no clean way back |
-| 4 | No drift detection | Nothing tells you machine A and machine B have diverged, or that a machine matches the repo |
-| 5 | Non-idempotent `curl \| bash` steps | Re-running is not guaranteed safe; versions float |
-| 6 | Symlink logic is bespoke and must be maintained | Edge cases (WSL IDE servers, `.bak` collisions) are your code to debug |
+| # | Pain point                                                                              | Why it hurts syncing                                                                        |
+|---|-----------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+| 1 | The installer is interactive (`read -p` at every step) and self-described as unreliable | Can't run unattended; a new machine is a babysitting session                                |
+| 2 | No single source of truth for "what is installed"                                       | Package intent lives in a bash array, a TOML file, and several inline `curl` calls          |
+| 3 | No atomicity or rollback                                                                | A failure halfway through leaves a half-configured machine with no clean way back           |
+| 4 | No drift detection                                                                      | Nothing tells you machine A and machine B have diverged, or that a machine matches the repo |
+| 5 | Non-idempotent `curl \| bash` steps                                                     | Re-running is not guaranteed safe; versions float                                           |
+| 6 | Symlink logic is bespoke and must be maintained                                         | Edge cases (WSL IDE servers, `.bak` collisions) are your code to debug                      |
 
 "More robust" means fixing as many of 1–6 as the effort is worth. Keep that
 table in mind — it's the scorecard every option below is graded against.
@@ -143,18 +143,18 @@ the reproducibility/rollback payoff is worth the learning curve for you.
 
 ### 3.5 Scorecard
 
-| | Stow | chezmoi | Ansible | **Nix + HM** |
-|---|:---:|:---:|:---:|:---:|
-| Declarative configs | ✅ | ✅ | ✅ | ✅ |
-| Declarative packages | ❌ | ⚠️ (scripts) | ✅ | ✅ |
-| Idempotent / unattended | ❌ | ✅ | ✅ | ✅ |
-| **Version reproducibility** | ❌ | ❌ | ⚠️ | ✅ |
-| **Atomic rollback** | ❌ | ❌ | ❌ | ✅ |
-| Secrets handling | ❌ | ✅ | ✅ | ✅ (sops-nix/agenix) |
-| Drift detection | ❌ | ✅ | ⚠️ | ✅ |
-| Cross-platform (Arch/Ubuntu/mac/WSL) | ✅ | ✅ | ✅ | ✅ |
-| Learning curve | trivial | low | medium | **high** |
-| Keeps your current workflow | mostly | mostly | no | rewrite |
+|                                      |  Stow   |   chezmoi   | Ansible |    **Nix + HM**     |
+|--------------------------------------|:-------:|:-----------:|:-------:|:-------------------:|
+| Declarative configs                  |    ✅    |      ✅      |    ✅    |          ✅          |
+| Declarative packages                 |    ❌    | ⚠️ (scripts) |    ✅    |          ✅          |
+| Idempotent / unattended              |    ❌    |      ✅      |    ✅    |          ✅          |
+| **Version reproducibility**          |    ❌    |      ❌      |    ⚠️    |          ✅          |
+| **Atomic rollback**                  |    ❌    |      ❌      |    ❌    |          ✅          |
+| Secrets handling                     |    ❌    |      ✅      |    ✅    | ✅ (sops-nix/agenix) |
+| Drift detection                      |    ❌    |      ✅      |    ⚠️    |          ✅          |
+| Cross-platform (Arch/Ubuntu/mac/WSL) |    ✅    |      ✅      |    ✅    |          ✅          |
+| Learning curve                       | trivial |     low     | medium  |      **high**       |
+| Keeps your current workflow          | mostly  |   mostly    |   no    |       rewrite       |
 
 ## 4. Recommendation
 
@@ -358,105 +358,21 @@ machine-local.
 
 ## 8. Per-machine identity & secrets (work vs personal)
 
-The committed `.gitconfig` provides a personal baseline. Work devices can
-override the email and public signing key through an untracked include. The
-identity model has three tiers:
+Committed baselines stay personal. Work email, path-scoped identities, and
+device-only brew/mise packages live in the gitignored `overrides/` tree at the
+repo root.
 
-| Tier | Example | Where it lives | Committed? |
-|------|---------|----------------|-----------|
-| 1. True secret | SSH **private** key | `~/.ssh/` per machine, generated per device | **Never** (not git, not `/nix/store`) |
-| 2. Per-machine identity | git email, which **public** signing key | small **untracked** file per machine | No (or encrypted) |
-| 3. Encrypted-at-rest | API tokens, etc. | `~/.profile_secret`, or sops/age | Only if encrypted |
+**Canonical docs:** [machine-overrides.md](./machine-overrides.md)
 
-Tier 1 already behaves correctly here: the private key is never committed, and
-`scripts/ssh-sign` reads `SSH_SIGN_KEY_PATH` so each machine points at its own
-key. `.ssh/allowed_signers` holds public keys only, so it is safe to commit.
-Tier 2 is overridden only on machines that need a non-personal identity.
+| Tier                   | Example                           | Where                            | Committed?        |
+|------------------------|-----------------------------------|----------------------------------|-------------------|
+| 1. True secret         | SSH **private** key               | `~/.ssh/`                        | **Never**         |
+| 2. Per-machine overlay | work email, extra brew/mise tools | `overrides/`                     | No                |
+| 3. Encrypted-at-rest   | API tokens                        | `~/.profile_secret`, or sops/age | Only if encrypted |
 
-### 8.1 The tooling-independent fix: git `include` / `includeIf`
-
-On a work machine, override the committed personal baseline from an untracked
-file:
-
-```gitconfig
-# committed .gitconfig already contains the personal [user] baseline
-[include]
-    path = ~/.config/git/local.gitconfig    # optional untracked override
-```
-
-Each machine's `~/.config/git/local.gitconfig` (never committed) holds:
-
-```gitconfig
-[user]
-    email = you@work.example
-    signingKey = key::ssh-ed25519 AAAA…work-key…
-```
-
-Even better, if a **single** machine has both work and personal repos, use
-directory-conditional includes so the right key is chosen automatically:
-
-```gitconfig
-[includeIf "gitdir:~/repos/work/"]
-    path = ~/.config/git/work.gitconfig
-[includeIf "gitdir:~/repos/personal/"]
-    path = ~/.config/git/personal.gitconfig
-```
-
-Your `.gitignore` already ignores `*_secret`; add `local.gitconfig` (or name the
-files `*_secret`). This directly answers your question — the private bit is a
-plain local file you write once per machine, nothing leaves the box.
-
-### 8.2 In Nix / Home Manager
-
-The active setup symlinks `.gitconfig`, whose include blocks point at untracked
-local files. `home/git.nix` remains an opt-in native alternative:
-
-```nix
-programs.git = {
-  enable = true;
-  userName = "Bosco Domingo";
-  includes = [
-    { path = "~/.config/git/local.gitconfig"; }                    # per-machine default
-    { condition = "gitdir:~/repos/work/";     path = "~/.config/git/work.gitconfig"; }
-    { condition = "gitdir:~/repos/personal/"; path = "~/.config/git/personal.gitconfig"; }
-  ];
-};
-```
-
-Two ways to supply the private values:
-
-- **Local file (recommended, simplest):** the `include` above reads a file you
-  write once per machine — matches your existing `~/.profile_secret` habit,
-  zero extra infrastructure.
-- **Encrypted-in-repo (if you want it version-controlled):** `sops-nix` or
-  `agenix` decrypt secrets into place on `home-manager switch`, keyed to each
-  machine's SSH/age key. Use this only if you specifically want the values
-  tracked (encrypted) rather than living outside the repo.
-
-Non-secret per-machine values could alternatively live in the host module
-(`macbook.nix` = personal, a work host = work), but a public repo is a reason to
-prefer the local-file route for the work email. The SSH **private** key is never
-put in Nix — Home Manager only references its path; you generate/copy it per
-machine as today.
-
-### 8.3 In chezmoi
-
-Its native answer: a `.gitconfig.tmpl` templated from per-machine data
-(`.chezmoidata`, or a first-run prompt), with age/1Password for anything
-encrypted:
-
-```gitconfig
-[user]
-    email = {{ .git.email }}
-    signingKey = {{ .git.signingKey }}
-```
-
-### 8.4 Recommendation
-
-Keep the committed personal baseline and use a **local untracked override** on
-work machines (§8.1). Add `includeIf` when work and personal repositories share
-a machine. Reach for sops-nix/agenix only if encrypted secrets must be tracked.
-The SSH private key stays per-machine and out of the repo in every case.
+Tier 1: `scripts/ssh-sign` + `SSH_SIGN_KEY_PATH`; `.ssh/allowed_signers` is
+public keys only. For sops-nix/agenix or chezmoi templating alternatives, see
+the machine-overrides doc and older notes in git history if needed.
 
 ## 9. Tool ownership & retiring `run.sh`
 
@@ -465,11 +381,26 @@ one owner. Nothing is installed by more than one system.
 
 ### 9.1 Who owns what
 
-| System | Owns | Examples |
-|--------|------|----------|
-| **Nix / Home Manager** | Stable global CLI tools; dotfile symlinks | rg, bat, jj, neovim, mise, direnv, tmux... |
-| **mise** | Language runtimes + explicitly declared floating tools | pi, zellij, node, go, python, rust, bun, pnpm... |
-| **Homebrew** | Tools whose Nix/mise packages are unsuitable | engram, httpstat |
+| System                 | Owns                                                   | Examples                              |
+|------------------------|--------------------------------------------------------|---------------------------------------|
+| **Nix / Home Manager** | Stable global CLI tools; dotfile symlinks              | rg, jj, neovim, mise, direnv, tmux... |
+| **mise**               | Language runtimes + explicitly declared floating tools | node, go, python, rust, bun, pnpm...  |
+| **Homebrew**           | Tools whose Nix/mise packages are unsuitable           | engram, httpstat                      |
+
+Per-machine extras (not synced) use the shared `overrides/` tree — see
+[machine-overrides.md](./machine-overrides.md):
+
+| Layer        | Synced baseline            | Untracked overlay               |
+|--------------|----------------------------|---------------------------------|
+| **git**      | `.gitconfig`               | `overrides/git/*.gitconfig`     |
+| **jj**       | `.config/jj/config.toml`   | `overrides/jj/*.toml`           |
+| **Homebrew** | `Brewfile`                 | `overrides/brew/Brewfile.local` |
+| **mise**     | `.config/mise/config.toml` | `overrides/mise/config.toml`    |
+
+`scripts/brew-bundle` (called from `bootstrap.sh`) concatenates the Brewfile and
+optional local overlay, then runs `brew bundle`. Mise merges
+`~/.mise/config.toml` (symlinked to `overrides/mise/config.toml`) on top of the
+synced global config — declare device-only tools there and run `mise install`.
 
 Pi and Zellij are installed via mise. Pi's mutable agent directory is kept
 machine-local rather than managed as one Home Manager link.
@@ -485,21 +416,21 @@ runs the bundle whenever Homebrew is available.
 `run.sh` does more than install packages. Each of its installers maps to a Nix
 mechanism; it can be deleted once all are ported:
 
-| `run.sh` installer | Replacement | Status |
-|--------------------|-------------|--------|
-| `symlinks.sh` | `home/dotfiles.nix` (`mkOutOfStoreSymlink`) | ✅ done |
-| `packages.sh` | `home/packages.nix` (Nix); Homebrew kept only for declared exceptions | ✅ done |
-| `gpg.sh` | Deprecated (SSH signing now); optional prompts, nothing to port | ✅ n/a |
-| `tools.sh` → oh-my-posh | Existing standalone install; shell init tolerates absence | ✅ retained |
-| `tools.sh` → oh-my-zsh | `home/tools.nix` activation clone to `~/.oh-my-zsh` | ✅ done |
-| `tools.sh` → tmux + tpm | `tmux` in `home/packages.nix`; tpm cloned in `home/tools.nix` | ✅ done |
-| `tools.sh` → cheat sheets, micro themes | `home/tools.nix` activation (git clone / curl) | ✅ done |
-| `ai-agents.sh` → jj approval guards | `home/tools.nix` activation runs `AI/agent-guards/install.py` | ✅ done |
-| `ai-agents.sh` → engram | Engram via Homebrew; `scripts/engram-setup` registers it with autodiscovered agents (run by `home/tools.nix`) | ✅ done |
-| `symlinks.sh` → editor/agent config (Cursor settings, extensions, `server-env-setup`) | `home/dotfiles.nix` symlinks; Pi state remains local | ✅ done |
-| `gpg.sh` (if still needed) | Optional standalone `scripts/gpg-setup` | ✅ done |
-| `run.sh` (entrypoint) | `nix/bootstrap.sh` | ✅ done |
-| `Arch/run_arch.sh`, `Ubuntu/run_ubuntu.sh` | Install prerequisites, clone, run `bootstrap.sh` | ✅ done |
+| `run.sh` installer                                                                    | Replacement                                                                                                   | Status     |
+|---------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------|------------|
+| `symlinks.sh`                                                                         | `home/dotfiles.nix` (`mkOutOfStoreSymlink`)                                                                   | ✅ done     |
+| `packages.sh`                                                                         | `home/packages.nix` (Nix); Homebrew kept only for declared exceptions                                         | ✅ done     |
+| `gpg.sh`                                                                              | Deprecated (SSH signing now); optional prompts, nothing to port                                               | ✅ n/a      |
+| `tools.sh` → oh-my-posh                                                               | Existing standalone install; shell init tolerates absence                                                     | ✅ retained |
+| `tools.sh` → oh-my-zsh                                                                | `home/tools.nix` activation clone to `~/.oh-my-zsh`                                                           | ✅ done     |
+| `tools.sh` → tmux + tpm                                                               | `tmux` in `home/packages.nix`; tpm cloned in `home/tools.nix`                                                 | ✅ done     |
+| `tools.sh` → cheat sheets, micro themes                                               | `home/tools.nix` activation (git clone / curl)                                                                | ✅ done     |
+| `ai-agents.sh` → jj approval guards                                                   | `home/tools.nix` activation runs `AI/agent-guards/install.py`                                                 | ✅ done     |
+| `ai-agents.sh` → engram                                                               | Engram via Homebrew; `scripts/engram-setup` registers it with autodiscovered agents (run by `home/tools.nix`) | ✅ done     |
+| `symlinks.sh` → editor/agent config (Cursor settings, extensions, `server-env-setup`) | `home/dotfiles.nix` symlinks; Pi state remains local                                                          | ✅ done     |
+| `gpg.sh` (if still needed)                                                            | Optional standalone `scripts/gpg-setup`                                                                       | ✅ done     |
+| `run.sh` (entrypoint)                                                                 | `nix/bootstrap.sh`                                                                                            | ✅ done     |
+| `Arch/run_arch.sh`, `Ubuntu/run_ubuntu.sh`                                            | Install prerequisites, clone, run `bootstrap.sh`                                                              | ✅ done     |
 
 `run.sh` and the `Setup/` installers are gone. The distro scripts install the
 prerequisites (zsh, git, curl, locales, mise build deps) that a package

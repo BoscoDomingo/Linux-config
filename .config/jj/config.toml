@@ -1,5 +1,7 @@
 "$schema" = "https://jj-vcs.github.io/jj/latest/config-schema.json"
 
+# Baseline (personal) identity. Per-machine / per-directory overrides live in
+# the gitignored overrides/jj/ tree (symlinked to ~/.config/jj/conf.d).
 [user]
 name = "Bosco Domingo"
 email = "boscodomingob@gmail.com"

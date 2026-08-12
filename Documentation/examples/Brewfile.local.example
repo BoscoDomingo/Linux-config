@@ -1,0 +1,8 @@
+# Synced Brewfile is at ~/dotfiles/Brewfile.
+# Copy this to ~/dotfiles/overrides/brew/Brewfile.local and add device-only
+# formulae. Never commit it — scripts/brew-bundle concatenates it automatically.
+# See Documentation/machine-overrides.md.
+#
+# Example:
+#   cask "copilot-cli"
+#   cask "sonarqube-cli"

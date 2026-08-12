@@ -1,3 +1,6 @@
+# Synced mise baseline (language runtimes + floating tools).
+# Per-machine extras: overrides/mise/config.toml (gitignored), exposed as
+# ~/.mise/config.toml. See Documentation/machine-overrides.md.
 [tools]
 usage = "latest"  # Internal
 bun = "latest"

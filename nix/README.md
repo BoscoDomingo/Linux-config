@@ -31,23 +31,21 @@ blocked, see [`test/README.md`](test/README.md).
 
 ## Layout
 
-| File | Role |
-|------|------|
-| `flake.nix` | Inputs (nixpkgs, home-manager, nix-darwin) and per-host outputs |
-| `home/common.nix` | Shared config imported by every host |
-| `home/packages.nix` | The former Homebrew array, as a Nix package list |
-| `home/dotfiles.nix` | Out-of-store symlinks to your existing repo files (keeps them editable) |
-| `home/shell.nix` | Example native Home Manager modules (zsh/starship/fzf/direnv) |
-| `home/git.nix` | Opt-in: per-machine git identity (work vs personal) via `includeIf` |
-| `home/tools.nix` | Activation steps for git-cloned/curled frameworks (oh-my-zsh, tpm, cheat sheets, micro themes, jj guards, engram) |
-| `hosts/*.nix` | Per-machine / per-OS overrides |
-| `bootstrap.sh` | One-command setup for a new machine |
-| `test/verify.sh` | Post-switch sanity checks; `test/README.md` records the verified run |
+| File                | Role                                                                                                              |
+|---------------------|-------------------------------------------------------------------------------------------------------------------|
+| `flake.nix`         | Inputs (nixpkgs, home-manager, nix-darwin) and per-host outputs                                                   |
+| `home/common.nix`   | Shared config imported by every host                                                                              |
+| `home/packages.nix` | The former Homebrew array, as a Nix package list                                                                  |
+| `home/dotfiles.nix` | Out-of-store symlinks to your existing repo files (keeps them editable)                                           |
+| `home/shell.nix`    | Example native Home Manager modules (zsh/starship/fzf/direnv)                                                     |
+| `home/git.nix`      | Opt-in: per-machine git identity (work vs personal) via `includeIf`                                               |
+| `home/tools.nix`    | Activation steps for git-cloned/curled frameworks (oh-my-zsh, tpm, cheat sheets, micro themes, jj guards, engram) |
+| `hosts/*.nix`       | Per-machine / per-OS overrides                                                                                    |
+| `bootstrap.sh`      | One-command setup for a new machine                                                                               |
+| `test/verify.sh`    | Post-switch sanity checks; `test/README.md` records the verified run                                              |
 
-Per-machine identity (git email + signing key) and secrets are covered in
-[the migration doc](../Documentation/Nix_exploration.md#8-per-machine-identity--secrets-work-vs-personal).
-The short version: keep them in an untracked
-`~/.config/git/local.gitconfig` per machine and `[include]` it — the SSH
-private key stays in `~/.ssh/` and is never committed.
+Per-machine identity and device-only packages live in the gitignored
+[`overrides/`](../Documentation/machine-overrides.md) tree (`git`, `jj`,
+`mise`, `brew`). The SSH private key stays in `~/.ssh/` and is never committed.
 
 The migration is active; use the cheatsheet for routine updates and rollback.

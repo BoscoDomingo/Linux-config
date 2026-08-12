@@ -247,12 +247,15 @@ more aggressively than intended.
 
 - **mise tools:** use `mise install`, `mise upgrade`, or `mise upgrade <tool>`.
   Do not use `mise self-update`; mise itself is managed by Nix.
+  Synced tools live in `.config/mise/config.toml`; device-only tools go in
+  `overrides/mise/config.toml` (see [machine-overrides.md](./machine-overrides.md)).
 - **pnpm:** pnpm is managed by mise, so prefer `mise upgrade pnpm`. Avoid a
   global `pnpm self-update`, which can create a competing copy in `PNPM_HOME`.
   A project-local package-manager pin is a separate project concern.
-- **Homebrew:** use `brew update && brew upgrade`. Only Engram and httpstat are
-  intentionally Brew-managed; `brew bundle --file "$REPO/Brewfile"` reconciles
-  those declarations.
+- **Homebrew:** use `brew update && brew upgrade`. Synced exceptions live in
+  `Brewfile`; device-only formulae go in `overrides/brew/Brewfile.local`.
+  Reconcile with `bash "$REPO/scripts/brew-bundle"` (install) or
+  `bash "$REPO/scripts/brew-bundle" cleanup --force` (drop undeclared leaves).
 - **Application self-updaters:** do not self-update Nix-owned applications.
   Advance `nixpkgs`, build, and activate instead.
 - **Arch:** `sudo pacman -Syu` remains a separate operating-system update; Home

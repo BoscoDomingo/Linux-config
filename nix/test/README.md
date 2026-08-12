@@ -15,16 +15,16 @@ packages), including **per-machine local overrides**. It passed.
 
 ## What was verified (and the result)
 
-| # | Property | Result |
-|---|----------|--------|
-| 1 | `nix build` of `homeConfigurations.<host>.activationPackage` **evaluates and builds** from the pinned inputs | ✅ built the generation (packages fetched from `cache.nixos.org`) |
-| 2 | `home-manager` activation creates the profile + symlinks on a clean `$HOME` | ✅ `Creating home file links` / `installPackages` succeeded |
-| 3 | Nix-installed CLIs are on `PATH` and runnable | ✅ verification enforces Nix provenance for the declared global toolbox |
-| 4 | Dotfiles are **out-of-store symlinks to the live repo** (still editable in place) | ✅ `~/.zshrc → ~/dotfiles/.zshrc`; editing the repo file is visible immediately through the link |
-| 5 | Pre-existing files are backed up, not clobbered | ✅ `.profile`/`.bashrc` → `*.hm-bak` (equivalent to `home-manager -b`) |
-| 6 | **Per-machine git identity** via untracked `~/.config/git/local.gitconfig` overrides the committed baseline | ✅ work override wins; baseline stays `boscodomingob@gmail.com` |
-| 7 | **Per-directory git identity** via `includeIf` | ✅ repo under `~/work` → work email; repo under `~/personal` → personal email |
-| 8 | **Atomic rollback** between generations | ✅ gen2 added `tree` (on `PATH`); rollback to gen1 removed it while dotfiles stayed linked; generations recorded as `home-manager-{1,2,3}-link` |
+| # | Property                                                                                                     | Result                                                                                                                                         |
+|---|--------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1 | `nix build` of `homeConfigurations.<host>.activationPackage` **evaluates and builds** from the pinned inputs | ✅ built the generation (packages fetched from `cache.nixos.org`)                                                                               |
+| 2 | `home-manager` activation creates the profile + symlinks on a clean `$HOME`                                  | ✅ `Creating home file links` / `installPackages` succeeded                                                                                     |
+| 3 | Nix-installed CLIs are on `PATH` and runnable                                                                | ✅ verification enforces Nix provenance for the declared global toolbox                                                                         |
+| 4 | Dotfiles are **out-of-store symlinks to the live repo** (still editable in place)                            | ✅ `~/.zshrc → ~/dotfiles/.zshrc`; editing the repo file is visible immediately through the link                                                |
+| 5 | Pre-existing files are backed up, not clobbered                                                              | ✅ `.profile`/`.bashrc` → `*.hm-bak` (equivalent to `home-manager -b`)                                                                          |
+| 6 | **Per-machine git/jj identity** via gitignored `overrides/git` + `overrides/jj`                              | ✅ work override wins; baseline stays `boscodomingob@gmail.com`                                                                                 |
+| 7 | **Per-directory git/jj identity** via `includeIf` / `--when.repositories`                                    | ✅ `~/repos` → work; `~/dotfiles` / `~/personal` → personal                                                                                     |
+| 8 | **Atomic rollback** between generations                                                                      | ✅ gen2 added `tree` (on `PATH`); rollback to gen1 removed it while dotfiles stayed linked; generations recorded as `home-manager-{1,2,3}-link` |
 
 The current live-host verification checks 30 package and symlink invariants.
 
@@ -39,8 +39,8 @@ A brand-new unprivileged user with an empty home, then:
    (`releases.nixos.org`), flakes enabled.
 2. The dotfiles checked out to `~/dotfiles`.
 3. `nix build .#homeConfigurations.ubuntu.activationPackage` → `./result/activate`.
-4. Created `~/.config/git/local.gitconfig` (work identity) + `~/work` and
-   `~/personal` repos to exercise the overrides.
+4. Created parallel git/jj work overrides under `overrides/` plus `~/repos`
+   and `~/personal` repos to exercise the path-scoped overrides.
 5. Ran `verify.sh`; built a 2nd generation and rolled back.
 
 ## Running it where GitHub tarball fetch is blocked (CI / locked-down networks)

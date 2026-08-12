@@ -10,7 +10,14 @@ __pycache__
 # They should be installed in the system using Leader + I inside tmux
 .config/tmux/plugins
 *_secret
+# Machine-local overlays (git, jj, mise, brew). See Documentation/machine-overrides.md.
+/overrides/**
+!/overrides/.gitkeep
+
+# Legacy paths (pre-overrides/ tree); keep ignoring in case a checkout still has them.
 .config/jj/repos/
+.config/jj/conf.d/
+.config/git/
 
 # Micro writes themes, plugins, syntax files, backups, and buffers into its config dir.
 .config/micro/backups/

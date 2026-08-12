@@ -1,7 +1,6 @@
 [user]
-  # Baseline (personal) identity. Kept here so personal machines work with no
-  # extra setup. Per-machine / per-directory overrides are applied by the
-  # [include]/[includeIf] blocks at the end of this file — later includes win.
+  # Baseline (personal) identity. Per-machine / per-directory overrides are applied by the
+  # [include]/[includeIf] blocks at the end of this file.
   name="Bosco Domingo"
   email = "boscodomingob@gmail.com"
   signingKey = "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBJ9uF4A1FF454eFAWhQab6uOuhtl6PVrvAez3AWuFLN Bosco Domingo"
@@ -109,15 +108,17 @@
   dub=delete-untracked-branches
 
 # MARK: - Per-machine / per-directory identity overrides
-# See Documentation/Nix_exploration.md §8. These files are untracked and
-# optional: a missing include path is silently ignored, so personal machines
-# keep the [user] identity above with zero extra setup. On a work machine,
-# drop the work email + signing key into ~/.config/git/local.gitconfig (or use
-# the per-directory includeIf below) and it overrides the baseline. The SSH
-# private key itself never lives in this repo.
+# Canonical docs: Documentation/machine-overrides.md
+# Edit files under the gitignored overrides/ tree:
+#   overrides/git/local.gitconfig
+#   overrides/git/work.gitconfig       # ~/repos/
+#   overrides/git/personal.gitconfig   # ~/dotfiles/, ~/personal/
+# Later includes win. Missing paths are ignored.
 [include]
-  path = ~/.config/git/local.gitconfig
-[includeIf "gitdir:~/repos/work/"]
-  path = ~/.config/git/work.gitconfig
-[includeIf "gitdir:~/repos/personal/"]
-  path = ~/.config/git/personal.gitconfig
+  path = ~/dotfiles/overrides/git/local.gitconfig
+[includeIf "gitdir:~/repos/"]
+  path = ~/dotfiles/overrides/git/work.gitconfig
+[includeIf "gitdir:~/dotfiles/"]
+  path = ~/dotfiles/overrides/git/personal.gitconfig
+[includeIf "gitdir:~/personal/"]
+  path = ~/dotfiles/overrides/git/personal.gitconfig

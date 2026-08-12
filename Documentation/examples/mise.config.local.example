@@ -1,0 +1,7 @@
+# Machine-local mise tools (not synced). Copy to
+# ~/dotfiles/overrides/mise/config.toml — mise loads it via ~/.mise/config.toml.
+# See Documentation/machine-overrides.md.
+#
+# [tools]
+# just = "latest"
+# kubectl = "latest"

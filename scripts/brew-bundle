@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# Install (or cleanup) Homebrew packages from the synced Brewfile plus an
+# optional per-machine overlay — same idea as overrides/git for identity.
+#
+#   scripts/brew-bundle              # brew bundle install
+#   scripts/brew-bundle cleanup -f   # remove formulae not in either file
+#
+# Synced baseline:  $DOTFILES_REPO/Brewfile
+# Machine overlay:  $DOTFILES_REPO/overrides/brew/Brewfile.local  (gitignored)
+#
+# See Documentation/machine-overrides.md. Missing overlay is fine.
+set -euo pipefail
+
+REPO="${DOTFILES_REPO:-$HOME/dotfiles}"
+BASE="$REPO/Brewfile"
+LOCAL="$REPO/overrides/brew/Brewfile.local"
+
+if ! command -v brew >/dev/null 2>&1; then
+	echo "brew not on PATH; skip" >&2
+	exit 0
+fi
+if [ ! -f "$BASE" ]; then
+	echo "missing $BASE" >&2
+	exit 1
+fi
+
+files=("$BASE")
+if [ -f "$LOCAL" ]; then
+	files+=("$LOCAL")
+	echo "brew bundle: $BASE + $LOCAL"
+else
+	echo "brew bundle: $BASE (no $LOCAL)"
+fi
+
+# Remaining args are forwarded (e.g. cleanup --force). Default subcommand is install.
+if [ "$#" -eq 0 ]; then
+	set -- install
+fi
+
+cat "${files[@]}" | brew bundle "$@" --file=-

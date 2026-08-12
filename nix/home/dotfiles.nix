@@ -59,7 +59,9 @@ in
     "fastfetch".source = link "${repo}/.config/fastfetch";
     "ghostty".source = link "${repo}/.config/ghostty";
     "hypr".source = link "${repo}/.config/hypr";
-    "jj".source = link "${repo}/.config/jj";
+    # Link only config.toml so ~/.config/jj/conf.d can symlink to
+    # overrides/jj/ and repos/ stays machine-local.
+    "jj/config.toml".source = link "${repo}/.config/jj/config.toml";
     "lsd".source = link "${repo}/.config/lsd";
     "micro".source = link "${repo}/.config/micro";
     "mise".source = link "${repo}/.config/mise";

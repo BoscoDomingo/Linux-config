@@ -8,6 +8,40 @@ let
   git = "${pkgs.git}/bin/git";
 in
 {
+  # Ensure ~/.config/jj is a real directory (not the old whole-dir symlink),
+  # then point tool-expected paths at the gitignored overrides/ tree.
+  # See Documentation/machine-overrides.md.
+  home.activation.machineOverrides = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
+    overrides="${repo}/overrides"
+    mkdir -p "$overrides/git" "$overrides/jj" "$overrides/mise" "$overrides/brew"
+
+    jjdir="$HOME/.config/jj"
+    if [ -L "$jjdir" ]; then
+      echo "Migrating ~/.config/jj from directory symlink to real directory"
+      tmp=$(mktemp -d)
+      [ -d "$jjdir/repos" ] && cp -a "$jjdir/repos" "$tmp/repos"
+      # Prefer existing overrides/jj; otherwise rescue conf.d contents once.
+      if [ -d "$jjdir/conf.d" ] && [ ! -L "$jjdir/conf.d" ]; then
+        cp -a "$jjdir/conf.d/." "$overrides/jj/" 2>/dev/null || true
+      fi
+      rm -f "$jjdir"
+      mkdir -p "$jjdir"
+      [ -d "$tmp/repos" ] && mv "$tmp/repos" "$jjdir/repos"
+      rm -rf "$tmp"
+    fi
+    mkdir -p "$jjdir"
+    # conf.d -> overrides/jj (replace a real dir left from older setups)
+    if [ -d "$jjdir/conf.d" ] && [ ! -L "$jjdir/conf.d" ]; then
+      cp -a "$jjdir/conf.d/." "$overrides/jj/" 2>/dev/null || true
+      rm -rf "$jjdir/conf.d"
+    fi
+    ln -sfn "$overrides/jj" "$jjdir/conf.d"
+
+    # mise global overlay
+    mkdir -p "$HOME/.mise"
+    ln -sfn "$overrides/mise/config.toml" "$HOME/.mise/config.toml"
+  '';
+
   # oh-my-zsh framework at ~/.oh-my-zsh. Cloned (not a Nix store path) so it
   # stays writable for its own cache/updates; .zshrc points $ZSH here.
   home.activation.ohMyZsh = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
