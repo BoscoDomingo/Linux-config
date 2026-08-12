@@ -47,6 +47,9 @@ in
     rip2 # rm-improved
     lazyjj
     witr
+    gh
+    jq
+    lazydocker
     zsh-autosuggestions
     zsh-fast-syntax-highlighting
     zsh-completions
