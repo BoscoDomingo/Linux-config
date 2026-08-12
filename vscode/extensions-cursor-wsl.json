@@ -2469,24 +2469,6 @@
 		}
 	},
 	{
-		"identifier": { "id": "iceye.syl" },
-		"version": "1.2.1",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/iceye.syl-1.2.1",
-			"scheme": "file"
-		},
-		"relativeLocation": "iceye.syl-1.2.1",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": true,
-			"isBuiltin": false,
-			"installedTimestamp": 1782305439500,
-			"pinned": true,
-			"source": "vsix"
-		}
-	},
-	{
 		"identifier": {
 			"id": "elijah-potter.harper",
 			"uuid": "67361f9a-6018-4ea8-9fd2-37b4de177c4e"
@@ -2538,32 +2520,6 @@
 			"id": "9d8c32ab-354c-4daf-a9bf-20b633734435",
 			"publisherDisplayName": "usernamehw",
 			"publisherId": "151820df-5dc5-4c97-8751-eb84643203fa",
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "yzane.markdown-pdf",
-			"uuid": "f015bc3c-a098-4245-8765-615e002e09ab"
-		},
-		"version": "2.1.0",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/yzane.markdown-pdf-2.1.0",
-			"scheme": "file"
-		},
-		"relativeLocation": "yzane.markdown-pdf-2.1.0",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1783324266142,
-			"pinned": false,
-			"source": "vsix",
-			"id": "f015bc3c-a098-4245-8765-615e002e09ab",
-			"publisherDisplayName": "yzane",
-			"publisherId": "86794f67-46a8-4137-a5a4-1415a0e41e7d",
 			"isPreReleaseVersion": false,
 			"hasPreReleaseVersion": false
 		}
@@ -2776,66 +2732,6 @@
 	},
 	{
 		"identifier": {
-			"id": "jj-view.jj-view",
-			"uuid": "9218ea3e-b964-494e-a2af-4f64dfddfac9"
-		},
-		"version": "2.4.0",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/jj-view.jj-view-2.4.0-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "jj-view.jj-view-2.4.0-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1784719243605,
-			"pinned": true,
-			"source": "gallery",
-			"id": "9218ea3e-b964-494e-a2af-4f64dfddfac9",
-			"publisherId": "55e7875a-2c3e-4f5f-a5df-68605dea8ada",
-			"publisherDisplayName": "jj-view",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "visualjj.visualjj",
-			"uuid": "338d7429-21f3-449d-acdf-8518eae43a72"
-		},
-		"version": "0.32.1",
-		"location": {
-			"$mid": 1,
-			"path": "/home/bosco/.cursor-server/extensions/visualjj.visualjj-0.32.1-linux-x64",
-			"scheme": "file"
-		},
-		"relativeLocation": "visualjj.visualjj-0.32.1-linux-x64",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1784719244373,
-			"pinned": true,
-			"source": "gallery",
-			"id": "338d7429-21f3-449d-acdf-8518eae43a72",
-			"publisherId": "828fee6d-3c80-4fdc-9b0e-a9a8d09fb856",
-			"publisherDisplayName": "visualjj",
-			"targetPlatform": "linux-x64",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
 			"id": "vitest.explorer",
 			"uuid": "ab3534a7-eaae-4f75-9735-62bfd758b220"
 		},
@@ -2865,12 +2761,13 @@
 		}
 	},
 	{
-		"identifier": { "id": "vscode-icons-team.vscode-icons" },
+		"identifier": {
+			"id": "vscode-icons-team.vscode-icons",
+			"uuid": "9ccc1dd7-7ec4-4a46-bd4f-7d7b8b9d322a"
+		},
 		"version": "12.19.0",
 		"location": {
 			"$mid": 1,
-			"fsPath": "/home/bosco/.cursor-server/extensions/vscode-icons-team.vscode-icons-12.19.0-universal",
-			"external": "file:///home/bosco/.cursor-server/extensions/vscode-icons-team.vscode-icons-12.19.0-universal",
 			"path": "/home/bosco/.cursor-server/extensions/vscode-icons-team.vscode-icons-12.19.0-universal",
 			"scheme": "file"
 		},
@@ -2891,6 +2788,144 @@
 			"isPreReleaseVersion": false,
 			"hasPreReleaseVersion": false,
 			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "yzane.markdown-pdf",
+			"uuid": "f015bc3c-a098-4245-8765-615e002e09ab"
+		},
+		"version": "2.2.0",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/yzane.markdown-pdf-2.2.0-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "yzane.markdown-pdf-2.2.0-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1785947564104,
+			"pinned": false,
+			"source": "gallery",
+			"id": "f015bc3c-a098-4245-8765-615e002e09ab",
+			"publisherId": "86794f67-46a8-4137-a5a4-1415a0e41e7d",
+			"publisherDisplayName": "yzane",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "sonarsource.sonarlint-vscode",
+			"uuid": "a7fa941e-bcda-486f-8141-8483a6286177"
+		},
+		"version": "5.7.0",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/sonarsource.sonarlint-vscode-5.7.0-linux-x64",
+			"scheme": "file"
+		},
+		"relativeLocation": "sonarsource.sonarlint-vscode-5.7.0-linux-x64",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1785947564108,
+			"pinned": false,
+			"source": "gallery",
+			"id": "a7fa941e-bcda-486f-8141-8483a6286177",
+			"publisherId": "08b9cc7e-b259-49cd-b013-dfa5357b0a83",
+			"publisherDisplayName": "SonarSource",
+			"targetPlatform": "linux-x64",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "jj-view.jj-view",
+			"uuid": "9218ea3e-b964-494e-a2af-4f64dfddfac9"
+		},
+		"version": "2.6.0",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/jj-view.jj-view-2.6.0-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "jj-view.jj-view-2.6.0-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1786441083648,
+			"pinned": true,
+			"source": "gallery",
+			"id": "9218ea3e-b964-494e-a2af-4f64dfddfac9",
+			"publisherId": "55e7875a-2c3e-4f5f-a5df-68605dea8ada",
+			"publisherDisplayName": "jj-view",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "visualjj.visualjj",
+			"uuid": "338d7429-21f3-449d-acdf-8518eae43a72"
+		},
+		"version": "0.33.3",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/visualjj.visualjj-0.33.3-linux-x64",
+			"scheme": "file"
+		},
+		"relativeLocation": "visualjj.visualjj-0.33.3-linux-x64",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1786441084242,
+			"pinned": true,
+			"source": "gallery",
+			"id": "338d7429-21f3-449d-acdf-8518eae43a72",
+			"publisherId": "828fee6d-3c80-4fdc-9b0e-a9a8d09fb856",
+			"publisherDisplayName": "visualjj",
+			"targetPlatform": "linux-x64",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": { "id": "iceye.syl" },
+		"version": "1.3.0",
+		"location": {
+			"$mid": 1,
+			"path": "/home/bosco/.cursor-server/extensions/iceye.syl-1.3.0",
+			"scheme": "file"
+		},
+		"relativeLocation": "iceye.syl-1.3.0",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": true,
+			"isBuiltin": false,
+			"installedTimestamp": 1786533224162,
+			"pinned": true,
+			"source": "vsix"
 		}
 	}
 ]

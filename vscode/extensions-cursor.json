@@ -2715,36 +2715,6 @@
 	},
 	{
 		"identifier": {
-			"id": "anysphere.remote-ssh",
-			"uuid": "73a45d83-83c7-4b22-bebf-c9130b0ab3f3"
-		},
-		"version": "1.1.13",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/anysphere.remote-ssh-1.1.13",
-			"scheme": "file"
-		},
-		"relativeLocation": "anysphere.remote-ssh-1.1.13",
-		"metadata": {
-			"isApplicationScoped": true,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1784798100427,
-			"pinned": false,
-			"source": "gallery",
-			"id": "73a45d83-83c7-4b22-bebf-c9130b0ab3f3",
-			"publisherId": "c16ea17f-2629-4893-9064-35c0fd9add4c",
-			"publisherDisplayName": "Anysphere",
-			"targetPlatform": "undefined",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
 			"id": "anysphere.remote-containers",
 			"uuid": "94d8b289-9db0-4c3c-b4f3-a3294c789678"
 		},
@@ -2984,13 +2954,13 @@
 		}
 	},
 	{
-		"identifier": { "id": "golang.go" },
+		"identifier": {
+			"id": "golang.go",
+			"uuid": "d6f6cfea-4b6f-41f4-b571-6ad2ab7918da"
+		},
 		"version": "0.56.0",
 		"location": {
 			"$mid": 1,
-			"fsPath": "c:\\Users\\BoscoDomingoBenito\\.cursor\\extensions\\golang.go-0.56.0-universal",
-			"_sep": 1,
-			"external": "file:///c%3A/Users/BoscoDomingoBenito/.cursor/extensions/golang.go-0.56.0-universal",
 			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/golang.go-0.56.0-universal",
 			"scheme": "file"
 		},
@@ -3011,6 +2981,86 @@
 			"isPreReleaseVersion": false,
 			"hasPreReleaseVersion": false,
 			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "anysphere.remote-ssh",
+			"uuid": "73a45d83-83c7-4b22-bebf-c9130b0ab3f3"
+		},
+		"version": "1.1.14",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/anysphere.remote-ssh-1.1.14",
+			"scheme": "file"
+		},
+		"relativeLocation": "anysphere.remote-ssh-1.1.14",
+		"metadata": {
+			"isApplicationScoped": true,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1786438946476,
+			"pinned": false,
+			"source": "gallery",
+			"id": "73a45d83-83c7-4b22-bebf-c9130b0ab3f3",
+			"publisherId": "c16ea17f-2629-4893-9064-35c0fd9add4c",
+			"publisherDisplayName": "Anysphere",
+			"targetPlatform": "undefined",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "visualjj.visualjj",
+			"uuid": "338d7429-21f3-449d-acdf-8518eae43a72"
+		},
+		"version": "0.33.3",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/visualjj.visualjj-0.33.3-win32-x64",
+			"scheme": "file"
+		},
+		"relativeLocation": "visualjj.visualjj-0.33.3-win32-x64",
+		"metadata": {
+			"installedTimestamp": 1786534591328,
+			"source": "gallery",
+			"id": "338d7429-21f3-449d-acdf-8518eae43a72",
+			"publisherId": "828fee6d-3c80-4fdc-9b0e-a9a8d09fb856",
+			"publisherDisplayName": "visualjj",
+			"targetPlatform": "win32-x64",
+			"updated": false,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false
+		}
+	},
+	{
+		"identifier": { "id": "sonarsource.sonarlint-vscode" },
+		"version": "5.7.0",
+		"location": {
+			"$mid": 1,
+			"fsPath": "c:\\Users\\BoscoDomingoBenito\\.cursor\\extensions\\sonarsource.sonarlint-vscode-5.7.0-win32-x64",
+			"_sep": 1,
+			"external": "file:///c%3A/Users/BoscoDomingoBenito/.cursor/extensions/sonarsource.sonarlint-vscode-5.7.0-win32-x64",
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/sonarsource.sonarlint-vscode-5.7.0-win32-x64",
+			"scheme": "file"
+		},
+		"relativeLocation": "sonarsource.sonarlint-vscode-5.7.0-win32-x64",
+		"metadata": {
+			"installedTimestamp": 1786534600894,
+			"source": "gallery",
+			"id": "a7fa941e-bcda-486f-8141-8483a6286177",
+			"publisherId": "08b9cc7e-b259-49cd-b013-dfa5357b0a83",
+			"publisherDisplayName": "SonarSource",
+			"targetPlatform": "win32-x64",
+			"updated": false,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false
 		}
 	}
 ]
