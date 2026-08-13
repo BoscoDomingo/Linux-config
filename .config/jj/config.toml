@@ -115,8 +115,8 @@ de = ["diffedit"] # Alternative to squash
 
 u = ["undo"]
 
-a = ["absorb", "-i"]
-aa = ["absorb"]
+a = ["absorb"]
+ai = ["absorb", "-i"]
 af = ["absorb", "--ignore-immutable", "-t", "immutable()"] # absorb disregarding immutability (such as bookmarked changes)
 
 # Navigation
