@@ -20,14 +20,17 @@ you want a newer Nix-managed mise, the current update boundary is therefore:
 
 ```sh
 nix flake update nixpkgs --flake "$REPO/nix"
+# nix flake update nixpkgs --flake "$PWD/nix" # if you are in the repo root
 ```
 
 That makes every package sourced from `nixpkgs` *eligible* for an update. Nix
 only downloads/builds derivations whose resolved outputs changed, and the new
-Home Manager generation is activated atomically. There is no generic command
-that advances only mise while all other packages remain at the old nixpkgs
+Home Manager generation is activated atomically.
+
+There is no generic command
+that advances only one package while all other packages remain at the old nixpkgs
 revision. Doing that persistently would require a dedicated flake input or
-package override for mise, which adds maintenance overhead.
+package override for each package, which adds maintenance overhead.
 
 ## Apply the current locked configuration
 
@@ -249,9 +252,6 @@ more aggressively than intended.
   Do not use `mise self-update`; mise itself is managed by Nix.
   Synced tools live in `.config/mise/config.toml`; device-only tools go in
   `overrides/mise/config.toml` (see [machine-overrides.md](./machine-overrides.md)).
-- **pnpm:** pnpm is managed by mise, so prefer `mise upgrade pnpm`. Avoid a
-  global `pnpm self-update`, which can create a competing copy in `PNPM_HOME`.
-  A project-local package-manager pin is a separate project concern.
 - **Homebrew:** use `brew update && brew upgrade`. Synced exceptions live in
   `Brewfile`; device-only formulae go in `overrides/brew/Brewfile.local`.
   Reconcile with `bash "$REPO/scripts/brew-bundle"` (install) or
