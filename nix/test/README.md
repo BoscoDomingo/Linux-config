@@ -28,9 +28,6 @@ packages), including **per-machine local overrides**. It passed.
 
 The current live-host verification checks 30 package and symlink invariants.
 
-The SSH **private** key was never placed in the repo or the Nix store at any
-point — only its path is referenced (via `scripts/ssh-sign` / `SSH_SIGN_KEY_PATH`).
-
 ## How the test machine was set up
 
 A brand-new unprivileged user with an empty home, then:

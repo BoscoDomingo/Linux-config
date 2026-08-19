@@ -2,7 +2,7 @@
 # Declarative dotfile symlinks.
 #
 # `mkOutOfStoreSymlink` links straight to the files in this repo checkout, so
-# .zshrc / .config/* stay editable in place — the files are not copied
+# .zshrc / .config/* stay editable in place. The files are not copied
 # read-only into /nix/store. Home Manager owns the link set: it creates them
 # atomically and prunes links dropped from this set.
 let

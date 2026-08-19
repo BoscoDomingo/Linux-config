@@ -9,7 +9,7 @@
 # Idempotent: safe to re-run to apply changes.
 #
 # INSTALL_BREW=1 also installs Homebrew (escape hatch for tools not in nixpkgs).
-# SKIP_MISE=1 skips `mise install` (language runtimes + pi), e.g. in CI.
+# SKIP_MISE=1 skips `mise install` (language runtimes), e.g. in CI.
 # Where GitHub tarball fetch is blocked, use the --override-input technique in
 # test/README.md instead.
 set -euo pipefail
@@ -83,7 +83,7 @@ HOME_MANAGER_BACKUP_EXT=hm-bak "$activation/activate"
 # Home Manager profile as the stable-tool owner before mise and verification.
 export PATH="$HOME/.nix-profile/bin:$PATH"
 
-# 4. Populate mise-managed tools (language runtimes, pi). mise itself is
+# 4. Populate mise-managed tools (language runtimes). mise itself is
 #    installed by Home Manager above. Skip with SKIP_MISE=1.
 if [ "${SKIP_MISE:-0}" != "1" ]; then
 	mise_bin="$HOME/.nix-profile/bin/mise"

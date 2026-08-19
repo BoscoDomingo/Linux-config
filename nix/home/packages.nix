@@ -51,7 +51,7 @@ in
     fzf
     bat
     ripgrep
-    delta # brew: git-delta
+    delta 
     fastfetch
     onefetch
     duf
@@ -88,7 +88,5 @@ in
     mise
     direnv
     tmux
-    # Engram comes from Homebrew, not Nix; scripts/engram-setup registers it
-    # with detected coding agents.
   ];
 }

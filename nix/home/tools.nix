@@ -8,7 +8,7 @@ let
   git = "${pkgs.git}/bin/git";
 in
 {
-  # Ensure ~/.config/jj is a real directory (not the old whole-dir symlink),
+  # Ensure ~/.config/jj is a real directory,
   # then point tool-expected paths at the gitignored overrides/ tree.
   # See Documentation/machine-overrides.md.
   home.activation.machineOverrides = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''

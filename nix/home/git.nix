@@ -11,9 +11,9 @@
 {
   programs.git = {
     enable = true;
-    userName = "Bosco Domingo"; # name is safe to share; email/key are not
+    userName = "Bosco Domingo";
 
-    # Later includes win: personal paths beat local/work when both match.
+    # Later entries win (i.e. dotfiles use personal.gitconfig instead of default).
     includes = [
       { path = "~/dotfiles/overrides/git/local.gitconfig"; }
       {

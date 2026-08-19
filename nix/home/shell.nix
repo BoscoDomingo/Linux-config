@@ -2,14 +2,11 @@
 # OPTIONAL: native Home Manager modules for tools with first-class
 # support. These generate config AND manage the package together, so you can
 # drop the corresponding symlink from dotfiles.nix if you adopt them.
-#
-# You do NOT need to convert everything — keep tools you're happy with as
-# plain symlinks. This file shows the pattern for the highest-value ones.
 let
   repo = "${config.home.homeDirectory}/dotfiles";
 in
 {
-  # zsh: let HM manage the package/plugins but keep YOUR interactive config by
+  # zsh: let HM manage the package/plugins but keep interactive config by
   # sourcing the existing layered files (.profile → .shellrc → .aliases).
   programs.zsh = {
     enable = true;
@@ -22,7 +19,7 @@ in
   programs.fzf.enable = true;
   programs.direnv = {
     enable = true;
-    nix-direnv.enable = true; # fast direnv + Nix; complements mise
+    nix-direnv.enable = true;
   };
 
   # git: can either manage settings in Nix or keep your .gitconfig symlink.

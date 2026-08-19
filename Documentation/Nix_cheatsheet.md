@@ -6,7 +6,7 @@ Nix manages declared user packages and dotfiles; it does **not** update the
 host operating system itself.
 
 ```sh
-REPO="$HOME/dotfiles"
+DOTFILES_REPO="${DOTFILES_REPO:-$HOME/dotfiles}"
 HOST="arch-wsl"
 ```
 
@@ -19,7 +19,7 @@ Most Nix packages in this repository share one pinned `nixpkgs` revision. If
 you want a newer Nix-managed mise, the current update boundary is therefore:
 
 ```sh
-nix flake update nixpkgs --flake "$REPO/nix"
+nix flake update nixpkgs --flake "$DOTFILES_REPO/nix"
 # nix flake update nixpkgs --flake "$PWD/nix" # if you are in the repo root
 ```
 
@@ -39,7 +39,7 @@ Build without changing live state:
 ```sh
 activation="$(
   nix build --no-link --print-out-paths \
-    "$REPO/nix#homeConfigurations.$HOST.activationPackage"
+    "$DOTFILES_REPO/nix#homeConfigurations.$HOST.activationPackage"
 )"
 ```
 
@@ -53,7 +53,7 @@ Activate and verify:
 
 ```sh
 HOME_MANAGER_BACKUP_EXT=hm-bak "$activation/activate"
-bash "$REPO/nix/test/verify.sh"
+bash "$DOTFILES_REPO/nix/test/verify.sh"
 ```
 
 This applies the versions already pinned in `nix/flake.lock`; it does not
@@ -62,7 +62,7 @@ fetch newer package revisions.
 ## Full repository reconciliation
 
 ```sh
-bash "$REPO/nix/bootstrap.sh"
+bash "$DOTFILES_REPO/nix/bootstrap.sh"
 ```
 
 Use bootstrap on a new device or when you want to reconcile Nix, the Brewfile,
@@ -74,35 +74,35 @@ necessary for a routine Home Manager switch.
 Update every flake input:
 
 ```sh
-nix flake update --flake "$REPO/nix"
+nix flake update --flake "$DOTFILES_REPO/nix"
 ```
 
 Update only the shared nixpkgs revision:
 
 ```sh
-nix flake update nixpkgs --flake "$REPO/nix"
+nix flake update nixpkgs --flake "$DOTFILES_REPO/nix"
 ```
 
 Update only Home Manager:
 
 ```sh
-nix flake update home-manager --flake "$REPO/nix"
+nix flake update home-manager --flake "$DOTFILES_REPO/nix"
 ```
 
 Review, build, activate, and verify an update:
 
 ```sh
-git diff -- "$REPO/nix/flake.lock"
-nix flake check "$REPO/nix"
+git diff -- "$DOTFILES_REPO/nix/flake.lock"
+nix flake check "$DOTFILES_REPO/nix"
 
 activation="$(
   nix build --no-link --print-out-paths \
-    "$REPO/nix#homeConfigurations.$HOST.activationPackage"
+    "$DOTFILES_REPO/nix#homeConfigurations.$HOST.activationPackage"
 )"
 
 "$activation/home-path/bin/mise" --version  # inspect candidate mise
 HOME_MANAGER_BACKUP_EXT=hm-bak "$activation/activate"
-bash "$REPO/nix/test/verify.sh"
+bash "$DOTFILES_REPO/nix/test/verify.sh"
 ```
 
 Commit `nix/flake.lock` so other devices use the exact same revisions. On
@@ -136,8 +136,8 @@ nix search nixpkgs mise
 Edit `nix/home/packages.nix`, then:
 
 ```sh
-nix flake check "$REPO/nix"
-bash "$REPO/nix/bootstrap.sh"
+nix flake check "$DOTFILES_REPO/nix"
+bash "$DOTFILES_REPO/nix/bootstrap.sh"
 ```
 
 Avoid `nix profile install` for permanent tools: it creates imperative state
@@ -170,16 +170,16 @@ nix run nixpkgs#cowsay -- "hello"
 
 ```sh
 nix --version
-nix flake show "$REPO/nix"
-nix flake metadata "$REPO/nix"
-nix flake check "$REPO/nix"
+nix flake show "$DOTFILES_REPO/nix"
+nix flake metadata "$DOTFILES_REPO/nix"
+nix flake check "$DOTFILES_REPO/nix"
 ```
 
 Build with detailed logs and traces:
 
 ```sh
 nix build -L --show-trace --no-link \
-  "$REPO/nix#homeConfigurations.$HOST.activationPackage"
+  "$DOTFILES_REPO/nix#homeConfigurations.$HOST.activationPackage"
 ```
 
 Inspect the active generation:
@@ -193,7 +193,7 @@ Inspect closure size:
 
 ```sh
 nix path-info -Sh \
-  "$REPO/nix#homeConfigurations.$HOST.activationPackage"
+  "$DOTFILES_REPO/nix#homeConfigurations.$HOST.activationPackage"
 ```
 
 Check who owns the command currently being executed:
@@ -254,8 +254,8 @@ more aggressively than intended.
   `overrides/mise/config.toml` (see [machine-overrides.md](./machine-overrides.md)).
 - **Homebrew:** use `brew update && brew upgrade`. Synced exceptions live in
   `Brewfile`; device-only formulae go in `overrides/brew/Brewfile.local`.
-  Reconcile with `bash "$REPO/scripts/brew-bundle"` (install) or
-  `bash "$REPO/scripts/brew-bundle" cleanup --force` (drop undeclared leaves).
+  Reconcile with `bash "$DOTFILES_REPO/scripts/brew-bundle"` (install) or
+  `bash "$DOTFILES_REPO/scripts/brew-bundle" cleanup --force` (drop undeclared leaves).
 - **Application self-updaters:** do not self-update Nix-owned applications.
   Advance `nixpkgs`, build, and activate instead.
 - **Arch:** `sudo pacman -Syu` remains a separate operating-system update; Home
