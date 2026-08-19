@@ -49,6 +49,7 @@ AI/.pi/agent/git/
 !.config/opencode/package.json
 !.config/opencode/plugins/
 !.config/opencode/plugins/**
+.config/opencode/plugins/herdr-agent-state.js
 *package-lock.json
 
 .config/cheat/cheatsheets/community/
