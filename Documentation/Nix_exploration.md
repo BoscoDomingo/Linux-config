@@ -9,10 +9,7 @@ Per-machine identity and secrets: [`machine-overrides.md`](machine-overrides.md)
 
 ## 1. The problem
 
-A personal dotfiles repo needs to sync config and tools across Arch, Ubuntu,
-macOS, and WSL without a babysitting session on every new machine.
-
-The old imperative path (`run.sh` and per-distro installers) failed that bar:
+The old imperative path (`run.sh` and per-distro installers) failed at portability:
 
 | # | Pain point                                        | Why it hurts syncing                                  |
 |---|---------------------------------------------------|-------------------------------------------------------|
@@ -23,18 +20,16 @@ The old imperative path (`run.sh` and per-distro installers) failed that bar:
 | 5 | Non-idempotent `curl \| bash` steps               | Re-runs are unsafe; versions float                    |
 | 6 | Bespoke symlink logic                             | Edge cases are local code to maintain                 |
 
-"Robust" means fixing as many of these as the effort is worth.
-
 ## 2. What "robust" requires
 
 In priority order for this setup:
 
-1. **Declarative** — one description of desired state; the tool makes the machine match it. (kills #2, #4)
-2. **Idempotent and unattended** — run twice equals run once; no prompts. (kills #1, #5)
+1. **Declarative** — one description of desired state; the tool makes the machine match it. (#2, #4)
+2. **Idempotent and unattended** — run twice equals run once; no prompts. (#1, #5)
 3. **Reproducible** — same inputs produce the same machine, including versions. (strong form of #4)
 4. **Reversible** — a bad change rolls back atomically. (kills #3)
 
-Dotfile managers give you 1–2 for config files. Nix is the mainstream option
+Dotfile managers give 1–2 for config files. Nix is the mainstream option
 that gives all four for both config files and the package/toolchain layer.
 
 ## 3. Alternatives
@@ -139,6 +134,12 @@ the Nix lock. Nix owns the stable global CLI toolbox.
 
 ### 5.1 Tool ownership
 
+The old `run.sh` / `Setup/` installers are gone. Distro scripts install host
+prerequisites, clone the repo, and hand off to `nix/bootstrap.sh`, which
+installs Nix and activates the generation pinned by `flake.lock`. Activation
+hooks in `home/tools.nix` are best-effort so a network hiccup does not brick a
+switch.
+
 Each responsibility has one owner. Nothing is installed by more than one system.
 
 | System                  | Owns                                                   | Examples                           |
@@ -195,11 +196,6 @@ register without a keypress (currently `claude-code`, which prompts before it
 adds its tools to `permissions.allow` in `~/.claude/settings.json`) are printed
 as a reminder to run `engram setup <agent>` by hand.
 
-The old `run.sh` / `Setup/` installers are gone. Distro scripts install host
-prerequisites, clone the repo, and hand off to `nix/bootstrap.sh`, which
-installs Nix and activates the generation pinned by `flake.lock`. Activation
-hooks in `home/tools.nix` are best-effort so a network hiccup does not brick a
-switch.
 
 ### 5.2 Dotfiles stay live-editable
 

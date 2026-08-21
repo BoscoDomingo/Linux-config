@@ -16,7 +16,7 @@ Updating `nixpkgs` is not a full operating-system upgrade: it does not run
 `pacman`, update Windows/WSL, or change Homebrew and mise-managed tools.
 
 Most Nix packages in this repository share one pinned `nixpkgs` revision. If
-you want a newer Nix-managed mise, the current update boundary is therefore:
+you want a newer Nix-managed package, the current update boundary is therefore:
 
 ```sh
 nix flake update nixpkgs --flake "$DOTFILES_REPO/nix"
@@ -27,9 +27,10 @@ That makes every package sourced from `nixpkgs` *eligible* for an update. Nix
 only downloads/builds derivations whose resolved outputs changed, and the new
 Home Manager generation is activated atomically.
 
-There is no generic command
-that advances only one package while all other packages remain at the old nixpkgs
-revision. Doing that persistently would require a dedicated flake input or
+**There is no generic command
+that advances only one package** while all other packages remain at the old nixpkgs
+revision.
+Doing that persistently would require a dedicated flake input or
 package override for each package, which adds maintenance overhead.
 
 ## Apply the current locked configuration
