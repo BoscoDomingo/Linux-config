@@ -53,3 +53,4 @@ AI/.pi/agent/git/
 *package-lock.json
 
 .config/cheat/cheatsheets/community/
+codebook.toml
