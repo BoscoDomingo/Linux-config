@@ -167,6 +167,12 @@ synced global config.
 agent. Bootstrap installs Homebrew itself only when `INSTALL_BREW=1`, then runs
 the bundle when Homebrew is available.
 
+Registration is unattended: `engram setup` gets stdin from `/dev/null` and a
+timeout so it can never stall activation or bootstrap. Agents that engram cannot
+register without a keypress (currently `claude-code`, which prompts before it
+adds its tools to `permissions.allow` in `~/.claude/settings.json`) are printed
+as a reminder to run `engram setup <agent>` by hand.
+
 The old `run.sh` / `Setup/` installers are gone. Distro scripts install host
 prerequisites, clone the repo, and hand off to `nix/bootstrap.sh`, which
 installs Nix and activates the generation pinned by `flake.lock`. Activation

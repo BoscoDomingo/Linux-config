@@ -92,9 +92,17 @@ if [ "${SKIP_MISE:-0}" != "1" ]; then
 	if [ -n "$mise_bin" ]; then
 		echo "== mise install =="
 		"$mise_bin" install
-		# Register the Homebrew-owned Engram with each detected coding agent.
-		[ -x "$REPO/scripts/engram-setup" ] && bash "$REPO/scripts/engram-setup" || true
 	fi
+fi
+
+# 5. Register the Homebrew-owned Engram with each detected coding agent. Kept
+#    outside the mise block so SKIP_MISE=1 still registers it, but after mise so
+#    agents that mise installs are detected. Exit code 10 means the script
+#    printed reminders for agents that only a human can register.
+engram_status=0
+if [ -x "$REPO/scripts/engram-setup" ]; then
+	echo "== engram setup =="
+	bash "$REPO/scripts/engram-setup" || engram_status=$?
 fi
 
 echo "== verify =="
@@ -113,3 +121,13 @@ overrides/ tree (see Documentation/machine-overrides.md):
 Then: bash ~/dotfiles/nix/bootstrap.sh   # refreshes symlinks + brew bundle
       ssh-keygen -t ed25519 -C "you@work.example"   # private key never committed
 EOF
+
+# Repeat the engram reminder here: the verify output above is long enough to
+# scroll the "engram setup" section off the screen.
+if [ "$engram_status" = 10 ]; then
+	cat <<'EOF'
+
+engram is still missing from the agents listed in the "engram setup" section
+above. Run the commands it printed and answer their prompts.
+EOF
+fi
