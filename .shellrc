@@ -89,3 +89,13 @@ ensure_link() {
 
 	ln -s "$src" "$dst"
 }
+
+# Claude Code opens Agent View when you start it with no arguments, which can't run slash commands
+# An empty prompt argument bypasses that 
+claude() {
+	if [ "$#" -eq 0 ]; then
+		command claude ''
+	else
+		command claude "$@"
+	fi
+}
