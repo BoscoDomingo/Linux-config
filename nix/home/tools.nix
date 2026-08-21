@@ -6,6 +6,16 @@
 let
   repo = "${config.home.homeDirectory}/dotfiles";
   git = "${pkgs.git}/bin/git";
+  # The opencode installer shells out to plain Unix tools; activation runs with a
+  # restricted PATH, so hand it the ones it needs.
+  opencodeInstallerPath = lib.makeBinPath [
+    pkgs.curl
+    pkgs.gnutar
+    pkgs.gzip
+    pkgs.coreutils
+    pkgs.gnugrep
+    pkgs.gnused
+  ];
 in
 {
   # Ensure ~/.config/jj is a real directory,
@@ -77,6 +87,24 @@ in
           -o "$dir/$t.micro" || true
       fi
     done
+  '';
+
+  # opencode from the upstream installer instead of nixpkgs. The nixpkgs package
+  # is a Bun standalone compiled by an autoPatchelfHook'd bun; the shifted ELF
+  # offsets make it segfault in ld-linux on WSL2 (NixOS/nixpkgs#520383), so the
+  # command exits 139 with no output. `--no-modify-path` stops the installer from
+  # appending PATH lines to the repo-symlinked .zshrc; .profile adds the bin dir.
+  # Guarded on the binary being absent, so a switch never re-downloads 180 MB.
+  # Upgrades are manual, because .config/opencode/opencode.json sets
+  # `autoupdate: notify`: re-run the installer, or delete the binary and switch.
+  home.activation.opencode = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    if [ ! -x "$HOME/.opencode/bin/opencode" ]; then
+      installer="$(${pkgs.coreutils}/bin/mktemp)"
+      run ${pkgs.curl}/bin/curl -fsSL https://opencode.ai/install -o "$installer" || true
+      run env PATH="${opencodeInstallerPath}:$PATH" \
+        ${pkgs.bash}/bin/bash "$installer" --no-modify-path || true
+      ${pkgs.coreutils}/bin/rm -f "$installer"
+    fi
   '';
 
   # AI-agent jj-approval guards.

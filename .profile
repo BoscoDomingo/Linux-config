@@ -111,6 +111,11 @@ esac
 # that may remain for tools no longer declared in mise.
 _path_prepend_if_missing "$HOME/.nix-profile/bin"
 
+# opencode comes from its own installer, not Nix (the nixpkgs Bun standalone
+# segfaults on WSL2). Prepended after the Nix profile so it wins if a stale
+# Nix-owned opencode is still present in an older generation's profile.
+_path_prepend_if_missing "$HOME/.opencode/bin"
+
 # rip2
 export RIP_GRAVEYARD="$HOME/.local/share/rip2/graveyard"
 if ! [ -d "$RIP_GRAVEYARD" ]; then

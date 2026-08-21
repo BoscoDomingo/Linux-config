@@ -141,11 +141,12 @@ the Nix lock. Nix owns the stable global CLI toolbox.
 
 Each responsibility has one owner. Nothing is installed by more than one system.
 
-| System                 | Owns                                                   | Examples                           |
-|------------------------|--------------------------------------------------------|------------------------------------|
-| **Nix / Home Manager** | Stable global CLI tools; dotfile symlinks              | rg, jj, neovim, mise, direnv, tmux |
-| **mise**               | Language runtimes + explicitly declared floating tools | node, go, python, rust, bun, pnpm  |
-| **Homebrew**           | Tools whose Nix/mise packages are unsuitable           | engram, httpstat                   |
+| System                  | Owns                                                   | Examples                           |
+|-------------------------|--------------------------------------------------------|------------------------------------|
+| **Nix / Home Manager**  | Stable global CLI tools; dotfile symlinks              | rg, jj, neovim, mise, direnv, tmux |
+| **mise**                | Language runtimes + explicitly declared floating tools | node, go, python, rust, bun, pnpm  |
+| **Homebrew**            | Tools whose Nix/mise packages are unsuitable           | engram, httpstat                   |
+| **Upstream installer**  | Tools whose Nix build is broken on this platform       | opencode                           |
 
 Per-machine extras (not synced) use the gitignored `overrides/` tree — see
 [machine-overrides.md](./machine-overrides.md):
@@ -161,6 +162,27 @@ Per-machine extras (not synced) use the gitignored `overrides/` tree — see
 optional local overlay, then runs `brew bundle`. Mise merges
 `~/.mise/config.toml` (symlinked to `overrides/mise/config.toml`) on top of the
 synced global config.
+
+#### 5.1.1 Bun / opencode
+
+`opencode` is the one tool installed from its vendor's own script. The nixpkgs
+package is a Bun standalone compiled by a bun that `autoPatchelfHook` has
+rewritten; the shifted ELF offsets make the result segfault inside `ld-linux`
+before any application code runs, so on WSL2 the command exits 139 with no
+output ([NixOS/nixpkgs#520383](https://github.com/nixos/nixpkgs/issues/520383),
+fixed upstream by [oven-sh/bun#31024](https://github.com/oven-sh/bun/pull/31024)).
+
+`home/tools.nix` therefore runs `https://opencode.ai/install` with
+`--no-modify-path`, which puts the upstream binary in `~/.opencode/bin`. The
+`--no-modify-path` flag matters: without it the installer appends `export PATH=`
+lines to `.zshrc`, which is a symlink into this repo. `.profile` adds
+`~/.opencode/bin` after the Nix profile so it wins over any stale Nix-owned copy.
+The activation step only runs when the binary is missing, so a switch never
+re-downloads 180 MB; upgrades are manual, because the repo config sets
+`autoupdate: notify`. Once nixpkgs ships a Bun version that contains the
+upstream fix, move opencode back to `packages.nix`.
+
+#### 5.1.2 engram
 
 `engram` is installed via Homebrew; `scripts/engram-setup` (from
 `home/tools.nix` and `bootstrap.sh`) registers it with each detected coding

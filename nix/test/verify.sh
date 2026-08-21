@@ -22,7 +22,7 @@ no() {
 
 echo "== packages owned by Home Manager (from ~/.nix-profile) =="
 for bin in rg bat eza fd fzf delta fastfetch duf gping hyperfine trip sshs cheat rip \
-	jj nvim opencode mise direnv tmux diffnav herdr; do
+	jj nvim mise direnv tmux diffnav herdr; do
 	# Ignore shell functions created by `mise activate`; verify the executable.
 	p=$(type -P "$bin" 2>/dev/null || true)
 	case "$p" in
@@ -38,6 +38,21 @@ for bin in rg bat eza fd fzf delta fastfetch duf gping hyperfine trip sshs cheat
 	*) no "$bin -> $p (expected ~/.nix-profile)" ;;
 	esac
 done
+
+# opencode comes from its own installer, not Nix: the nixpkgs Bun standalone
+# segfaults in ld-linux on WSL2. See nix/home/tools.nix.
+opencode_path=$(type -P opencode 2>/dev/null || true)
+case "$opencode_path" in
+"$HOME/.opencode/bin/opencode")
+	if opencode --version >/dev/null 2>&1; then
+		ok "opencode -> $opencode_path (upstream installer)"
+	else
+		no "opencode -> $opencode_path but fails to run"
+	fi
+	;;
+"") no "opencode missing (expected $HOME/.opencode/bin/opencode)" ;;
+*) no "opencode -> $opencode_path (expected $HOME/.opencode/bin/opencode, not Nix)" ;;
+esac
 
 diffnav_path=$(readlink -f "$(type -P diffnav 2>/dev/null || true)")
 case "$diffnav_path" in

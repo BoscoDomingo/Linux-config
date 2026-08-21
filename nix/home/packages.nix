@@ -51,7 +51,7 @@ in
     fzf
     bat
     ripgrep
-    delta 
+    delta
     fastfetch
     onefetch
     duf
@@ -73,7 +73,8 @@ in
     jujutsu # `jj`
     jjui # jj TUI
     neovim
-    opencode
+    # opencode is deliberately absent. See Nix_exploration for details
+    # opencode
     yt-dlp
     act
     tree-sitter
