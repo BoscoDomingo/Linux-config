@@ -91,6 +91,7 @@ st = ["status"]
 # Use diffnav for commit inspection, but skip it when jj show has metadata without a diff.
 sh = ["show", "--config=ui.diff-formatter=':git'", "--config=ui.pager=[\"jj-diffnav-pager\"]"]
 shp = ["show", "-r", "@-", "--config=ui.diff-formatter=':git'", "--config=ui.pager=[\"jj-diffnav-pager\"]"]
+shs = ["show", "--summary"]
 
 d = ["diff"]
 l = ["log"]
