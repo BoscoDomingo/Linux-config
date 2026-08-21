@@ -10,6 +10,10 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 
+# Repo path for ad-hoc commands from any directory.
+# Scripts also default to $HOME/dotfiles if this is unset (fresh-machine bootstrap).
+export DOTFILES_REPO="${DOTFILES_REPO:-$HOME/dotfiles}"
+
 export VISUAL=micro
 export EDITOR=nvim
 

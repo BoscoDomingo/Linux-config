@@ -62,7 +62,8 @@ fetch newer package revisions.
 ## Full repository reconciliation
 
 ```sh
-bash "$DOTFILES_REPO/nix/bootstrap.sh"
+dotfiles-bootstrap
+# bash "$DOTFILES_REPO/nix/bootstrap.sh"  # same thing, before the wrapper is on PATH
 ```
 
 Use bootstrap on a new device or when you want to reconcile Nix, the Brewfile,
@@ -137,7 +138,7 @@ Edit `nix/home/packages.nix`, then:
 
 ```sh
 nix flake check "$DOTFILES_REPO/nix"
-bash "$DOTFILES_REPO/nix/bootstrap.sh"
+dotfiles-bootstrap
 ```
 
 Avoid `nix profile install` for permanent tools: it creates imperative state

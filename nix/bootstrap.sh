@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Bootstrap this Home Manager config on a new machine.
 #
+#   dotfiles-bootstrap                          # PATH wrapper after activation
 #   bash ~/dotfiles/nix/bootstrap.sh            # auto-detects the current host
 #   HOST=ubuntu bash ~/dotfiles/nix/bootstrap.sh
 #
