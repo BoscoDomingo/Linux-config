@@ -161,7 +161,9 @@ and then run `mise use <alias>` to install it.
 This is better than using `mise use -g ubi:<org_or_user>/<repo>` because the name won't be polluted with the `ubi:` prefix.
 ## Homebrew
 
-The CLI toolbox is primarily managed by Nix ([`nix/home/packages.nix`](nix/home/packages.nix)); Homebrew manages exceptions from the repository [`Brewfile`](Brewfile), including Engram and httpstat. Opt in to installing Homebrew via `INSTALL_BREW=1` when running `nix/bootstrap.sh`; macOS GUI casks remain declared via nix-darwin. See [`Documentation/Nix_exploration.md`](Documentation/Nix_exploration.md#51-tool-ownership).
+The CLI toolbox is primarily managed by Nix ([`nix/home/packages.nix`](nix/home/packages.nix)); Homebrew manages exceptions from the repository [`Brewfile`](Brewfile).
+Opt in to installing Homebrew via `INSTALL_BREW=1` when running `nix/bootstrap.sh`.
+See [`Documentation/Nix_exploration.md`](Documentation/Nix_exploration.md#51-tool-ownership).
 
 ## Built-in package managers
 

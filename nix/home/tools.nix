@@ -113,16 +113,4 @@ in
       run ${pkgs.python3}/bin/python3 "${repo}/AI/agent-guards/install.py" || true
     fi
   '';
-
-  # Register engram (agent memory) with every coding agent detected on the
-  # machine. Activation uses a restricted PATH, so include both supported
-  # Homebrew prefixes where this repository declares Engram ownership. Exit
-  # code 10 (agents awaiting an interactive `engram setup`) is a reminder, not
-  # an activation failure, so it is swallowed with the other exit codes.
-  home.activation.engram = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-    if [ -x "${repo}/scripts/engram-setup" ]; then
-      run env PATH="/home/linuxbrew/.linuxbrew/bin:/opt/homebrew/bin:$PATH" \
-        ${pkgs.bash}/bin/bash "${repo}/scripts/engram-setup" || true
-    fi
-  '';
 }

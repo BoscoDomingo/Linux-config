@@ -20,7 +20,7 @@ bash ~/dotfiles/nix/bootstrap.sh   # auto-detects the host; override with HOST=<
 
 That installs Nix (if missing) and runs the pinned activation package. Add
 `INSTALL_BREW=1` to also install Homebrew; when Homebrew is available,
-bootstrap installs the repository `Brewfile` (Engram and httpstat). Or do it by
+bootstrap installs the repository `Brewfile`. Or do it by
 hand:
 
 For manual build, dry-run, activation, update, and rollback commands, use the
@@ -32,18 +32,18 @@ blocked, see [`test/README.md`](test/README.md).
 
 ## Layout
 
-| File                | Role                                                                                                              |
-|---------------------|-------------------------------------------------------------------------------------------------------------------|
-| `flake.nix`         | Inputs (nixpkgs, home-manager, nix-darwin) and per-host outputs                                                   |
-| `home/common.nix`   | Shared config imported by every host                                                                              |
-| `home/packages.nix` | The former Homebrew array, as a Nix package list                                                                  |
-| `home/dotfiles.nix` | Out-of-store symlinks to your existing repo files (keeps them editable)                                           |
-| `home/shell.nix`    | Example native Home Manager modules (zsh/starship/fzf/direnv)                                                     |
-| `home/git.nix`      | Opt-in: per-machine git identity (work vs personal) via `includeIf`                                               |
-| `home/tools.nix`    | Activation steps for git-cloned/curled frameworks (oh-my-zsh, tpm, cheat sheets, micro themes, jj guards, engram) |
-| `hosts/*.nix`       | Per-machine / per-OS overrides                                                                                    |
-| `bootstrap.sh`      | One-command setup for a new machine                                                                               |
-| `test/verify.sh`    | Post-switch sanity checks; `test/README.md` records the verified run                                              |
+| File                | Role                                                                    |
+|---------------------|-------------------------------------------------------------------------|
+| `flake.nix`         | Inputs (nixpkgs, home-manager, nix-darwin) and per-host outputs         |
+| `home/common.nix`   | Shared config imported by every host                                    |
+| `home/packages.nix` | The former Homebrew array, as a Nix package list                        |
+| `home/dotfiles.nix` | Out-of-store symlinks to your existing repo files (keeps them editable) |
+| `home/shell.nix`    | Example native Home Manager modules                                     |
+| `home/git.nix`      | Opt-in: per-machine git identity (work vs personal) via `includeIf`     |
+| `home/tools.nix`    | Activation steps for git-cloned/curled frameworks                       |
+| `hosts/*.nix`       | Per-machine / per-OS overrides                                          |
+| `bootstrap.sh`      | One-command setup for a new machine                                     |
+| `test/verify.sh`    | Post-switch sanity checks; `test/README.md` records the verified run    |
 
 Per-machine identity and device-only packages live in the gitignored
 [`overrides/`](../Documentation/machine-overrides.md) tree (`git`, `jj`,

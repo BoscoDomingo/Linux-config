@@ -142,12 +142,12 @@ switch.
 
 Each responsibility has one owner. Nothing is installed by more than one system.
 
-| System                 | Owns                                                   | Examples         |
-|------------------------|--------------------------------------------------------|------------------|
-| **Nix / Home Manager** | Stable global CLI tools; dotfile symlinks              | rg, jj, neovim   |
-| **mise**               | Language runtimes + explicitly declared floating tools | go, rust         |
-| **Homebrew**           | Tools whose Nix/mise packages are unsuitable           | engram, httpstat |
-| **Upstream installer** | Tools that shouldn't be self-managed                   | mise, opencode   |
+| System                 | Owns                                                   | Examples       |
+|------------------------|--------------------------------------------------------|----------------|
+| **Nix / Home Manager** | Stable global CLI tools; dotfile symlinks              | rg, jj, neovim |
+| **mise**               | Language runtimes + explicitly declared floating tools | go, rust       |
+| **Homebrew**           | Tools whose Nix/mise packages are unsuitable           | httpstat       |
+| **Upstream installer** | Tools that shouldn't be self-managed                   | mise, opencode |
 
 Per-machine extras (not synced) use the gitignored `overrides/` tree — see
 [machine-overrides.md](./machine-overrides.md):
@@ -164,7 +164,7 @@ optional local overlay, then runs `brew bundle`. Mise merges
 `~/.mise/config.toml` (symlinked to `overrides/mise/config.toml`) on top of the
 synced global config.
 
-#### 5.1.1 Bun / opencode
+#### 5.1.1 Opencode
 
 `opencode` is the one tool installed from its vendor's own script. The nixpkgs
 package is a Bun standalone compiled by a bun that `autoPatchelfHook` has
@@ -183,20 +183,7 @@ re-downloads 180 MB; upgrades are manual, because the repo config sets
 `autoupdate: notify`. Once nixpkgs ships a Bun version that contains the
 upstream fix, move opencode back to `packages.nix`.
 
-#### 5.1.2 engram
-
-`engram` is installed via Homebrew; `scripts/engram-setup` (from
-`home/tools.nix` and `bootstrap.sh`) registers it with each detected coding
-agent. Bootstrap installs Homebrew itself only when `INSTALL_BREW=1`, then runs
-the bundle when Homebrew is available.
-
-Registration is unattended: `engram setup` gets stdin from `/dev/null` and a
-timeout so it can never stall activation or bootstrap. Agents that engram cannot
-register without a keypress (currently `claude-code`, which prompts before it
-adds its tools to `permissions.allow` in `~/.claude/settings.json`) are printed
-as a reminder to run `engram setup <agent>` by hand.
-
-#### 5.1.3 mise
+#### 5.1.2 mise
 
 `mise` is installed from `https://mise.run` rather than nixpkgs, so that
 `mise self-update` works.
