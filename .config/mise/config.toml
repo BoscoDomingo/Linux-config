@@ -12,6 +12,7 @@ rust = "latest"
 
 biome = "latest"
 golangci-lint = "latest"
+diffnav = "0.11.0"
 
 [settings]
 idiomatic_version_file_enable_tools = ["go"]
@@ -22,3 +23,4 @@ go-blueprint = "github:Melkeydev/go-blueprint"
 oh-my-posh = "github:JanDeDobbeleer/oh-my-posh"
 "tldr++" = "github:isacikgoz/tldr"
 tlrc = "cargo:tlrc"
+diffnav = "aqua:dlvhdr/diffnav"
