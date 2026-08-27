@@ -23,6 +23,6 @@
   ];
 
   # mise manages language runtimes plus explicitly declared floating tools;
-  # Nix manages the stable global toolbox. mise's own config is symlinked via
-  # dotfiles.nix.
+  # Nix manages the stable global toolbox. mise itself is self-managed (see
+  # ../bootstrap.sh); its config is symlinked via dotfiles.nix.
 }

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 # Declarative dotfile symlinks.
 #
 # `mkOutOfStoreSymlink` links straight to the files in this repo checkout, so
@@ -27,9 +27,6 @@ in
     ".gitignore_global".source = link "${repo}/.gitignore_global";
 
     ".local/bin/scripts".source = link "${repo}/scripts";
-    # Keep mise's conventional installer path as a compatibility link while
-    # Nix remains the single owner of the executable and its version.
-    ".local/bin/mise".source = "${pkgs.mise}/bin/mise";
 
     ".ssh/config".source = link "${repo}/.ssh/config";
     # Public signing trust follows the shared personal key; private key material

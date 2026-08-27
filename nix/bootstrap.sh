@@ -84,15 +84,18 @@ HOME_MANAGER_BACKUP_EXT=hm-bak "$activation/activate"
 # Home Manager profile as the stable-tool owner before mise and verification.
 export PATH="$HOME/.nix-profile/bin:$PATH"
 
-# 4. Populate mise-managed tools (language runtimes). mise itself is
-#    installed by Home Manager above. Skip with SKIP_MISE=1.
+# 4. Install mise from its official source when absent.
+mise_bin="$HOME/.local/bin/mise"
+if [ ! -x "$mise_bin" ]; then
+	echo "== Installing mise =="
+	curl -fsSL https://mise.run | sh
+fi
+
+# Populate all tools declared in the synced and machine-local mise configs.
+# SKIP_MISE=1 skips this expensive step in Nix-layer tests.
 if [ "${SKIP_MISE:-0}" != "1" ]; then
-	mise_bin="$HOME/.nix-profile/bin/mise"
-	[ -x "$mise_bin" ] || mise_bin="$(command -v mise 2>/dev/null || true)"
-	if [ -n "$mise_bin" ]; then
-		echo "== mise install =="
-		"$mise_bin" install
-	fi
+	echo "== mise install =="
+	"$mise_bin" install
 fi
 
 # 5. Register the Homebrew-owned Engram with each detected coding agent. Kept

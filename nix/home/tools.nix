@@ -6,9 +6,9 @@
 let
   repo = "${config.home.homeDirectory}/dotfiles";
   git = "${pkgs.git}/bin/git";
-  # The opencode installer shells out to plain Unix tools; activation runs with a
-  # restricted PATH, so hand it the ones it needs.
-  opencodeInstallerPath = lib.makeBinPath [
+  # The opencode installer shells out to plain Unix tools. Activation runs with
+  # a restricted PATH, so give the installer the tools it needs.
+  installerPath = lib.makeBinPath [
     pkgs.curl
     pkgs.gnutar
     pkgs.gzip
@@ -101,7 +101,7 @@ in
     if [ ! -x "$HOME/.opencode/bin/opencode" ]; then
       installer="$(${pkgs.coreutils}/bin/mktemp)"
       run ${pkgs.curl}/bin/curl -fsSL https://opencode.ai/install -o "$installer" || true
-      run env PATH="${opencodeInstallerPath}:$PATH" \
+      run env PATH="${installerPath}:$PATH" \
         ${pkgs.bash}/bin/bash "$installer" --no-modify-path || true
       ${pkgs.coreutils}/bin/rm -f "$installer"
     fi

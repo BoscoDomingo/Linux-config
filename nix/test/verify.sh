@@ -22,22 +22,31 @@ no() {
 
 echo "== packages owned by Home Manager (from ~/.nix-profile) =="
 for bin in rg bat eza fd fzf delta fastfetch duf gping hyperfine trip sshs cheat rip \
-	jj nvim mise direnv tmux diffnav herdr; do
-	# Ignore shell functions created by `mise activate`; verify the executable.
+	jj nvim direnv tmux herdr; do
 	p=$(type -P "$bin" 2>/dev/null || true)
 	case "$p" in
 	*"/.nix-profile/"*) ok "$bin -> $p" ;;
-	"$HOME/.local/bin/mise")
-		resolved=$(readlink -f "$p" 2>/dev/null || true)
-		case "$resolved" in
-		/nix/store/*-mise-*/bin/mise) ok "$bin -> $p -> $resolved" ;;
-		*) no "$bin -> $p -> $resolved (expected Nix-owned mise)" ;;
-		esac
-		;;
 	"") no "$bin missing" ;;
 	*) no "$bin -> $p (expected ~/.nix-profile)" ;;
 	esac
 done
+
+# mise comes from its own installer, not Nix
+# `type -P` ignores the shell function created by `mise activate`.
+mise_path=$(type -P mise 2>/dev/null || true)
+case "$mise_path" in
+"$HOME/.local/bin/mise")
+	if [ -L "$mise_path" ]; then
+		no "mise -> $mise_path is a symlink to $(readlink -f "$mise_path") (expected a self-managed regular file)"
+	elif mise --version >/dev/null 2>&1; then
+		ok "mise -> $mise_path (self-managed, $(mise --version 2>/dev/null | head -1))"
+	else
+		no "mise -> $mise_path but fails to run"
+	fi
+	;;
+"") no "mise missing (expected $HOME/.local/bin/mise)" ;;
+*) no "mise -> $mise_path (expected $HOME/.local/bin/mise, not Nix)" ;;
+esac
 
 # opencode comes from its own installer, not Nix: the nixpkgs Bun standalone
 # segfaults in ld-linux on WSL2. See nix/home/tools.nix.
@@ -54,11 +63,20 @@ case "$opencode_path" in
 *) no "opencode -> $opencode_path (expected $HOME/.opencode/bin/opencode, not Nix)" ;;
 esac
 
-diffnav_path=$(readlink -f "$(type -P diffnav 2>/dev/null || true)")
+# diffnav is mise-owned and pinned to 0.11.0 in .config/mise/config.toml,
+diffnav_path=$(type -P diffnav 2>/dev/null || true)
+# Outside a `mise activate`d shell PATH resolves to the shim, which points at
+# the mise binary rather than the tool; ask mise where it actually lives.
+if [ "$diffnav_path" = "$HOME/.local/share/mise/shims/diffnav" ]; then
+	diffnav_path=$(mise which diffnav 2>/dev/null || true)
+fi
 case "$diffnav_path" in
-/nix/store/*diffnav-0.11.0*/bin/diffnav) ok "diffnav pinned -> $diffnav_path" ;;
-"") no "diffnav missing (expected Nix-owned 0.11.0)" ;;
-*) no "diffnav -> $diffnav_path (expected diffnav-0.11.0)" ;;
+"$HOME/.local/share/mise/installs/"*diffnav*/0.11.0/diffnav)
+	ok "diffnav pinned -> $diffnav_path (mise)"
+	;;
+"$HOME/.local/share/mise/installs/"*) no "diffnav -> $diffnav_path (expected the 0.11.0 pin)" ;;
+"") no "diffnav missing (expected mise-owned 0.11.0)" ;;
+*) no "diffnav -> $diffnav_path (expected mise-owned 0.11.0)" ;;
 esac
 
 echo "== dotfiles symlinked to the live repo (out-of-store) =="

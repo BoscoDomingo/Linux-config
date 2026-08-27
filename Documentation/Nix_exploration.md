@@ -142,12 +142,12 @@ switch.
 
 Each responsibility has one owner. Nothing is installed by more than one system.
 
-| System                  | Owns                                                   | Examples                           |
-|-------------------------|--------------------------------------------------------|------------------------------------|
-| **Nix / Home Manager**  | Stable global CLI tools; dotfile symlinks              | rg, jj, neovim, mise, direnv, tmux |
-| **mise**                | Language runtimes + explicitly declared floating tools | node, go, python, rust, bun, pnpm  |
-| **Homebrew**            | Tools whose Nix/mise packages are unsuitable           | engram, httpstat                   |
-| **Upstream installer**  | Tools whose Nix build is broken on this platform       | opencode                           |
+| System                 | Owns                                                   | Examples         |
+|------------------------|--------------------------------------------------------|------------------|
+| **Nix / Home Manager** | Stable global CLI tools; dotfile symlinks              | rg, jj, neovim   |
+| **mise**               | Language runtimes + explicitly declared floating tools | go, rust         |
+| **Homebrew**           | Tools whose Nix/mise packages are unsuitable           | engram, httpstat |
+| **Upstream installer** | Tools that shouldn't be self-managed                   | mise, opencode   |
 
 Per-machine extras (not synced) use the gitignored `overrides/` tree — see
 [machine-overrides.md](./machine-overrides.md):
@@ -195,6 +195,11 @@ timeout so it can never stall activation or bootstrap. Agents that engram cannot
 register without a keypress (currently `claude-code`, which prompts before it
 adds its tools to `permissions.allow` in `~/.claude/settings.json`) are printed
 as a reminder to run `engram setup <agent>` by hand.
+
+#### 5.1.3 mise
+
+`mise` is installed from `https://mise.run` rather than nixpkgs, so that
+`mise self-update` works.
 
 
 ### 5.2 Dotfiles stay live-editable

@@ -102,7 +102,6 @@ activation="$(
     "$DOTFILES_REPO/nix#homeConfigurations.$HOST.activationPackage"
 )"
 
-"$activation/home-path/bin/mise" --version  # inspect candidate mise
 HOME_MANAGER_BACKUP_EXT=hm-bak "$activation/activate"
 bash "$DOTFILES_REPO/nix/test/verify.sh"
 ```
@@ -114,15 +113,15 @@ again unless you intentionally want newer revisions.
 ### Try a newer package without installing it
 
 ```sh
-nix shell nixpkgs#mise
-mise --version
+nix shell nixpkgs#jq
+jq --version
 exit
 ```
 
 Or run it once:
 
 ```sh
-nix run nixpkgs#mise -- --version
+nix run nixpkgs#cowsay -- "hello"
 ```
 
 These commands do not change the Home Manager configuration or generation.
@@ -132,7 +131,7 @@ These commands do not change the Home Manager configuration or generation.
 Search nixpkgs:
 
 ```sh
-nix search nixpkgs mise
+nix search nixpkgs ripgrep
 ```
 
 Edit `nix/home/packages.nix`, then:
@@ -147,12 +146,8 @@ outside this repository's declarative package list.
 
 ### diffnav version pin
 
-`nix/home/packages.nix` temporarily overrides `pkgs.diffnav` to **0.11.0**
-because nixpkgs-unstable currently ships a broken 0.12.0 build. mise may still
-declare `diffnav = "0.11.0"` as a fallback until the Nix candidate is verified;
-remove the mise entry once `bash nix/test/verify.sh` reports the Nix store
-path. When upstream fixes land, delete the override in `packages.nix` and use
-plain `pkgs.diffnav` again after `nix flake update nixpkgs`.
+`.config/mise/config.toml` pins `diffnav = "0.11.0"` because 0.12.0 is broken.
+This can be removed once upstream fixes land.
 
 ## Temporary environments
 
@@ -205,9 +200,6 @@ type -P mise
 readlink -f "$(type -P mise)"
 ```
 
-`~/.local/bin/mise` is intentionally a Home Manager-managed compatibility
-link to the Nix store, so that path is expected.
-
 ## Roll back
 
 List generations:
@@ -250,8 +242,7 @@ more aggressively than intended.
 
 ## Other package managers: brief caveats
 
-- **mise tools:** use `mise install`, `mise upgrade`, or `mise upgrade <tool>`.
-  Do not use `mise self-update`; mise itself is managed by Nix.
+- **mise tools:** use `mise self-update`, `mise install`, `mise upgrade`, or `mise upgrade <tool>`.
   Synced tools live in `.config/mise/config.toml`; device-only tools go in
   `overrides/mise/config.toml` (see [machine-overrides.md](./machine-overrides.md)).
 - **Homebrew:** use `brew update && brew upgrade`. Synced exceptions live in

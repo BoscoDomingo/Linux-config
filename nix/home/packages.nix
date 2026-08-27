@@ -19,23 +19,6 @@ let
     '';
   });
 
-  # nixpkgs-unstable currently ships diffnav 0.12.0, which is broken here.
-  # Pin to upstream's last known-good derivation; delete this override once
-  # nixpkgs ships a fixed release and `pkgs.diffnav` works again.
-  diffnav = pkgs.diffnav.overrideAttrs (_old: rec {
-    version = "0.11.0";
-    src = pkgs.fetchFromGitHub {
-      owner = "dlvhdr";
-      repo = "diffnav";
-      tag = "v${version}";
-      hash = "sha256-6VtAQzZNLQrf8QYVXxLUgb3F6xguFDbwaE9kahPhbSE=";
-    };
-    vendorHash = "sha256-gmmckzR0D1oFuTG5TAb6gLMoNbcZl9EsjbFjhPfJqnQ=";
-    ldflags = [
-      "-s"
-      "-w"
-    ];
-  });
 in
 {
   home.packages = with pkgs; [
@@ -59,7 +42,7 @@ in
     hyperfine
     trippy # `trip`
     sshs
-    rip2 # rm-improved
+    rip2
     lazyjj
     witr
     gh
@@ -70,11 +53,10 @@ in
     zsh-completions
     zshAutocomplete
 
-    jujutsu # `jj`
-    jjui # jj TUI
+    jujutsu
+    jjui
     neovim
-    # opencode is deliberately absent. See Nix_exploration for details
-    # opencode
+
     yt-dlp
     act
     tree-sitter
@@ -83,11 +65,8 @@ in
     tlrc
     dotenvx
     herdr
-    diffnav # pinned to 0.11.0 via the let-binding above
-
-    # Shell foundation, referenced unconditionally in shell init.
-    mise
     direnv
     tmux
+    # Some tools (opencode, mise) are deliberately absent. See Nix_exploration for details
   ];
 }

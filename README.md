@@ -86,7 +86,13 @@ Agent sessions get only `.profile` + tool activation (direnv, mise) -- no aliase
 
 Recommended since you can manage multiple language SDKs + tools at once, not needing a version manager for each.
 
-It also works directly with GitHub repos, [asdf plugins](https://github.com/asdf-vm/asdf-plugins), and a bunch of [other backends (aqua, vfox, etc)](https://mise.jdx.dev/dev-tools/backends/), so you can manage pretty much anything with it. Pretty neat!
+mise manages itself here: [`nix/bootstrap.sh`](nix/bootstrap.sh) installs it from `https://mise.run`,
+then runs `mise install`. See
+[`Documentation/Nix_exploration.md`](Documentation/Nix_exploration.md#513-mise).
+
+It also works directly with GitHub repos, [asdf plugins](https://github.com/asdf-vm/asdf-plugins),
+and a bunch of [other backends (aqua, vfox, etc)](https://mise.jdx.dev/dev-tools/backends/),
+so you can manage pretty much anything with it. Pretty neat!
 
 The biggest drawback is that they won't be available until you activate mise for the given shell during initialisation,
 unless you reference them manually. Generally speaking, some tools will require using the built-in package manager or
