@@ -13,14 +13,14 @@ rust = "latest"
 biome = "latest"
 golangci-lint = "latest"
 diffnav = "0.11.0"
+"tldr++" = "latest"
+shfmt = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["go"]
 
 [tool_alias]
 engram = "github:Gentleman-Programming/engram"
-go-blueprint = "github:Melkeydev/go-blueprint"
 oh-my-posh = "github:JanDeDobbeleer/oh-my-posh"
 "tldr++" = "github:isacikgoz/tldr"
-tlrc = "cargo:tlrc"
 diffnav = "aqua:dlvhdr/diffnav"
