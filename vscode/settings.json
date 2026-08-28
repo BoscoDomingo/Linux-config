@@ -456,10 +456,18 @@
 	"[go.mod]": {
 		"editor.defaultFormatter": "golang.go"
 	},
-	"go.toolsManagement.autoUpdate": true,
+	// mise owns the Go tools (see .config/mise/config.toml); letting the
+	// extension `go install` them puts binaries in the versioned GOBIN, where
+	// the next Go upgrade orphans them. Update with `mise upgrade` instead.
+	"go.toolsManagement.autoUpdate": false,
+	// The extension looks for a bare name in $GOBIN, then $GOPATH/bin, then
+	// PATH. A file in ~/go/bin thus hides the mise tool.
+	// scripts/link-go-tools keeps ~/go/bin correct.
 	"go.alternateTools": {
 		"go": "~/.local/share/mise/installs/go/latest/bin/go",
-		"customFormatter": "golangci-lint-v2"
+		"customFormatter": "golangci-lint",
+		// mise ships the v2 CLI as plain `golangci-lint`.
+		"golangci-lint-v2": "golangci-lint"
 	},
 	"go.formatTool": "custom",
 	"go.formatFlags": ["fmt", "--stdin"],
@@ -519,7 +527,7 @@
 
 	// MARK: Python
 	"[python]": {
-		"editor.defaultFormatter": "ms-python.black-formatter",
+		"editor.defaultFormatter": "charliermarsh.ruff",
 		"editor.codeActionsOnSave": {
 			"source.organizeImports": "explicit",
 			"source.unusedImports": "explicit"
@@ -1529,4 +1537,5 @@
 	"syl.burnRateSpikeSensitivity": "relaxed",
 	"syl.allowEnvironmentCursorTokenFallback": true,
 	"cursor.composer.conversationDensity": "compact-ungrouped",
+	"extensions.installCooldownHours": 24,
 }

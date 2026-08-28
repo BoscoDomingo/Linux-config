@@ -97,6 +97,13 @@ unset _brew_bin
 # and the VS Code extension for Go and C# don't work properly otherwise.
 _path_prepend_if_missing "$HOME/.local/share/mise/shims"
 
+# Update the $GOPATH/bin links at each shell start. `mise upgrade` breaks them,
+# and the Go extension then asks you to recompile the linter.
+# See scripts/link-go-tools.
+if [ -x "$DOTFILES_REPO/scripts/link-go-tools" ]; then
+	"$DOTFILES_REPO/scripts/link-go-tools" >/dev/null
+fi
+
 # pnpm
 export PNPM_HOME="$XDG_DATA_HOME/pnpm"
 # pnpm only accepts enablePrePostScripts globally through env, not config.yaml.

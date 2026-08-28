@@ -98,6 +98,10 @@ if [ "${SKIP_MISE:-0}" != "1" ]; then
 	"$mise_bin" install
 fi
 
+# Create the $GOPATH/bin links that the Go extension reads. mise must install
+# the tools first. The script does nothing if the tools are absent.
+bash "$REPO/scripts/link-go-tools"
+
 echo "== verify =="
 bash "$REPO/nix/test/verify.sh"
 

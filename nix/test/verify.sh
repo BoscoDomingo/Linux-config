@@ -79,6 +79,23 @@ case "$diffnav_path" in
 *) no "diffnav -> $diffnav_path (expected mise-owned 0.11.0)" ;;
 esac
 
+# $GOPATH/bin must match mise. If it does not, the Go extension asks you to
+# recompile the tools.
+golangci_link="${GOPATH:-$HOME/go}/bin/golangci-lint"
+golangci_build=$(mise which golangci-lint 2>/dev/null || true)
+if [ -z "$golangci_build" ]; then
+	echo "  (optional) golangci-lint not installed by mise yet"
+elif [ -e "$golangci_link" ] && [ ! -L "$golangci_link" ]; then
+	no "$golangci_link is a real file. It hides $golangci_build. Delete it, then run scripts/link-go-tools"
+elif [ ! -L "$golangci_link" ]; then
+	# Use -L, not -e. A broken symlink is stale, not missing.
+	no "$golangci_link missing (run scripts/link-go-tools)"
+elif [ "$golangci_link" -ef "$golangci_build" ]; then
+	ok "golangci-lint -> $golangci_build (\$GOPATH/bin link for the Go extension)"
+else
+	no "$golangci_link -> $(readlink "$golangci_link") (stale; expected $golangci_build)"
+fi
+
 echo "== dotfiles symlinked to the live repo (out-of-store) =="
 for f in .bash_profile .zshrc .profile .aliases .gitconfig .ssh/allowed_signers \
 	.config/starship.toml .config/nvim .config/jj/config.toml; do
