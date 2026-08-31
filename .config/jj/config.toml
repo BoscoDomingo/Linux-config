@@ -23,7 +23,7 @@ key = "~/.ssh/id_ed25519.pub"
 
 [--scope.signing.backends.ssh]
 allowed-signers = "~/.ssh/allowed_signers"
-program = "C:/Windows/System32/OpenSSH/ssh-keygen.exe"
+program = "C:/Users/bosco/Windows-config/Scripts/ssh-sign.cmd"
 
 [--scope.aliases]
 sh = [
@@ -40,6 +40,10 @@ shp = [
   # Use the Windows cmd shim in Windows-config/Scripts; Windows process lookup doesn't resolve the extensionless POSIX helper.
   "--config=ui.pager=[\"jj-diffnav-pager.cmd\"]",
 ]
+
+[--scope.ui]
+# Windows does not include less, so use jj's portable built-in pager.
+pager = ":builtin"
 
 [git]
 # push-bookmark-prefix = "feat/"
