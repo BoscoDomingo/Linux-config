@@ -17,7 +17,19 @@ diffnav = "0.11.0"
 shfmt = "latest"
 
 [settings]
-idiomatic_version_file_enable_tools = ["go"]
+idiomatic_version_file_enable_tools = ["rust", "node", "bun", "deno", "golangci-lint", "python", "dotnet", "zig"]
+auto_update = true
+auto_update_check_duration = "2d"
+github.credential_command = "gh auth token"
+npm.bun = true
+npm.package_manager = "auto"
+pipx.uvx = true
+safe = true
+sandbox.deny_all = true
+status = { show_deps_stale = true, show_env = true, missing_tools = "if_other_versions_installed", show_tools = true }
+upgrade.auto_prune = true
+upgrade.prune_after = "24h"
+
 
 [tool_alias]
 engram = "github:Gentleman-Programming/engram"
