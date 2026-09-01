@@ -471,6 +471,10 @@
 	},
 	"go.formatTool": "custom",
 	"go.formatFlags": ["fmt", "--stdin"],
+	// The v2 name pins the v2 output flags. The plain name makes the extension
+	// read the version from the binary, and it sends v1 flags if it cannot read
+	// that version. So this deviates from the manual-install setup that
+	// https://golangci-lint.run/docs/welcome/integrations/ recommends.
 	"go.lintTool": "golangci-lint-v2",
 	"go.lintFlags": ["--path-mode=abs", "--fast-only"],
 	"gopls": {
