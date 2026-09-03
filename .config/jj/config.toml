@@ -98,7 +98,8 @@ l = ["log"]
 ls = ["log", "--summary"]
 la = ["log", "-r", "::"]
 le = ["log", "-r", "empty() & mutable()"]
-ld = ["log", "-r", "divergent()"]
+lc = ["log", "-r", "conflicts()"]
+ld = ["log", "-r", 'description(exact:"")']
 ln = ["log", "-r", "remote_bookmarks().."] # All non-pushed-yet commits
 lnp = ["log", "-r", "(remote_bookmarks()..@)::"] # Current working copy's non-pushed-yet commits
 
