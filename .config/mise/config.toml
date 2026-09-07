@@ -14,6 +14,8 @@ biome = "latest"
 golangci-lint = "latest"
 diffnav = "0.11.0"
 "tldr++" = "latest"
+hunk = "latest"
+"github:trasta298/keifu" = "latest"
 shfmt = "latest"
 
 [settings]
