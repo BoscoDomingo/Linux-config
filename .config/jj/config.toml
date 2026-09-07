@@ -184,6 +184,7 @@ wu = ["workspace", "update-stale"]
 # Git
 g = ["git"]
 gf = ["git", "fetch"]
+f = ["git", "fetch"]
 gp = ["git", "push"]
 gpb = ["git", "push", "-b"]
 gpa = ["git", "push", "--all"]
