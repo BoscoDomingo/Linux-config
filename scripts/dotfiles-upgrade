@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+# Update Nix-managed tools from any directory.
+#
+#   dotfiles-upgrade
+#   dotfiles-upgrade --all
+set -euo pipefail
+
+usage() {
+	cat <<'EOF'
+Usage: dotfiles-upgrade [-a|--all]
+
+Update Nix inputs and apply the Home Manager configuration.
+With --all, also upgrade mise and Homebrew tools.
+EOF
+}
+
+all=0
+case "${1:-}" in
+"") ;;
+-a | --all) all=1 ;;
+-h | --help)
+	usage
+	exit 0
+	;;
+*)
+	usage >&2
+	exit 2
+	;;
+esac
+if [ "$#" -gt 1 ]; then
+	usage >&2
+	exit 2
+fi
+
+REPO="${DOTFILES_REPO:-$HOME/dotfiles}"
+if [ ! -d "$REPO/nix" ]; then
+	echo "dotfiles-upgrade: missing Nix config at $REPO/nix" >&2
+	exit 1
+fi
+if ! command -v nix >/dev/null 2>&1; then
+	echo "dotfiles-upgrade: nix is not on PATH; run dotfiles-bootstrap first" >&2
+	exit 1
+fi
+
+export NIX_CONFIG="experimental-features = nix-command flakes
+${NIX_CONFIG:-}"
+
+echo "== updating Nix inputs =="
+nix flake update --flake "$REPO/nix"
+
+echo "== applying Home Manager configuration =="
+bash "$REPO/nix/bootstrap.sh"
+
+if [ "$all" -eq 1 ]; then
+	echo "== updating mise =="
+	"$HOME/.local/bin/mise" self-update --yes
+	"$HOME/.local/bin/mise" upgrade --yes
+
+	brew_bin="$(command -v brew || true)"
+	if [ -n "$brew_bin" ]; then
+		echo "== updating Homebrew =="
+		"$brew_bin" update
+		"$brew_bin" upgrade
+	else
+		echo "== Homebrew not found; skipping =="
+	fi
+fi

@@ -388,3 +388,8 @@ fi
 if [ -f "$HOME/.moon/bin/env" ]; then
 	. "$HOME/.moon/bin/env"
 fi
+
+if [ -z "$HERDR_ENV" ]; then
+	herdr
+fi
+

@@ -26,8 +26,8 @@ github.credential_command = "gh auth token"
 npm.bun = true
 npm.package_manager = "auto"
 pipx.uvx = true
-safe = true
-sandbox.deny_all = true
+# safe = true
+# sandbox.deny_all = true
 status = { show_deps_stale = true, show_env = true, missing_tools = "if_other_versions_installed", show_tools = true }
 upgrade.auto_prune = true
 upgrade.prune_after = "24h"

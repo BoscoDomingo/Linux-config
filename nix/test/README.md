@@ -12,6 +12,8 @@ packages), including **per-machine local overrides**. It passed.
   `DISTRO=arch bash nix/test/container-test.sh` for Arch. It installs Nix,
   clones the selected branch, seeds a work identity, runs `bootstrap.sh`, then
   `verify.sh`.
+- [`upgrade-test.sh`](upgrade-test.sh) — black-box test for
+  `scripts/dotfiles-upgrade`: `bash ~/dotfiles/nix/test/upgrade-test.sh`.
 
 ## What was verified (and the result)
 

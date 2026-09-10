@@ -96,7 +96,6 @@ Homebrew device-only — `overrides/brew/Brewfile.local`:
 
 ```ruby
 # cask "copilot-cli"
-# brew "plantuml"
 ```
 
 Arch system patches are reusable files committed under `Arch/patches/`. Enable

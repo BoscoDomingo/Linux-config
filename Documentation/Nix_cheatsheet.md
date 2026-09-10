@@ -81,6 +81,20 @@ Use bootstrap on a new device or when you want to reconcile Nix, the Brewfile,
 mise tools, activation hooks, and verification together. It is broader than
 necessary for a routine Home Manager switch.
 
+## Upgrade Nix-managed tools
+
+Run this from any directory. `DOTFILES_REPO` defaults to `$HOME/dotfiles` and
+`HOST` is inherited by Home Manager:
+
+```sh
+dotfiles-upgrade
+HOST=arch-wsl dotfiles-upgrade
+```
+
+This updates `nix/flake.lock`, then applies the new Home Manager generation.
+Use `dotfiles-upgrade --all` to also run `mise self-update`, `mise upgrade`,
+`brew update`, and `brew upgrade`. Homebrew is skipped when it is not installed.
+
 ## Update Nix packages
 
 Update every flake input:
@@ -252,13 +266,12 @@ more aggressively than intended.
 
 ## Other package managers: brief caveats
 
-- **mise tools:** use `mise self-update`, `mise install`, `mise upgrade`, or `mise upgrade <tool>`.
-  Synced tools live in `.config/mise/config.toml`; device-only tools go in
-  `overrides/mise/config.toml` (see [machine-overrides.md](./machine-overrides.md)).
+- **mise tools:** use `mise self-update`, `mise install`, `mise upgrade`, or
+  `mise upgrade <tool>`. Synced tools live in
+  `.config/mise/config.toml`; device-only tools go in `overrides/mise/config.toml`
+  (see [machine-overrides.md](./machine-overrides.md)).
 - **Homebrew:** use `brew update && brew upgrade`. Synced exceptions live in
   `Brewfile`; device-only formulae go in `overrides/brew/Brewfile.local`.
-  Reconcile with `bash "$DOTFILES_REPO/scripts/brew-bundle"` (install) or
-  `bash "$DOTFILES_REPO/scripts/brew-bundle" cleanup --force` (drop undeclared leaves).
 - **Application self-updaters:** do not self-update Nix-owned applications.
   Advance `nixpkgs`, build, and activate instead.
 - **Arch:** `sudo pacman -Syu` remains a separate operating-system update; Home
