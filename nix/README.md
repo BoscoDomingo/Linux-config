@@ -23,6 +23,10 @@ That installs Nix (if missing) and runs the pinned activation package. Add
 bootstrap installs the repository `Brewfile`. Or do it by
 hand:
 
+The bootstrap uses the Determinate Nix Installer. The rationale, accepted
+tradeoffs, and conditions for changing to the official installer are recorded
+in the [installer decision](../docs/decisions/2026-09-15_use-determinate-nix.md).
+
 For manual build, dry-run, activation, update, and rollback commands, use the
 [`cheatsheet`](../Documentation/Nix_cheatsheet.md).
 

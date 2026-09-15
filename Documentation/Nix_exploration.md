@@ -140,6 +140,10 @@ installs Nix and activates the generation pinned by `flake.lock`. Activation
 hooks in `home/tools.nix` are best-effort so a network hiccup does not brick a
 switch.
 
+The bootstrap uses the Determinate Nix Installer. Its rationale, tradeoffs, and
+conditions for changing to the official installer are recorded in
+the [installer decision](../docs/decisions/2026-09-15_use-determinate-nix.md).
+
 Each responsibility has one owner. Nothing is installed by more than one system.
 
 | System                 | Owns                                                   | Examples       |

@@ -39,7 +39,9 @@ arch | arch-wsl | ubuntu | macbook) ;;
 	;;
 esac
 
-# Install Nix (Determinate installer; enables flakes by default) if missing.
+# Install Nix with the reviewed cross-platform, flakes-ready installer choice.
+# Rationale and conditions for switching to upstream:
+# docs/decisions/2026-09-15_use-determinate-nix.md
 if ! command -v nix >/dev/null 2>&1; then
 	echo "== Installing Nix =="
 	curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix |
