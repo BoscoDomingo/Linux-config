@@ -104,6 +104,14 @@ fi
 # the tools first. The script does nothing if the tools are absent.
 bash "$REPO/scripts/link-go-tools"
 
+# Bare-metal Arch can opt in to root-owned distro patches through the
+# gitignored overrides/patches/enabled file. The sync is idempotent and installs
+# pacman hooks so package upgrades reapply compatible patches.
+if [ "$HOST" = "arch" ] && [ -f "$REPO/overrides/patches/enabled" ]; then
+	echo "== Arch system patches =="
+	DOTFILES_REPO="$REPO" bash "$REPO/Arch/sync-patches.sh"
+fi
+
 echo "== verify =="
 bash "$REPO/nix/test/verify.sh"
 
@@ -112,10 +120,11 @@ cat <<EOF
 Done. Per-machine identity and device-only packages live in the gitignored
 overrides/ tree (see Documentation/machine-overrides.md):
 
-  mkdir -p ~/dotfiles/overrides/{git,jj,mise,brew}
+  mkdir -p ~/dotfiles/overrides/{git,jj,mise,brew,patches}
   # overrides/git/local.gitconfig  + overrides/jj/local.toml   (work default)
   # overrides/git/{work,personal}.gitconfig + overrides/jj/{work,personal}.toml
   # overrides/mise/config.toml     + overrides/brew/Brewfile.local
+  # overrides/patches/enabled      (bare-metal Arch system patches)
 
 Then: bash ~/dotfiles/nix/bootstrap.sh   # refreshes symlinks + brew bundle
       ssh-keygen -t ed25519 -C "you@work.example"   # private key never committed

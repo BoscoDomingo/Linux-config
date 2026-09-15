@@ -18,6 +18,8 @@ overrides/
     config.toml          # device-only tools (merged by mise)
   brew/
     Brewfile.local       # device-only formulae/casks
+  patches/
+    enabled              # selected bare-metal Arch system patches
 ```
 
 `/overrides/` is gitignored. Home Manager / bootstrap create the directories and
@@ -43,6 +45,7 @@ personal machines need zero of these.
 | **jj**       | `.config/jj/config.toml`   | `overrides/jj/*.toml`           | `~/.config/jj/conf.d` → symlink to `overrides/jj`             |
 | **mise**     | `.config/mise/config.toml` | `overrides/mise/config.toml`    | `~/.mise/config.toml` → symlink to that file                  |
 | **Homebrew** | `Brewfile`                 | `overrides/brew/Brewfile.local` | `scripts/brew-bundle` concatenates both                       |
+| **Arch patches** | `Arch/patches/`        | `overrides/patches/enabled`     | Bootstrap installs selected patches and pacman hooks          |
 
 Later git includes win, so personal path files beat `local` / `work` when both
 match. jj `conf.d` files load lexicographically after the synced config.toml.
@@ -96,10 +99,23 @@ Homebrew device-only — `overrides/brew/Brewfile.local`:
 # brew "plantuml"
 ```
 
+Arch system patches are reusable files committed under `Arch/patches/`. Enable
+one patch per line in `overrides/patches/enabled`:
+
+```text
+plasma-lockscreen-fast-retry
+```
+
+`nix/bootstrap.sh` installs each selected patch and its pacman hook. The hook
+reapplies the patch after the owning package is updated. If upstream code no
+longer matches, the helper leaves it unchanged and prints a warning. To disable
+a patch, remove its line and run bootstrap again. The helper removes only the
+expected patched code and then removes its hook.
+
 ## First-time setup on a work machine
 
 ```sh
-mkdir -p ~/dotfiles/overrides/{git,jj,mise,brew}
+mkdir -p ~/dotfiles/overrides/{git,jj,mise,brew,patches}
 # write the files above, then:
 bash ~/dotfiles/nix/bootstrap.sh   # refreshes symlinks + brew bundle
 mise install                       # if you added mise tools

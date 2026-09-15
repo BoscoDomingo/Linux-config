@@ -28,7 +28,7 @@ in
       echo "Would migrate jj and mise machine-override links"
     else
     overrides="${repo}/overrides"
-    mkdir -p "$overrides/git" "$overrides/jj" "$overrides/mise" "$overrides/brew"
+    mkdir -p "$overrides/git" "$overrides/jj" "$overrides/mise" "$overrides/brew" "$overrides/patches"
 
     jjdir="$HOME/.config/jj"
     if [ -L "$jjdir" ]; then
