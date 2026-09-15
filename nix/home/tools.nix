@@ -22,6 +22,11 @@ in
   # then point tool-expected paths at the gitignored overrides/ tree.
   # See Documentation/machine-overrides.md.
   home.activation.machineOverrides = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
+    # This migration uses conditional filesystem operations that cannot be
+    # represented safely through Home Manager's command-level dry-run wrapper.
+    if [ -n "''${DRY_RUN:-}" ]; then
+      echo "Would migrate jj and mise machine-override links"
+    else
     overrides="${repo}/overrides"
     mkdir -p "$overrides/git" "$overrides/jj" "$overrides/mise" "$overrides/brew"
 
@@ -50,6 +55,7 @@ in
     # mise global overlay
     mkdir -p "$HOME/.mise"
     ln -sfn "$overrides/mise/config.toml" "$HOME/.mise/config.toml"
+    fi
   '';
 
   # oh-my-zsh framework at ~/.oh-my-zsh. Cloned (not a Nix store path) so it
