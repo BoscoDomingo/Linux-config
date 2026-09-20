@@ -12,5 +12,5 @@ upstream code instead of applying partial changes.
 
 Available patches:
 
-- `plasma-lockscreen-fast-retry`: removes KDE's extra three-second retry delay.
-  PAM authentication and account lockout policy are not changed.
+- [`plasma-lockscreen-fast-retry`](plasma-lockscreen-fast-retry/README.md):
+  removes KDE's retry delay.
