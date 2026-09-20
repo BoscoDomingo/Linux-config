@@ -10,6 +10,16 @@ DOTFILES_REPO="${DOTFILES_REPO:-$HOME/dotfiles}"
 HOST="arch-wsl"
 ```
 
+## Package ownership by location
+
+```text
+/usr/bin                    system package manager (`pacman`, `apt`, etc)
+/nix/store                  Nix packages
+~/.nix-profile/bin          active Home Manager tools
+~/.local/share/mise         mise tools
+/home/linuxbrew/.linuxbrew  Homebrew exceptions
+```
+
 ## The important update distinction
 
 Updating `nixpkgs` is not a full operating-system upgrade: it does not run
