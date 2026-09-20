@@ -45,6 +45,19 @@ for bin in rg bat eza fd fzf delta fastfetch duf gping hyperfine trip sshs cheat
 	esac
 done
 
+# CachyOS package builds must use its system toolchain, not Nix wrappers.
+if [ "${HOST:-}" = "cachyos" ] || grep -q '^ID=cachyos' /etc/os-release 2>/dev/null; then
+	for bin in gcc cc ld; do
+		p=$(type -P "$bin" 2>/dev/null || true)
+		resolved=$(readlink -f "$p" 2>/dev/null || true)
+		case "$resolved" in
+		/usr/bin/*) ok "$bin -> $resolved (CachyOS)" ;;
+		"") no "$bin missing (expected /usr/bin/$bin)" ;;
+		*) no "$bin -> $resolved (expected the CachyOS system toolchain)" ;;
+		esac
+	done
+fi
+
 # mise comes from its own installer, not Nix
 # `type -P` ignores the shell function created by `mise activate`.
 mise_path=$(type -P mise 2>/dev/null || true)

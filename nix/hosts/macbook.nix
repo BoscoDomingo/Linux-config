@@ -5,8 +5,8 @@
 {
   imports = [ ../home/common.nix ];
 
-  # macOS-only packages, or Linux packages to exclude, go here.
-  # home.packages = with pkgs; [ ... ];
+  # Keep the existing Nix compiler behavior on macOS.
+  home.packages = [ pkgs.gcc ];
 
   # Your MacOS/ dir (ghostty-mac config, DefaultKeyBinding.dict) would be
   # symlinked from a mac-specific block, e.g.:

@@ -15,7 +15,7 @@ per-machine + per-directory git identity overrides, and atomic rollback).
 ## Try it
 
 ```sh
-bash ~/dotfiles/nix/bootstrap.sh   # auto-detects the host; override with HOST=<arch|arch-wsl|ubuntu|macbook>
+bash ~/dotfiles/nix/bootstrap.sh   # auto-detects the host; override with HOST=<arch|arch-wsl|cachyos|ubuntu|macbook>
 ```
 
 That installs Nix (if missing) and runs the pinned activation package. Add

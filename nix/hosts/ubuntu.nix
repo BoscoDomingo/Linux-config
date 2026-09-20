@@ -1,8 +1,10 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 # Ubuntu. Everything shared comes from common.nix; only Ubuntu-specific bits
 # live here.
 {
   imports = [ ../home/common.nix ];
+
+  home.packages = [ pkgs.gcc ];
 
   # zsh-autocomplete re-runs Ubuntu's global compinit; this .zshenv sets
   # skip_global_compinit=1 to avoid the double init.

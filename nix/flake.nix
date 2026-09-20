@@ -54,6 +54,10 @@
           system = "x86_64-linux";
           hostModule = ./hosts/arch-wsl.nix;
         };
+        "cachyos" = mkHome {
+          system = "x86_64-linux";
+          hostModule = ./hosts/cachyos.nix;
+        };
         "ubuntu" = mkHome {
           system = "x86_64-linux";
           hostModule = ./hosts/ubuntu.nix;
