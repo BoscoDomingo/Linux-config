@@ -5,4 +5,3 @@
 #
 # Example:
 #   cask "copilot-cli"
-#   cask "sonarqube-cli"
