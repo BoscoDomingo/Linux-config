@@ -55,6 +55,7 @@ in
     "direnv".source = link "${repo}/.config/direnv";
     "fastfetch".source = link "${repo}/.config/fastfetch";
     "ghostty".source = link "${repo}/.config/ghostty";
+    "herdr/config.toml".source = link "${repo}/.config/herdr/config.toml";
     "hypr".source = link "${repo}/.config/hypr";
     # Link only config.toml so ~/.config/jj/conf.d can symlink to
     # overrides/jj/ and repos/ stays machine-local.
