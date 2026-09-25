@@ -67,6 +67,7 @@ in
     herdr
     direnv
     tmux
+    socat
     # Some tools (opencode, mise) are deliberately absent. See Nix_exploration for details
   ];
 }
