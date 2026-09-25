@@ -43,7 +43,7 @@ esac
 # Rationale and conditions for switching to upstream:
 # docs/decisions/2026-09-15_use-determinate-nix.md
 if ! command -v nix >/dev/null 2>&1; then
-	echo "== Installing Nix =="
+	printf '\033[35m== Installing Nix ==\033[0m\n'
 	curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix |
 		sh -s -- install --no-confirm
 	# shellcheck disable=SC1091
@@ -59,7 +59,7 @@ ${NIX_CONFIG:-}"
 # Optional Homebrew (opt-in per machine via INSTALL_BREW=1)
 #    up its prefix on later shells; bootstrap also exports it immediately.
 if [ "${INSTALL_BREW:-0}" = "1" ] && ! command -v brew >/dev/null 2>&1; then
-	echo "== Installing Homebrew (INSTALL_BREW=1) =="
+	printf '\033[35m== Installing Homebrew (INSTALL_BREW=1) ==\033[0m\n'
 	NONINTERACTIVE=1 /bin/bash -c \
 		"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
@@ -71,13 +71,13 @@ for brew_bin in /home/linuxbrew/.linuxbrew/bin/brew /opt/homebrew/bin/brew /usr/
 done
 # Synced Brewfile plus optional overrides/brew/Brewfile.local (device-only).
 if command -v brew >/dev/null 2>&1 && [ -f "$REPO/Brewfile" ]; then
-	echo "== brew bundle =="
+	printf '\033[35m== brew bundle ==\033[0m\n'
 	bash "$REPO/scripts/brew-bundle"
 fi
 
 # Build and run the activation package pinned by this repository's flake.lock.
 #    The backup extension preserves pre-existing paths during first activation.
-echo "== activating $REPO/nix#homeConfigurations.$HOST =="
+printf '\033[35m== activating %s ==\033[0m\n' "$REPO/nix#homeConfigurations.$HOST"
 activation=$(nix build --no-link --print-out-paths \
 	"$REPO/nix#homeConfigurations.$HOST.activationPackage")
 HOME_MANAGER_BACKUP_EXT=hm-bak "$activation/activate"
@@ -89,14 +89,14 @@ export PATH="$HOME/.nix-profile/bin:$PATH"
 # Install mise from its official source when absent.
 mise_bin="$HOME/.local/bin/mise"
 if [ ! -x "$mise_bin" ]; then
-	echo "== Installing mise =="
+	printf '\033[35m== Installing mise ==\033[0m\n'
 	curl -fsSL https://mise.run | sh
 fi
 
 # Populate all tools declared in the synced and machine-local mise configs.
 # SKIP_MISE=1 skips this expensive step in Nix-layer tests.
 if [ "${SKIP_MISE:-0}" != "1" ]; then
-	echo "== mise install =="
+	printf '\033[35m== mise install ==\033[0m\n'
 	"$mise_bin" install
 fi
 
@@ -108,16 +108,16 @@ bash "$REPO/scripts/link-go-tools"
 # gitignored overrides/patches/enabled file. The sync is idempotent and installs
 # pacman hooks so package upgrades reapply compatible patches.
 if [ "$HOST" = "arch" ] && [ -f "$REPO/overrides/patches/enabled" ]; then
-	echo "== Arch system patches =="
+	printf '\033[35m== Arch system patches ==\033[0m\n'
 	DOTFILES_REPO="$REPO" bash "$REPO/Arch/sync-patches.sh"
 fi
 
-echo "== verify =="
+printf '\033[35m== verify ==\033[0m\n'
 bash "$REPO/nix/test/verify.sh"
 
+printf '\n\033[32m✅ Done\033[0m\n\033[33m'
 cat <<EOF
-
-Done. Per-machine identity and device-only packages live in the gitignored
+Per-machine identity and device-only packages live in the gitignored
 overrides/ tree (see Documentation/machine-overrides.md):
 
   mkdir -p ~/dotfiles/overrides/{git,jj,mise,brew,patches}
@@ -129,3 +129,4 @@ overrides/ tree (see Documentation/machine-overrides.md):
 Then: bash ~/dotfiles/nix/bootstrap.sh   # refreshes symlinks + brew bundle
       ssh-keygen -t ed25519 -C "you@work.example"   # private key never committed
 EOF
+printf '\033[0m'

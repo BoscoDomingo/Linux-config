@@ -45,23 +45,23 @@ fi
 export NIX_CONFIG="experimental-features = nix-command flakes
 ${NIX_CONFIG:-}"
 
-echo "== updating Nix inputs =="
+printf '\033[35m== updating Nix inputs ==\033[0m\n'
 nix flake update --flake "$REPO/nix"
 
-echo "== applying Home Manager configuration =="
+printf '\033[35m== applying Home Manager configuration ==\033[0m\n'
 bash "$REPO/nix/bootstrap.sh"
 
 if [ "$all" -eq 1 ]; then
-	echo "== updating mise =="
+	printf '\033[35m== updating mise ==\033[0m\n'
 	"$HOME/.local/bin/mise" self-update --yes
 	"$HOME/.local/bin/mise" upgrade --yes
 
 	brew_bin="$(command -v brew || true)"
 	if [ -n "$brew_bin" ]; then
-		echo "== updating Homebrew =="
+		printf '\033[35m== updating Homebrew ==\033[0m\n'
 		"$brew_bin" update
 		"$brew_bin" upgrade
 	else
-		echo "== Homebrew not found; skipping =="
+		printf '\033[35m== Homebrew not found; skipping ==\033[0m\n'
 	fi
 fi

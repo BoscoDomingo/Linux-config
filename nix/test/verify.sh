@@ -19,8 +19,22 @@ no() {
 	printf '  \033[31mFAIL\033[0m  %s\n' "$1"
 	fail=$((fail + 1))
 }
+header() {
+	printf '\033[35m%s\033[0m\n' "$1"
+}
+email_color() {
+	local email=$1 checksum color
+	checksum=$(printf '%s' "$email" | cksum)
+	checksum=${checksum%% *}
+	color=$((16 + checksum % 216))
+	printf '\033[38;5;%sm%s\033[0m' "$color" "$email"
+}
+identity() {
+	local label=$1 path=$2 email=$3
+	printf '  %s (\033[34m%s\033[0m): %s\n' "$label" "$path" "$(email_color "$email")"
+}
 
-echo "== packages owned by Home Manager (from ~/.nix-profile) =="
+header "== packages owned by Home Manager (from ~/.nix-profile) =="
 for bin in rg bat eza fd fzf delta fastfetch duf gping hyperfine trip sshs cheat rip \
 	jj nvim direnv tmux herdr; do
 	p=$(type -P "$bin" 2>/dev/null || true)
@@ -96,7 +110,7 @@ else
 	no "$golangci_link -> $(readlink "$golangci_link") (stale; expected $golangci_build)"
 fi
 
-echo "== dotfiles symlinked to the live repo (out-of-store) =="
+header "== dotfiles symlinked to the live repo (out-of-store) =="
 for f in .bash_profile .zshrc .profile .aliases .gitconfig .ssh/allowed_signers \
 	.config/starship.toml .config/nvim .config/jj/config.toml; do
 	tgt=$(readlink -f "$HOME/$f" 2>/dev/null || true)
@@ -123,14 +137,14 @@ case "$mise_ov" in
 *) no "~/.mise/config.toml resolves to '$mise_ov' (expected $REPO/overrides/mise/config.toml)" ;;
 esac
 
-echo "== git / jj identity (overrides/ tree) =="
-echo "  baseline git (repo .gitconfig): $(git -C "$REPO" config --file "$REPO/.gitconfig" user.email 2>/dev/null || echo '?')"
-echo "  baseline jj  (repo config.toml): $(sed -n 's/^email = \"\(.*\)\"/\1/p' "$REPO/.config/jj/config.toml" 2>/dev/null | head -1)"
+header "== git / jj identity (overrides/ tree) =="
+identity "baseline git" "$REPO/.gitconfig" "$(git -C "$REPO" config --file "$REPO/.gitconfig" user.email 2>/dev/null || echo '?')"
+identity "baseline jj" "$REPO/.config/jj/config.toml" "$(sed -n 's/^email = \"\(.*\)\"/\1/p' "$REPO/.config/jj/config.toml" 2>/dev/null | head -1)"
 if [ -f "$REPO/overrides/git/local.gitconfig" ]; then
-	echo "  git effective in \$HOME:       $(cd "$HOME" && git config user.email)"
+	identity "git effective" "$HOME" "$(cd "$HOME" && git config user.email)"
 fi
 if [ -f "$REPO/overrides/jj/local.toml" ]; then
-	echo "  jj  effective in \$HOME:        $(cd "$HOME" && jj config get user.email 2>/dev/null || echo '?')"
+	identity "jj effective" "$HOME" "$(cd "$HOME" && jj config get user.email 2>/dev/null || echo '?')"
 fi
 # includeIf / --when.repositories only trigger inside a repo under that path.
 email_in_git_repo() { # $1 = base dir
@@ -149,15 +163,15 @@ email_in_jj_repo() {
 	dir=$(dirname "$repo")
 	(cd "$dir" && jj config get user.email 2>/dev/null)
 }
-[ -d "$HOME/repos" ] && echo "  git in a ~/repos repo:          $(email_in_git_repo "$HOME/repos" || echo 'n/a (no repo)')"
-[ -d "$HOME/repos" ] && echo "  jj  in a ~/repos repo:          $(email_in_jj_repo "$HOME/repos" || echo 'n/a (no repo)')"
-[ -d "$HOME/dotfiles" ] && echo "  git in ~/dotfiles:              $(cd "$HOME/dotfiles" && git config user.email 2>/dev/null || echo 'n/a')"
-[ -d "$HOME/dotfiles" ] && echo "  jj  in ~/dotfiles:              $(cd "$HOME/dotfiles" && jj config get user.email 2>/dev/null || echo 'n/a')"
-[ -d "$HOME/personal" ] && echo "  git in a ~/personal repo:       $(email_in_git_repo "$HOME/personal" || echo 'n/a (no repo)')"
-[ -d "$HOME/personal" ] && echo "  jj  in a ~/personal repo:       $(email_in_jj_repo "$HOME/personal" || echo 'n/a (no repo)')"
+[ -d "$HOME/repos" ] && identity "git in repos" "$HOME/repos" "$(email_in_git_repo "$HOME/repos" || echo 'n/a (no repo)')"
+[ -d "$HOME/repos" ] && identity "jj in repos" "$HOME/repos" "$(email_in_jj_repo "$HOME/repos" || echo 'n/a (no repo)')"
+[ -d "$HOME/dotfiles" ] && identity "git in dotfiles" "$HOME/dotfiles" "$(cd "$HOME/dotfiles" && git config user.email 2>/dev/null || echo 'n/a')"
+[ -d "$HOME/dotfiles" ] && identity "jj in dotfiles" "$HOME/dotfiles" "$(cd "$HOME/dotfiles" && jj config get user.email 2>/dev/null || echo 'n/a')"
+[ -d "$HOME/personal" ] && identity "git in personal" "$HOME/personal" "$(email_in_git_repo "$HOME/personal" || echo 'n/a (no repo)')"
+[ -d "$HOME/personal" ] && identity "jj in personal" "$HOME/personal" "$(email_in_jj_repo "$HOME/personal" || echo 'n/a (no repo)')"
 
 echo
-echo "== home-manager generations (rollback targets) =="
+header "== home-manager generations (rollback targets) =="
 ls -1 "${XDG_STATE_HOME:-$HOME/.local/state}/nix/profiles/" 2>/dev/null | grep home-manager || echo "  (none found)"
 
 echo
