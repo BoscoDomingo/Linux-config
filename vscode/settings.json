@@ -325,11 +325,13 @@
 		"https://developer.microsoft.com/json-schemas/": true,
 		"https://json-schema.org/": true,
 		"https://json.schemastore.org/": true,
+		"https://models.dev/model-schema.json": true,
 		"https://raw.githubusercontent.com/devcontainers/spec/": true,
 		"https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json": true,
 		"https://raw.githubusercontent.com/microsoft/vscode/": true,
 		"https://schemastore.azurewebsites.net/": true,
-		"https://www.schemastore.org/": true
+		"https://www.schemastore.org/": true,
+		"https://opencode.ai/*": true
 	},
 	"[toml]": {
 		"editor.defaultFormatter": "tamasfe.even-better-toml"
@@ -990,6 +992,108 @@
 	},
 
 	// MARK: Theme/TO-DOs
+	"better-todo-tree.general.revealBehaviour": "end of todo",
+	"better-todo-tree.general.showIconsInsteadOfTagsInStatusBar": true,
+	"better-todo-tree.general.tagGroups": {
+		"FIX": ["FIXME", "FIX", "FIX-ME", "BUG"],
+		"TO-DO": ["TODO", "TO DO", "TO-DO"],
+		"TECH-DEBT": ["TD", "TECH-DEBT", "DEBT"],
+		"WARNING": ["WARNING", "WARN"],
+		"NOTE": ["NOTE", "REFACTOR", "REMOVE"],
+		"BOY-SCOUT": ["BOY-SCOUT", "BS", "ENH"],
+		"PERFORMANCE": ["PERF", "PERFORMANCE"]
+	},
+	"better-todo-tree.general.tags": [
+		"FIXME",
+		"FIX",
+		"FIX-ME",
+		"BUG",
+		"TODO",
+		"TO DO",
+		"TO-DO",
+		"TD",
+		"TECH-DEBT",
+		"DEBT",
+		"WARNING",
+		"WARN",
+		"NOTE",
+		"REFACTOR",
+		"REMOVE",
+		"BOY-SCOUT",
+		"BS",
+		"ENH",
+		"PERF",
+		"PERFORMANCE"
+	],
+	"better-todo-tree.general.showActivityBarBadge": true,
+	"better-todo-tree.highlights.customHighlight": {
+		"TECH-DEBT": {
+			"icon": "repo",
+			"iconColour": "#ebc310"
+		},
+		"FIX": {
+			"icon": "flame",
+			"iconColour": "#ff0000",
+			"background": "#ff000094",
+			"foreground": "#dbdbdb",
+			"textDecoration": "underline"
+		},
+		"BOY-SCOUT": {
+			"icon": "smiley",
+			"iconColour": "#00fff2",
+			"background": "#00fff2af",
+			"foreground": "#fff",
+			"fontStyle": "italic"
+		},
+		"TO-DO": {
+			"icon": "check",
+			"iconColour": "#9bf739",
+			"background": "#c2ff35"
+		},
+		"PERFORMANCE": {
+			"icon": "rocket",
+			"iconColour": "#f739ea",
+			"background": "#ff35ee",
+			"foreground": "#000"
+		},
+		"BUG": {
+			"icon": "bug",
+			"iconColour": "#7b7b7b"
+		},
+		"HACK": {
+			"icon": "tools"
+		},
+		"NOTE": {
+			"icon": "note",
+			"iconColour": "#ffe2e2",
+			"background": "#eaeaea"
+		},
+		"WARNING": {
+			"icon": "alert",
+			"iconColour": "#ffd000"
+		},
+		"[x]": {
+			"icon": "issue-closed"
+		}
+	},
+	"better-todo-tree.highlights.defaultHighlight": {
+		"background": "#fffb00",
+		"fontStyle": "bold",
+		"gutterIcon": true,
+		"foreground": "#000000",
+		"iconColour": "#6ef164",
+		"type": "tag-and-subTag"
+	},
+	"better-todo-tree.highlights.highlightDelay": 300,
+	"better-todo-tree.filtering.excludeGlobs": [
+		"**/node_modules/*/**",
+		"**/dist/*.js"
+	],
+	"better-todo-tree.filtering.ignoreGitSubmodules": true,
+	"better-todo-tree.filtering.useBuiltInExcludes": "search excludes",
+	"better-todo-tree.tree.showCountsInTree": true,
+	"better-todo-tree.tree.sortTagsOnlyViewAlphabetically": true,
+	"better-todo-tree.regex.regexCaseSensitive": true,
 	"todo-tree.general.revealBehaviour": "end of todo",
 	"todo-tree.general.tagGroups": {
 		"FIX": ["FIXME", "FIX", "FIX-ME", "BUG"],
@@ -1116,6 +1220,7 @@
 	"chat.viewProgressBadge.enabled": true,
 	"chat.useNestedAgentsMdFiles": true,
 	"chat.mcp.collisionBehavior": "suffix",
+	"chat.viewSessions.orientation": "stacked",
 	"chat.mcp.discovery.enabled": {
 		"cursor-global": true,
 		"cursor-workspace": true
@@ -1542,4 +1647,5 @@
 	"syl.allowEnvironmentCursorTokenFallback": true,
 	"cursor.composer.conversationDensity": "compact-ungrouped",
 	"extensions.installCooldownHours": 24,
+	"security.workspace.trust.enabled": true
 }
