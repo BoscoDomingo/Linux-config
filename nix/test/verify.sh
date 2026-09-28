@@ -172,7 +172,17 @@ email_in_jj_repo() {
 
 echo
 header "== home-manager generations (rollback targets) =="
-ls -1 "${XDG_STATE_HOME:-$HOME/.local/state}/nix/profiles/" 2>/dev/null | grep home-manager || echo "  (none found)"
+mapfile -t generations < <(home-manager generations 2>/dev/null || true)
+generation_count=${#generations[@]}
+first_visible=$((generation_count > 5 ? generation_count - 5 : 0))
+if [ "$generation_count" -eq 0 ]; then
+	echo "  (none found)"
+else
+	for ((index = first_visible; index < generation_count; index++)); do
+		printf '  %s\n' "${generations[$index]}"
+	done
+	printf '  %d additional generation(s) available\n' "$first_visible"
+fi
 
 echo
 printf 'result: %d passed, %d failed\n' "$pass" "$fail"
