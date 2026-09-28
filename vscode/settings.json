@@ -1225,6 +1225,16 @@
 		"cursor-global": true,
 		"cursor-workspace": true
 	},
+	// Copilot agent terminals set VSCODE_IPC_HOOK_CLI like human terminals,
+	// so we have to mark them explicitly as agent ones.
+	"chat.tools.terminal.terminalProfile.linux": {
+		"path": "zsh",
+		"env": { "_IS_AI_AGENT": "1" }
+	},
+	"chat.tools.terminal.terminalProfile.osx": {
+		"path": "zsh",
+		"env": { "_IS_AI_AGENT": "1" }
+	},
 	"chat.tools.urls.autoApprove": {
 		"https://code.visualstudio.com": true,
 		"https://github.com/microsoft/vscode/wiki/*": true,

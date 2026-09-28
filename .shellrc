@@ -10,35 +10,14 @@ if [ -z "$_IS_AI_AGENT" ]; then
 	[ -n "$AGENT" ] && _IS_AI_AGENT=1
 	# GitHub Copilot Chat agent terminals expose copilot-chat paths in PATH.
 	# Only check PATH when not in a regular VS Code terminal (Copilot adds these paths to all terminals).
+	# Note: `VSCODE_IPC_HOOK_CLI=1` = descendant of a VS Code process (incl. agent or extension terminals),
+	# `TERM_PROGRAM=vscode` = inside its terminal.
 	if [ -z "$VSCODE_IPC_HOOK_CLI" ]; then
 		case ":${PATH}:" in
 		*":$HOME/.vscode-server/data/User/globalStorage/github.copilot-chat/copilotCli:"*) _IS_AI_AGENT=1 ;;
 		*":$HOME/.vscode-server/data/User/globalStorage/github.copilot-chat/debugCommand:"*) _IS_AI_AGENT=1 ;;
 		esac
 	fi
-fi
-
-if [ -z "$_IS_AI_AGENT" ] && [ "${_DOTFILES_HAS_REAL_TTY:-1}" = "1" ]; then
-	# Skip cosmetic/user-facing setup for IDE shell-environment probes without a real terminal.
-	export "MICRO_TRUECOLOR=1"
-	[ -e "$HOME/.aliases" ] && . "$HOME/.aliases"
-
-	# Run once a day
-	if [ ! -e "/tmp/$(date -I).sem" ]; then
-		touch "/tmp/$(date -I).sem"
-		command -v fastfetch >/dev/null 2>&1 && fastfetch
-		if [ -n "$(command -v brew)" ]; then
-			(brew update &>/dev/null &)
-		fi
-	fi
-
-	# OpenCode can leave Ghostty's cursor in block mode; restore the preferred bar cursor on exit.
-	opencode() {
-		command opencode "$@"
-		_opencode_status=$?
-		printf '\033[5 q'
-		return "$_opencode_status"
-	}
 fi
 
 # Lightweight utility functions
@@ -91,7 +70,7 @@ ensure_link() {
 }
 
 # Claude Code opens Agent View when you start it with no arguments, which can't run slash commands
-# An empty prompt argument bypasses that 
+# An empty prompt argument bypasses that
 claude() {
 	if [ "$#" -eq 0 ]; then
 		command claude ''
@@ -99,3 +78,32 @@ claude() {
 		command claude "$@"
 	fi
 }
+
+# Require shell startup code to confirm a real interactive terminal; unknown contexts stay headless.
+if [ -z "$_IS_AI_AGENT" ] && [ "${_IS_INTERACTIVE_TTY:-0}" = "1" ]; then
+	# Skip cosmetic/user-facing setup for IDE shell-environment probes without a real terminal.
+	export "MICRO_TRUECOLOR=1"
+	[ -e "$HOME/.aliases" ] && . "$HOME/.aliases"
+
+	# Run once a day
+	if [ ! -e "/tmp/$(date -I).sem" ]; then
+		touch "/tmp/$(date -I).sem"
+		command -v fastfetch >/dev/null 2>&1 && fastfetch
+		if [ -n "$(command -v brew)" ]; then
+			(brew update &>/dev/null &)
+		fi
+	fi
+
+	# OpenCode can leave Ghostty's cursor in block mode; restore the preferred bar cursor on exit.
+	opencode() {
+		command opencode "$@"
+		_opencode_status=$?
+		printf '\033[5 q'
+		return "$_opencode_status"
+	}
+
+	# VS Code (and Cursor) terminals never auto-start herdr, for humans or agents.
+	if [ -z "$HERDR_ENV" ] && [ "$TERM_PROGRAM" != "vscode" ]; then
+		herdr
+	fi
+fi

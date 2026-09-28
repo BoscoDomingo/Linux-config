@@ -6,6 +6,12 @@ if [ -n "${VSCODE_IPC_HOOK_CLI}" ] && [ -e "$HOME/.profile" ]; then
 	. "$HOME/.profile"
 fi
 
+# Keep human-facing setup disabled for headless shells and IDE probes.
+_IS_INTERACTIVE_TTY=0
+if [[ $- == *i* && -t 0 && -t 1 ]]; then
+	_IS_INTERACTIVE_TTY=1
+fi
+
 # Load common interactive config (agent detection, aliases, etc.)
 [ -r "$HOME/.shellrc" ] && . "$HOME/.shellrc"
 

@@ -12,9 +12,9 @@ bindkey -e
 
 # Keep IDE shell-environment resolvers and other no-TTY probes lightweight while
 # still loading the non-interactive environment, direnv, and mise below.
-_DOTFILES_HAS_REAL_TTY=0
+_IS_INTERACTIVE_TTY=0
 if [[ -o interactive && -t 0 && -t 1 ]]; then
-	_DOTFILES_HAS_REAL_TTY=1
+	_IS_INTERACTIVE_TTY=1
 fi
 
 # Load environment and common interactive config
@@ -29,7 +29,7 @@ command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
 command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh)"
 
 # Everything below is non-agent, real-terminal UI only
-if [[ -z "$_IS_AI_AGENT" && "$_DOTFILES_HAS_REAL_TTY" = "1" ]]; then
+if [[ -z "$_IS_AI_AGENT" && "$_IS_INTERACTIVE_TTY" = "1" ]]; then
 	# MARK: - Oh My Zsh
 	# Required for oh-my-zsh
 	export LANG="en_GB.UTF-8"
@@ -221,8 +221,8 @@ if [[ -z "$_IS_AI_AGENT" && "$_DOTFILES_HAS_REAL_TTY" = "1" ]]; then
 	[ -n "$(command -v rip)" ] && source <(rip completions zsh)
 	[ -n "$(command -v fzf)" ] && source <(fzf --zsh)
 	[ -n "$(command -v fx)" ] && source <(fx --comp zsh)
-  [ -n "$(command -v qq)" ] && source <(qq completion zsh)
-  [ -n "$(command -v herdr)" ] && source <(herdr completion zsh)
+	[ -n "$(command -v qq)" ] && source <(qq completion zsh)
+	[ -n "$(command -v herdr)" ] && source <(herdr completion zsh)
 
 	## Static/custom completions
 	# Files must be named `_<command>` in $XDG_CONFIG_HOME/zsh/completions.
@@ -274,7 +274,7 @@ if [[ -z "$_IS_AI_AGENT" && "$_DOTFILES_HAS_REAL_TTY" = "1" ]]; then
 	fi
 
 	unalias gcp
-  unalias gga
+	unalias gga
 	alias reload='source ~/.zshrc'
 	alias full_reload="exec zsh"
 	alias reload_w_tmux="DOTFILES_AUTO_TMUX=1 zsh"
@@ -388,8 +388,3 @@ fi
 if [ -f "$HOME/.moon/bin/env" ]; then
 	. "$HOME/.moon/bin/env"
 fi
-
-if [ -z "$HERDR_ENV" ]; then
-	herdr
-fi
-
