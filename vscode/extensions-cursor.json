@@ -2218,32 +2218,6 @@
 	},
 	{
 		"identifier": {
-			"id": "zhuangtongfa.material-theme",
-			"uuid": "26a529c9-2654-4b95-a63f-02f6a52429e6"
-		},
-		"version": "3.19.0",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/zhuangtongfa.material-theme-3.19.0-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "zhuangtongfa.material-theme-3.19.0-universal",
-		"metadata": {
-			"installedTimestamp": 1779562708336,
-			"pinned": true,
-			"source": "gallery",
-			"id": "26a529c9-2654-4b95-a63f-02f6a52429e6",
-			"publisherId": "8ae75bda-ec22-4a17-9340-abf1a20beca9",
-			"publisherDisplayName": "zhuangtongfa",
-			"targetPlatform": "universal",
-			"updated": false,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false
-		}
-	},
-	{
-		"identifier": {
 			"id": "wayou.vscode-todo-highlight",
 			"uuid": "97a08c5f-6667-4242-a5c5-045dfb6bd4b9"
 		},
@@ -2443,36 +2417,6 @@
 			"id": "7d236dd4-6af6-48f4-9464-6bf82ad36aaa",
 			"publisherId": "058d2b2f-dac6-41b2-8c3e-462966d45cd6",
 			"publisherDisplayName": "ban",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "codeandstuff.package-json-upgrade",
-			"uuid": "1f59cde6-3a8c-47e4-b40b-355c1641721a"
-		},
-		"version": "3.7.0",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/codeandstuff.package-json-upgrade-3.7.0-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "codeandstuff.package-json-upgrade-3.7.0-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1782199597450,
-			"pinned": false,
-			"source": "gallery",
-			"id": "1f59cde6-3a8c-47e4-b40b-355c1641721a",
-			"publisherId": "31d03940-ac40-40ee-bd05-fefb4d01ab50",
-			"publisherDisplayName": "codeandstuff",
 			"targetPlatform": "universal",
 			"updated": true,
 			"private": false,
@@ -2715,66 +2659,6 @@
 	},
 	{
 		"identifier": {
-			"id": "anysphere.remote-containers",
-			"uuid": "94d8b289-9db0-4c3c-b4f3-a3294c789678"
-		},
-		"version": "1.0.38",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/anysphere.remote-containers-1.0.38",
-			"scheme": "file"
-		},
-		"relativeLocation": "anysphere.remote-containers-1.0.38",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1785508645404,
-			"pinned": false,
-			"source": "gallery",
-			"id": "94d8b289-9db0-4c3c-b4f3-a3294c789678",
-			"publisherId": "c16ea17f-2629-4893-9064-35c0fd9add4c",
-			"publisherDisplayName": "Anysphere",
-			"targetPlatform": "undefined",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "jj-view.jj-view",
-			"uuid": "9218ea3e-b964-494e-a2af-4f64dfddfac9"
-		},
-		"version": "2.5.1",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/jj-view.jj-view-2.5.1-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "jj-view.jj-view-2.5.1-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1786026960301,
-			"pinned": true,
-			"source": "gallery",
-			"id": "9218ea3e-b964-494e-a2af-4f64dfddfac9",
-			"publisherId": "55e7875a-2c3e-4f5f-a5df-68605dea8ada",
-			"publisherDisplayName": "jj-view",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
 			"id": "jjk.jjk",
 			"uuid": "27fecc3e-093e-4ff1-b130-b3ccf371337d"
 		},
@@ -2985,21 +2869,171 @@
 	},
 	{
 		"identifier": {
+			"id": "anysphere.remote-containers",
+			"uuid": "94d8b289-9db0-4c3c-b4f3-a3294c789678"
+		},
+		"version": "1.0.39",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/anysphere.remote-containers-1.0.39",
+			"scheme": "file"
+		},
+		"relativeLocation": "anysphere.remote-containers-1.0.39",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1786614439696,
+			"pinned": false,
+			"source": "gallery",
+			"id": "94d8b289-9db0-4c3c-b4f3-a3294c789678",
+			"publisherId": "c16ea17f-2629-4893-9064-35c0fd9add4c",
+			"publisherDisplayName": "Anysphere",
+			"targetPlatform": "undefined",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "jj-view.jj-view",
+			"uuid": "9218ea3e-b964-494e-a2af-4f64dfddfac9"
+		},
+		"version": "2.6.0",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/jj-view.jj-view-2.6.0-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "jj-view.jj-view-2.6.0-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1786702308383,
+			"pinned": true,
+			"source": "gallery",
+			"id": "9218ea3e-b964-494e-a2af-4f64dfddfac9",
+			"publisherId": "55e7875a-2c3e-4f5f-a5df-68605dea8ada",
+			"publisherDisplayName": "jj-view",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "zhuangtongfa.material-theme",
+			"uuid": "26a529c9-2654-4b95-a63f-02f6a52429e6"
+		},
+		"version": "3.20.2",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/zhuangtongfa.material-theme-3.20.2-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "zhuangtongfa.material-theme-3.20.2-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1786702316333,
+			"pinned": true,
+			"source": "gallery",
+			"id": "26a529c9-2654-4b95-a63f-02f6a52429e6",
+			"publisherId": "8ae75bda-ec22-4a17-9340-abf1a20beca9",
+			"publisherDisplayName": "zhuangtongfa",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "codeandstuff.package-json-upgrade",
+			"uuid": "1f59cde6-3a8c-47e4-b40b-355c1641721a"
+		},
+		"version": "3.8.0",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/codeandstuff.package-json-upgrade-3.8.0-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "codeandstuff.package-json-upgrade-3.8.0-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1789115902074,
+			"pinned": false,
+			"source": "gallery",
+			"id": "1f59cde6-3a8c-47e4-b40b-355c1641721a",
+			"publisherId": "31d03940-ac40-40ee-bd05-fefb4d01ab50",
+			"publisherDisplayName": "codeandstuff",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "sonarsource.sonarlint-vscode",
+			"uuid": "a7fa941e-bcda-486f-8141-8483a6286177"
+		},
+		"version": "5.10.0",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/sonarsource.sonarlint-vscode-5.10.0-win32-x64",
+			"scheme": "file"
+		},
+		"relativeLocation": "sonarsource.sonarlint-vscode-5.10.0-win32-x64",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1789544364331,
+			"pinned": false,
+			"source": "gallery",
+			"id": "a7fa941e-bcda-486f-8141-8483a6286177",
+			"publisherId": "08b9cc7e-b259-49cd-b013-dfa5357b0a83",
+			"publisherDisplayName": "SonarSource",
+			"targetPlatform": "win32-x64",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
 			"id": "anysphere.remote-ssh",
 			"uuid": "73a45d83-83c7-4b22-bebf-c9130b0ab3f3"
 		},
-		"version": "1.1.14",
+		"version": "1.1.16",
 		"location": {
 			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/anysphere.remote-ssh-1.1.14",
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/anysphere.remote-ssh-1.1.16",
 			"scheme": "file"
 		},
-		"relativeLocation": "anysphere.remote-ssh-1.1.14",
+		"relativeLocation": "anysphere.remote-ssh-1.1.16",
 		"metadata": {
 			"isApplicationScoped": true,
 			"isMachineScoped": false,
 			"isBuiltin": false,
-			"installedTimestamp": 1786438946476,
+			"installedTimestamp": 1790076571875,
 			"pinned": false,
 			"source": "gallery",
 			"id": "73a45d83-83c7-4b22-bebf-c9130b0ab3f3",
@@ -3014,53 +3048,33 @@
 		}
 	},
 	{
-		"identifier": {
-			"id": "visualjj.visualjj",
-			"uuid": "338d7429-21f3-449d-acdf-8518eae43a72"
-		},
-		"version": "0.33.3",
+		"identifier": { "id": "visualjj.visualjj" },
+		"version": "0.35.3",
 		"location": {
 			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/visualjj.visualjj-0.33.3-win32-x64",
+			"fsPath": "c:\\Users\\BoscoDomingoBenito\\.cursor\\extensions\\visualjj.visualjj-0.35.3-win32-x64",
+			"_sep": 1,
+			"external": "file:///c%3A/Users/BoscoDomingoBenito/.cursor/extensions/visualjj.visualjj-0.35.3-win32-x64",
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/visualjj.visualjj-0.35.3-win32-x64",
 			"scheme": "file"
 		},
-		"relativeLocation": "visualjj.visualjj-0.33.3-win32-x64",
+		"relativeLocation": "visualjj.visualjj-0.35.3-win32-x64",
 		"metadata": {
-			"installedTimestamp": 1786534591328,
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1790076629859,
+			"pinned": false,
 			"source": "gallery",
 			"id": "338d7429-21f3-449d-acdf-8518eae43a72",
 			"publisherId": "828fee6d-3c80-4fdc-9b0e-a9a8d09fb856",
 			"publisherDisplayName": "visualjj",
 			"targetPlatform": "win32-x64",
-			"updated": false,
+			"updated": true,
 			"private": false,
 			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false
-		}
-	},
-	{
-		"identifier": { "id": "sonarsource.sonarlint-vscode" },
-		"version": "5.7.0",
-		"location": {
-			"$mid": 1,
-			"fsPath": "c:\\Users\\BoscoDomingoBenito\\.cursor\\extensions\\sonarsource.sonarlint-vscode-5.7.0-win32-x64",
-			"_sep": 1,
-			"external": "file:///c%3A/Users/BoscoDomingoBenito/.cursor/extensions/sonarsource.sonarlint-vscode-5.7.0-win32-x64",
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/sonarsource.sonarlint-vscode-5.7.0-win32-x64",
-			"scheme": "file"
-		},
-		"relativeLocation": "sonarsource.sonarlint-vscode-5.7.0-win32-x64",
-		"metadata": {
-			"installedTimestamp": 1786534600894,
-			"source": "gallery",
-			"id": "a7fa941e-bcda-486f-8141-8483a6286177",
-			"publisherId": "08b9cc7e-b259-49cd-b013-dfa5357b0a83",
-			"publisherDisplayName": "SonarSource",
-			"targetPlatform": "win32-x64",
-			"updated": false,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false
+			"hasPreReleaseVersion": false,
+			"preRelease": false
 		}
 	}
 ]
