@@ -12,7 +12,8 @@
 		"todo-tree.general.tags",
 		"files.eol"
 	],
-	"window.newWindowProfile": "Default",
+	"workbench.experimental.modernUI": false,
+	"window.density.layout": "compact",
 	"window.autoDetectColorScheme": false,
 	"zenMode.hideLineNumbers": false,
 	"workbench.editor.editorActionsLocation": "titleBar",
@@ -21,6 +22,7 @@
 	"security.workspace.trust.banner": "untilDismissed",
 	"security.allowedUNCHosts": ["wsl.localhost"],
 	"security.workspace.trust.untrustedFiles": "open",
+	"security.workspace.trust.enabled": true,
 	"remote.autoForwardPortsSource": "hybrid",
 	"extensions.autoUpdate": "off",
 	"extensions.autoUpdateDelay": 24,
@@ -1656,6 +1658,5 @@
 	"syl.burnRateSpikeSensitivity": "relaxed",
 	"syl.allowEnvironmentCursorTokenFallback": true,
 	"cursor.composer.conversationDensity": "compact-ungrouped",
-	"extensions.installCooldownHours": 24,
-	"security.workspace.trust.enabled": true
+	"extensions.installCooldownHours": 24
 }
