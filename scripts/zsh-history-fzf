@@ -32,13 +32,15 @@ _load_raw_records() {
 # so let zsh decode it instead of reading the text as-is.
 _load_decoded_commands() {
 	local HISTSIZE=$((${#raw_records} + 1)) SAVEHIST=0
+	local -a events
 	integer event
 	decoded_commands=()
 
 	((${#raw_records})) || return 0
 	builtin fc -R "$histfile"
 	# Key scans of $history skip the current event, which holds the last entry.
-	for ((event = ${${(on)${(k)history}}[1]:-HISTCMD}; event <= HISTCMD; event++)); do
+	events=(${(on)${(k)history}})
+	for ((event = ${events[1]:-HISTCMD}; event <= HISTCMD; event++)); do
 		decoded_commands+=("$history[$event]")
 	done
 }
