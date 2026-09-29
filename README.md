@@ -50,13 +50,13 @@ Shell config is layered so that non-interactive env setup is separated from inte
 flowchart TD
     subgraph login ["Login Shell Init"]
         zprofile[".zprofile"]
-        profile[".profile\n(env vars, PATH, SSH, WSL)"]
+        profile[".profile"]
     end
 
     subgraph interactive ["Interactive Shell Init"]
-        zshrc[".zshrc\n(oh-my-zsh, completions, prompt, WT cwd)"]
-        bashrc[".bashrc\n(bash-completion, prompt)"]
-        shellrc[".shellrc\n(aliases, fastfetch, functions)"]
+        zshrc[".zshrc"]
+        bashrc[".bashrc"]
+        shellrc[".shellrc"]
     end
 
     zprofile -->|"emulate sh source"| profile
