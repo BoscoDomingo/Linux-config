@@ -3,41 +3,44 @@
 
 emulate -L zsh
 setopt extendedglob no_aliases
+zmodload zsh/parameter
 
 histfile=${HISTFILE:-$HOME/.histfile}
 
 _load_history_records() {
-	integer id=0
-	local line current_raw current_command
+	_load_raw_records
+	_load_decoded_commands
+}
+
+# Raw records are only used to rewrite the file on delete. zsh continues an
+# entry while a line ends in a backslash, so split records the same way.
+_load_raw_records() {
+	local line record
 	raw_records=()
-	commands=()
 
 	[[ -r "$histfile" ]] || return 0
 	while IFS= read -r line || [[ -n "$line" ]]; do
-		if [[ "$line" =~ '^: [0-9]+:[0-9]+;(.*)$' ]]; then
-			if [[ -n "$current_raw" ]]; then
-				((id++))
-				raw_records[$id]="$current_raw"
-				commands[$id]="$current_command"
-			fi
-			current_raw="$line"$'\n'
-			current_command="$match[1]"
-		else
-			if [[ -n "$current_raw" ]]; then
-				current_raw+="$line"$'\n'
-				current_command+=$'\n'"$line"
-			else
-				current_raw="$line"$'\n'
-				current_command="$line"
-			fi
-		fi
+		record+="$line"$'\n'
+		[[ "$line" == *\\ ]] && continue
+		raw_records+=("$record")
+		record=
 	done <"$histfile"
+	[[ -n "$record" ]] && raw_records+=("$record")
+}
 
-	if [[ -n "$current_raw" ]]; then
-		((id++))
-		raw_records[$id]="$current_raw"
-		commands[$id]="$current_command"
-	fi
+# The file stores newlines as backslash-newline and non-ASCII bytes metafied,
+# so let zsh decode it instead of reading the text as-is.
+_load_decoded_commands() {
+	local HISTSIZE=$((${#raw_records} + 1)) SAVEHIST=0
+	integer event
+	decoded_commands=()
+
+	((${#raw_records})) || return 0
+	builtin fc -R "$histfile"
+	# Key scans of $history skip the current event, which holds the last entry.
+	for ((event = ${${(on)${(k)history}}[1]:-HISTCMD}; event <= HISTCMD; event++)); do
+		decoded_commands+=("$history[$event]")
+	done
 }
 
 _list_history() {
@@ -45,11 +48,11 @@ _list_history() {
 	typeset -A seen
 	_load_history_records
 
-	for id in {${#commands}..1}; do
-		[[ -n "${commands[$id]}" ]] || continue
-		((${+seen[${commands[$id]}]})) && continue
-		seen[${commands[$id]}]=1
-		display=${commands[$id]//$'\n'/\\n}
+	for id in {${#decoded_commands}..1}; do
+		[[ -n "${decoded_commands[$id]}" ]] || continue
+		((${+seen[${decoded_commands[$id]}]})) && continue
+		seen[${decoded_commands[$id]}]=1
+		display=${decoded_commands[$id]//$'\n'/\\n}
 		display=${display//$'\t'/    }
 		printf '%s\t%s\n' "$id" "$display"
 	done
@@ -59,7 +62,7 @@ _show_history() {
 	local id=$1
 	[[ "$id" == <-> ]] || return 0
 	_load_history_records
-	printf '%s' "${commands[$id]}"
+	printf '%s' "${decoded_commands[$id]}"
 }
 
 _pick_history() {
@@ -92,14 +95,19 @@ _delete_history() {
 	local id=$1 target tmpfile
 	[[ "$id" == <-> ]] || return 0
 	_load_history_records
-	target=${commands[$id]}
+	target=${decoded_commands[$id]}
 	[[ -n "$target" ]] || return 0
+	# Deletion maps decoded commands back to raw records by position.
+	if ((${#decoded_commands} != ${#raw_records})); then
+		print -u2 "zsh-history-fzf: $histfile records do not align, not deleting"
+		return 1
+	fi
 
 	umask 077
 	tmpfile=$(mktemp "${TMPDIR:-/tmp}/zsh-history-fzf.XXXXXX") || return 1
 	{
-		for id in {1..${#commands}}; do
-			[[ "${commands[$id]}" == "$target" ]] && continue
+		for id in {1..${#decoded_commands}}; do
+			[[ "${decoded_commands[$id]}" == "$target" ]] && continue
 			printf '%s' "${raw_records[$id]}"
 		done
 	} >"$tmpfile"
