@@ -12,6 +12,13 @@ rust = "latest"
 
 biome = "latest"
 golangci-lint = "latest"
+
+# Editor Go tooling. Declared as mise tools (not `go install`ed) because mise
+# points GOBIN at ~/.local/share/mise/installs/go/<version>/bin, so anything
+# `go install`ed there disappears from PATH on every Go upgrade and leaves a
+# dead shim behind ("No version is set for shim: gopls").
+"go:golang.org/x/tools/gopls" = "latest"
+"go:github.com/go-delve/delve/cmd/dlv" = "latest"
 diffnav = "0.11.0"
 "tldr++" = "latest"
 hunk = "latest"
@@ -28,7 +35,9 @@ npm.package_manager = "auto"
 pipx.uvx = true
 # safe = true
 # sandbox.deny_all = true
-status = { show_deps_stale = true, show_env = true, missing_tools = "if_other_versions_installed", show_tools = true }
+# show_env/show_tools off: they print the active tools and env vars on every
+# new shell, which is noise. `mise ls --current` and `mise env` show the same data.
+status = { show_deps_stale = true, show_env = false, missing_tools = "if_other_versions_installed", show_tools = false }
 upgrade.auto_prune = true
 upgrade.prune_after = "24h"
 
