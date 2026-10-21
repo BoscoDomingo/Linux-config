@@ -1,8 +1,10 @@
 "$schema" = "https://jj-vcs.github.io/jj/latest/config-schema.json"
 
+# Baseline (personal) identity. Per-machine / per-directory overrides live in
+# the gitignored overrides/jj/ tree (symlinked to ~/.config/jj/conf.d).
 [user]
 name = "Bosco Domingo"
-email = "bosco.domingo@iceye.com"
+email = "boscodomingob@gmail.com"
 
 [signing]
 behavior = "keep"
@@ -11,7 +13,7 @@ key = "~/.ssh/id_ed25519"
 
 [signing.backends.ssh]
 allowed-signers = "~/.ssh/allowed_signers"
-program = "ssh-sign"
+program = "ssh-sign"                       # Should be in dotfiles repo
 
 [[--scope]]
 --when.platforms = ["windows"]
@@ -21,7 +23,7 @@ key = "~/.ssh/id_ed25519.pub"
 
 [--scope.signing.backends.ssh]
 allowed-signers = "~/.ssh/allowed_signers"
-program = "C:/Windows/System32/OpenSSH/ssh-keygen.exe"
+program = "ssh-sign.cmd"                   # Comes from Windows-config/Scripts
 
 [--scope.aliases]
 sh = [
@@ -38,6 +40,10 @@ shp = [
   # Use the Windows cmd shim in Windows-config/Scripts; Windows process lookup doesn't resolve the extensionless POSIX helper.
   "--config=ui.pager=[\"jj-diffnav-pager.cmd\"]",
 ]
+
+[--scope.ui]
+# Windows does not include less, so use jj's portable built-in pager.
+pager = ":builtin"
 
 [git]
 # push-bookmark-prefix = "feat/"
@@ -89,13 +95,15 @@ st = ["status"]
 # Use diffnav for commit inspection, but skip it when jj show has metadata without a diff.
 sh = ["show", "--config=ui.diff-formatter=':git'", "--config=ui.pager=[\"jj-diffnav-pager\"]"]
 shp = ["show", "-r", "@-", "--config=ui.diff-formatter=':git'", "--config=ui.pager=[\"jj-diffnav-pager\"]"]
+shs = ["show", "--summary"]
 
 d = ["diff"]
 l = ["log"]
 ls = ["log", "--summary"]
 la = ["log", "-r", "::"]
 le = ["log", "-r", "empty() & mutable()"]
-ld = ["log", "-r", "divergent()"]
+lc = ["log", "-r", "conflicts()"]
+ld = ["log", "-r", 'description(exact:"")']
 ln = ["log", "-r", "remote_bookmarks().."] # All non-pushed-yet commits
 lnp = ["log", "-r", "(remote_bookmarks()..@)::"] # Current working copy's non-pushed-yet commits
 
@@ -113,8 +121,8 @@ de = ["diffedit"] # Alternative to squash
 
 u = ["undo"]
 
-a = ["absorb", "-i"]
-aa = ["absorb"]
+a = ["absorb"]
+ai = ["absorb", "-i"]
 af = ["absorb", "--ignore-immutable", "-t", "immutable()"] # absorb disregarding immutability (such as bookmarked changes)
 
 # Navigation
@@ -180,6 +188,7 @@ wu = ["workspace", "update-stale"]
 # Git
 g = ["git"]
 gf = ["git", "fetch"]
+f = ["git", "fetch"]
 gp = ["git", "push"]
 gpb = ["git", "push", "-b"]
 gpa = ["git", "push", "--all"]

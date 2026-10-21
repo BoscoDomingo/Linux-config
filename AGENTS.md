@@ -1,8 +1,8 @@
 This is a repo that contains dotfiles for Linux-like systems.
 
-First-time setup and any subsequent updates should be done by running the `run.sh` script (which may be called from the distro-specific setup script on the first run, e.g. `Arch/run_arch.sh`). It should be an idempotent operation.
+Setup is managed by Nix (Home Manager). First-time setup and subsequent updates run `nix/bootstrap.sh` (idempotent), which installs Nix and activates the generation pinned by `nix/flake.lock`. On a brand-new machine the distro-specific script (`Arch/run_arch.sh` or `Ubuntu/run_ubuntu.sh`) installs prerequisites, clones the repo, and calls `nix/bootstrap.sh`.
 
-Any time a dotfiles-managed modification is made, ensure `run.sh` and the distro-specific setup scripts are updated to reflect the changes.
+Any time a dotfiles-managed modification is made, ensure the Nix config under `nix/` reflects it: dotfile symlinks in `nix/home/dotfiles.nix`, packages in `nix/home/packages.nix`, and git-cloned/curled frameworks in `nix/home/tools.nix`. Tool ownership (Nix vs mise vs Homebrew) is documented in `Documentation/Nix_exploration.md`.
 
 Do not assume every fix discovered while working in this repo should be added to the dotfiles. When scope is ambiguous, clarify first whether the user wants a current-device-only fix or a reusable dotfiles change.
 
@@ -19,6 +19,10 @@ This also means that root-level `.agents/`, `.claude/`, `.cursor/`, and similar 
 If using mise-installed tools, prefer using the `latest` tag instead of a specific version unless a specific version is required, in which case, use the most specific path (i.e. `/1.0.1/` instead of `/1/` or `/1.0/`).
 
 Always verify symlinks are correct to ensure any changes to files here are applied. Since I also use WSL in some cases, issues may arise from the Windows side of things, so check that too (especially for Cursor, VS Code, and other such tools I will have installed on Windows but have WSL support).
+
+For outputs only:
+1. Avoid the use of em- and en-dashes. Use punctuation, regular dashes and other alternatives instead.
+2. Use ASD-STE100 Simplified Technical English
 
 ## Note on contributing to this repo
 

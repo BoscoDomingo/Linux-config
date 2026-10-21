@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+# Reapply the KDE lock-screen retry patch without overwriting changed upstream code.
+set -euo pipefail
+
+target="${DOTFILES_PATCH_ROOT:-}/usr/share/plasma/shells/org.kde.plasma.desktop/contents/lockscreen/LockScreenUi.qml"
+patch_file="$(dirname "$0")/retry-delay.patch"
+action="${1:-apply}"
+
+case "$action" in
+apply | remove) ;;
+*)
+	printf 'Usage: %s [apply|remove]\n' "$0" >&2
+	exit 2
+	;;
+esac
+
+if [ ! -f "$target" ]; then
+	printf 'dotfiles patch: target is absent, leaving the system unchanged: %s\n' "$target" >&2
+	exit 0
+fi
+
+if [ "$action" = apply ]; then
+	if grep -A3 -F 'id: graceLockTimer' "$target" | grep -Eq 'interval:[[:space:]]*0([[:space:]]|$)'; then
+		printf 'dotfiles patch: plasma-lockscreen-fast-retry is already applied\n'
+		exit 0
+	fi
+	patch_args=(--forward)
+	verb='apply'
+	past_tense='applied'
+else
+	if grep -A3 -F 'id: graceLockTimer' "$target" | grep -Eq 'interval:[[:space:]]*3000([[:space:]]|$)'; then
+		printf 'dotfiles patch: plasma-lockscreen-fast-retry is already removed\n'
+		exit 0
+	fi
+	patch_args=(--reverse)
+	verb='remove'
+	past_tense='removed'
+fi
+
+tmp=$(mktemp "${target}.dotfiles.XXXXXX")
+trap 'rm -f "$tmp"' EXIT
+cp --preserve=mode,ownership,timestamps "$target" "$tmp"
+
+if ! patch --dry-run --batch "${patch_args[@]}" "$tmp" "$patch_file" >/dev/null; then
+	printf 'dotfiles patch: cannot %s plasma-lockscreen-fast-retry; upstream code changed, leaving it untouched\n' "$verb" >&2
+	exit 0
+fi
+patch --batch "${patch_args[@]}" "$tmp" "$patch_file" >/dev/null
+
+chown --reference="$target" "$tmp"
+chmod --reference="$target" "$tmp"
+mv "$tmp" "$target"
+trap - EXIT
+printf 'dotfiles patch: %s plasma-lockscreen-fast-retry\n' "$past_tense"

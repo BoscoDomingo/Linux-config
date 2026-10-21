@@ -12,7 +12,8 @@
 		"todo-tree.general.tags",
 		"files.eol"
 	],
-	"window.newWindowProfile": "Default",
+	"workbench.experimental.modernUI": false,
+	"window.density.layout": "compact",
 	"window.autoDetectColorScheme": false,
 	"zenMode.hideLineNumbers": false,
 	"workbench.editor.editorActionsLocation": "titleBar",
@@ -21,6 +22,7 @@
 	"security.workspace.trust.banner": "untilDismissed",
 	"security.allowedUNCHosts": ["wsl.localhost"],
 	"security.workspace.trust.untrustedFiles": "open",
+	"security.workspace.trust.enabled": true,
 	"remote.autoForwardPortsSource": "hybrid",
 	"extensions.autoUpdate": "off",
 	"extensions.autoUpdateDelay": 24,
@@ -325,11 +327,13 @@
 		"https://developer.microsoft.com/json-schemas/": true,
 		"https://json-schema.org/": true,
 		"https://json.schemastore.org/": true,
+		"https://models.dev/model-schema.json": true,
 		"https://raw.githubusercontent.com/devcontainers/spec/": true,
 		"https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json": true,
 		"https://raw.githubusercontent.com/microsoft/vscode/": true,
 		"https://schemastore.azurewebsites.net/": true,
-		"https://www.schemastore.org/": true
+		"https://www.schemastore.org/": true,
+		"https://opencode.ai/*": true
 	},
 	"[toml]": {
 		"editor.defaultFormatter": "tamasfe.even-better-toml"
@@ -456,13 +460,25 @@
 	"[go.mod]": {
 		"editor.defaultFormatter": "golang.go"
 	},
-	"go.toolsManagement.autoUpdate": true,
+	// mise owns the Go tools (see .config/mise/config.toml); letting the
+	// extension `go install` them puts binaries in the versioned GOBIN, where
+	// the next Go upgrade orphans them. Update with `mise upgrade` instead.
+	"go.toolsManagement.autoUpdate": false,
+	// The extension looks for a bare name in $GOBIN, then $GOPATH/bin, then
+	// PATH. A file in ~/go/bin thus hides the mise tool.
+	// scripts/link-go-tools keeps ~/go/bin correct.
 	"go.alternateTools": {
 		"go": "~/.local/share/mise/installs/go/latest/bin/go",
-		"customFormatter": "golangci-lint-v2"
+		"customFormatter": "golangci-lint",
+		// mise ships the v2 CLI as plain `golangci-lint`.
+		"golangci-lint-v2": "golangci-lint"
 	},
 	"go.formatTool": "custom",
 	"go.formatFlags": ["fmt", "--stdin"],
+	// The v2 name pins the v2 output flags. The plain name makes the extension
+	// read the version from the binary, and it sends v1 flags if it cannot read
+	// that version. So this deviates from the manual-install setup that
+	// https://golangci-lint.run/docs/welcome/integrations/ recommends.
 	"go.lintTool": "golangci-lint-v2",
 	"go.lintFlags": ["--path-mode=abs", "--fast-only"],
 	"gopls": {
@@ -519,7 +535,7 @@
 
 	// MARK: Python
 	"[python]": {
-		"editor.defaultFormatter": "ms-python.black-formatter",
+		"editor.defaultFormatter": "charliermarsh.ruff",
 		"editor.codeActionsOnSave": {
 			"source.organizeImports": "explicit",
 			"source.unusedImports": "explicit"
@@ -833,7 +849,10 @@
 		"[Default Dark*]": {
 			"textMateRules": [
 				{
-					"scope": ["string", "string.quoted.docstring.multi.python"],
+					"scope": [
+						"string",
+						"string.quoted.docstring.multi.python"
+					],
 					"settings": {
 						"foreground": "#ffb06a"
 					}
@@ -845,7 +864,10 @@
 					}
 				},
 				{
-					"scope": ["keyword", "keyword.control"],
+					"scope": [
+						"keyword",
+						"keyword.control"
+					],
 					"settings": {
 						"foreground": "#e475db"
 					}
@@ -870,13 +892,17 @@
 					}
 				},
 				{
-					"scope": ["meta"],
+					"scope": [
+						"meta"
+					],
 					"settings": {
 						"foreground": "#e1e1e1f0"
 					}
 				},
 				{
-					"scope": ["meta.object-literal.key"],
+					"scope": [
+						"meta.object-literal.key"
+					],
 					"settings": {
 						"foreground": "#eeeeee"
 					}
@@ -927,20 +953,26 @@
 					}
 				},
 				{
-					"scope": ["constant"],
+					"scope": [
+						"constant"
+					],
 					"name": "Numbers and booleans",
 					"settings": {
 						"foreground": "#F39C12"
 					}
 				},
 				{
-					"scope": ["variable.parameter"],
+					"scope": [
+						"variable.parameter"
+					],
 					"settings": {
 						"foreground": "#ffb06a"
 					}
 				},
 				{
-					"scope": ["support.type"],
+					"scope": [
+						"support.type"
+					],
 					"settings": {
 						"foreground": "#19c2ff"
 					}
@@ -961,13 +993,17 @@
 		"[Shades of Purple]": {
 			"textMateRules": [
 				{
-					"scope": ["entity.name.function"],
+					"scope": [
+						"entity.name.function"
+					],
 					"settings": {
 						"foreground": "#fbe600"
 					}
 				},
 				{
-					"scope": ["support.type.primitive"],
+					"scope": [
+						"support.type.primitive"
+					],
 					"settings": {
 						"foreground": "#ff00dd"
 					}
@@ -978,6 +1014,108 @@
 	},
 
 	// MARK: Theme/TO-DOs
+	"better-todo-tree.general.revealBehaviour": "end of todo",
+	"better-todo-tree.general.showIconsInsteadOfTagsInStatusBar": true,
+	"better-todo-tree.general.tagGroups": {
+		"FIX": ["FIXME", "FIX", "FIX-ME", "BUG"],
+		"TO-DO": ["TODO", "TO DO", "TO-DO"],
+		"TECH-DEBT": ["TD", "TECH-DEBT", "DEBT"],
+		"WARNING": ["WARNING", "WARN"],
+		"NOTE": ["NOTE", "REFACTOR", "REMOVE"],
+		"BOY-SCOUT": ["BOY-SCOUT", "BS", "ENH"],
+		"PERFORMANCE": ["PERF", "PERFORMANCE"]
+	},
+	"better-todo-tree.general.tags": [
+		"FIXME",
+		"FIX",
+		"FIX-ME",
+		"BUG",
+		"TODO",
+		"TO DO",
+		"TO-DO",
+		"TD",
+		"TECH-DEBT",
+		"DEBT",
+		"WARNING",
+		"WARN",
+		"NOTE",
+		"REFACTOR",
+		"REMOVE",
+		"BOY-SCOUT",
+		"BS",
+		"ENH",
+		"PERF",
+		"PERFORMANCE"
+	],
+	"better-todo-tree.general.showActivityBarBadge": true,
+	"better-todo-tree.highlights.customHighlight": {
+		"TECH-DEBT": {
+			"icon": "repo",
+			"iconColour": "#ebc310"
+		},
+		"FIX": {
+			"icon": "flame",
+			"iconColour": "#ff0000",
+			"background": "#ff000094",
+			"foreground": "#dbdbdb",
+			"textDecoration": "underline"
+		},
+		"BOY-SCOUT": {
+			"icon": "smiley",
+			"iconColour": "#00fff2",
+			"background": "#00fff2af",
+			"foreground": "#fff",
+			"fontStyle": "italic"
+		},
+		"TO-DO": {
+			"icon": "check",
+			"iconColour": "#9bf739",
+			"background": "#c2ff35"
+		},
+		"PERFORMANCE": {
+			"icon": "rocket",
+			"iconColour": "#f739ea",
+			"background": "#ff35ee",
+			"foreground": "#000"
+		},
+		"BUG": {
+			"icon": "bug",
+			"iconColour": "#7b7b7b"
+		},
+		"HACK": {
+			"icon": "tools"
+		},
+		"NOTE": {
+			"icon": "note",
+			"iconColour": "#ffe2e2",
+			"background": "#eaeaea"
+		},
+		"WARNING": {
+			"icon": "alert",
+			"iconColour": "#ffd000"
+		},
+		"[x]": {
+			"icon": "issue-closed"
+		}
+	},
+	"better-todo-tree.highlights.defaultHighlight": {
+		"background": "#fffb00",
+		"fontStyle": "bold",
+		"gutterIcon": true,
+		"foreground": "#000000",
+		"iconColour": "#6ef164",
+		"type": "tag-and-subTag"
+	},
+	"better-todo-tree.highlights.highlightDelay": 300,
+	"better-todo-tree.filtering.excludeGlobs": [
+		"**/node_modules/*/**",
+		"**/dist/*.js"
+	],
+	"better-todo-tree.filtering.ignoreGitSubmodules": true,
+	"better-todo-tree.filtering.useBuiltInExcludes": "search excludes",
+	"better-todo-tree.tree.showCountsInTree": true,
+	"better-todo-tree.tree.sortTagsOnlyViewAlphabetically": true,
+	"better-todo-tree.regex.regexCaseSensitive": true,
 	"todo-tree.general.revealBehaviour": "end of todo",
 	"todo-tree.general.tagGroups": {
 		"FIX": ["FIXME", "FIX", "FIX-ME", "BUG"],
@@ -1104,9 +1242,20 @@
 	"chat.viewProgressBadge.enabled": true,
 	"chat.useNestedAgentsMdFiles": true,
 	"chat.mcp.collisionBehavior": "suffix",
+	"chat.viewSessions.orientation": "stacked",
 	"chat.mcp.discovery.enabled": {
 		"cursor-global": true,
 		"cursor-workspace": true
+	},
+	// Copilot agent terminals set VSCODE_IPC_HOOK_CLI like human terminals,
+	// so we have to mark them explicitly as agent ones.
+	"chat.tools.terminal.terminalProfile.linux": {
+		"path": "zsh",
+		"env": { "_IS_AI_AGENT": "1" }
+	},
+	"chat.tools.terminal.terminalProfile.osx": {
+		"path": "zsh",
+		"env": { "_IS_AI_AGENT": "1" }
 	},
 	"chat.tools.urls.autoApprove": {
 		"https://code.visualstudio.com": true,
@@ -1529,4 +1678,5 @@
 	"syl.burnRateSpikeSensitivity": "relaxed",
 	"syl.allowEnvironmentCursorTokenFallback": true,
 	"cursor.composer.conversationDensity": "compact-ungrouped",
+	"extensions.installCooldownHours": 24
 }

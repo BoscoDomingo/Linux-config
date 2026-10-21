@@ -1,0 +1,12 @@
+--- LockScreenUi.qml
++++ LockScreenUi.qml
+@@ -179,7 +179,8 @@
+         Timer {
+             id: graceLockTimer
+-            interval: 3000
++            // Device-only: retry without the extra UI delay; PAM still enforces authentication.
++            interval: 0
+             onTriggered: {
+                 root.clearPassword();
+                 authenticator.startAuthenticating();
+             }

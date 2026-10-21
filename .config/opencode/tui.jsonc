@@ -5,7 +5,8 @@
   "generic_tool_output_visibility": false,
   "header_visible": true,
   "plugin": [
-    "opencode-subagent-statusline"
+    "opencode-subagent-statusline",
+    "./herdr-tui-session.js"
   ],
   "scrollbar_visible": true,
   "sidebar": "auto",

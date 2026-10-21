@@ -40,7 +40,7 @@ flowchart TD
 |---------------------------------------|-------------------------------------------------------------------|
 | `AI/agent-guards/jj-approval.py`      | Shared classifier and provider response adapter                   |
 | `AI/agent-guards/install.py`          | Idempotently installs/merges active user-level agent config       |
-| `Setup/installers/ai-agents.sh`       | `run.sh` AI-agent setup step; also handles user-global AI tooling |
+| `nix/home/tools.nix`                  | Home Manager activation step that runs `install.py` on every switch |
 | `AI/.cursor/rules/jj-ai-approval.mdc` | Cursor instruction rule source                                    |
 | `AI/.cursor/hooks.json`               | Versioned Cursor hook template                                    |
 | `AI/tests/test_jj_approval_guard.py`  | Guard behavior tests                                              |
@@ -55,13 +55,10 @@ OpenCode uses native `permission.bash` rules: `jj *` asks by default, with expli
 
 ## Installation
 
-Run the normal dotfiles installer:
-
-```sh
-./run.sh
-```
-
-The installer calls `AI/agent-guards/install.py`, which creates the `~/.local/bin/ai-agent-guard-jj-approval.py` symlink and merges provider config without overwriting unrelated settings.
+`nix/home/tools.nix` runs `AI/agent-guards/install.py` on every `home-manager
+switch`, so this is set up as part of the normal Nix bootstrap
+(`nix/bootstrap.sh`). It creates the `~/.local/bin/ai-agent-guard-jj-approval.py`
+symlink and merges provider config without overwriting unrelated settings.
 
 Manual re-run:
 

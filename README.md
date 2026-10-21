@@ -27,9 +27,18 @@
 
 # Installation
 
-You can try running the [`./run.sh`](run.sh) file directly (or if a distro-specific script exists, use that instead), although it is untested and will likely not work.
+Setup is managed by Nix (Home Manager). On a fresh machine, run the distro-specific bootstrap, which installs prerequisites, clones this repo, and hands off to the Nix setup:
 
-Otherwise, just run the commands manually.
+- Arch (incl. WSL): [`Arch/run_arch.sh`](Arch/run_arch.sh)
+- Ubuntu (incl. WSL): [`Ubuntu/run_ubuntu.sh`](Ubuntu/run_ubuntu.sh)
+
+On a machine that already has the repo cloned, run the Nix bootstrap directly:
+
+```sh
+bash ~/dotfiles/nix/bootstrap.sh   # auto-detects arch vs arch-wsl; override with HOST=<arch|arch-wsl|ubuntu|macbook>
+```
+
+See [`nix/README.md`](nix/README.md) for how it's structured and [`Documentation/Nix_exploration.md`](Documentation/Nix_exploration.md) for the full design and tool-ownership split.
 
 ---
 
@@ -41,13 +50,13 @@ Shell config is layered so that non-interactive env setup is separated from inte
 flowchart TD
     subgraph login ["Login Shell Init"]
         zprofile[".zprofile"]
-        profile[".profile\n(env vars, PATH, SSH, WSL)"]
+        profile[".profile"]
     end
 
     subgraph interactive ["Interactive Shell Init"]
-        zshrc[".zshrc\n(oh-my-zsh, completions, prompt, WT cwd)"]
-        bashrc[".bashrc\n(bash-completion, prompt)"]
-        shellrc[".shellrc\n(aliases, fastfetch, functions)"]
+        zshrc[".zshrc"]
+        bashrc[".bashrc"]
+        shellrc[".shellrc"]
     end
 
     zprofile -->|"emulate sh source"| profile
@@ -77,7 +86,13 @@ Agent sessions get only `.profile` + tool activation (direnv, mise) -- no aliase
 
 Recommended since you can manage multiple language SDKs + tools at once, not needing a version manager for each.
 
-It also works directly with GitHub repos, [asdf plugins](https://github.com/asdf-vm/asdf-plugins), and a bunch of [other backends (aqua, vfox, etc)](https://mise.jdx.dev/dev-tools/backends/), so you can manage pretty much anything with it. Pretty neat!
+mise manages itself here: [`nix/bootstrap.sh`](nix/bootstrap.sh) installs it from `https://mise.run`,
+then runs `mise install`. See
+[`Documentation/Nix_exploration.md`](Documentation/Nix_exploration.md#513-mise).
+
+It also works directly with GitHub repos, [asdf plugins](https://github.com/asdf-vm/asdf-plugins),
+and a bunch of [other backends (aqua, vfox, etc)](https://mise.jdx.dev/dev-tools/backends/),
+so you can manage pretty much anything with it. Pretty neat!
 
 The biggest drawback is that they won't be available until you activate mise for the given shell during initialisation,
 unless you reference them manually. Generally speaking, some tools will require using the built-in package manager or
@@ -146,7 +161,9 @@ and then run `mise use <alias>` to install it.
 This is better than using `mise use -g ubi:<org_or_user>/<repo>` because the name won't be polluted with the `ubi:` prefix.
 ## Homebrew
 
-See [`./run.sh`](run.sh) for a list of tools installed with Homebrew.
+The CLI toolbox is primarily managed by Nix ([`nix/home/packages.nix`](nix/home/packages.nix)); Homebrew manages exceptions from the repository [`Brewfile`](Brewfile).
+Opt in to installing Homebrew via `INSTALL_BREW=1` when running `nix/bootstrap.sh`.
+See [`Documentation/Nix_exploration.md`](Documentation/Nix_exploration.md#51-tool-ownership).
 
 ## Built-in package managers
 

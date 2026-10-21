@@ -1,3 +1,6 @@
+# Synced mise baseline (language runtimes + floating tools).
+# Per-machine extras: overrides/mise/config.toml (gitignored), exposed as
+# ~/.mise/config.toml. See Documentation/machine-overrides.md.
 [tools]
 usage = "latest"  # Internal
 bun = "latest"
@@ -7,30 +10,40 @@ pnpm = "latest"
 python = "latest"
 rust = "latest"
 
-act = "latest"
 biome = "latest"
-diffnav = "latest"
-dotenvx = "latest"
-gdu = "latest"
 golangci-lint = "latest"
-hyperfine = "latest"
-jj = "latest"
-navi = "latest"
-neovim = "latest"
-opencode = "latest"
-ripgrep = "latest"
-# "tldr++" = "latest"
-tlrc = "latest"
-yt-dlp = "latest"
-tree-sitter = "latest"
-herdr = "latest"
+
+# Editor Go tooling. Declared as mise tools (not `go install`ed) because mise
+# points GOBIN at ~/.local/share/mise/installs/go/<version>/bin, so anything
+# `go install`ed there disappears from PATH on every Go upgrade and leaves a
+# dead shim behind ("No version is set for shim: gopls").
+"go:golang.org/x/tools/gopls" = "latest"
+"go:github.com/go-delve/delve/cmd/dlv" = "latest"
+diffnav = "0.11.0"
+"tldr++" = "latest"
+hunk = "latest"
+"github:trasta298/keifu" = "latest"
+shfmt = "latest"
 
 [settings]
-idiomatic_version_file_enable_tools = ["go"]
+idiomatic_version_file_enable_tools = ["rust", "node", "bun", "deno", "golangci-lint", "python", "dotnet", "zig"]
+auto_update = true
+auto_update_check_duration = "2d"
+github.credential_command = "gh auth token"
+npm.bun = true
+npm.package_manager = "auto"
+pipx.uvx = true
+# safe = true
+# sandbox.deny_all = true
+# show_env/show_tools off: they print the active tools and env vars on every
+# new shell, which is noise. `mise ls --current` and `mise env` show the same data.
+status = { show_deps_stale = true, show_env = false, missing_tools = "if_other_versions_installed", show_tools = false }
+upgrade.auto_prune = true
+upgrade.prune_after = "24h"
+
 
 [tool_alias]
-diffnav = "github:dlvhdr/diffnav"
-go-blueprint = "github:Melkeydev/go-blueprint"
+engram = "github:Gentleman-Programming/engram"
 oh-my-posh = "github:JanDeDobbeleer/oh-my-posh"
 "tldr++" = "github:isacikgoz/tldr"
-tlrc = "cargo:tlrc"
+diffnav = "aqua:dlvhdr/diffnav"
