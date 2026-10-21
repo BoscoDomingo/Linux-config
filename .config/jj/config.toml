@@ -47,7 +47,11 @@ pager = ":builtin"
 
 [git]
 # push-bookmark-prefix = "feat/"
-sign-on-push = true # Lazy signing only on pushes
+
+[revsets]
+# Lazy signing only on pushes. jj 0.47 replaced the boolean git.sign-on-push with
+# this revset; the value matches what the old `true` setting did.
+git-sign-on-push = "~signed() & mine()"
 
 [remotes.origin]
 auto-track-bookmarks = "*"
@@ -71,7 +75,7 @@ log-word-wrap = true
 movement.edit = true                            # Useful if using `prev` and `next` and want to edit the parent directly
 pager = ["less", "-FRX"]                        # Keep non-diff output visible after closing the pager.
 paginate = "auto"
-show-cryptographic-signatures = true
+show-cryptographic-signatures = false
 
 [merge-tools.delta]
 # Pass jj's computed content width to delta and accept delta's "differences found" exit code.
