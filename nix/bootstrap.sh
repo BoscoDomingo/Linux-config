@@ -1,0 +1,132 @@
+#!/usr/bin/env bash
+# Bootstrap this Home Manager config on a new machine.
+#
+#   dotfiles-bootstrap                          # PATH wrapper after activation
+#   bash ~/dotfiles/nix/bootstrap.sh            # auto-detects the current host
+#   HOST=ubuntu bash ~/dotfiles/nix/bootstrap.sh
+#
+# HOST must match an entry in flake.nix `homeConfigurations` (arch | arch-wsl |
+# ubuntu | macbook). When unset it detects Darwin, Ubuntu, Arch WSL, or Arch.
+# Idempotent: safe to re-run to apply changes.
+#
+# INSTALL_BREW=1 also installs Homebrew (escape hatch for tools not in nixpkgs).
+# SKIP_MISE=1 skips `mise install` (language runtimes), e.g. in CI.
+# Where GitHub tarball fetch is blocked, use the --override-input technique in
+# test/README.md instead.
+set -euo pipefail
+
+REPO="${DOTFILES_REPO:-$HOME/dotfiles}"
+# Default host from the operating system; override with
+# HOST=<arch|arch-wsl|ubuntu|macbook> when needed.
+if [ -z "${HOST:-}" ]; then
+	if [ "$(uname -s)" = "Darwin" ]; then
+		HOST=macbook
+	elif grep -qiE 'microsoft|wsl' /proc/version 2>/dev/null &&
+		grep -q '^ID=arch' /etc/os-release 2>/dev/null; then
+		HOST=arch-wsl
+	elif grep -q '^ID=ubuntu' /etc/os-release 2>/dev/null; then
+		HOST=ubuntu
+	else
+		HOST=arch
+	fi
+fi
+
+case "$HOST" in
+arch | arch-wsl | ubuntu | macbook) ;;
+*)
+	echo "Unknown HOST '$HOST' (expected arch, arch-wsl, ubuntu, or macbook)" >&2
+	exit 1
+	;;
+esac
+
+# Install Nix with the reviewed cross-platform, flakes-ready installer choice.
+# Rationale and conditions for switching to upstream:
+# docs/decisions/2026-09-15_use-determinate-nix.md
+if ! command -v nix >/dev/null 2>&1; then
+	printf '\033[35m== Installing Nix ==\033[0m\n'
+	curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix |
+		sh -s -- install --no-confirm
+	# shellcheck disable=SC1091
+	. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh 2>/dev/null ||
+		. "$HOME/.nix-profile/etc/profile.d/nix.sh"
+fi
+
+# Existing Nix installations may not enable the modern CLI globally. Keep the
+# bootstrap self-contained without modifying machine-wide Nix configuration.
+export NIX_CONFIG="experimental-features = nix-command flakes
+${NIX_CONFIG:-}"
+
+# Optional Homebrew (opt-in per machine via INSTALL_BREW=1)
+#    up its prefix on later shells; bootstrap also exports it immediately.
+if [ "${INSTALL_BREW:-0}" = "1" ] && ! command -v brew >/dev/null 2>&1; then
+	printf '\033[35m== Installing Homebrew (INSTALL_BREW=1) ==\033[0m\n'
+	NONINTERACTIVE=1 /bin/bash -c \
+		"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+for brew_bin in /home/linuxbrew/.linuxbrew/bin/brew /opt/homebrew/bin/brew /usr/local/bin/brew; do
+	if [ -x "$brew_bin" ]; then
+		eval "$("$brew_bin" shellenv)"
+		break
+	fi
+done
+# Synced Brewfile plus optional overrides/brew/Brewfile.local (device-only).
+if command -v brew >/dev/null 2>&1 && [ -f "$REPO/Brewfile" ]; then
+	printf '\033[35m== brew bundle ==\033[0m\n'
+	bash "$REPO/scripts/brew-bundle"
+fi
+
+# Build and run the activation package pinned by this repository's flake.lock.
+#    The backup extension preserves pre-existing paths during first activation.
+printf '\033[35m== activating %s ==\033[0m\n' "$REPO/nix#homeConfigurations.$HOST"
+activation=$(nix build --no-link --print-out-paths \
+	"$REPO/nix#homeConfigurations.$HOST.activationPackage")
+HOME_MANAGER_BACKUP_EXT=hm-bak "$activation/activate"
+
+# brew shellenv prepends legacy Brew tools earlier in this process. Restore the
+# Home Manager profile as the stable-tool owner before mise and verification.
+export PATH="$HOME/.nix-profile/bin:$PATH"
+
+# Install mise from its official source when absent.
+mise_bin="$HOME/.local/bin/mise"
+if [ ! -x "$mise_bin" ]; then
+	printf '\033[35m== Installing mise ==\033[0m\n'
+	curl -fsSL https://mise.run | sh
+fi
+
+# Populate all tools declared in the synced and machine-local mise configs.
+# SKIP_MISE=1 skips this expensive step in Nix-layer tests.
+if [ "${SKIP_MISE:-0}" != "1" ]; then
+	printf '\033[35m== mise install ==\033[0m\n'
+	"$mise_bin" install
+fi
+
+# Create the $GOPATH/bin links that the Go extension reads. mise must install
+# the tools first. The script does nothing if the tools are absent.
+bash "$REPO/scripts/link-go-tools"
+
+# Bare-metal Arch can opt in to root-owned distro patches through the
+# gitignored overrides/patches/enabled file. The sync is idempotent and installs
+# pacman hooks so package upgrades reapply compatible patches.
+if [ "$HOST" = "arch" ] && [ -f "$REPO/overrides/patches/enabled" ]; then
+	printf '\033[35m== Arch system patches ==\033[0m\n'
+	DOTFILES_REPO="$REPO" bash "$REPO/Arch/sync-patches.sh"
+fi
+
+printf '\033[35m== verify ==\033[0m\n'
+bash "$REPO/nix/test/verify.sh"
+
+printf '\n\033[32m✅ Done\033[0m\n\033[33m'
+cat <<EOF
+Per-machine identity and device-only packages live in the gitignored
+overrides/ tree (see Documentation/machine-overrides.md):
+
+  mkdir -p ~/dotfiles/overrides/{git,jj,mise,brew,patches}
+  # overrides/git/local.gitconfig  + overrides/jj/local.toml   (work default)
+  # overrides/git/{work,personal}.gitconfig + overrides/jj/{work,personal}.toml
+  # overrides/mise/config.toml     + overrides/brew/Brewfile.local
+  # overrides/patches/enabled      (bare-metal Arch system patches)
+
+Then: bash ~/dotfiles/nix/bootstrap.sh   # refreshes symlinks + brew bundle
+      ssh-keygen -t ed25519 -C "you@work.example"   # private key never committed
+EOF
+printf '\033[0m'

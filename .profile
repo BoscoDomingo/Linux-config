@@ -10,6 +10,10 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 
+# Repo path for ad-hoc commands from any directory.
+# Scripts also default to $HOME/dotfiles if this is unset (fresh-machine bootstrap).
+export DOTFILES_REPO="${DOTFILES_REPO:-$HOME/dotfiles}"
+
 export VISUAL=micro
 export EDITOR=nvim
 
@@ -79,17 +83,26 @@ _path_prepend_if_missing "$HOME/.local/bin/scripts"
 
 _path_prepend_if_missing "$HOME/.cache/.bun/bin"
 
-# Homebrew
-if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
-	case ":$PATH:" in
-	*":/home/linuxbrew/.linuxbrew/bin:"*) ;;
-	*) eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" ;;
-	esac
-fi
+# Homebrew uses different prefixes on Linux and macOS; initialize the first
+# available one while tolerating machines where Homebrew is intentionally absent.
+for _brew_bin in /home/linuxbrew/.linuxbrew/bin/brew /opt/homebrew/bin/brew /usr/local/bin/brew; do
+	if [ -x "$_brew_bin" ]; then
+		eval "$("$_brew_bin" shellenv)"
+		break
+	fi
+done
+unset _brew_bin
 
 # This is needed since mise is instantiated after VS Code is started,
 # and the VS Code extension for Go and C# don't work properly otherwise.
 _path_prepend_if_missing "$HOME/.local/share/mise/shims"
+
+# Update the $GOPATH/bin links at each shell start. `mise upgrade` breaks them,
+# and the Go extension then asks you to recompile the linter.
+# See scripts/link-go-tools.
+if [ -x "$DOTFILES_REPO/scripts/link-go-tools" ]; then
+	"$DOTFILES_REPO/scripts/link-go-tools" >/dev/null
+fi
 
 # pnpm
 export PNPM_HOME="$XDG_DATA_HOME/pnpm"
@@ -101,7 +114,13 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-# opencode
+# Nix owns the stable global toolbox, so its profile must precede mise shims
+# that may remain for tools no longer declared in mise.
+_path_prepend_if_missing "$HOME/.nix-profile/bin"
+
+# opencode comes from its own installer, not Nix (the nixpkgs Bun standalone
+# segfaults on WSL2). Prepended after the Nix profile so it wins if a stale
+# Nix-owned opencode is still present in an older generation's profile.
 _path_prepend_if_missing "$HOME/.opencode/bin"
 
 # rip2

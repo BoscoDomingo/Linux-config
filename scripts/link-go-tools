@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# Link the mise Go tools into $GOPATH/bin.
+#
+# The Go extension looks in $GOPATH/bin before PATH. It then reads the Go
+# version from the file that it finds. The extension asks you to recompile the
+# tool if that file is old, or if that file is not a Go program.
+#
+# The mise path contains the tool version. Thus the link breaks after
+# `mise upgrade`. The .profile and nix/bootstrap.sh files run this script again.
+set -euo pipefail
+
+gopath="${GOPATH:-$HOME/go}"
+mise_installs="${XDG_DATA_HOME:-$HOME/.local/share}/mise/installs"
+
+# Use a glob, not `mise which`, because this runs at each shell start.
+current_build() {
+	local tool="$1" candidate
+	for candidate in "$mise_installs/$tool/latest"/*/"$tool"; do
+		if [ -x "$candidate" ]; then
+			printf '%s\n' "$candidate"
+			return 0
+		fi
+	done
+	return 1
+}
+
+link_tool() {
+	local tool="$1" target link
+	target=$(current_build "$tool") || return 0
+	link="$gopath/bin/$tool"
+
+	# Do not delete a real file. It hides the mise tool, but the user owns it.
+	if [ -e "$link" ] && [ ! -L "$link" ]; then
+		echo "link-go-tools: $link is a real file. It hides $target from the Go extension. Remove it." >&2
+		return 0
+	fi
+	if [ "$target" -ef "$link" ]; then
+		return 0
+	fi
+
+	mkdir -p "$gopath/bin"
+	ln -sfn "$target" "$link"
+	echo "link-go-tools: $link -> $target"
+}
+
+link_tool golangci-lint

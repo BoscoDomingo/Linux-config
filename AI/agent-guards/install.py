@@ -223,6 +223,7 @@ def install_codex() -> None:
 def install_opencode() -> None:
     path = HOME / ".config" / "opencode" / "opencode.json"
     data = load_json(path, {"$schema": "https://opencode.ai/config.json"})
+    original = json.loads(json.dumps(data))
     data.setdefault("$schema", "https://opencode.ai/config.json")
     permission = data.setdefault("permission", {})
     if not isinstance(permission, dict):
@@ -252,7 +253,11 @@ def install_opencode() -> None:
     }
     for pattern, action in jj_rules.items():
         bash[pattern] = action
-    write_json(path, data)
+    # Keep hand-formatted, repo-managed JSON untouched when the guard policy is
+    # already current. This prevents every Home Manager activation from
+    # creating a formatting-only working-copy change.
+    if data != original:
+        write_json(path, data)
 
 
 def main() -> int:

@@ -1,6 +1,7 @@
 alias c='clear'
 alias rmf='rm -rf'
 alias rm="echo \"Use 'rip' instead of rm (or /usr/bin/rm)\" && exit 1"
+alias tree='eza -T -L=3 --icons --group-directories-first --header --created --modified --time-style=long-iso --git'
 
 alias cursor_bar="printf '\033[5 q'"
 

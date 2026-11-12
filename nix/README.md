@@ -1,0 +1,56 @@
+# `nix/` — Home Manager config (working, tested)
+
+Rationale, alternatives, and tool ownership:
+[`../Documentation/Nix_exploration.md`](../Documentation/Nix_exploration.md).
+Daily commands and update boundaries:
+[`Nix + Home Manager cheatsheet`](../Documentation/Nix_cheatsheet.md).
+
+This is the setup path for the repo: `bootstrap.sh` installs Nix and activates
+the pinned Home Manager configuration, and the distro scripts
+(`../Arch/run_arch.sh`, `../Ubuntu/run_ubuntu.sh`) hand off to it on a fresh
+machine. Verified end-to-end on a clean machine: see
+[`test/README.md`](test/README.md) (packages, out-of-store dotfile symlinks,
+per-machine + per-directory git identity overrides, and atomic rollback).
+
+## Try it
+
+```sh
+bash ~/dotfiles/nix/bootstrap.sh   # auto-detects the host; override with HOST=<arch|arch-wsl|ubuntu|macbook>
+```
+
+That installs Nix (if missing) and runs the pinned activation package. Add
+`INSTALL_BREW=1` to also install Homebrew; when Homebrew is available,
+bootstrap installs the repository `Brewfile`. Or do it by
+hand:
+
+The bootstrap uses the Determinate Nix Installer. The rationale, accepted
+tradeoffs, and conditions for changing to the official installer are recorded
+in the [installer decision](../docs/decisions/2026-09-15_use-determinate-nix.md).
+
+For manual build, dry-run, activation, update, and rollback commands, use the
+[`cheatsheet`](../Documentation/Nix_cheatsheet.md).
+
+`flake.nix` sets `username = "bosco"` and `dotfiles.nix` assumes the repo is at
+`~/dotfiles`; adjust both if either differs. Where GitHub tarball fetch is
+blocked, see [`test/README.md`](test/README.md).
+
+## Layout
+
+| File                | Role                                                                    |
+|---------------------|-------------------------------------------------------------------------|
+| `flake.nix`         | Inputs (nixpkgs, home-manager, nix-darwin) and per-host outputs         |
+| `home/common.nix`   | Shared config imported by every host                                    |
+| `home/packages.nix` | The former Homebrew array, as a Nix package list                        |
+| `home/dotfiles.nix` | Out-of-store symlinks to your existing repo files (keeps them editable) |
+| `home/shell.nix`    | Example native Home Manager modules                                     |
+| `home/git.nix`      | Opt-in: per-machine git identity (work vs personal) via `includeIf`     |
+| `home/tools.nix`    | Activation steps for git-cloned/curled frameworks                       |
+| `hosts/*.nix`       | Per-machine / per-OS overrides                                          |
+| `bootstrap.sh`      | One-command setup for a new machine                                     |
+| `test/verify.sh`    | Post-switch sanity checks; `test/README.md` records the verified run    |
+
+Per-machine identity and device-only packages live in the gitignored
+[`overrides/`](../Documentation/machine-overrides.md) tree (`git`, `jj`,
+`mise`, `brew`). The SSH private key stays in `~/.ssh/` and is never committed.
+
+Use the cheatsheet for routine updates and rollback.

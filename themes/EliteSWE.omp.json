@@ -115,7 +115,7 @@
 						"display_mode": "context",
 						"fetch_virtual_env": true
 					},
-					"template": " \ue235 {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }} {{ .Full }}{{ end }}",
+					"template": " \ue235 {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }} {{ .Full }} {{ end }}",
 					"foreground": "#fff200",
 					"background": "#003544",
 					"style": "powerline",

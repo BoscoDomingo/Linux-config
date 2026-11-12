@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = plasma-desktop
+
+[Action]
+Description = Reapplying the dotfiles KDE lock-screen fast-retry patch
+When = PostTransaction
+Depends = patch
+Exec = /usr/local/lib/dotfiles/patches/plasma-lockscreen-fast-retry/apply
