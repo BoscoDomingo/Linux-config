@@ -20,6 +20,12 @@ pacman -S --noconfirm --needed \
 	sudo zsh git openssh curl ca-certificates file procps-ng which xz \
 	base-devel openssl zlib bzip2 readline sqlite ncurses tk libxml2 xmlsec libffi
 
+# GitHub Copilot local sandboxing (Copilot CLI and VS Code agent terminals)
+# needs bubblewrap >= 0.5.0, slirp4netns, util-linux >= 2.35 and nf_tables
+# iptables. These come from pacman, not Nix: they need system integration
+# (setuid/namespaces, kernel netfilter). Arch's iptables uses nf_tables.
+pacman -S --noconfirm --needed bubblewrap slirp4netns util-linux iptables
+
 # wslview (BROWSER=wslview in .profile) is WSL↔Windows interop; only under WSL.
 [ "$is_wsl" = "1" ] && pacman -S --noconfirm --needed wslu
 
