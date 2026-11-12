@@ -1678,5 +1678,12 @@
 	"syl.burnRateSpikeSensitivity": "relaxed",
 	"syl.allowEnvironmentCursorTokenFallback": true,
 	"cursor.composer.conversationDensity": "compact-ungrouped",
-	"extensions.installCooldownHours": 24
+	"extensions.installCooldownHours": 24,
+	// The VS Code agent sandbox denies reads under $HOME by default and ignores
+	// ~/.copilot/settings.json's sandbox.userPolicy. Allow herdr's Copilot
+	// SessionStart hook script (read) and its unix socket dir (write).
+	"chat.agent.sandbox.fileSystem.linux": {
+		"allowRead": ["~/.copilot/hooks"],
+		"allowWrite": ["~/.config/herdr"]
+	}
 }

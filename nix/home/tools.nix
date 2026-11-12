@@ -119,4 +119,24 @@ in
       run ${pkgs.python3}/bin/python3 "${repo}/AI/agent-guards/install.py" || true
     fi
   '';
+
+  # Copilot CLI sandbox: let sandboxed hooks see herdr's agent-state script and
+  # reach its unix socket. Without this, the herdr SessionStart hook fails with
+  # "No such file or directory" inside bwrap. ~/.copilot/settings.json is owned
+  # and rewritten by Copilot itself (plugins, hooks, model), so it cannot be a
+  # symlink; merge only the two paths instead. Idempotent, and skipped when
+  # Copilot has not created the file yet.
+  home.activation.copilotSandboxHerdr = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    settings="$HOME/.copilot/settings.json"
+    if [ -f "$settings" ] && [ -z "''${DRY_RUN:-}" ]; then
+      tmp="$(${pkgs.coreutils}/bin/mktemp)"
+      if ${pkgs.jq}/bin/jq --arg ro "$HOME/.copilot/hooks" --arg rw "$HOME/.config/herdr" '
+          .sandbox.userPolicy.filesystem.readonlyPaths |= ((. // []) + [$ro] | unique)
+          | .sandbox.userPolicy.filesystem.readwritePaths |= ((. // []) + [$rw] | unique)
+        ' "$settings" > "$tmp"; then
+        ${pkgs.coreutils}/bin/cat "$tmp" > "$settings"
+      fi
+      ${pkgs.coreutils}/bin/rm -f "$tmp"
+    fi
+  '';
 }
