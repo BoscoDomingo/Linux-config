@@ -32,7 +32,9 @@ _dotfiles_path_dedupe() {
 _dotfiles_path_prepend_if_dir "/home/linuxbrew/.linuxbrew/bin"
 _dotfiles_path_prepend_if_dir "$HOME/bin"
 _dotfiles_path_prepend_if_dir "$HOME/.local/bin"
-_dotfiles_path_prepend_if_dir "$HOME/.local/bin/scripts"
+# Real repo path, not a symlink nested in ~/.local/bin: the Copilot sandbox
+# bind-mounts PATH dirs and bwrap cannot mount onto a nested symlink.
+_dotfiles_path_prepend_if_dir "${DOTFILES_REPO:-$HOME/dotfiles}/scripts"
 _dotfiles_path_prepend_if_dir "$HOME/.local/share/mise/shims"
 _dotfiles_path_prepend_if_dir "$PNPM_HOME"
 # Add Nix last because this helper prepends; Nix owns the stable global toolbox

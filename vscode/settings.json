@@ -26,6 +26,7 @@
 	"remote.autoForwardPortsSource": "hybrid",
 	"extensions.autoUpdate": "off",
 	"extensions.autoUpdateDelay": 24,
+	"extensions.installCooldownHours": 24,
 
 	// MARK: General/Zoom
 	"window.zoomLevel": 0,
@@ -463,7 +464,7 @@
 	// mise owns the Go tools (see .config/mise/config.toml); letting the
 	// extension `go install` them puts binaries in the versioned GOBIN, where
 	// the next Go upgrade orphans them. Update with `mise upgrade` instead.
-	"go.toolsManagement.autoUpdate": false,
+	"go.toolsManagement.autoUpdate": true,
 	// The extension looks for a bare name in $GOBIN, then $GOPATH/bin, then
 	// PATH. A file in ~/go/bin thus hides the mise tool.
 	// scripts/link-go-tools keeps ~/go/bin correct.
@@ -568,6 +569,8 @@
 	"python.missingPackage.severity": "Warning",
 	"debugpy.debugJustMyCode": false,
 	"workbench.editorAssociations": {
+		"*.copilotmd": "vscode.markdown.preview.editor",
+		"{hexdiff}:/**/*.*": "hexEditor.hexedit",
 		"*.ipynb": "jupyter-notebook"
 	},
 
@@ -1233,16 +1236,25 @@
 	"github.copilot.chat.githubMcpServer.readonly": true,
 	"chat.mcp.gallery.enabled": true,
 	"chat.checkpoints.showFileChanges": true,
+	"chat.permissions.default": "autopilot",
+	"chatCustomizationsEvaluations.waza.command": "/home/bosco/.vscode-server/data/User/globalStorage/ms-vscode.vscode-chat-customizations-evaluations/bin/waza",
 	"chat.agent.sandbox.enabled": "on",
-	"chat.agent.sandbox.allowNetwork": true,
 	"chat.agent.sandbox.enabledWindows": "on",
+	"chat.agent.sandbox.network.allowNetwork": true,
+	"chat.agent.sandbox.network.allowLocalNetwork": true,
+	// The VS Code agent sandbox denies reads under $HOME by default and ignores
+	// ~/.copilot/settings.json's sandbox.userPolicy. Allow herdr's Copilot
+	// SessionStart hook script (read) and its unix socket dir (write).
+	"chat.agent.sandbox.fileSystem.linux": {
+		"allowRead": ["~/.copilot/hooks"],
+		"allowWrite": ["~/.config/herdr"]
+	},
 	"chat.editor.wordWrap": "on",
 	"chat.editing.explainChanges.enabled": true,
 	"chat.unifiedAgentsBar.enabled": true,
 	"chat.viewProgressBadge.enabled": true,
 	"chat.useNestedAgentsMdFiles": true,
 	"chat.mcp.collisionBehavior": "suffix",
-	"chat.viewSessions.orientation": "stacked",
 	"chat.mcp.discovery.enabled": {
 		"cursor-global": true,
 		"cursor-workspace": true
@@ -1288,7 +1300,12 @@
 		"https://docs.anthropic.com/en": true,
 		"https://docs.anthropic.com": true,
 		"https://*.anthropic.com": true,
-		"https://code.claude.com/docs/en/skills": true
+		"https://code.claude.com/docs/en/skills": true,
+		"https://moonrepo.dev/blog": true,
+		"https://moonrepo.dev": true,
+		"https://github.com/moonrepo/moon/releases": true,
+		"https://github.com/moonrepo/moon": true,
+		"https://github.com/moonrepo": true
 	},
 	"chat.tools.terminal.autoApprove": {
 		"JJ_PAGER=cat jj diff --stat": true,
@@ -1415,7 +1432,8 @@
 		"xargs": false,
 		"eval": false,
 		"Invoke-Expression": false,
-		"iex": false
+		"iex": false,
+		"mise": true
 	},
 
 	// MARK: - Cursor
@@ -1444,6 +1462,7 @@
 	],
 	"cursor.windowSwitcher.sidebarHoverCollapsed": true,
 	"cursor.composer.codeBlockWordWrap": true,
+	"cursor.composer.conversationDensity": "compact-ungrouped",
 	"cursor.composer.usageSummaryDisplay": "always",
 	"cursor.composer.editorConversationDensity": "compact-ungrouped",
 	"cursor.general.glassShowWarningNotifications": true,
@@ -1455,9 +1474,11 @@
 	"cursorpyright.analysis.typeCheckingMode": "basic",
 
 	// MARK: - Claude Code
-	"claudeCode.selectedModel": "opusplan",
+	"claudeCode.selectedModel": "opus",
 	"claudeCode.preferredLocation": "sidebar",
 	"claudeCode.enableNewConversationShortcut": true,
+	"claudeCode.hideOnboarding": true,
+	"claudeCode.focusView": true,
 
 	// MARK: - ChatGPT
 	"chatgpt.reviewDelivery": "detached",
@@ -1666,24 +1687,8 @@
 	"powershell.promptToUpdatePowerShell": false,
 	"spellright.language": ["en", "es"],
 	"spellright.documentTypes": ["markdown", "latex", "plaintext", "jsonc"],
-
+	"coderabbit.accountRegion": "eu",
 	"coderabbit.region": "eu",
-	"sonarlint.connectedMode.connections.sonarcloud": [
-		{
-			"organizationKey": "iceye",
-			"connectionId": "iceye",
-			"region": "EU"
-		}
-	],
 	"syl.burnRateSpikeSensitivity": "relaxed",
-	"syl.allowEnvironmentCursorTokenFallback": true,
-	"cursor.composer.conversationDensity": "compact-ungrouped",
-	"extensions.installCooldownHours": 24,
-	// The VS Code agent sandbox denies reads under $HOME by default and ignores
-	// ~/.copilot/settings.json's sandbox.userPolicy. Allow herdr's Copilot
-	// SessionStart hook script (read) and its unix socket dir (write).
-	"chat.agent.sandbox.fileSystem.linux": {
-		"allowRead": ["~/.copilot/hooks"],
-		"allowWrite": ["~/.config/herdr"]
-	}
+	"syl.allowEnvironmentCursorTokenFallback": true
 }

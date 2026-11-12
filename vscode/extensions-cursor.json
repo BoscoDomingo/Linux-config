@@ -853,36 +853,6 @@
 	},
 	{
 		"identifier": {
-			"id": "streetsidesoftware.code-spell-checker",
-			"uuid": "f6dbd813-b0a0-42c1-90ea-10dde9d925a7"
-		},
-		"version": "4.5.6",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/streetsidesoftware.code-spell-checker-4.5.6-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "streetsidesoftware.code-spell-checker-4.5.6-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1773649398493,
-			"pinned": true,
-			"source": "gallery",
-			"id": "f6dbd813-b0a0-42c1-90ea-10dde9d925a7",
-			"publisherId": "8775b9d6-a6aa-40a2-891f-653264718d50",
-			"publisherDisplayName": "Street Side Software",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
 			"id": "orta.vscode-twoslash-queries",
 			"uuid": "fd2c2092-c30c-4c43-b41f-b4dfbec3276f"
 		},
@@ -1151,32 +1121,6 @@
 	},
 	{
 		"identifier": {
-			"id": "repreng.csv",
-			"uuid": "f2e80b0c-f33b-40ca-a3a5-bdaf53823a83"
-		},
-		"version": "1.3.0",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/repreng.csv-1.3.0-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "repreng.csv-1.3.0-universal",
-		"metadata": {
-			"installedTimestamp": 1773652135525,
-			"pinned": true,
-			"source": "gallery",
-			"id": "f2e80b0c-f33b-40ca-a3a5-bdaf53823a83",
-			"publisherId": "5a7c9a42-67e0-42c9-9c53-c559b5f2aa25",
-			"publisherDisplayName": "ReprEng",
-			"targetPlatform": "universal",
-			"updated": false,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false
-		}
-	},
-	{
-		"identifier": {
 			"id": "michelemelluso.gitignore",
 			"uuid": "0fa141d2-0184-49b6-b8f6-b572f965b164"
 		},
@@ -1250,32 +1194,6 @@
 			"id": "373a8fcf-9125-4d72-807d-f98890a552d8",
 			"publisherId": "61f4b344-99e6-4583-a64b-a8894656fe60",
 			"publisherDisplayName": "anteprimorac",
-			"targetPlatform": "universal",
-			"updated": false,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "chamboug.js-auto-backticks",
-			"uuid": "89454707-ebf2-4d40-b9b9-c3ed09083889"
-		},
-		"version": "1.2.0",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/chamboug.js-auto-backticks-1.2.0-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "chamboug.js-auto-backticks-1.2.0-universal",
-		"metadata": {
-			"installedTimestamp": 1773652189936,
-			"pinned": true,
-			"source": "gallery",
-			"id": "89454707-ebf2-4d40-b9b9-c3ed09083889",
-			"publisherId": "ac6322a4-07c2-4ccb-8226-3b6c47d56f75",
-			"publisherDisplayName": "chamboug",
 			"targetPlatform": "universal",
 			"updated": false,
 			"private": false,
@@ -1440,32 +1358,6 @@
 		}
 	},
 	{
-		"identifier": {
-			"id": "streetsidesoftware.code-spell-checker-spanish",
-			"uuid": "8d6dcf6f-1957-4dd5-809e-addb07d8c1fb"
-		},
-		"version": "2.3.9",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/streetsidesoftware.code-spell-checker-spanish-2.3.9-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "streetsidesoftware.code-spell-checker-spanish-2.3.9-universal",
-		"metadata": {
-			"installedTimestamp": 1773664348535,
-			"pinned": true,
-			"source": "gallery",
-			"id": "8d6dcf6f-1957-4dd5-809e-addb07d8c1fb",
-			"publisherId": "8775b9d6-a6aa-40a2-891f-653264718d50",
-			"publisherDisplayName": "Street Side Software",
-			"targetPlatform": "universal",
-			"updated": false,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false
-		}
-	},
-	{
 		"identifier": { "id": "jzmstrjp.color-the-tag-name" },
 		"version": "0.24.0",
 		"location": {
@@ -1603,36 +1495,6 @@
 			"id": "da302e39-e7df-4ef8-8ddd-73eb422fb70b",
 			"publisherId": "c25e50fb-d96f-4c60-b941-ca7f1abd821d",
 			"publisherDisplayName": "brittanychiang",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "teabyii.ayu",
-			"uuid": "5178733e-4b02-4829-95c5-1ce970847c23"
-		},
-		"version": "1.1.12",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/teabyii.ayu-1.1.12-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "teabyii.ayu-1.1.12-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1779561439487,
-			"pinned": true,
-			"source": "gallery",
-			"id": "5178733e-4b02-4829-95c5-1ce970847c23",
-			"publisherId": "8a0aaf7f-34ab-48b1-9384-c15c80413d57",
-			"publisherDisplayName": "teabyii",
 			"targetPlatform": "universal",
 			"updated": true,
 			"private": false,
@@ -1878,36 +1740,6 @@
 	},
 	{
 		"identifier": {
-			"id": "fogio.inline-go-struct-tags-syntax-highlight",
-			"uuid": "63529134-957b-47ec-85d8-61db81da27a5"
-		},
-		"version": "1.0.1",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/fogio.inline-go-struct-tags-syntax-highlight-1.0.1-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "fogio.inline-go-struct-tags-syntax-highlight-1.0.1-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1779561836736,
-			"pinned": true,
-			"source": "gallery",
-			"id": "63529134-957b-47ec-85d8-61db81da27a5",
-			"publisherId": "26092eee-aeea-42ac-86e0-31bcc58d32b4",
-			"publisherDisplayName": "fogio",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
 			"id": "bierner.markdown-mermaid",
 			"uuid": "f8d0ffc4-66bb-4a9c-8149-ef8f043691a1"
 		},
@@ -2048,36 +1880,6 @@
 			"id": "5a882e99-34b7-4450-a0b1-f1bd94681c7b",
 			"publisherId": "b50a3794-55b1-455b-b235-82849ce2bc16",
 			"publisherDisplayName": "TakumiI",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "mads-hartmann.bash-ide-vscode",
-			"uuid": "b1b0f283-8246-4e90-832e-a6c409d378d1"
-		},
-		"version": "1.43.0",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/mads-hartmann.bash-ide-vscode-1.43.0-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "mads-hartmann.bash-ide-vscode-1.43.0-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1779562280184,
-			"pinned": true,
-			"source": "gallery",
-			"id": "b1b0f283-8246-4e90-832e-a6c409d378d1",
-			"publisherId": "f40c9497-3e29-43d8-954d-e60d92bc26f0",
-			"publisherDisplayName": "mads-hartmann",
 			"targetPlatform": "universal",
 			"updated": true,
 			"private": false,
@@ -2244,32 +2046,6 @@
 	},
 	{
 		"identifier": {
-			"id": "elijah-potter.harper",
-			"uuid": "67361f9a-6018-4ea8-9fd2-37b4de177c4e"
-		},
-		"version": "2.2.1",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/elijah-potter.harper-2.2.1-win32-x64",
-			"scheme": "file"
-		},
-		"relativeLocation": "elijah-potter.harper-2.2.1-win32-x64",
-		"metadata": {
-			"installedTimestamp": 1779562736481,
-			"pinned": true,
-			"source": "gallery",
-			"id": "67361f9a-6018-4ea8-9fd2-37b4de177c4e",
-			"publisherId": "a098746b-cc7e-4534-b8ee-6834fcb649b0",
-			"publisherDisplayName": "elijah-potter",
-			"targetPlatform": "win32-x64",
-			"updated": false,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false
-		}
-	},
-	{
-		"identifier": {
 			"id": "mikestead.dotenv",
 			"uuid": "532533c9-a894-4a58-9eee-bbfbe7c06f71"
 		},
@@ -2417,66 +2193,6 @@
 			"id": "7d236dd4-6af6-48f4-9464-6bf82ad36aaa",
 			"publisherId": "058d2b2f-dac6-41b2-8c3e-462966d45cd6",
 			"publisherDisplayName": "ban",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "usernamehw.errorlens",
-			"uuid": "9d8c32ab-354c-4daf-a9bf-20b633734435"
-		},
-		"version": "3.28.0",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/usernamehw.errorlens-3.28.0-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "usernamehw.errorlens-3.28.0-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1783324292817,
-			"pinned": true,
-			"source": "gallery",
-			"id": "9d8c32ab-354c-4daf-a9bf-20b633734435",
-			"publisherId": "151820df-5dc5-4c97-8751-eb84643203fa",
-			"publisherDisplayName": "usernamehw",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "vscode-icons-team.vscode-icons",
-			"uuid": "9ccc1dd7-7ec4-4a46-bd4f-7d7b8b9d322a"
-		},
-		"version": "12.19.0",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/vscode-icons-team.vscode-icons-12.19.0-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "vscode-icons-team.vscode-icons-12.19.0-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1783324294639,
-			"pinned": true,
-			"source": "gallery",
-			"id": "9ccc1dd7-7ec4-4a46-bd4f-7d7b8b9d322a",
-			"publisherId": "652ad61d-3a6a-48ca-ab1a-80dc8953b2b6",
-			"publisherDisplayName": "vscode-icons-team",
 			"targetPlatform": "universal",
 			"updated": true,
 			"private": false,
@@ -2689,66 +2405,6 @@
 	},
 	{
 		"identifier": {
-			"id": "redhat.vscode-yaml",
-			"uuid": "2061917f-f76a-458a-8da9-f162de22b97e"
-		},
-		"version": "1.24.0",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/redhat.vscode-yaml-1.24.0-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "redhat.vscode-yaml-1.24.0-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1786026962795,
-			"pinned": true,
-			"source": "gallery",
-			"id": "2061917f-f76a-458a-8da9-f162de22b97e",
-			"publisherId": "1deab481-4801-4170-8a64-801999f5ee73",
-			"publisherDisplayName": "Red Hat",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "biomejs.biome",
-			"uuid": "2c992d35-3965-4369-856e-fdfbb0af2ce2"
-		},
-		"version": "3.7.1",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/biomejs.biome-3.7.1-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "biomejs.biome-3.7.1-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1786026964116,
-			"pinned": true,
-			"source": "gallery",
-			"id": "2c992d35-3965-4369-856e-fdfbb0af2ce2",
-			"publisherId": "570e4e26-7e71-4308-8299-d18166119ce7",
-			"publisherDisplayName": "biomejs",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
 			"id": "yzane.markdown-pdf",
 			"uuid": "f015bc3c-a098-4245-8765-615e002e09ab"
 		},
@@ -2839,126 +2495,6 @@
 	},
 	{
 		"identifier": {
-			"id": "golang.go",
-			"uuid": "d6f6cfea-4b6f-41f4-b571-6ad2ab7918da"
-		},
-		"version": "0.56.0",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/golang.go-0.56.0-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "golang.go-0.56.0-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1786026966043,
-			"pinned": true,
-			"source": "gallery",
-			"id": "d6f6cfea-4b6f-41f4-b571-6ad2ab7918da",
-			"publisherId": "dbf6ae0a-da75-4167-ac8b-75b4512f2153",
-			"publisherDisplayName": "golang",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "anysphere.remote-containers",
-			"uuid": "94d8b289-9db0-4c3c-b4f3-a3294c789678"
-		},
-		"version": "1.0.39",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/anysphere.remote-containers-1.0.39",
-			"scheme": "file"
-		},
-		"relativeLocation": "anysphere.remote-containers-1.0.39",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1786614439696,
-			"pinned": false,
-			"source": "gallery",
-			"id": "94d8b289-9db0-4c3c-b4f3-a3294c789678",
-			"publisherId": "c16ea17f-2629-4893-9064-35c0fd9add4c",
-			"publisherDisplayName": "Anysphere",
-			"targetPlatform": "undefined",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "jj-view.jj-view",
-			"uuid": "9218ea3e-b964-494e-a2af-4f64dfddfac9"
-		},
-		"version": "2.6.0",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/jj-view.jj-view-2.6.0-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "jj-view.jj-view-2.6.0-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1786702308383,
-			"pinned": true,
-			"source": "gallery",
-			"id": "9218ea3e-b964-494e-a2af-4f64dfddfac9",
-			"publisherId": "55e7875a-2c3e-4f5f-a5df-68605dea8ada",
-			"publisherDisplayName": "jj-view",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "zhuangtongfa.material-theme",
-			"uuid": "26a529c9-2654-4b95-a63f-02f6a52429e6"
-		},
-		"version": "3.20.2",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/zhuangtongfa.material-theme-3.20.2-universal",
-			"scheme": "file"
-		},
-		"relativeLocation": "zhuangtongfa.material-theme-3.20.2-universal",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1786702316333,
-			"pinned": true,
-			"source": "gallery",
-			"id": "26a529c9-2654-4b95-a63f-02f6a52429e6",
-			"publisherId": "8ae75bda-ec22-4a17-9340-abf1a20beca9",
-			"publisherDisplayName": "zhuangtongfa",
-			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
 			"id": "codeandstuff.package-json-upgrade",
 			"uuid": "1f59cde6-3a8c-47e4-b40b-355c1641721a"
 		},
@@ -2989,27 +2525,255 @@
 	},
 	{
 		"identifier": {
-			"id": "sonarsource.sonarlint-vscode",
-			"uuid": "a7fa941e-bcda-486f-8141-8483a6286177"
+			"id": "fogio.inline-go-struct-tags-syntax-highlight",
+			"uuid": "63529134-957b-47ec-85d8-61db81da27a5"
 		},
-		"version": "5.10.0",
+		"version": "1.1.0",
 		"location": {
 			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/sonarsource.sonarlint-vscode-5.10.0-win32-x64",
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/fogio.inline-go-struct-tags-syntax-highlight-1.1.0-universal",
 			"scheme": "file"
 		},
-		"relativeLocation": "sonarsource.sonarlint-vscode-5.10.0-win32-x64",
+		"relativeLocation": "fogio.inline-go-struct-tags-syntax-highlight-1.1.0-universal",
 		"metadata": {
 			"isApplicationScoped": false,
 			"isMachineScoped": false,
 			"isBuiltin": false,
-			"installedTimestamp": 1789544364331,
+			"installedTimestamp": 1793879268939,
+			"pinned": true,
+			"source": "gallery",
+			"id": "63529134-957b-47ec-85d8-61db81da27a5",
+			"publisherId": "698c8153-cee3-42c7-a418-a0f84c77f941",
+			"publisherDisplayName": "fogio",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "mads-hartmann.bash-ide-vscode",
+			"uuid": "b1b0f283-8246-4e90-832e-a6c409d378d1"
+		},
+		"version": "1.43.2",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/mads-hartmann.bash-ide-vscode-1.43.2-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "mads-hartmann.bash-ide-vscode-1.43.2-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1790781803504,
+			"pinned": true,
+			"source": "gallery",
+			"id": "b1b0f283-8246-4e90-832e-a6c409d378d1",
+			"publisherId": "f40c9497-3e29-43d8-954d-e60d92bc26f0",
+			"publisherDisplayName": "mads-hartmann",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "anysphere.remote-containers",
+			"uuid": "94d8b289-9db0-4c3c-b4f3-a3294c789678"
+		},
+		"version": "1.0.41",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/anysphere.remote-containers-1.0.41",
+			"scheme": "file"
+		},
+		"relativeLocation": "anysphere.remote-containers-1.0.41",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1791988024771,
 			"pinned": false,
 			"source": "gallery",
-			"id": "a7fa941e-bcda-486f-8141-8483a6286177",
-			"publisherId": "08b9cc7e-b259-49cd-b013-dfa5357b0a83",
-			"publisherDisplayName": "SonarSource",
-			"targetPlatform": "win32-x64",
+			"id": "94d8b289-9db0-4c3c-b4f3-a3294c789678",
+			"publisherId": "c16ea17f-2629-4893-9064-35c0fd9add4c",
+			"publisherDisplayName": "Anysphere",
+			"targetPlatform": "undefined",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": { "id": "iceye.syl" },
+		"version": "1.3.3",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/iceye.syl-1.3.3",
+			"scheme": "file"
+		},
+		"relativeLocation": "iceye.syl-1.3.3",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1793199668657,
+			"pinned": true,
+			"source": "vsix"
+		}
+	},
+	{
+		"identifier": {
+			"id": "usernamehw.errorlens",
+			"uuid": "9d8c32ab-354c-4daf-a9bf-20b633734435"
+		},
+		"version": "3.30.0",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/usernamehw.errorlens-3.30.0-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "usernamehw.errorlens-3.30.0-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1792761532343,
+			"pinned": true,
+			"source": "gallery",
+			"id": "9d8c32ab-354c-4daf-a9bf-20b633734435",
+			"publisherId": "151820df-5dc5-4c97-8751-eb84643203fa",
+			"publisherDisplayName": "usernamehw",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "golang.go",
+			"uuid": "d6f6cfea-4b6f-41f4-b571-6ad2ab7918da"
+		},
+		"version": "0.58.0",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/golang.go-0.58.0-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "golang.go-0.58.0-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1792761532893,
+			"pinned": true,
+			"source": "gallery",
+			"id": "d6f6cfea-4b6f-41f4-b571-6ad2ab7918da",
+			"publisherId": "dbf6ae0a-da75-4167-ac8b-75b4512f2153",
+			"publisherDisplayName": "golang",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "jj-view.jj-view",
+			"uuid": "9218ea3e-b964-494e-a2af-4f64dfddfac9"
+		},
+		"version": "2.10.0",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/jj-view.jj-view-2.10.0-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "jj-view.jj-view-2.10.0-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1792761533436,
+			"pinned": true,
+			"source": "gallery",
+			"id": "9218ea3e-b964-494e-a2af-4f64dfddfac9",
+			"publisherId": "55e7875a-2c3e-4f5f-a5df-68605dea8ada",
+			"publisherDisplayName": "jj-view",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "redhat.vscode-yaml",
+			"uuid": "2061917f-f76a-458a-8da9-f162de22b97e"
+		},
+		"version": "2.0.0",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/redhat.vscode-yaml-2.0.0-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "redhat.vscode-yaml-2.0.0-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1792761534853,
+			"pinned": true,
+			"source": "gallery",
+			"id": "2061917f-f76a-458a-8da9-f162de22b97e",
+			"publisherId": "1deab481-4801-4170-8a64-801999f5ee73",
+			"publisherDisplayName": "Red Hat",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "vscode-icons-team.vscode-icons",
+			"uuid": "9ccc1dd7-7ec4-4a46-bd4f-7d7b8b9d322a"
+		},
+		"version": "13.0.0",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/vscode-icons-team.vscode-icons-13.0.0-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "vscode-icons-team.vscode-icons-13.0.0-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1793879268955,
+			"pinned": true,
+			"source": "gallery",
+			"id": "9ccc1dd7-7ec4-4a46-bd4f-7d7b8b9d322a",
+			"publisherId": "652ad61d-3a6a-48ca-ab1a-80dc8953b2b6",
+			"publisherDisplayName": "vscode-icons-team",
+			"targetPlatform": "universal",
 			"updated": true,
 			"private": false,
 			"isPreReleaseVersion": false,
@@ -3022,18 +2786,18 @@
 			"id": "anysphere.remote-ssh",
 			"uuid": "73a45d83-83c7-4b22-bebf-c9130b0ab3f3"
 		},
-		"version": "1.1.16",
+		"version": "1.1.17",
 		"location": {
 			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/anysphere.remote-ssh-1.1.16",
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/anysphere.remote-ssh-1.1.17",
 			"scheme": "file"
 		},
-		"relativeLocation": "anysphere.remote-ssh-1.1.16",
+		"relativeLocation": "anysphere.remote-ssh-1.1.17",
 		"metadata": {
 			"isApplicationScoped": true,
 			"isMachineScoped": false,
 			"isBuiltin": false,
-			"installedTimestamp": 1790076571875,
+			"installedTimestamp": 1793648699746,
 			"pinned": false,
 			"source": "gallery",
 			"id": "73a45d83-83c7-4b22-bebf-c9130b0ab3f3",
@@ -3048,28 +2812,268 @@
 		}
 	},
 	{
-		"identifier": { "id": "visualjj.visualjj" },
-		"version": "0.35.3",
+		"identifier": {
+			"id": "biomejs.biome",
+			"uuid": "2c992d35-3965-4369-856e-fdfbb0af2ce2"
+		},
+		"version": "3.8.1",
 		"location": {
 			"$mid": 1,
-			"fsPath": "c:\\Users\\BoscoDomingoBenito\\.cursor\\extensions\\visualjj.visualjj-0.35.3-win32-x64",
-			"_sep": 1,
-			"external": "file:///c%3A/Users/BoscoDomingoBenito/.cursor/extensions/visualjj.visualjj-0.35.3-win32-x64",
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/visualjj.visualjj-0.35.3-win32-x64",
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/biomejs.biome-3.8.1-universal",
 			"scheme": "file"
 		},
-		"relativeLocation": "visualjj.visualjj-0.35.3-win32-x64",
+		"relativeLocation": "biomejs.biome-3.8.1-universal",
 		"metadata": {
 			"isApplicationScoped": false,
 			"isMachineScoped": false,
 			"isBuiltin": false,
-			"installedTimestamp": 1790076629859,
+			"installedTimestamp": 1793648757245,
+			"pinned": true,
+			"source": "gallery",
+			"id": "2c992d35-3965-4369-856e-fdfbb0af2ce2",
+			"publisherId": "570e4e26-7e71-4308-8299-d18166119ce7",
+			"publisherDisplayName": "biomejs",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "streetsidesoftware.code-spell-checker-spanish",
+			"uuid": "8d6dcf6f-1957-4dd5-809e-addb07d8c1fb"
+		},
+		"version": "3.0.1",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/streetsidesoftware.code-spell-checker-spanish-3.0.1-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "streetsidesoftware.code-spell-checker-spanish-3.0.1-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1793648772406,
+			"pinned": true,
+			"source": "gallery",
+			"id": "8d6dcf6f-1957-4dd5-809e-addb07d8c1fb",
+			"publisherId": "01a13ff3-dd60-74b5-b2c2-3f948d4e7ff7",
+			"publisherDisplayName": "Street Side Software",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "zhuangtongfa.material-theme",
+			"uuid": "26a529c9-2654-4b95-a63f-02f6a52429e6"
+		},
+		"version": "3.20.6",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/zhuangtongfa.material-theme-3.20.6-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "zhuangtongfa.material-theme-3.20.6-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1793648772397,
+			"pinned": true,
+			"source": "gallery",
+			"id": "26a529c9-2654-4b95-a63f-02f6a52429e6",
+			"publisherId": "8ae75bda-ec22-4a17-9340-abf1a20beca9",
+			"publisherDisplayName": "zhuangtongfa",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "repreng.csv",
+			"uuid": "f2e80b0c-f33b-40ca-a3a5-bdaf53823a83"
+		},
+		"version": "1.5.2",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/repreng.csv-1.5.2-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "repreng.csv-1.5.2-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1793648758417,
+			"pinned": true,
+			"source": "gallery",
+			"id": "f2e80b0c-f33b-40ca-a3a5-bdaf53823a83",
+			"publisherId": "5a7c9a42-67e0-42c9-9c53-c559b5f2aa25",
+			"publisherDisplayName": "ReprEng",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "streetsidesoftware.code-spell-checker",
+			"uuid": "f6dbd813-b0a0-42c1-90ea-10dde9d925a7"
+		},
+		"version": "4.10.0",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/streetsidesoftware.code-spell-checker-4.10.0-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "streetsidesoftware.code-spell-checker-4.10.0-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1793648757880,
+			"pinned": true,
+			"source": "gallery",
+			"id": "f6dbd813-b0a0-42c1-90ea-10dde9d925a7",
+			"publisherId": "01a13ff3-dd60-74b5-b2c2-3f948d4e7ff7",
+			"publisherDisplayName": "Street Side Software",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "elijah-potter.harper",
+			"uuid": "67361f9a-6018-4ea8-9fd2-37b4de177c4e"
+		},
+		"version": "3.0.0",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/elijah-potter.harper-3.0.0-win32-x64",
+			"scheme": "file"
+		},
+		"relativeLocation": "elijah-potter.harper-3.0.0-win32-x64",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1793648772371,
+			"pinned": true,
+			"source": "gallery",
+			"id": "67361f9a-6018-4ea8-9fd2-37b4de177c4e",
+			"publisherId": "a098746b-cc7e-4534-b8ee-6834fcb649b0",
+			"publisherDisplayName": "elijah-potter",
+			"targetPlatform": "win32-x64",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "chamboug.js-auto-backticks",
+			"uuid": "89454707-ebf2-4d40-b9b9-c3ed09083889"
+		},
+		"version": "1.2.1",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/chamboug.js-auto-backticks-1.2.1-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "chamboug.js-auto-backticks-1.2.1-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1793648772384,
+			"pinned": true,
+			"source": "gallery",
+			"id": "89454707-ebf2-4d40-b9b9-c3ed09083889",
+			"publisherId": "ac6322a4-07c2-4ccb-8226-3b6c47d56f75",
+			"publisherDisplayName": "chamboug",
+			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "visualjj.visualjj",
+			"uuid": "338d7429-21f3-449d-acdf-8518eae43a72"
+		},
+		"version": "0.36.3",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/visualjj.visualjj-0.36.3-win32-x64",
+			"scheme": "file"
+		},
+		"relativeLocation": "visualjj.visualjj-0.36.3-win32-x64",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1793691901017,
 			"pinned": false,
 			"source": "gallery",
 			"id": "338d7429-21f3-449d-acdf-8518eae43a72",
 			"publisherId": "828fee6d-3c80-4fdc-9b0e-a9a8d09fb856",
 			"publisherDisplayName": "visualjj",
 			"targetPlatform": "win32-x64",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": { "id": "teabyii.ayu" },
+		"version": "1.6.0",
+		"location": {
+			"$mid": 1,
+			"fsPath": "c:\\Users\\BoscoDomingoBenito\\.cursor\\extensions\\teabyii.ayu-1.6.0-universal",
+			"_sep": 1,
+			"external": "file:///c%3A/Users/BoscoDomingoBenito/.cursor/extensions/teabyii.ayu-1.6.0-universal",
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/teabyii.ayu-1.6.0-universal",
+			"scheme": "file"
+		},
+		"relativeLocation": "teabyii.ayu-1.6.0-universal",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1793879268946,
+			"pinned": true,
+			"source": "gallery",
+			"id": "5178733e-4b02-4829-95c5-1ce970847c23",
+			"publisherId": "8a0aaf7f-34ab-48b1-9384-c15c80413d57",
+			"publisherDisplayName": "teabyii",
+			"targetPlatform": "universal",
 			"updated": true,
 			"private": false,
 			"isPreReleaseVersion": false,
