@@ -110,6 +110,61 @@ else
 	no "$golangci_link -> $(readlink "$golangci_link") (stale; expected $golangci_build)"
 fi
 
+# GitHub Copilot local sandboxing (Copilot CLI `/sandbox enable`, VS Code
+# `chat.agent.sandbox.enabled`) needs root-owned distro packages that Nix does
+# not own. Existing machines never re-run the distro scripts, so report gaps
+# here. Warnings only: containers (nix/test/container-test.sh) lack namespaces.
+# Requirements: https://code.visualstudio.com/docs/agents/run/agent-sandboxing
+if [ "$(uname -s)" = "Linux" ]; then
+	header "== Copilot local sandbox prerequisites (warnings only) =="
+	sandbox_warn=0
+	warn() {
+		printf '  \033[33mWARN\033[0m  %s\n' "$1"
+		sandbox_warn=1
+	}
+	bwrap_version=$(bwrap --version 2>/dev/null | awk '{print $2}')
+	if [ -z "$bwrap_version" ]; then
+		warn "bwrap missing (need bubblewrap >= 0.5.0)"
+	elif [ "$(printf '%s\n0.5.0\n' "$bwrap_version" | sort -V | head -1)" != "0.5.0" ]; then
+		warn "bwrap $bwrap_version is too old (need >= 0.5.0)"
+	else
+		ok "bwrap $bwrap_version -> $(type -P bwrap)"
+	fi
+	for bin in slirp4netns nsenter iptables ip6tables iptables-restore ip6tables-restore; do
+		p=$(type -P "$bin" 2>/dev/null || true)
+		if [ -n "$p" ]; then ok "$bin -> $p"; else warn "$bin missing"; fi
+	done
+	# util-linux >= 2.35 adds these unshare flags.
+	if unshare --help 2>/dev/null | grep -q -- '--map-current-user' &&
+		unshare --help 2>/dev/null | grep -q -- '--keep-caps'; then
+		ok "unshare supports --map-current-user/--keep-caps"
+	else
+		warn "unshare lacks --map-current-user/--keep-caps (need util-linux >= 2.35)"
+	fi
+	case "$(iptables --version 2>/dev/null)" in
+	*nf_tables*) ok "iptables uses the nf_tables backend" ;;
+	"") ;; # Already reported missing above.
+	*) warn "iptables uses the legacy backend (works only if /run/xtables.lock is writable)" ;;
+	esac
+	if [ -r /dev/net/tun ] && [ -w /dev/net/tun ]; then
+		ok "/dev/net/tun is read/write"
+	else
+		warn "/dev/net/tun is not read/write for $(id -un)"
+	fi
+	if unshare --user --map-current-user --net true 2>/dev/null; then
+		ok "unprivileged user + network namespaces work"
+	else
+		warn "unprivileged user/network namespaces are blocked (WSL1, sysctl, or AppArmor)"
+	fi
+	if [ "$sandbox_warn" = "1" ]; then
+		if grep -q '^ID=ubuntu' /etc/os-release 2>/dev/null; then
+			echo "  fix: sudo apt-get install -y bubblewrap slirp4netns util-linux iptables"
+		elif grep -q '^ID=arch' /etc/os-release 2>/dev/null; then
+			echo "  fix: sudo pacman -S --needed bubblewrap slirp4netns util-linux iptables"
+		fi
+	fi
+fi
+
 header "== dotfiles symlinked to the live repo (out-of-store) =="
 for f in .bash_profile .zshrc .profile .aliases .gitconfig .ssh/allowed_signers \
 	.config/starship.toml .config/nvim .config/jj/config.toml; do
