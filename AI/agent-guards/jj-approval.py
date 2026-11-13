@@ -11,29 +11,58 @@ import sys
 from typing import Any
 
 
-READ_ONLY_ALIASES = {
-    "st",
-    "sh",
-    "d",
-    "l",
-    "ls",
-    "la",
-    "le",
-    "ln",
-    "lnp",
-    "oplog",
-    "gf",
+# Inspection commands in jj 0.47.1 and aliases from the managed jj config.
+# Normal inspection can still trigger jj's automatic working-copy snapshot.
+READ_ONLY_SUBCOMMANDS = {
+    (): {
+        "diff", "evolog", "evolution-log", "help", "interdiff", "log", "root",
+        "show", "status", "version",
+        "d", "l", "la", "lc", "ld", "le", "ln", "lnp", "ls", "oplog",
+        "sh", "shp", "shs", "st",
+    },
+    ("bookmark",): {"list", "l"},
+    ("config",): {"get", "g", "list", "l"},
+    ("debug",): {
+        "copy-detection", "fileset", "index", "local-working-copy", "revset",
+        "stacked-table", "template", "tree", "working-copy",
+    },
+    ("debug", "object"): {"commit", "file", "operation", "symlink", "tree", "view"},
+    ("debug", "watchman"): {"status", "query-clock", "query-changed-files"},
+    ("file",): {"annotate", "list", "search", "show"},
+    ("git",): {"root"},
+    ("git", "colocation"): {"status"},
+    ("git", "remote"): {"list"},
+    ("operation",): {"diff", "log", "show"},
+    ("sparse",): {"list"},
+    ("tag",): {"list", "l"},
+    ("util",): {"completion", "config-schema", "diff", "markdown-help"},
+    ("util", "backend"): {"name"},
+    ("workspace",): {"list", "root"},
 }
 
-READ_ONLY_COMMANDS = {
-    "status",
-    "log",
-    "diff",
-    "show",
-    "root",
-    "version",
-    "help",
+COMMAND_ALIASES = {
+    ("b",): ("bookmark",),
+    ("g",): ("git",),
+    ("gp",): ("git", "push"),
+    ("op",): ("operation",),
+    ("config", "p"): ("config", "path"),
 }
+
+# These commands only inspect state when a specific option is present.
+READ_ONLY_OPTIONS = {
+    ("config", "path"): ({"--user"}, set()),
+    ("git", "push"): (
+        {"--dry-run"},
+        {
+            "-b", "--bookmark", "--branch", "-c", "--change", "--named", "-o",
+            "--option", "-r", "--revision", "--revisions", "--remote", "-t", "--tag",
+        },
+    ),
+    ("resolve",): ({"-l", "--list"}, {"-r", "--revision", "--tool"}),
+}
+
+COMMAND_GROUPS = set(READ_ONLY_SUBCOMMANDS) | {("bisect",), ("gerrit",)}
+HELP_OPTIONS = {"-h", "--help"}
 
 GLOBAL_OPTIONS_WITH_VALUES = {
     "-R",
@@ -43,6 +72,15 @@ GLOBAL_OPTIONS_WITH_VALUES = {
     "--config",
     "--config-file",
     "--color",
+}
+
+GLOBAL_FLAGS = {
+    "--ignore-working-copy",
+    "--no-integrate-operation",
+    "--ignore-immutable",
+    "--debug",
+    "--quiet",
+    "--no-pager",
 }
 
 SEGMENT_BREAKS = {";", "&&", "||", "|", "(", ")"}
@@ -85,55 +123,55 @@ def command_segments(tokens: list[str]):
 def skip_global_options(tokens: list[str], index: int) -> int:
     while index < len(tokens):
         token = tokens[index]
-        if token == "--":
-            return index + 1
         if token in GLOBAL_OPTIONS_WITH_VALUES:
             index += 2
-            continue
-        if any(token.startswith(option + "=") for option in GLOBAL_OPTIONS_WITH_VALUES):
+        elif (
+            token in GLOBAL_FLAGS
+            or token.startswith("-R") and len(token) > 2
+            or token.partition("=")[0] in GLOBAL_OPTIONS_WITH_VALUES and "=" in token
+        ):
             index += 1
-            continue
-        if token.startswith("-"):
-            index += 1
-            continue
-        return index
+        else:
+            break
     return index
 
 
-def read_only_subcommand(tokens: list[str], index: int) -> bool:
-    index = skip_global_options(tokens, index)
-    if index >= len(tokens):
-        return True
-
-    subcommand = tokens[index]
-    rest = tokens[index + 1 :]
-
-    if subcommand in READ_ONLY_ALIASES or subcommand in READ_ONLY_COMMANDS:
-        return True
-
-    if subcommand in {"bookmark", "b"}:
-        return not rest or rest[0] in {"list"}
-
-    if subcommand == "config":
-        return bool(rest) and rest[0] in {"get", "list", "path"}
-
-    if subcommand == "op":
-        return bool(rest) and rest[0] in {"log", "show"}
-
-    if subcommand == "file":
-        return bool(rest) and rest[0] in {"list", "show"}
-
-    if subcommand in {"git", "g"}:
-        return bool(rest) and rest[0] == "fetch"
-
-    if subcommand == "util":
-        return bool(rest) and rest[0] in {
-            "completion",
-            "config-schema",
-            "markdown-help",
-        }
-
+def has_read_only_option(tokens: list[str], path: tuple[str, ...]) -> bool:
+    read_only_flags, options_with_values = READ_ONLY_OPTIONS[path]
+    skip_value = False
+    for token in tokens:
+        if skip_value:
+            skip_value = False
+        elif token == "--":
+            break
+        elif token in options_with_values or token in GLOBAL_OPTIONS_WITH_VALUES:
+            skip_value = True
+        elif token in read_only_flags:
+            return True
     return False
+
+
+def read_only_subcommand(tokens: list[str], index: int) -> bool:
+    path: tuple[str, ...] = ()
+    while path in COMMAND_GROUPS:
+        index = skip_global_options(tokens, index)
+        if index >= len(tokens) or tokens[index] in HELP_OPTIONS:
+            return True
+        if not path and tokens[index] in {"-V", "--version"}:
+            return True
+
+        subcommand = tokens[index]
+        if subcommand in READ_ONLY_SUBCOMMANDS.get(path, ()):
+            return True
+
+        path = (*path, subcommand)
+        path = COMMAND_ALIASES.get(path, path)
+        index += 1
+
+    help_index = skip_global_options(tokens, index)
+    if help_index < len(tokens) and tokens[help_index] in HELP_OPTIONS:
+        return True
+    return path in READ_ONLY_OPTIONS and has_read_only_option(tokens[index:], path)
 
 
 def nested_shell_command(segment: list[str], index: int) -> str | None:
