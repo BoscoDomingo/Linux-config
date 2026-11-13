@@ -26,7 +26,9 @@ in
     ".gitconfig".source = link "${repo}/.gitconfig";
     ".gitignore_global".source = link "${repo}/.gitignore_global";
 
-    ".local/bin/scripts".source = link "${repo}/scripts";
+    # No ~/.local/bin/scripts link: .profile puts $DOTFILES_REPO/scripts on
+    # PATH directly, because the Copilot sandbox (bwrap) cannot mount PATH
+    # entries that are symlinks nested in another PATH dir.
 
     ".ssh/config".source = link "${repo}/.ssh/config";
     # Public signing trust follows the shared personal key; private key material
