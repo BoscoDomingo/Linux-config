@@ -79,7 +79,10 @@ _path_prepend_if_missing "$HOME/bin"
 
 _path_prepend_if_missing "$HOME/.local/bin"
 
-_path_prepend_if_missing "$HOME/.local/bin/scripts"
+# Use the real repo path, not a symlink under ~/.local/bin: the Copilot sandbox
+# bind-mounts each PATH dir, and bwrap cannot mount onto a symlink inside the
+# already-mounted ~/.local/bin ("Can't mount on symlink destination").
+_path_prepend_if_missing "$DOTFILES_REPO/scripts"
 
 _path_prepend_if_missing "$HOME/.cache/.bun/bin"
 

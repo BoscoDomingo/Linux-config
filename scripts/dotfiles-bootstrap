@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Run Home Manager bootstrap from any directory.
-# On PATH via ~/.local/bin/scripts after Home Manager activation.
+# On PATH via $DOTFILES_REPO/scripts (set in .profile).
 #
 #   dotfiles-bootstrap
 #   HOST=ubuntu dotfiles-bootstrap
