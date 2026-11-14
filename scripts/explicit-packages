@@ -55,7 +55,9 @@ if ((color)); then
 else
 	B= D= R= CY= GR= MA= YE= BL= RE=
 fi
-cols=$(tput cols 2>/dev/null || echo 120)
+# Only truncate descriptions on a terminal; keep full text for files and pipes.
+cols=0
+[[ -t 1 ]] && cols=$(tput cols 2>/dev/null || echo 120)
 
 # Stream sections into one gawk program, separated by marker lines:
 #   foreign packages | installed group members | pacman.log | pacman -Qei
@@ -70,8 +72,14 @@ cols=$(tput cols 2>/dev/null || echo 120)
 	LC_ALL=C pacman -Qei
 } | gawk -v view="$view" -v source="$source" -v sort="$sort" -v cols="$cols" \
 	-v B="$B" -v D="$D" -v R="$R" -v CY="$CY" -v GR="$GR" -v MA="$MA" -v YE="$YE" -v BL="$BL" -v RE="$RE" '
-function logts(s) {  # "2025-12-28T15:20:30+0100" -> epoch (offset ignored)
-  return mktime(substr(s,1,4) " " substr(s,6,2) " " substr(s,9,2) " " substr(s,12,2) " " substr(s,15,2) " " substr(s,18,2))
+# Log line -> epoch. Handles "[2025-12-28T15:20:30+0100]" (pacman >= 5.2, offset
+# applied) and legacy "[2019-01-01 12:00]" (no offset, read as local time).
+function logts(line,  s, off) {
+  s = substr(line, 2, 24)
+  if (substr(s, 11, 1) == " ")
+    return mktime(substr(s,1,4) " " substr(s,6,2) " " substr(s,9,2) " " substr(s,12,2) " " substr(s,15,2) " 0")
+  off = (substr(s,21,2) * 3600 + substr(s,23,2) * 60) * (substr(s,20,1) == "-" ? -1 : 1)
+  return mktime(substr(s,1,4) " " substr(s,6,2) " " substr(s,9,2) " " substr(s,12,2) " " substr(s,15,2) " " substr(s,18,2), 1) - off
 }
 function qeits(s,  a) {  # "Sat Nov 14 11:53:33 2026" -> epoch
   split(s, a, /[ :]+/)
@@ -118,7 +126,7 @@ sec == "@@FOREIGN" { foreign[$0] = 1; next }
 sec == "@@GROUPS"  { groupsof[$2] = groupsof[$2] " " $1; next }
 sec == "@@LOG" {
   if ($0 ~ /\[PACMAN\] Running \x27/) {
-    ts = logts(substr($1, 2)); cmd = $0
+    ts = logts($0); cmd = $0
     sub(/^.*Running \x27/, "", cmd); sub(/\x27$/, "", cmd)
     parsecmd(cmd)
     # The installer session starts with a command against an alternate root
@@ -130,7 +138,7 @@ sec == "@@LOG" {
     if (!installer && (op == "S" || op == "U" || (op == "D" && asexplicit)))
       for (i = 1; i <= ntargets; i++) typed[targets[i]] = 1
   } else if (match($0, /\[ALPM\] installed ([^ ]+) /, a)) {
-    first[a[1]] = logts(substr($1, 2)); byinst[a[1]] = (installer == 1)
+    first[a[1]] = logts($0); byinst[a[1]] = (installer == 1)
   }
   next
 }
@@ -144,7 +152,9 @@ function add(  n, by, src, ins, upd) {
   n = f["Name"]; upd = qeits(f["Install Date"])
   if (n in first) { ins = first[n]; by = byinst[n] ? "installer" : "indirect" }
   else { ins = upd; by = "unknown" }
-  if (by != "installer" && (typed[n] || typedgroup(n))) by = "typed"
+  # typed[] only holds commands run after the installer session, so naming an
+  # installer package later makes it yours.
+  if (typed[n] || typedgroup(n)) by = "typed"
   src = (n in foreign) ? "aur" : "repo"
   if (source != "all" && source != src) return
   if (view == "typed" && by != "typed") return
@@ -172,7 +182,7 @@ function render(  i, k, n, wn, wv, wd, d, c, by, tally) {
   printf B "%-" wn "s  %-" wv "s  %-4s  %-9s  %-10s  %-10s  %s" R "\n", "PACKAGE", "VERSION", "SRC", "BY", "INSTALLED", "UPDATED", "DESCRIPTION"
   for (i = 1; i <= nr; i++) {
     n = substr(k[i], index(k[i], "\t") + 1); by = byof[n]
-    d = desc[n]; if (length(d) > wd) d = substr(d, 1, wd - 1) "…"
+    d = desc[n]; if (cols > 0 && length(d) > wd) d = substr(d, 1, wd - 1) "…"
     c = by == "typed" ? GR : by == "indirect" ? BL : by == "installer" ? D : RE
     printf CY "%-" wn "s" R "  " YE "%-" wv "s" R "  " (srcof[n] == "aur" ? MA : GR) "%-4s" R "  " c "%-9s" R "  %-10s  " D "%-10s" R "  %s\n", \
       n, ver[n], srcof[n], by, strftime("%Y-%m-%d", insof[n]), updof[n] ? strftime("%Y-%m-%d", updof[n]) : "-", d

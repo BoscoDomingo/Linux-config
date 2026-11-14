@@ -23,8 +23,9 @@ explicit-packages [view] [-r|--repo] [-a|--aur] [-s|--sort date|updated|name] [-
 | `-s`, `--sort`         | `date` installed (default), last `updated`, or `name`  |
 | `-n`, `--no-color`     | Plain output (automatic when not a TTY)                |
 
-`BY` column: `typed` (you named it, or its group), `indirect` (marked explicit
-by something else, e.g. a replacement), `installer`, `unknown` (not in the log).
+`BY` column: `typed` (you named it or its group after the installer finished,
+even if the installer first set it up), `indirect` (marked explicit by something
+else, e.g. a replacement), `installer`, `unknown` (not in the log).
 
 ## Examples
 
@@ -39,6 +40,9 @@ explicit-packages -n -u > ~/my-packages.txt  # snapshot for a new machine
 - Installer session: starts with a command on an alternate root (Calamares,
   pacstrap) and lasts while automated commands follow within 5 minutes.
 - `UPDATED` is pacman's "Install Date", which changes on every upgrade.
+- Log timestamps use their logged UTC offset. Pre-2019 (pacman < 5.2) lines
+  have no offset and are read as local time.
 - If the log is rotated, older packages show as `unknown`. Override the log
   path with `PACMAN_LOG=...`.
-- Descriptions are truncated to the terminal width (80 columns when piped).
+- Descriptions are truncated to the terminal width. Piped or redirected output
+  keeps the full text.
