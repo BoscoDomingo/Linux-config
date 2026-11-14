@@ -22,7 +22,6 @@ let
 in
 {
   home.packages = with pkgs; [
-    gcc
     cheat
     progress
     bottom # `btm`

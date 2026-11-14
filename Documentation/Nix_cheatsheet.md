@@ -1,7 +1,8 @@
 # Nix + Home Manager cheatsheet
 
 This repository uses standalone Home Manager. The examples below target the
-live Arch WSL host; set `HOST` to `arch`, `ubuntu`, or `macbook` elsewhere.
+live Arch WSL host; set `HOST` to `arch`, `cachyos`, `ubuntu`, or `macbook`
+elsewhere.
 Nix manages declared user packages and dotfiles; it does **not** update the
 host operating system itself.
 

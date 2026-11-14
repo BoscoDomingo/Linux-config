@@ -35,7 +35,7 @@ Setup is managed by Nix (Home Manager). On a fresh machine, run the distro-speci
 On a machine that already has the repo cloned, run the Nix bootstrap directly:
 
 ```sh
-bash ~/dotfiles/nix/bootstrap.sh   # auto-detects arch vs arch-wsl; override with HOST=<arch|arch-wsl|ubuntu|macbook>
+bash ~/dotfiles/nix/bootstrap.sh   # auto-detects the host; override with HOST=<arch|arch-wsl|cachyos|ubuntu|macbook>
 ```
 
 See [`nix/README.md`](nix/README.md) for how it's structured and [`Documentation/Nix_exploration.md`](Documentation/Nix_exploration.md) for the full design and tool-ownership split.

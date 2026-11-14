@@ -1,7 +1,8 @@
-{ ... }:
-# Bare-metal Arch, incl. CachyOS and other Arch derivatives. Everything comes
-# from common.nix; this host adds nothing WSL-specific. The WSL variant that
-# layers on top of it is hosts/arch-wsl.nix.
+{ pkgs, ... }:
+# Bare-metal Arch and the shared base for Arch derivatives. Everything comes
+# from common.nix; host variants layer their differences on top.
 {
   imports = [ ../home/common.nix ];
+
+  home.packages = [ pkgs.gcc ];
 }

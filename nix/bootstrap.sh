@@ -6,7 +6,7 @@
 #   HOST=ubuntu bash ~/dotfiles/nix/bootstrap.sh
 #
 # HOST must match an entry in flake.nix `homeConfigurations` (arch | arch-wsl |
-# ubuntu | macbook). When unset it detects Darwin, Ubuntu, Arch WSL, or Arch.
+# cachyos | ubuntu | macbook). When unset it detects the current platform.
 # Idempotent: safe to re-run to apply changes.
 #
 # INSTALL_BREW=1 also installs Homebrew (escape hatch for tools not in nixpkgs).
@@ -17,13 +17,15 @@ set -euo pipefail
 
 REPO="${DOTFILES_REPO:-$HOME/dotfiles}"
 # Default host from the operating system; override with
-# HOST=<arch|arch-wsl|ubuntu|macbook> when needed.
+# HOST=<arch|arch-wsl|cachyos|ubuntu|macbook> when needed.
 if [ -z "${HOST:-}" ]; then
 	if [ "$(uname -s)" = "Darwin" ]; then
 		HOST=macbook
 	elif grep -qiE 'microsoft|wsl' /proc/version 2>/dev/null &&
 		grep -q '^ID=arch' /etc/os-release 2>/dev/null; then
 		HOST=arch-wsl
+	elif grep -q '^ID=cachyos' /etc/os-release 2>/dev/null; then
+		HOST=cachyos
 	elif grep -q '^ID=ubuntu' /etc/os-release 2>/dev/null; then
 		HOST=ubuntu
 	else
@@ -32,9 +34,9 @@ if [ -z "${HOST:-}" ]; then
 fi
 
 case "$HOST" in
-arch | arch-wsl | ubuntu | macbook) ;;
+arch | arch-wsl | cachyos | ubuntu | macbook) ;;
 *)
-	echo "Unknown HOST '$HOST' (expected arch, arch-wsl, ubuntu, or macbook)" >&2
+	echo "Unknown HOST '$HOST' (expected arch, arch-wsl, cachyos, ubuntu, or macbook)" >&2
 	exit 1
 	;;
 esac
@@ -107,13 +109,13 @@ bash "$REPO/scripts/link-go-tools"
 # Bare-metal Arch can opt in to root-owned distro patches through the
 # gitignored overrides/patches/enabled file. The sync is idempotent and installs
 # pacman hooks so package upgrades reapply compatible patches.
-if [ "$HOST" = "arch" ] && [ -f "$REPO/overrides/patches/enabled" ]; then
+if { [ "$HOST" = "arch" ] || [ "$HOST" = "cachyos" ]; } && [ -f "$REPO/overrides/patches/enabled" ]; then
 	printf '\033[35m== Arch system patches ==\033[0m\n'
 	DOTFILES_REPO="$REPO" bash "$REPO/Arch/sync-patches.sh"
 fi
 
 printf '\033[35m== verify ==\033[0m\n'
-bash "$REPO/nix/test/verify.sh"
+HOST="$HOST" bash "$REPO/nix/test/verify.sh"
 
 printf '\n\033[32m✅ Done\033[0m\n\033[33m'
 cat <<EOF
