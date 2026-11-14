@@ -40,8 +40,8 @@ explicit-packages -n -u > ~/my-packages.txt  # snapshot for a new machine
 - Installer session: starts with a command on an alternate root (Calamares,
   pacstrap) and lasts while automated commands follow within 5 minutes.
 - `UPDATED` is pacman's "Install Date", which changes on every upgrade.
-- Log timestamps use their logged UTC offset. Pre-2019 (pacman < 5.2) lines
-  have no offset and are read as local time.
+- Log timestamps use their logged UTC offset. Lines from pacman < 5.2 (before
+  late 2019) have no offset and are read as local time.
 - If the log is rotated, older packages show as `unknown`. Override the log
   path with `PACMAN_LOG=...`.
 - Descriptions are truncated to the terminal width. Piped or redirected output
