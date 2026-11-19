@@ -37,9 +37,10 @@ class JjApprovalGuardInstallerTests(unittest.TestCase):
                 "jj d**": "allow",
                 "jj l*": "allow",
                 "git push": "ask",
-                "jj gf custom": "deny",
                 "jj status": "allow",
                 "jj *": "ask",
+                "jj new": "deny",
+                "jj status *": "deny",
             }}})
 
             installer.install_opencode()
@@ -47,8 +48,10 @@ class JjApprovalGuardInstallerTests(unittest.TestCase):
             rules = json.loads(path.read_text())["permission"]["bash"]
             managed_path = installer.REPO_ROOT / ".config" / "opencode" / "opencode.json"
             managed = json.loads(managed_path.read_text())["permission"]["bash"]
-            expected = {"*": "allow", "git push": "ask", "jj gf custom": "deny"}
+            expected = {"*": "allow", "git push": "ask"}
             expected.update((rule, action) for rule, action in managed.items() if rule.startswith("jj "))
+            expected["jj status *"] = "deny"
+            expected["jj new"] = "deny"
             self.assertEqual(list(rules.items()), list(expected.items()))
             self.assertEqual(rules["jj config path --user"], "allow")
             self.assertEqual(rules["jj d *"], "allow")

@@ -150,6 +150,16 @@ class JjAiApprovalHookTests(unittest.TestCase):
             with self.subTest(command=command):
                 self.assertEqual(run_hook(command)["permission"], "allow")
 
+    def test_requires_approval_for_shell_line_continuations(self) -> None:
+        for command in [
+            "j\\\nj commit -m test",
+            '"j\\\nj" commit -m test',
+            "jj git pu\\\nsh",
+            "jj git \\\npush",
+        ]:
+            with self.subTest(command=command):
+                self.assertEqual(run_hook(command)["permission"], "ask")
+
     def test_allows_non_jj_commands(self) -> None:
         self.assertEqual(run_hook("git status")["permission"], "allow")
 

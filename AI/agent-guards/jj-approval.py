@@ -120,6 +120,9 @@ def command_segments(command: str):
         offset = match.end()
         kind = match.lastgroup
         token = match.group()
+        # shlex retains escaped newlines that a shell removes before splitting words.
+        if kind != "comment" and "\\\n" in token:
+            raise ValueError("Shell line continuation requires inspection")
         if kind in {"space", "comment"}:
             continue
         if redirect_target:

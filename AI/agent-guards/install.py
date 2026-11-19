@@ -237,7 +237,8 @@ def install_opencode() -> None:
     managed_path = REPO_ROOT / ".config" / "opencode" / "opencode.json"
     managed_bash = load_json(managed_path, {})["permission"]["bash"]
     jj_rules = {
-        pattern: action for pattern, action in managed_bash.items()
+        pattern: bash[pattern] if bash.get(pattern) in {"ask", "deny"} else action
+        for pattern, action in managed_bash.items()
         if pattern.startswith("jj ")
     }
     # Remove old allow rules so they cannot override the new defaults.
@@ -254,14 +255,23 @@ def install_opencode() -> None:
         if bash.get(pattern) == "allow":
             del bash[pattern]
 
-    # OpenCode checks the last matching rule. Keep the default before exceptions.
+    # Replace the managed rules at the old default so custom rules after it still win.
     installed_rules = [
         (pattern, action) for pattern, action in bash.items() if pattern in jj_rules
     ]
     if installed_rules != list(jj_rules.items()):
-        for pattern in jj_rules:
-            bash.pop(pattern, None)
-        bash.update(jj_rules)
+        anchor = "jj *" if "jj *" in bash else next(
+            (pattern for pattern in bash if pattern.startswith("jj ")), None
+        )
+        updated = {}
+        for pattern, action in bash.items():
+            if pattern == anchor:
+                updated.update(jj_rules)
+            if pattern not in jj_rules:
+                updated[pattern] = action
+        if anchor is None:
+            updated.update(jj_rules)
+        permission["bash"] = bash = updated
     # Keep hand-formatted, repo-managed JSON untouched when the guard policy is
     # already current. This prevents every Home Manager activation from
     # creating a formatting-only working-copy change.
