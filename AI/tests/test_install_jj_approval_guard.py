@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 import importlib.util
+import json
+import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 INSTALLER = Path(__file__).resolve().parents[1] / "agent-guards" / "install.py"
@@ -17,6 +20,44 @@ def load_installer():
 
 
 class JjApprovalGuardInstallerTests(unittest.TestCase):
+    def test_migrates_stale_opencode_jj_rules(self) -> None:
+        installer = load_installer()
+        with tempfile.TemporaryDirectory() as directory:
+            installer.HOME = Path(directory)
+            path = installer.HOME / ".config" / "opencode" / "opencode.json"
+            installer.write_json(path, {"permission": {"bash": {
+                "*": "allow",
+                "jj git fetch": "allow",
+                "jj git fetch*": "allow",
+                "jj gf": "allow",
+                "jj gf*": "allow",
+                "jj config path": "allow",
+                "jj config path*": "allow",
+                "jj d*": "allow",
+                "jj d**": "allow",
+                "jj l*": "allow",
+                "git push": "ask",
+                "jj gf custom": "deny",
+                "jj status": "allow",
+                "jj *": "ask",
+            }}})
+
+            installer.install_opencode()
+
+            rules = json.loads(path.read_text())["permission"]["bash"]
+            managed_path = installer.REPO_ROOT / ".config" / "opencode" / "opencode.json"
+            managed = json.loads(managed_path.read_text())["permission"]["bash"]
+            expected = {"*": "allow", "git push": "ask", "jj gf custom": "deny"}
+            expected.update((rule, action) for rule, action in managed.items() if rule.startswith("jj "))
+            self.assertEqual(list(rules.items()), list(expected.items()))
+            self.assertEqual(rules["jj config path --user"], "allow")
+            self.assertEqual(rules["jj d *"], "allow")
+            self.assertNotIn("jj git fetch*", rules)
+
+            with patch.object(installer, "write_json") as write_json:
+                installer.install_opencode()
+                write_json.assert_not_called()
+
     def test_removes_legacy_extensionless_cursor_hook_commands(self) -> None:
         installer = load_installer()
         stale_command = (

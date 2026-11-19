@@ -231,32 +231,41 @@ def install_opencode() -> None:
     bash = permission.setdefault("bash", {})
     if not isinstance(bash, dict):
         raise ValueError("opencode permission.bash must be an object to merge jj guard rules")
+    original_order = list(bash)
 
+    # Use the repo config as the source for both symlinked and standalone installs.
+    managed_path = REPO_ROOT / ".config" / "opencode" / "opencode.json"
+    managed_bash = load_json(managed_path, {})["permission"]["bash"]
     jj_rules = {
-        "jj *": "ask",
-        "jj status*": "allow",
-        "jj st*": "allow",
-        "jj diff*": "allow",
-        "jj d*": "allow",
-        "jj log*": "allow",
-        "jj l*": "allow",
-        "jj show*": "allow",
-        "jj sh*": "allow",
-        "jj op log*": "allow",
-        "jj oplog*": "allow",
-        "jj config get*": "allow",
-        "jj config list*": "allow",
-        "jj config path*": "allow",
-        "jj bookmark list*": "allow",
-        "jj git fetch*": "allow",
-        "jj gf*": "allow",
+        pattern: action for pattern, action in managed_bash.items()
+        if pattern.startswith("jj ")
     }
-    for pattern, action in jj_rules.items():
-        bash[pattern] = action
+    # Remove old allow rules so they cannot override the new defaults.
+    legacy_prefixes = (
+        "bookmark list", "config get", "config list", "config path",
+        "d", "diff", "gf", "git fetch", "l", "log", "op log", "oplog",
+        "sh", "show", "st", "status",
+    )
+    stale_patterns = {f"jj {prefix}*" for prefix in legacy_prefixes}
+    stale_patterns.update({
+        "jj config path", "jj d**", "jj gf", "jj git fetch", "jj l**", "jj sh**",
+    })
+    for pattern in stale_patterns:
+        if bash.get(pattern) == "allow":
+            del bash[pattern]
+
+    # OpenCode checks the last matching rule. Keep the default before exceptions.
+    installed_rules = [
+        (pattern, action) for pattern, action in bash.items() if pattern in jj_rules
+    ]
+    if installed_rules != list(jj_rules.items()):
+        for pattern in jj_rules:
+            bash.pop(pattern, None)
+        bash.update(jj_rules)
     # Keep hand-formatted, repo-managed JSON untouched when the guard policy is
     # already current. This prevents every Home Manager activation from
     # creating a formatting-only working-copy change.
-    if data != original:
+    if data != original or list(bash) != original_order:
         write_json(path, data)
 
 

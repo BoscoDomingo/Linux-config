@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import shlex
 import sys
 from typing import Any
@@ -18,7 +19,7 @@ READ_ONLY_SUBCOMMANDS = {
         "diff", "evolog", "evolution-log", "help", "interdiff", "log", "root",
         "show", "status", "version",
         "d", "l", "la", "lc", "ld", "le", "ln", "lnp", "ls", "oplog",
-        "sh", "shp", "shs", "st",
+        "sh", "shp", "shs", "st", "wl",
     },
     ("bookmark",): {"list", "l"},
     ("config",): {"get", "g", "list", "l"},
@@ -45,6 +46,8 @@ COMMAND_ALIASES = {
     ("g",): ("git",),
     ("gp",): ("git", "push"),
     ("op",): ("operation",),
+    ("slv",): ("resolve",),
+    ("w",): ("workspace",),
     ("config", "p"): ("config", "path"),
 }
 
@@ -83,7 +86,13 @@ GLOBAL_FLAGS = {
     "--no-pager",
 }
 
-SEGMENT_BREAKS = {";", "&&", "||", "|", "(", ")"}
+# Keep operators separate from quoted or escaped words before removing quotes.
+SHELL_TOKEN = re.compile(
+    r"""(?P<space>[ \t\r]+|\\\n)|(?P<comment>\#[^\n]*)"""
+    r"""|(?P<redirect>(?:[0-9]+)?(?:<<<|<<-?|<>|<&|<|>\||>&|>>?)|&>>?)"""
+    r"""|(?P<separator>\n|&&|\|\||\|&|[;&|()])"""
+    r"""|(?P<word>(?:'[^']*'|"(?:\\[\s\S]|[^"\\])*"|\\[\s\S]|[^\s'"\\;&|()<>])+)"""
+)
 SHELL_COMMANDS = {"bash", "sh", "zsh", "fish"}
 
 USER_MESSAGE = (
@@ -100,22 +109,36 @@ def load_input() -> dict[str, Any]:
     return json.loads(raw)
 
 
-def shell_tokens(command: str) -> list[str]:
-    lexer = shlex.shlex(command, posix=True, punctuation_chars=";&|()")
-    lexer.whitespace_split = True
-    lexer.commenters = ""
-    return list(lexer)
-
-
-def command_segments(tokens: list[str]):
+def command_segments(command: str):
     segment: list[str] = []
-    for token in tokens:
-        if token in SEGMENT_BREAKS:
+    redirect_target = False
+    offset = 0
+    while offset < len(command):
+        match = SHELL_TOKEN.match(command, offset)
+        if match is None:
+            raise ValueError("Unrecognized shell syntax")
+        offset = match.end()
+        kind = match.lastgroup
+        token = match.group()
+        if kind in {"space", "comment"}:
+            continue
+        if redirect_target:
+            if kind != "word":
+                raise ValueError("Missing shell redirection target")
+            redirect_target = False
+            continue
+        if kind == "redirect":
+            if token.lstrip("0123456789") in {"<<", "<<-"}:
+                raise ValueError("Shell here-document requires inspection")
+            redirect_target = True
+        elif kind == "separator":
             if segment:
                 yield segment
                 segment = []
-            continue
-        segment.append(token)
+        else:
+            segment.extend(shlex.split(token))
+    if redirect_target:
+        raise ValueError("Missing shell redirection target")
     if segment:
         yield segment
 
@@ -189,11 +212,11 @@ def nested_shell_command(segment: list[str], index: int) -> str | None:
 
 def risky_jj_invocation(command: str) -> str | None:
     try:
-        tokens = shell_tokens(command)
+        segments = list(command_segments(command))
     except ValueError:
         return command
 
-    for segment in command_segments(tokens):
+    for segment in segments:
         for index, token in enumerate(segment):
             if os.path.basename(token) == "jj":
                 if not read_only_subcommand(segment, index + 1):
