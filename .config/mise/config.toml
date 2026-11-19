@@ -19,7 +19,7 @@ golangci-lint = "latest"
 # dead shim behind ("No version is set for shim: gopls").
 "go:golang.org/x/tools/gopls" = "latest"
 "go:github.com/go-delve/delve/cmd/dlv" = "latest"
-diffnav = "0.11.0"
+diffnav = "0.13.1"
 "tldr++" = "latest"
 hunk = "latest"
 "github:trasta298/keifu" = "latest"
