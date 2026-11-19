@@ -16,7 +16,6 @@ GUARD = "$HOME/.local/bin/ai-agent-guard-jj-approval.py"
 GUARD_SOURCE = Path(__file__).resolve().parent / "jj-approval.py"
 GUARD_TARGET = HOME / ".local" / "bin" / "ai-agent-guard-jj-approval.py"
 PYTHON = sys.executable
-CURSOR_JJ_MATCHER = r"(^|[\s;&|()'\"])jj([\s;&|()'\"]|$)"
 POLICY_MARKER = "<!-- dotfiles:jujutsu-ai-approval -->"
 LEGACY_POLICY_MARKER = "<!-- dotfiles:jjujutsu-ai-approval -->"
 POLICY_TEXT = f"""{POLICY_MARKER}
@@ -147,7 +146,7 @@ def install_cursor() -> None:
         before_shell,
         {
             "command": guard_command("cursor"),
-            "matcher": CURSOR_JJ_MATCHER,
+            # Let the guard parse commands whose spelling spans shell continuations.
             "failClosed": True,
         },
     )
@@ -231,32 +230,51 @@ def install_opencode() -> None:
     bash = permission.setdefault("bash", {})
     if not isinstance(bash, dict):
         raise ValueError("opencode permission.bash must be an object to merge jj guard rules")
+    original_order = list(bash)
 
+    # Use the repo config as the source for both symlinked and standalone installs.
+    managed_path = REPO_ROOT / ".config" / "opencode" / "opencode.json"
+    managed_bash = load_json(managed_path, {})["permission"]["bash"]
     jj_rules = {
-        "jj *": "ask",
-        "jj status*": "allow",
-        "jj st*": "allow",
-        "jj diff*": "allow",
-        "jj d*": "allow",
-        "jj log*": "allow",
-        "jj l*": "allow",
-        "jj show*": "allow",
-        "jj sh*": "allow",
-        "jj op log*": "allow",
-        "jj oplog*": "allow",
-        "jj config get*": "allow",
-        "jj config list*": "allow",
-        "jj config path*": "allow",
-        "jj bookmark list*": "allow",
-        "jj git fetch*": "allow",
-        "jj gf*": "allow",
+        pattern: bash[pattern] if bash.get(pattern) in {"ask", "deny"} else action
+        for pattern, action in managed_bash.items()
+        if pattern.startswith("jj ")
     }
-    for pattern, action in jj_rules.items():
-        bash[pattern] = action
+    # Remove old allow rules so they cannot override the new defaults.
+    legacy_prefixes = (
+        "bookmark list", "config get", "config list", "config path",
+        "d", "diff", "gf", "git fetch", "l", "log", "op log", "oplog",
+        "sh", "show", "st", "status",
+    )
+    stale_patterns = {f"jj {prefix}*" for prefix in legacy_prefixes}
+    stale_patterns.update({
+        "jj config path", "jj d**", "jj gf", "jj git fetch", "jj l**", "jj sh**",
+    })
+    for pattern in stale_patterns:
+        if bash.get(pattern) == "allow":
+            del bash[pattern]
+
+    # Replace the managed rules at the old default so custom rules after it still win.
+    installed_rules = [
+        (pattern, action) for pattern, action in bash.items() if pattern in jj_rules
+    ]
+    if installed_rules != list(jj_rules.items()):
+        anchor = "jj *" if "jj *" in bash else next(
+            (pattern for pattern in bash if pattern.startswith("jj ")), None
+        )
+        updated = {}
+        for pattern, action in bash.items():
+            if pattern == anchor:
+                updated.update(jj_rules)
+            if pattern not in jj_rules:
+                updated[pattern] = action
+        if anchor is None:
+            updated.update(jj_rules)
+        permission["bash"] = bash = updated
     # Keep hand-formatted, repo-managed JSON untouched when the guard policy is
     # already current. This prevents every Home Manager activation from
     # creating a formatting-only working-copy change.
-    if data != original:
+    if data != original or list(bash) != original_order:
         write_json(path, data)
 
 

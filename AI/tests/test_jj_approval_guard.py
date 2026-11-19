@@ -31,7 +31,39 @@ class JjAiApprovalHookTests(unittest.TestCase):
             "jj op log",
             "jj bookmark list",
             "jj config list",
-            "jj git fetch",
+            "jj workspace list",
+            "jj workspace root",
+            "jj wl",
+            "jj w list",
+            "jj w root",
+            "jj workspace",
+            "jj --no-pager workspace --repository ../repo root",
+            "jj evolog",
+            "jj evolution-log",
+            "jj interdiff --from @- --to @",
+            "jj shp",
+            "jj lc",
+            "jj file annotate README.md",
+            "jj file search --pattern test",
+            "jj operation diff",
+            "jj b l",
+            "jj tag l",
+            "jj sparse list",
+            "jj g remote list",
+            "jj git root",
+            "jj git colocation status",
+            "jj util backend name",
+            "jj util diff old.txt new.txt",
+            "jj debug object commit @",
+            "jj config p --user",
+            "jj resolve -r @ --list",
+            "jj slv --list",
+            "jj git push --remote origin --dry-run",
+            "jj gp --dry-run",
+            "jj git push --help",
+            "jj git push --no-pager --help",
+            "jj -R../repo op --at-op=@ log",
+            "jj --version",
         ]:
             with self.subTest(command=command):
                 self.assertEqual(run_hook(command)["permission"], "allow")
@@ -55,7 +87,30 @@ class JjAiApprovalHookTests(unittest.TestCase):
             "jj bsm",
             "jj git push",
             "jj gp",
+            "jj git fetch",
+            "jj gf",
+            "jj f",
+            "jj g remote remove origin",
+            "jj git colocation enable",
+            "jj operation restore @-",
+            "jj tag set v1",
+            "jj sparse reset",
+            "jj config path --repo",
+            "jj config p --workspace",
+            "jj config gc",
+            "jj debug watchman reset-clock",
+            "jj resolve",
+            "jj slv",
+            "jj w add ../ws",
+            "jj resolve -- --list",
+            "jj git push -- --dry-run",
+            'jj git push --config "--dry-run" --remote origin',
+            "jj util snapshot",
+            "jj util exec -- echo --help",
             "jj undo",
+            "jj workspace add ../ws",
+            "jj workspace forget foo",
+            "jj workspace update-stale",
         ]:
             with self.subTest(command=command):
                 response = run_hook(command)
@@ -69,6 +124,53 @@ class JjAiApprovalHookTests(unittest.TestCase):
     def test_detects_jj_inside_nested_shell_commands(self) -> None:
         response = run_hook('bash -lc \'jj commit -m "ship"\'')
         self.assertEqual(response["permission"], "ask")
+
+    def test_only_uses_options_passed_to_jj(self) -> None:
+        for command in [
+            "jj git push > --dry-run",
+            "jj git push 2>--dry-run",
+            "jj git push &>--dry-run",
+            "jj git push # --dry-run",
+            "jj git push > --help",
+            "jj resolve > --list",
+            "jj slv # --list",
+            "jj config path > --user",
+            "echo done # comment\njj git push",
+        ]:
+            with self.subTest(command=command):
+                self.assertEqual(run_hook(command)["permission"], "ask")
+
+        for command in [
+            "jj git push --dry-run > preview.txt",
+            "jj resolve --list 2>/dev/null",
+            "jj resolve '>' --list",
+            "jj git push --named branch#2=@ --dry-run",
+            "jj git push --dry-run # preview only",
+        ]:
+            with self.subTest(command=command):
+                self.assertEqual(run_hook(command)["permission"], "allow")
+
+    def test_joins_shell_line_continuations(self) -> None:
+        for command in (
+            "j\\\nj commit -m test",
+            '"j\\\nj" commit -m test',
+            "jj git pu\\\nsh",
+            "jj git \\\npush",
+            "jj git push >\\\n& --dry-run",
+            "echo done # comment\\\njj git push",
+        ):
+            with self.subTest(command=command):
+                self.assertEqual(run_hook(command)["permission"], "ask")
+
+        for command in (
+            "echo \\\n hello",
+            "echo 'j\\\nj commit'",
+            "echo j\\\\\nj commit",
+            "j\\\nj status",
+            'jj git push "--dry-\\\nrun"',
+        ):
+            with self.subTest(command=command):
+                self.assertEqual(run_hook(command)["permission"], "allow")
 
     def test_allows_non_jj_commands(self) -> None:
         self.assertEqual(run_hook("git status")["permission"], "allow")

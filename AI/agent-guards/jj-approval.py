@@ -6,34 +6,66 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import shlex
 import sys
 from typing import Any
 
 
-READ_ONLY_ALIASES = {
-    "st",
-    "sh",
-    "d",
-    "l",
-    "ls",
-    "la",
-    "le",
-    "ln",
-    "lnp",
-    "oplog",
-    "gf",
+# Inspection commands in jj 0.47.1 and aliases from the managed jj config.
+# Normal inspection can still trigger jj's automatic working-copy snapshot.
+READ_ONLY_SUBCOMMANDS = {
+    (): {
+        "diff", "evolog", "evolution-log", "help", "interdiff", "log", "root",
+        "show", "status", "version",
+        "d", "l", "la", "lc", "ld", "le", "ln", "lnp", "ls", "oplog",
+        "sh", "shp", "shs", "st", "wl",
+    },
+    ("bookmark",): {"list", "l"},
+    ("config",): {"get", "g", "list", "l"},
+    ("debug",): {
+        "copy-detection", "fileset", "index", "local-working-copy", "revset",
+        "stacked-table", "template", "tree", "working-copy",
+    },
+    ("debug", "object"): {"commit", "file", "operation", "symlink", "tree", "view"},
+    ("debug", "watchman"): {"status", "query-clock", "query-changed-files"},
+    ("file",): {"annotate", "list", "search", "show"},
+    ("git",): {"root"},
+    ("git", "colocation"): {"status"},
+    ("git", "remote"): {"list"},
+    ("operation",): {"diff", "log", "show"},
+    ("sparse",): {"list"},
+    ("tag",): {"list", "l"},
+    ("util",): {"completion", "config-schema", "diff", "markdown-help"},
+    ("util", "backend"): {"name"},
+    ("workspace",): {"list", "root"},
 }
 
-READ_ONLY_COMMANDS = {
-    "status",
-    "log",
-    "diff",
-    "show",
-    "root",
-    "version",
-    "help",
+COMMAND_ALIASES = {
+    ("b",): ("bookmark",),
+    ("g",): ("git",),
+    ("gp",): ("git", "push"),
+    ("op",): ("operation",),
+    ("slv",): ("resolve",),
+    ("w",): ("workspace",),
+    ("config", "p"): ("config", "path"),
 }
+
+# These commands only inspect state when a specific option is present.
+READ_ONLY_OPTIONS = {
+    ("config", "path"): ({"--user"}, set()),
+    ("git", "push"): (
+        {"--dry-run"},
+        {
+            "-b", "--bookmark", "--branch", "-c", "--change", "--named", "-o",
+            "--option", "-r", "--revision", "--revisions", "--remote", "-t", "--tag",
+        },
+    ),
+    ("resolve",): ({"-l", "--list"}, {"-r", "--revision", "--tool"}),
+}
+
+COMMAND_GROUPS = set(READ_ONLY_SUBCOMMANDS) | {("bisect",), ("gerrit",)}
+HELP_OPTIONS = {"-h", "--help"}
 
 GLOBAL_OPTIONS_WITH_VALUES = {
     "-R",
@@ -45,7 +77,24 @@ GLOBAL_OPTIONS_WITH_VALUES = {
     "--color",
 }
 
-SEGMENT_BREAKS = {";", "&&", "||", "|", "(", ")"}
+GLOBAL_FLAGS = {
+    "--ignore-working-copy",
+    "--no-integrate-operation",
+    "--ignore-immutable",
+    "--debug",
+    "--quiet",
+    "--no-pager",
+}
+
+# Keep operators separate from quoted or escaped words before removing quotes.
+SHELL_TOKEN = re.compile(
+    r"""(?P<space>[ \t\r]+|\\\n)|(?P<comment>\#[^\n]*)"""
+    r"""|(?P<redirect>(?:[0-9]+)?(?:<<<|<<-?|<>|<&|<|>\||>&|>>?)|&>>?)"""
+    r"""|(?P<separator>\n|&&|\|\||\|&|[;&|()])"""
+    r"""|(?P<word>(?:'[^']*'|"(?:\\[\s\S]|[^"\\])*"|\\[\s\S]|[^\s'"\\;&|()<>])+)"""
+)
+SHELL_WORD_PART = re.compile(r"""'[^']*'|"(?:\\[\s\S]|[^"\\])*"|\\[\s\S]""")
+SHELL_ESCAPE = re.compile(r"\\[\s\S]")
 SHELL_COMMANDS = {"bash", "sh", "zsh", "fish"}
 
 USER_MESSAGE = (
@@ -62,22 +111,62 @@ def load_input() -> dict[str, Any]:
     return json.loads(raw)
 
 
-def shell_tokens(command: str) -> list[str]:
-    lexer = shlex.shlex(command, posix=True, punctuation_chars=";&|()")
-    lexer.whitespace_split = True
-    lexer.commenters = ""
-    return list(lexer)
+def join_shell_lines(command: str) -> str:
+    # Join continuations before lexing operators. Preserve comments, single quotes,
+    # and escaped backslashes because their newlines are literal.
+    def remove_continuation(match: re.Match[str]) -> str:
+        token = match.group()
+        return "" if token == "\\\n" else token
+
+    def join_word_part(match: re.Match[str]) -> str:
+        token = match.group()
+        if token.startswith('"'):
+            return SHELL_ESCAPE.sub(remove_continuation, token)
+        return remove_continuation(match)
+
+    def join_token(match: re.Match[str]) -> str:
+        token = match.group()
+        if match.lastgroup == "space":
+            return token.replace("\\\n", "")
+        if match.lastgroup == "word":
+            return SHELL_WORD_PART.sub(join_word_part, token)
+        return token
+
+    return SHELL_TOKEN.sub(join_token, command)
 
 
-def command_segments(tokens: list[str]):
+def command_segments(command: str):
+    if "\\\n" in command:
+        command = join_shell_lines(command)
     segment: list[str] = []
-    for token in tokens:
-        if token in SEGMENT_BREAKS:
+    redirect_target = False
+    offset = 0
+    while offset < len(command):
+        match = SHELL_TOKEN.match(command, offset)
+        if match is None:
+            raise ValueError("Unrecognized shell syntax")
+        offset = match.end()
+        kind = match.lastgroup
+        token = match.group()
+        if kind in {"space", "comment"}:
+            continue
+        if redirect_target:
+            if kind != "word":
+                raise ValueError("Missing shell redirection target")
+            redirect_target = False
+            continue
+        if kind == "redirect":
+            if token.lstrip("0123456789") in {"<<", "<<-"}:
+                raise ValueError("Shell here-document requires inspection")
+            redirect_target = True
+        elif kind == "separator":
             if segment:
                 yield segment
                 segment = []
-            continue
-        segment.append(token)
+        else:
+            segment.extend(shlex.split(token))
+    if redirect_target:
+        raise ValueError("Missing shell redirection target")
     if segment:
         yield segment
 
@@ -85,55 +174,55 @@ def command_segments(tokens: list[str]):
 def skip_global_options(tokens: list[str], index: int) -> int:
     while index < len(tokens):
         token = tokens[index]
-        if token == "--":
-            return index + 1
         if token in GLOBAL_OPTIONS_WITH_VALUES:
             index += 2
-            continue
-        if any(token.startswith(option + "=") for option in GLOBAL_OPTIONS_WITH_VALUES):
+        elif (
+            token in GLOBAL_FLAGS
+            or token.startswith("-R") and len(token) > 2
+            or token.partition("=")[0] in GLOBAL_OPTIONS_WITH_VALUES and "=" in token
+        ):
             index += 1
-            continue
-        if token.startswith("-"):
-            index += 1
-            continue
-        return index
+        else:
+            break
     return index
 
 
-def read_only_subcommand(tokens: list[str], index: int) -> bool:
-    index = skip_global_options(tokens, index)
-    if index >= len(tokens):
-        return True
-
-    subcommand = tokens[index]
-    rest = tokens[index + 1 :]
-
-    if subcommand in READ_ONLY_ALIASES or subcommand in READ_ONLY_COMMANDS:
-        return True
-
-    if subcommand in {"bookmark", "b"}:
-        return not rest or rest[0] in {"list"}
-
-    if subcommand == "config":
-        return bool(rest) and rest[0] in {"get", "list", "path"}
-
-    if subcommand == "op":
-        return bool(rest) and rest[0] in {"log", "show"}
-
-    if subcommand == "file":
-        return bool(rest) and rest[0] in {"list", "show"}
-
-    if subcommand in {"git", "g"}:
-        return bool(rest) and rest[0] == "fetch"
-
-    if subcommand == "util":
-        return bool(rest) and rest[0] in {
-            "completion",
-            "config-schema",
-            "markdown-help",
-        }
-
+def has_read_only_option(tokens: list[str], path: tuple[str, ...]) -> bool:
+    read_only_flags, options_with_values = READ_ONLY_OPTIONS[path]
+    skip_value = False
+    for token in tokens:
+        if skip_value:
+            skip_value = False
+        elif token == "--":
+            break
+        elif token in options_with_values or token in GLOBAL_OPTIONS_WITH_VALUES:
+            skip_value = True
+        elif token in read_only_flags:
+            return True
     return False
+
+
+def read_only_subcommand(tokens: list[str], index: int) -> bool:
+    path: tuple[str, ...] = ()
+    while path in COMMAND_GROUPS:
+        index = skip_global_options(tokens, index)
+        if index >= len(tokens) or tokens[index] in HELP_OPTIONS:
+            return True
+        if not path and tokens[index] in {"-V", "--version"}:
+            return True
+
+        subcommand = tokens[index]
+        if subcommand in READ_ONLY_SUBCOMMANDS.get(path, ()):
+            return True
+
+        path = (*path, subcommand)
+        path = COMMAND_ALIASES.get(path, path)
+        index += 1
+
+    help_index = skip_global_options(tokens, index)
+    if help_index < len(tokens) and tokens[help_index] in HELP_OPTIONS:
+        return True
+    return path in READ_ONLY_OPTIONS and has_read_only_option(tokens[index:], path)
 
 
 def nested_shell_command(segment: list[str], index: int) -> str | None:
@@ -151,11 +240,11 @@ def nested_shell_command(segment: list[str], index: int) -> str | None:
 
 def risky_jj_invocation(command: str) -> str | None:
     try:
-        tokens = shell_tokens(command)
+        segments = list(command_segments(command))
     except ValueError:
         return command
 
-    for segment in command_segments(tokens):
+    for segment in segments:
         for index, token in enumerate(segment):
             if os.path.basename(token) == "jj":
                 if not read_only_subcommand(segment, index + 1):
