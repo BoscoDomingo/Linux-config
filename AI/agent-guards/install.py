@@ -16,7 +16,6 @@ GUARD = "$HOME/.local/bin/ai-agent-guard-jj-approval.py"
 GUARD_SOURCE = Path(__file__).resolve().parent / "jj-approval.py"
 GUARD_TARGET = HOME / ".local" / "bin" / "ai-agent-guard-jj-approval.py"
 PYTHON = sys.executable
-CURSOR_JJ_MATCHER = r"(^|[\s;&|()'\"])jj([\s;&|()'\"]|$)"
 POLICY_MARKER = "<!-- dotfiles:jujutsu-ai-approval -->"
 LEGACY_POLICY_MARKER = "<!-- dotfiles:jjujutsu-ai-approval -->"
 POLICY_TEXT = f"""{POLICY_MARKER}
@@ -147,7 +146,7 @@ def install_cursor() -> None:
         before_shell,
         {
             "command": guard_command("cursor"),
-            "matcher": CURSOR_JJ_MATCHER,
+            # Let the guard parse commands whose spelling spans shell continuations.
             "failClosed": True,
         },
     )

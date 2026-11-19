@@ -93,6 +93,8 @@ SHELL_TOKEN = re.compile(
     r"""|(?P<separator>\n|&&|\|\||\|&|[;&|()])"""
     r"""|(?P<word>(?:'[^']*'|"(?:\\[\s\S]|[^"\\])*"|\\[\s\S]|[^\s'"\\;&|()<>])+)"""
 )
+SHELL_WORD_PART = re.compile(r"""'[^']*'|"(?:\\[\s\S]|[^"\\])*"|\\[\s\S]""")
+SHELL_ESCAPE = re.compile(r"\\[\s\S]")
 SHELL_COMMANDS = {"bash", "sh", "zsh", "fish"}
 
 USER_MESSAGE = (
@@ -109,7 +111,33 @@ def load_input() -> dict[str, Any]:
     return json.loads(raw)
 
 
+def join_shell_lines(command: str) -> str:
+    # Join continuations before lexing operators. Preserve comments, single quotes,
+    # and escaped backslashes because their newlines are literal.
+    def remove_continuation(match: re.Match[str]) -> str:
+        token = match.group()
+        return "" if token == "\\\n" else token
+
+    def join_word_part(match: re.Match[str]) -> str:
+        token = match.group()
+        if token.startswith('"'):
+            return SHELL_ESCAPE.sub(remove_continuation, token)
+        return remove_continuation(match)
+
+    def join_token(match: re.Match[str]) -> str:
+        token = match.group()
+        if match.lastgroup == "space":
+            return token.replace("\\\n", "")
+        if match.lastgroup == "word":
+            return SHELL_WORD_PART.sub(join_word_part, token)
+        return token
+
+    return SHELL_TOKEN.sub(join_token, command)
+
+
 def command_segments(command: str):
+    if "\\\n" in command:
+        command = join_shell_lines(command)
     segment: list[str] = []
     redirect_target = False
     offset = 0
@@ -120,9 +148,6 @@ def command_segments(command: str):
         offset = match.end()
         kind = match.lastgroup
         token = match.group()
-        # shlex retains escaped newlines that a shell removes before splitting words.
-        if kind != "comment" and "\\\n" in token:
-            raise ValueError("Shell line continuation requires inspection")
         if kind in {"space", "comment"}:
             continue
         if redirect_target:

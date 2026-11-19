@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import importlib.util
 import json
+import shlex
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -20,6 +22,40 @@ def load_installer():
 
 
 class JjApprovalGuardInstallerTests(unittest.TestCase):
+    def test_cursor_install_replaces_the_prefilter_and_invokes_the_guard(self) -> None:
+        installer = load_installer()
+        sample_path = installer.REPO_ROOT / "AI" / ".cursor" / "hooks.json"
+        sample_hooks = json.loads(sample_path.read_text())["hooks"]["beforeShellExecution"]
+        self.assertNotIn("matcher", sample_hooks[0])
+
+        with tempfile.TemporaryDirectory() as directory:
+            installer.HOME = Path(directory)
+            installer.GUARD_TARGET = installer.HOME / "ai-agent-guard-jj-approval.py"
+            path = installer.HOME / ".cursor" / "hooks.json"
+            installer.write_json(path, {"hooks": {"beforeShellExecution": [{
+                "command": installer.guard_command("cursor"),
+                "matcher": "jj",
+            }]}})
+
+            installer.ensure_guard_link()
+            installer.install_cursor()
+
+            hooks = json.loads(path.read_text())["hooks"]["beforeShellExecution"]
+            self.assertEqual(hooks, [{"command": installer.guard_command("cursor"), "failClosed": True}])
+            for command, permission in (
+                ("echo \\\n hello", "allow"),
+                ("j\\\nj commit -m test", "ask"),
+            ):
+                with self.subTest(command=command):
+                    result = subprocess.run(
+                        shlex.split(hooks[0]["command"]),
+                        input=json.dumps({"command": command}),
+                        capture_output=True,
+                        text=True,
+                        check=True,
+                    )
+                    self.assertEqual(json.loads(result.stdout)["permission"], permission)
+
     def test_migrates_stale_opencode_jj_rules(self) -> None:
         installer = load_installer()
         with tempfile.TemporaryDirectory() as directory:
