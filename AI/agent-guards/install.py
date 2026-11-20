@@ -3,7 +3,9 @@
 
 from __future__ import annotations
 
+import argparse
 import json
+import re
 import shlex
 import sys
 from pathlib import Path
@@ -18,10 +20,31 @@ GUARD_TARGET = HOME / ".local" / "bin" / "ai-agent-guard-jj-approval.py"
 PYTHON = sys.executable
 POLICY_MARKER = "<!-- dotfiles:jujutsu-ai-approval -->"
 LEGACY_POLICY_MARKER = "<!-- dotfiles:jjujutsu-ai-approval -->"
-POLICY_TEXT = f"""{POLICY_MARKER}
+LEGACY_POLICY_TEXT = f"""{POLICY_MARKER}
 ## Jujutsu AI Approval
 
 AI agents must ask for express approval before running mutating Jujutsu operations, including commits, working-copy movement (`jj new`, `jj edit`, `jj next`, `jj prev`), rebases, squashes, abandons, bookmark changes, undo, or `jj git push`. Read-only inspection such as `jj status`, `jj diff`, `jj log`, `jj show`, and `jj op log` is allowed without approval.
+"""
+PREVIOUS_POLICY_TEXT = f"""{POLICY_MARKER}
+## Jujutsu AI Approval
+
+Ask for approval before each mutating Jujutsu operation unless the user grants a chat bypass. Read-only inspection is allowed.
+
+The user can grant approval for all Jujutsu writes in this chat by putting `jj bypass for this session` on the first line of a user prompt. Mention this option when asking for approval. To restore per-operation checks, the user can send `jj revoke bypass`.
+"""
+PHRASE_POLICY_TEXT = f"""{POLICY_MARKER}
+## Jujutsu AI Approval
+
+Ask for approval before each mutating Jujutsu operation unless the user grants a chat bypass. Read-only inspection is allowed.
+
+The user can grant approval for all Jujutsu writes in any prompt in this chat, for example by saying "you can bypass jj hooks". Mention this option when asking for approval. The user can send `jj revoke bypass` to restore per-operation checks.
+"""
+POLICY_TEXT = f"""{POLICY_MARKER}
+## Jujutsu AI Approval
+
+Ask for approval before each mutating Jujutsu operation unless the user grants a chat bypass. Read-only inspection is allowed.
+
+When the user directly authorizes all Jujutsu writes in this chat, run `~/.local/bin/ai-agent-guard-jj-approval.py --provider {{provider}} --session-action grant` before the first write. Use `--session-action revoke` if the user withdraws approval. Run the helper as a standalone shell call. Use the successful result to confirm the change. Treat approval of a single operation as approval of that operation only.
 """
 
 
@@ -80,18 +103,21 @@ def remove_guard_command(items: list[Any], provider: str) -> None:
     items[:] = kept
 
 
-def guard_hook(provider: str, **extra: Any) -> dict[str, Any]:
+def guard_hook(provider: str, *, event: str = "shell", **extra: Any) -> dict[str, Any]:
     hook: dict[str, Any] = {
         "type": "command",
-        "command": guard_command(provider),
+        "command": guard_command(provider, event=event),
         "statusMessage": "Checking Jujutsu approval",
     }
     hook.update(extra)
     return hook
 
 
-def guard_command(provider: str) -> str:
-    return f"{shlex.quote(PYTHON)} {shlex.quote(str(GUARD_TARGET))} --provider {provider}"
+def guard_command(provider: str, *, event: str = "shell") -> str:
+    command = f"{shlex.quote(PYTHON)} {shlex.quote(str(GUARD_TARGET))} --provider {provider}"
+    if event != "shell":
+        return f"{command} --event {event}"
+    return command
 
 
 def ensure_guard_link() -> None:
@@ -118,16 +144,27 @@ def ensure_symlink(source: Path, target: Path) -> None:
     target.symlink_to(source)
 
 
-def append_policy(path: Path) -> None:
+def append_policy(path: Path, provider: str, powershell_helper: str | None = None) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     current = path.read_text() if path.exists() else ""
-    if LEGACY_POLICY_MARKER in current:
-        path.write_text(current.replace(LEGACY_POLICY_MARKER, POLICY_MARKER))
-        return
-    if POLICY_MARKER in current:
-        return
-    separator = "\n\n" if current and not current.endswith("\n\n") else ""
-    path.write_text(f"{current}{separator}{POLICY_TEXT}\n")
+    updated = current.replace(LEGACY_POLICY_MARKER, POLICY_MARKER)
+    policy = POLICY_TEXT.replace("{provider}", provider)
+    if powershell_helper is not None:
+        policy += f"\nIn PowerShell, use `{powershell_helper}` for the same operation.\n"
+    for previous in (LEGACY_POLICY_TEXT, PREVIOUS_POLICY_TEXT, PHRASE_POLICY_TEXT):
+        updated = updated.replace(previous, policy, 1)
+    if POLICY_MARKER not in updated:
+        separator = "\n\n" if updated and not updated.endswith("\n\n") else ""
+        updated = f"{updated}{separator}{policy}\n"
+    if updated != current:
+        path.write_text(updated)
+
+
+def remove_prompt_hook(hooks: dict[str, Any], provider: str, event: str) -> None:
+    if event in hooks:
+        remove_guard_command(hooks[event], provider)
+        if not hooks[event]:
+            del hooks[event]
 
 
 def install_cursor() -> None:
@@ -150,11 +187,15 @@ def install_cursor() -> None:
             "failClosed": True,
         },
     )
+    remove_prompt_hook(hooks, "cursor", "beforeSubmitPrompt")
+    pre_tool = hooks.setdefault("preToolUse", [])
+    remove_guard_command(pre_tool, "cursor")
+    append_once(pre_tool, {"matcher": "Shell", "command": guard_command("cursor", event="bind")})
     write_json(path, data)
 
 
 def install_claude() -> None:
-    append_policy(HOME / ".claude" / "CLAUDE.md")
+    append_policy(HOME / ".claude" / "CLAUDE.md", "claude")
 
     path = HOME / ".claude" / "settings.json"
     data = load_json(path, {})
@@ -168,33 +209,41 @@ def install_claude() -> None:
             "hooks": [guard_hook("claude")],
         },
     )
+    remove_prompt_hook(hooks, "claude", "UserPromptSubmit")
     write_json(path, data)
 
 
-def install_codex() -> None:
-    append_policy(HOME / ".codex" / "AGENTS.md")
-
-    hooks_path = HOME / ".codex" / "hooks.json"
+def install_codex_hooks(codex_home: Path, *, command_windows: str | None = None) -> None:
+    hooks_path = codex_home / "hooks.json"
     data = load_json(hooks_path, {"hooks": {}})
     hooks = data.setdefault("hooks", {})
     pre_tool = hooks.setdefault("PreToolUse", [])
     remove_guard_command(pre_tool, "codex")
+    hook = guard_hook("codex", timeout=30)
+    if command_windows is not None:
+        # Remove the obsolete Claude adapter from this Codex hook file.
+        remove_guard_command(pre_tool, "claude")
+        hook["commandWindows"] = command_windows
     append_once(
         pre_tool,
         {
             "matcher": "Bash",
-            "hooks": [guard_hook("codex", timeout=30)],
+            "hooks": [hook],
         },
     )
+    remove_prompt_hook(hooks, "codex", "UserPromptSubmit")
     write_json(hooks_path, data)
 
-    config_path = HOME / ".codex" / "config.toml"
+
+def enable_codex_hooks(codex_home: Path) -> None:
+    config_path = codex_home / "config.toml"
     config_path.parent.mkdir(parents=True, exist_ok=True)
     if not config_path.exists():
         config_path.write_text("[features]\ncodex_hooks = true\n")
         return
 
-    lines = config_path.read_text().splitlines()
+    current = config_path.read_text()
+    lines = current.splitlines()
     if any(line.strip().startswith("codex_hooks") for line in lines):
         updated = [
             "codex_hooks = true" if line.strip().startswith("codex_hooks") else line
@@ -216,7 +265,28 @@ def install_codex() -> None:
             inserted = True
         if not inserted:
             updated.extend(["", "[features]", "codex_hooks = true"])
-    config_path.write_text("\n".join(updated) + "\n")
+    content = "\n".join(updated) + "\n"
+    if content != current:
+        config_path.write_text(content)
+
+
+def install_codex() -> None:
+    codex_home = HOME / ".codex"
+    append_policy(codex_home / "AGENTS.md", "codex")
+    install_codex_hooks(codex_home)
+    enable_codex_hooks(codex_home)
+
+
+def install_windows_codex(codex_home: Path, distro: str) -> None:
+    # The Windows shell passes hook JSON on stdin to wsl.exe.
+    wsl = f"wsl.exe -d {distro} -u {HOME.name} --exec"
+    install_codex_hooks(codex_home, command_windows=f"{wsl} {guard_command('codex')}")
+    helper = (
+        f"{wsl} {shlex.quote(str(GUARD_TARGET))} --provider codex --session-action grant "
+        "--session-id $env:CODEX_THREAD_ID"
+    )
+    append_policy(codex_home / "AGENTS.md", "codex", helper)
+    enable_codex_hooks(codex_home)
 
 
 def install_opencode() -> None:
@@ -279,6 +349,21 @@ def install_opencode() -> None:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--windows-codex-home", type=Path)
+    parser.add_argument("--wsl-distro")
+    args = parser.parse_args()
+    if args.windows_codex_home:
+        if not args.wsl_distro or not all(
+            re.fullmatch(r"[a-zA-Z0-9_.-]+", value) for value in (args.wsl_distro, HOME.name)
+        ):
+            parser.error("Windows Codex requires a WSL distro and user with simple names")
+        ensure_guard_link()
+        install_windows_codex(args.windows_codex_home, args.wsl_distro)
+        return 0
+    if args.wsl_distro:
+        parser.error("--wsl-distro requires --windows-codex-home")
+
     ensure_guard_link()
     install_cursor()
     install_claude()

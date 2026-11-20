@@ -1,6 +1,12 @@
 {
 	"version": 1,
 	"hooks": {
+		"preToolUse": [
+			{
+				"matcher": "Shell",
+				"command": "$HOME/.local/bin/ai-agent-guard-jj-approval.py --provider cursor --event bind"
+			}
+		],
 		"beforeShellExecution": [
 			{
 				"command": "$HOME/.local/bin/ai-agent-guard-jj-approval.py --provider cursor",
