@@ -7,7 +7,7 @@ alwaysApply: true
 
 This rule applies to AI agents only. It does not restrict the human user's shell.
 
-Before running any Jujutsu command that commits, moves the working copy, rewrites history, changes bookmarks, abandons work, pushes, or otherwise may leave working changes behind, stop and ask for express approval for that exact operation.
+Ask for approval for each Jujutsu write unless the user has granted a bypass for this chat.
 
 Protected operations include, but are not limited to:
 
@@ -18,5 +18,9 @@ Protected operations include, but are not limited to:
 - `jj git push`, including push aliases such as `jj gp`, `jj gpb`, `jj gpn`, `jj gpt`, `jj gpm`, `jj gpd`
 
 Express approval must name the operation or clearly answer a prompt that names it. General momentum words such as "continue", "proceed", "go ahead", or approval for a previous workflow stage are not enough.
+
+## Session bypass
+
+When the user directly authorizes all Jujutsu writes in this chat, run `~/.local/bin/ai-agent-guard-jj-approval.py --provider cursor --session-action grant` as a standalone shell call before the first write. The hook asks the user to confirm the grant. Do not run a grant with your own `--session-id`. Use `--session-action revoke` if the user withdraws approval. Treat approval of a single operation as approval of that operation only.
 
 Read-only Jujutsu inspection is allowed without this gate, for example `jj status`, `jj diff`, `jj log`, `jj show`, `jj op log`, and `jj config list`.
