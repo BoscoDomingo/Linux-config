@@ -20,6 +20,8 @@ overrides/
     Brewfile.local       # device-only formulae/casks
   patches/
     enabled              # selected bare-metal Arch system patches
+  activation/
+    disabled             # Home Manager activation steps to skip
 ```
 
 `/overrides/` is gitignored. Home Manager / bootstrap create the directories and
@@ -46,6 +48,7 @@ personal machines need zero of these.
 | **mise**     | `.config/mise/config.toml` | `overrides/mise/config.toml`    | `~/.mise/config.toml` → symlink to that file                  |
 | **Homebrew** | `Brewfile`                 | `overrides/brew/Brewfile.local` | `scripts/brew-bundle` concatenates both                       |
 | **Arch patches** | `Arch/patches/`        | `overrides/patches/enabled`     | Bootstrap installs selected patches and pacman hooks          |
+| **Activation steps** | `nix/home/tools.nix` | `overrides/activation/disabled` | Each step skips itself when its key is listed               |
 
 Later git includes win, so personal path files beat `local` / `work` when both
 match. jj `conf.d` files load lexicographically after the synced config.toml.
@@ -111,10 +114,46 @@ longer matches, the helper leaves it unchanged and prints a warning. To disable
 a patch, remove its line and run bootstrap again. The helper removes only the
 expected patched code and then removes its hook.
 
+## Skip activation steps on one machine
+
+Each step in `nix/home/tools.nix` (except `machineOverrides`) has an opt-out
+key. The step runs only when its key is not listed in
+`overrides/activation/disabled`. Write one key per line. Other lines, such as
+comments, are ignored:
+
+```text
+# Keep the AI-agent jj approval guards off on this machine.
+agent_guards
+```
+
+| Key                     | Step                                           |
+|-------------------------|------------------------------------------------|
+| `oh_my_zsh`             | Clone oh-my-zsh                                |
+| `tpm`                   | Clone the tmux plugin manager                  |
+| `cheat_sheets`          | Clone the community cheatsheets                |
+| `micro_themes`          | Download the micro colour schemes              |
+| `opencode`              | Install OpenCode                               |
+| `agent_guards`          | Install the AI-agent jj approval guards        |
+| `copilot_sandbox_herdr` | Merge the herdr paths into the Copilot sandbox |
+
+The check runs during activation, so the next `home-manager switch` uses the
+change. To enable a step again, remove its line and switch again. Skipping a
+step does not undo what it installed earlier. For example, after you add
+`agent_guards`, remove its hooks and policy blocks from the agent configs by
+hand.
+
+`agent_guards` also turns off the OpenCode jj rules. These rules are in the
+repo-managed `opencode.json`, so `.profile` sets `OPENCODE_CONFIG` to
+`AI/agent-guards/opencode-disabled.json`. OpenCode merges that file, which
+allows `jj *`. Start a new login shell for the change to apply.
+
+When you add a step to `tools.nix`, wrap its body with
+`optional "<snake_case_key>"`, then add the key to this table.
+
 ## First-time setup on a work machine
 
 ```sh
-mkdir -p ~/dotfiles/overrides/{git,jj,mise,brew,patches}
+mkdir -p ~/dotfiles/overrides/{git,jj,mise,brew,patches,activation}
 # write the files above, then:
 bash ~/dotfiles/nix/bootstrap.sh   # refreshes symlinks + brew bundle
 mise install                       # if you added mise tools

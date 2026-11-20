@@ -14,6 +14,14 @@ export XDG_CACHE_HOME="$HOME/.cache"
 # Scripts also default to $HOME/dotfiles if this is unset (fresh-machine bootstrap).
 export DOTFILES_REPO="${DOTFILES_REPO:-$HOME/dotfiles}"
 
+# OpenCode reads its jj approval rules from the repo-managed opencode.json, so
+# no activation step can skip them. When agent_guards is opted out on this
+# machine, merge a config that allows jj. See Documentation/machine-overrides.md.
+if [ -z "${OPENCODE_CONFIG:-}" ] &&
+	grep -qxE '[[:space:]]*agent_guards[[:space:]]*' "$DOTFILES_REPO/overrides/activation/disabled" 2>/dev/null; then
+	export OPENCODE_CONFIG="$DOTFILES_REPO/AI/agent-guards/opencode-disabled.json"
+fi
+
 export VISUAL=micro
 export EDITOR=nvim
 
