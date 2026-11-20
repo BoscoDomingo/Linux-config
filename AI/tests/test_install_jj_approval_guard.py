@@ -11,6 +11,30 @@ from unittest.mock import patch
 
 INSTALLER = Path(__file__).resolve().parents[1] / "agent-guards" / "install.py"
 
+# Policy blocks that older installers wrote without an end marker.
+MARKER = "<!-- dotfiles:jujutsu-ai-approval -->"
+LEGACY_POLICY_TEXT = f"""{MARKER}
+## Jujutsu AI Approval
+
+AI agents must ask for express approval before running mutating Jujutsu operations, including commits, working-copy movement (`jj new`, `jj edit`, `jj next`, `jj prev`), rebases, squashes, abandons, bookmark changes, undo, or `jj git push`. Read-only inspection such as `jj status`, `jj diff`, `jj log`, `jj show`, and `jj op log` is allowed without approval.
+"""
+PHRASE_POLICY_TEXT = f"""{MARKER}
+## Jujutsu AI Approval
+
+Ask for approval before each mutating Jujutsu operation unless the user grants a chat bypass. Read-only inspection is allowed.
+
+The user can grant approval for all Jujutsu writes in any prompt in this chat, for example by saying "you can bypass jj hooks". Mention this option when asking for approval. The user can send `jj revoke bypass` to restore per-operation checks.
+"""
+UNMARKED_WINDOWS_POLICY_TEXT = f"""{MARKER}
+## Jujutsu AI Approval
+
+Ask for approval before each mutating Jujutsu operation unless the user grants a chat bypass. Read-only inspection is allowed.
+
+When the user directly authorizes all Jujutsu writes in this chat, run `~/.local/bin/ai-agent-guard-jj-approval.py --provider codex --session-action grant` before the first write. Use `--session-action revoke` if the user withdraws approval. Run the helper as a standalone shell call. Use the successful result to confirm the change. Treat approval of a single operation as approval of that operation only.
+
+In PowerShell, use `wsl.exe -d olddistro -u user --exec /home/user/.local/bin/ai-agent-guard-jj-approval.py --provider codex --session-action grant --session-id $env:CODEX_THREAD_ID` for the same operation.
+"""
+
 
 def load_installer():
     spec = importlib.util.spec_from_file_location("jj_guard_installer", INSTALLER)
@@ -117,8 +141,7 @@ class JjApprovalGuardInstallerTests(unittest.TestCase):
                 if policy:
                     policy_path = installer.HOME / policy
                     previous_policy = (
-                        installer.LEGACY_POLICY_TEXT if provider == "claude"
-                        else installer.PHRASE_POLICY_TEXT
+                        LEGACY_POLICY_TEXT if provider == "claude" else PHRASE_POLICY_TEXT
                     )
                     policy_path.write_text(previous_policy + "\n# Other instructions\n")
 
@@ -136,8 +159,37 @@ class JjApprovalGuardInstallerTests(unittest.TestCase):
                         "command": installer.guard_command(provider, event="bind"),
                     }])
                 if policy:
-                    expected = installer.POLICY_TEXT.replace("{provider}", provider)
+                    expected = installer.policy_block(provider)
                     self.assertEqual(policy_path.read_text(), expected + "\n# Other instructions\n")
+
+    def test_policy_reinstall_replaces_the_whole_managed_block(self) -> None:
+        installer = load_installer()
+        with tempfile.TemporaryDirectory() as directory:
+            installer.HOME = Path(directory, "home", "user")
+            codex_home = Path(directory, "codex")
+            codex_home.mkdir()
+            agents = codex_home / "AGENTS.md"
+            agents.write_text("# Mine\n\n" + UNMARKED_WINDOWS_POLICY_TEXT + "\nKeep this line.\n")
+
+            installer.install_windows_codex(codex_home, "archlinux")
+            first = agents.read_text()
+            self.assertNotIn("olddistro", first)
+            self.assertNotIn("CODEX_THREAD_ID", first)
+            self.assertTrue(first.startswith("# Mine\n\n" + MARKER))
+            self.assertTrue(first.endswith(installer.POLICY_END_MARKER + "\n\nKeep this line.\n"))
+
+            installer.install_windows_codex(codex_home, "ubuntu")
+            second = agents.read_text()
+            self.assertEqual(second.count(MARKER), 1)
+            self.assertNotIn("archlinux", second)
+            self.assertIn("wsl.exe -d ubuntu", second)
+
+            # A later Linux install drops the Windows-only helper line.
+            installer.append_policy(agents, "codex")
+            self.assertEqual(
+                agents.read_text(),
+                "# Mine\n\n" + installer.policy_block("codex") + "\nKeep this line.\n",
+            )
 
     def test_removes_legacy_extensionless_cursor_hook_commands(self) -> None:
         installer = load_installer()
@@ -175,7 +227,9 @@ class JjApprovalGuardInstallerTests(unittest.TestCase):
             command = pre_tool[1]["hooks"][0]["commandWindows"]
             self.assertEqual(command.split()[:3], ["wsl.exe", "-d", "archlinux"])
             self.assertTrue(command.endswith("--provider codex"))
-            self.assertIn("--session-id $env:CODEX_THREAD_ID", (codex_home / "AGENTS.md").read_text())
+            policy = (codex_home / "AGENTS.md").read_text()
+            self.assertIn("wsl.exe -d archlinux", policy)
+            self.assertNotIn("--session-id", policy.split("In PowerShell")[1])
 
     def test_removes_stale_nested_provider_hooks_without_dropping_other_hooks(self) -> None:
         installer = load_installer()

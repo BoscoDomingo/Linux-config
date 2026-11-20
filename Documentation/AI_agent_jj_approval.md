@@ -12,9 +12,16 @@ Everything that can commit, move the working copy, rewrite history, change bookm
 
 In Cursor, Claude Code, or Codex, grant the bypass in any user prompt. For example, say "Prepare the commit and you can bypass jj hooks." The grant covers all Jujutsu writes in that chat, including pushes. A normal approval prompt still covers one operation.
 
-The agent records approval with the standalone helper `~/.local/bin/ai-agent-guard-jj-approval.py --provider <provider> --session-action grant`. The tool hook supplies the chat ID. Ask the agent to revoke approval to restore per-operation checks.
+The agent requests the grant with the standalone helper `~/.local/bin/ai-agent-guard-jj-approval.py --provider <provider> --session-action grant`. The tool hook supplies the chat ID. Only the user can approve the grant:
 
-The helper creates an empty file under `$XDG_STATE_HOME/ai-agent-jj-approval` (default `~/.local/state/ai-agent-jj-approval`). The file name is a hash of the provider and chat ID. The shell hook checks this file before asking or blocking a write. A resumed chat keeps its grant if the provider reuses its ID. Subagents share the grant only if the provider supplies the same chat ID.
+- Claude Code and Cursor show one approval prompt for the grant.
+- Codex hooks cannot ask, so the hook blocks the call. The block message contains the full grant command with the chat ID. The agent gives this command to the user, who runs it in their own Linux or WSL terminal.
+
+The hook also asks (or blocks, in Codex) when the agent runs the grant in another form, for example with its own `--session-id`, through `bash -c`, or through `wsl.exe`. Revoking needs no approval, because it only restores checks. Ask the agent to revoke approval to restore per-operation checks.
+
+This gate stops agent mistakes and prompt injections that use the documented helper. It does not stop an agent that writes the grant file directly. The agent sandbox must stop that.
+
+The helper creates an empty file under `$XDG_STATE_HOME/ai-agent-jj-approval` (default `~/.local/state/ai-agent-jj-approval`). The file name is a hash of the provider and chat ID. The shell hook checks this file before asking or blocking a write. A resumed chat keeps its grant if the provider reuses its ID. Subagents share the grant only if the provider supplies the same chat ID. Claude Code gives subagents the session ID of their parent, so one grant covers the parent and its subagents.
 
 ## Architecture
 
@@ -32,7 +39,8 @@ flowchart TD
     codex --> guard
     opencode --> ask["OpenCode native ask/allow rules"]
 
-    user["User approval"] -->|Agent calls helper| grant["Record or revoke chat grant"]
+    helper["Agent calls grant helper"] --> confirm{"User approves grant prompt\n(Codex: user runs the command)"}
+    confirm -->|yes| grant["Record chat grant"]
     grant --> state["Grant by provider and chat ID"]
     state --> guard
     guard --> classify{"Command class"}
@@ -82,10 +90,19 @@ For Windows Codex Desktop with a WSL shell, run the installer from WSL with
 `--windows-codex-home <mounted Windows .codex path> --wsl-distro <distro name>`.
 Review the new hook in Codex before use.
 
+The installer writes the policy into `CLAUDE.md` and `AGENTS.md` between
+`<!-- dotfiles:jujutsu-ai-approval -->` and `<!-- /dotfiles:jujutsu-ai-approval -->`.
+Each install replaces this whole block, so a changed WSL distro or user takes
+effect. Do not edit text between the markers.
+
 ## Verification
 
 ```sh
 python3 AI/tests/test_jj_approval_guard.py
 ```
 
-The tests check default behavior, chat and provider isolation, and revocation.
+```sh
+python3 AI/tests/test_install_jj_approval_guard.py
+```
+
+The tests check default behavior, user approval of grants, other grant spellings, chat and provider isolation, revocation, and policy block replacement.
