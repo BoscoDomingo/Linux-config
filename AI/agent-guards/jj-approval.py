@@ -4,11 +4,13 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import re
 import shlex
 import sys
+from pathlib import Path
 from typing import Any
 
 
@@ -97,10 +99,16 @@ SHELL_WORD_PART = re.compile(r"""'[^']*'|"(?:\\[\s\S]|[^"\\])*"|\\[\s\S]""")
 SHELL_ESCAPE = re.compile(r"\\[\s\S]")
 SHELL_COMMANDS = {"bash", "sh", "zsh", "fish"}
 
+GUARD_TOOL = "~/.local/bin/ai-agent-guard-jj-approval.py"
+SESSION_BYPASS_MESSAGE = (
+    'To allow all Jujutsu writes in this chat, tell the agent, '
+    'for example, "you can bypass jj hooks".'
+)
+
 USER_MESSAGE = (
     "AI agent is trying to run a Jujutsu command that may commit, move the "
     "working copy, rewrite history, change bookmarks, abandon work, undo an "
-    "operation, or push. Approve this exact operation?"
+    f"operation, or push. Approve this exact operation? {SESSION_BYPASS_MESSAGE}"
 )
 
 
@@ -271,13 +279,66 @@ def extract_command(hook_input: dict[str, Any]) -> str:
     return ""
 
 
+def hook_session_id(provider: str, hook_input: dict[str, Any]) -> str | None:
+    field = "conversation_id" if provider == "cursor" else "session_id"
+    session = hook_input.get(field)
+    return session if isinstance(session, str) and session.strip() else None
+
+
+def session_grant(provider: str, session: str) -> Path:
+    # Use the provider's ID as data, never as a path.
+    digest = hashlib.sha256(f"{provider}\0{session}".encode()).hexdigest()
+    state_home = Path(os.environ.get("XDG_STATE_HOME") or Path.home() / ".local" / "state")
+    return state_home / "ai-agent-jj-approval" / digest
+
+
+def bind_session_action(
+    provider: str, command: str, hook_input: dict[str, Any],
+) -> dict[str, Any] | None:
+    # Bind only the dedicated helper, with no shell operators or extra arguments.
+    prefix = f"{GUARD_TOOL} --provider {provider} --session-action "
+    if command.strip() not in {prefix + "grant", prefix + "revoke"}:
+        return None
+
+    session = hook_session_id(provider, hook_input)
+    if session is None:
+        return None
+    updated_command = f"{command.strip()} --session-id {shlex.quote(session)}"
+    tool_input = hook_input.get("tool_input")
+    updated_input = {**tool_input, "command": updated_command} if isinstance(tool_input, dict) else {
+        "command": updated_command,
+    }
+    if provider == "cursor":
+        return {"permission": "allow", "updated_input": updated_input}
+
+    return {
+        "hookSpecificOutput": {
+            "hookEventName": "PreToolUse",
+            "permissionDecision": "allow",
+            "updatedInput": updated_input,
+        }
+    }
+
+
+def update_session_grant(provider: str, session: str, action: str) -> None:
+    grant = session_grant(provider, session)
+    if action == "grant":
+        grant.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
+        grant.touch(mode=0o600)
+    else:
+        grant.unlink(missing_ok=True)
+
+
 def cursor_response(risky: str | None) -> dict[str, Any]:
     if not risky:
         return {"permission": "allow"}
     return {
         "permission": "ask",
         "user_message": USER_MESSAGE,
-        "agent_message": f"Risky Jujutsu command requires express user approval: `{risky}`",
+        "agent_message": (
+            f"Risky Jujutsu command requires express user approval: `{risky}`. "
+            f"{SESSION_BYPASS_MESSAGE}"
+        ),
     }
 
 
@@ -301,8 +362,9 @@ def codex_response(risky: str | None) -> dict[str, Any]:
             "hookEventName": "PreToolUse",
             "permissionDecision": "deny",
             "permissionDecisionReason": (
-                "Codex PreToolUse hooks do not currently support interactive "
-                f"ask decisions. Ask the user for express approval before this Jujutsu operation: {risky}"
+                f"Jujutsu operation blocked: {risky}. "
+                "Codex cannot ask for approval from this hook. "
+                f"{SESSION_BYPASS_MESSAGE}"
             ),
         }
     }
@@ -319,11 +381,45 @@ def main() -> int:
         choices=("cursor", "claude", "codex", "classify"),
         default="cursor",
     )
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--event", choices=("shell", "bind"), default="shell")
+    mode.add_argument("--session-action", choices=("grant", "revoke"))
+    parser.add_argument("--session-id")
     args = parser.parse_args()
+
+    if args.session_action:
+        if args.provider == "classify":
+            parser.error("classify only supports shell input")
+        session = args.session_id
+        if session is None and args.provider == "codex":
+            session = os.environ.get("CODEX_THREAD_ID")
+        if not session or not session.strip():
+            parser.error("the agent hook needs to supply a chat ID")
+        try:
+            update_session_grant(args.provider, session, args.session_action)
+        except OSError as error:
+            parser.exit(1, f"Could not update the Jujutsu chat grant: {error}\n")
+        result = "recorded" if args.session_action == "grant" else "revoked"
+        print(f"Jujutsu chat grant {result}.")
+        return 0
 
     try:
         hook_input = load_input()
-        risky = risky_jj_invocation(extract_command(hook_input))
+        command = extract_command(hook_input)
+        if args.provider in {"claude", "codex"} or args.event == "bind":
+            bound = bind_session_action(args.provider, command, hook_input)
+            if bound is not None:
+                print(json.dumps(bound))
+                return 0
+        if args.event == "bind":
+            print(json.dumps({"permission": "allow"}))
+            return 0
+
+        risky = risky_jj_invocation(command)
+        if risky and args.provider != "classify":
+            session = hook_session_id(args.provider, hook_input)
+            if session is not None and session_grant(args.provider, session).is_file():
+                risky = None
         responses = {
             "cursor": cursor_response,
             "claude": claude_response,

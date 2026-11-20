@@ -97,6 +97,48 @@ class JjApprovalGuardInstallerTests(unittest.TestCase):
                 installer.install_opencode()
                 write_json.assert_not_called()
 
+    def test_replaces_managed_prompt_hooks_and_updates_policy_once(self) -> None:
+        for provider, settings, policy, event in (
+            ("cursor", ".cursor/hooks.json", None, "beforeSubmitPrompt"),
+            ("claude", ".claude/settings.json", ".claude/CLAUDE.md", "UserPromptSubmit"),
+            ("codex", ".codex/hooks.json", ".codex/AGENTS.md", "UserPromptSubmit"),
+        ):
+            with self.subTest(provider=provider), tempfile.TemporaryDirectory() as directory:
+                installer = load_installer()
+                installer.HOME = Path(directory)
+                path = installer.HOME / settings
+                unrelated = {"command": "echo keep"}
+                if provider != "cursor":
+                    unrelated = {"hooks": [{"type": "command", **unrelated}]}
+                old_hook = {"command": installer.guard_command(provider, event="prompt")}
+                if provider != "cursor":
+                    old_hook = {"hooks": [{"type": "command", **old_hook}]}
+                installer.write_json(path, {"hooks": {event: [unrelated, old_hook]}})
+                if policy:
+                    policy_path = installer.HOME / policy
+                    previous_policy = (
+                        installer.LEGACY_POLICY_TEXT if provider == "claude"
+                        else installer.PHRASE_POLICY_TEXT
+                    )
+                    policy_path.write_text(previous_policy + "\n# Other instructions\n")
+
+                install = getattr(installer, f"install_{provider}")
+                install()
+                installed = path.read_text()
+                install()
+                self.assertEqual(path.read_text(), installed)
+
+                hooks = json.loads(installed)["hooks"]
+                self.assertEqual(hooks[event], [unrelated])
+                if provider == "cursor":
+                    self.assertEqual(hooks["preToolUse"], [{
+                        "matcher": "Shell",
+                        "command": installer.guard_command(provider, event="bind"),
+                    }])
+                if policy:
+                    expected = installer.POLICY_TEXT.replace("{provider}", provider)
+                    self.assertEqual(policy_path.read_text(), expected + "\n# Other instructions\n")
+
     def test_removes_legacy_extensionless_cursor_hook_commands(self) -> None:
         installer = load_installer()
         stale_command = (
@@ -113,6 +155,27 @@ class JjApprovalGuardInstallerTests(unittest.TestCase):
         installer.remove_guard_command(items, "cursor")
 
         self.assertEqual(items, [{"command": "echo keep"}])
+
+    def test_windows_codex_replaces_the_old_adapter_and_preserves_other_hooks(self) -> None:
+        installer = load_installer()
+        with tempfile.TemporaryDirectory() as directory:
+            codex_home = Path(directory)
+            path = codex_home / "hooks.json"
+            unrelated = {"command": "echo keep"}
+            installer.write_json(path, {"hooks": {"PreToolUse": [{
+                "matcher": "Bash",
+                "hooks": [installer.guard_hook("claude"), unrelated],
+            }]}})
+            installer.install_windows_codex(codex_home, "archlinux")
+            installed = path.read_text()
+            installer.install_windows_codex(codex_home, "archlinux")
+            self.assertEqual(path.read_text(), installed)
+            pre_tool = json.loads(installed)["hooks"]["PreToolUse"]
+            self.assertEqual(pre_tool[0]["hooks"], [unrelated])
+            command = pre_tool[1]["hooks"][0]["commandWindows"]
+            self.assertEqual(command.split()[:3], ["wsl.exe", "-d", "archlinux"])
+            self.assertTrue(command.endswith("--provider codex"))
+            self.assertIn("--session-id $env:CODEX_THREAD_ID", (codex_home / "AGENTS.md").read_text())
 
     def test_removes_stale_nested_provider_hooks_without_dropping_other_hooks(self) -> None:
         installer = load_installer()
