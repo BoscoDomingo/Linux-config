@@ -113,7 +113,7 @@ in
     fi
   '';
 
-  # AI-agent jj-approval guards.
+  # Install AI-agent jj shell guards and the chat approval helper.
   home.activation.jjGuards = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
     if [ -f "${repo}/AI/agent-guards/install.py" ]; then
       run ${pkgs.python3}/bin/python3 "${repo}/AI/agent-guards/install.py" || true
