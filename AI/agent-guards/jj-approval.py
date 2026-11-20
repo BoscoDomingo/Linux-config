@@ -100,6 +100,12 @@ SHELL_ESCAPE = re.compile(r"\\[\s\S]")
 SHELL_COMMANDS = {"bash", "sh", "zsh", "fish"}
 
 GUARD_TOOL = "~/.local/bin/ai-agent-guard-jj-approval.py"
+# Names the helper can run under: the installed link, and the repo source.
+GUARD_NAMES = {"ai-agent-guard-jj-approval.py", "ai-agent-guard-jj-approval", "jj-approval.py"}
+GRANT_MESSAGE = (
+    "AI agent wants to allow all Jujutsu writes in this chat, including pushes, "
+    "without asking again. Approve the chat bypass?"
+)
 SESSION_BYPASS_MESSAGE = (
     'To allow all Jujutsu writes in this chat, tell the agent, '
     'for example, "you can bypass jj hooks".'
@@ -268,6 +274,33 @@ def risky_jj_invocation(command: str) -> str | None:
     return None
 
 
+def grants_session(segment: list[str], index: int) -> bool:
+    if os.path.basename(segment[index]) not in GUARD_NAMES:
+        return False
+    args = segment[index + 1 :]
+    return "--session-action=grant" in args or any(
+        token == "--session-action" and value == "grant"
+        for token, value in zip(args, args[1:])
+    )
+
+
+def requests_grant(command: str) -> bool:
+    # A grant turns off the gate for the whole chat, so the user must confirm
+    # it however the agent spells the helper call (extra flags, nested shells).
+    try:
+        segments = list(command_segments(command))
+    except ValueError:
+        return False  # The jj check asks for approval of unparsable commands.
+    for segment in segments:
+        for index in range(len(segment)):
+            if grants_session(segment, index):
+                return True
+            nested = nested_shell_command(segment, index)
+            if nested and requests_grant(nested):
+                return True
+    return False
+
+
 def extract_command(hook_input: dict[str, Any]) -> str:
     tool_input = hook_input.get("tool_input")
     if isinstance(tool_input, dict) and isinstance(tool_input.get("command"), str):
@@ -303,19 +336,68 @@ def bind_session_action(
     session = hook_session_id(provider, hook_input)
     if session is None:
         return None
+    grant = command.strip().endswith("grant")
+    if grant and provider == "codex":
+        return grant_response(provider, hook_input)
+
     updated_command = f"{command.strip()} --session-id {shlex.quote(session)}"
     tool_input = hook_input.get("tool_input")
     updated_input = {**tool_input, "command": updated_command} if isinstance(tool_input, dict) else {
         "command": updated_command,
     }
     if provider == "cursor":
+        # beforeShellExecution then sees the bound grant and asks the user.
         return {"permission": "allow", "updated_input": updated_input}
 
+    output: dict[str, Any] = {
+        "hookEventName": "PreToolUse",
+        # Only the user can grant the bypass. Revoking only adds checks.
+        "permissionDecision": "ask" if grant else "allow",
+        "updatedInput": updated_input,
+    }
+    if grant:
+        output["permissionDecisionReason"] = GRANT_MESSAGE
+    return {"hookSpecificOutput": output}
+
+
+def grant_response(provider: str, hook_input: dict[str, Any]) -> dict[str, Any]:
+    if provider == "cursor":
+        return {
+            "permission": "ask",
+            "user_message": GRANT_MESSAGE,
+            "agent_message": "The user must approve the Jujutsu chat bypass.",
+        }
+    if provider == "claude":
+        return {
+            "hookSpecificOutput": {
+                "hookEventName": "PreToolUse",
+                "permissionDecision": "ask",
+                "permissionDecisionReason": GRANT_MESSAGE,
+            }
+        }
+
+    # Codex hooks cannot ask, so the user runs the grant outside the agent.
+    session = hook_session_id(provider, hook_input)
+    if session is None:
+        reason = (
+            "Codex did not supply a chat ID, so the Jujutsu chat bypass is not "
+            "available. Ask the user to approve each Jujutsu write."
+        )
+    else:
+        user_command = (
+            f"{GUARD_TOOL} --provider codex --session-action grant "
+            f"--session-id {shlex.quote(session)}"
+        )
+        reason = (
+            "Only the user can grant the Jujutsu chat bypass, and Codex cannot ask "
+            "from this hook. Do not run the grant yourself. Ask the user to run "
+            f"this command in their own Linux or WSL terminal: `{user_command}`"
+        )
     return {
         "hookSpecificOutput": {
             "hookEventName": "PreToolUse",
-            "permissionDecision": "allow",
-            "updatedInput": updated_input,
+            "permissionDecision": "deny",
+            "permissionDecisionReason": reason,
         }
     }
 
@@ -375,7 +457,8 @@ def classify_response(risky: str | None) -> dict[str, Any]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser()
+    # No abbreviations, so requests_grant sees every spelling of --session-action.
+    parser = argparse.ArgumentParser(allow_abbrev=False)
     parser.add_argument(
         "--provider",
         choices=("cursor", "claude", "codex", "classify"),
@@ -391,8 +474,6 @@ def main() -> int:
         if args.provider == "classify":
             parser.error("classify only supports shell input")
         session = args.session_id
-        if session is None and args.provider == "codex":
-            session = os.environ.get("CODEX_THREAD_ID")
         if not session or not session.strip():
             parser.error("the agent hook needs to supply a chat ID")
         try:
@@ -413,6 +494,9 @@ def main() -> int:
                 return 0
         if args.event == "bind":
             print(json.dumps({"permission": "allow"}))
+            return 0
+        if args.provider != "classify" and requests_grant(command):
+            print(json.dumps(grant_response(args.provider, hook_input)))
             return 0
 
         risky = risky_jj_invocation(command)

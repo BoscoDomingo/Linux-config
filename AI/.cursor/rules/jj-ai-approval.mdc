@@ -21,6 +21,6 @@ Express approval must name the operation or clearly answer a prompt that names i
 
 ## Session bypass
 
-When the user directly authorizes all Jujutsu writes in this chat, run `~/.local/bin/ai-agent-guard-jj-approval.py --provider cursor --session-action grant` before the first write. Use `--session-action revoke` if the user withdraws approval. Run the helper as a standalone shell call. Use the successful result to confirm the change. Treat approval of a single operation as approval of that operation only.
+When the user directly authorizes all Jujutsu writes in this chat, run `~/.local/bin/ai-agent-guard-jj-approval.py --provider cursor --session-action grant` as a standalone shell call before the first write. The hook asks the user to confirm the grant. Do not run a grant with your own `--session-id`. Use `--session-action revoke` if the user withdraws approval. Treat approval of a single operation as approval of that operation only.
 
 Read-only Jujutsu inspection is allowed without this gate, for example `jj status`, `jj diff`, `jj log`, `jj show`, `jj op log`, and `jj config list`.

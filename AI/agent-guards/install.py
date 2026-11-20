@@ -20,31 +20,23 @@ GUARD_TARGET = HOME / ".local" / "bin" / "ai-agent-guard-jj-approval.py"
 PYTHON = sys.executable
 POLICY_MARKER = "<!-- dotfiles:jujutsu-ai-approval -->"
 LEGACY_POLICY_MARKER = "<!-- dotfiles:jjujutsu-ai-approval -->"
-LEGACY_POLICY_TEXT = f"""{POLICY_MARKER}
-## Jujutsu AI Approval
-
-AI agents must ask for express approval before running mutating Jujutsu operations, including commits, working-copy movement (`jj new`, `jj edit`, `jj next`, `jj prev`), rebases, squashes, abandons, bookmark changes, undo, or `jj git push`. Read-only inspection such as `jj status`, `jj diff`, `jj log`, `jj show`, and `jj op log` is allowed without approval.
-"""
-PREVIOUS_POLICY_TEXT = f"""{POLICY_MARKER}
-## Jujutsu AI Approval
-
-Ask for approval before each mutating Jujutsu operation unless the user grants a chat bypass. Read-only inspection is allowed.
-
-The user can grant approval for all Jujutsu writes in this chat by putting `jj bypass for this session` on the first line of a user prompt. Mention this option when asking for approval. To restore per-operation checks, the user can send `jj revoke bypass`.
-"""
-PHRASE_POLICY_TEXT = f"""{POLICY_MARKER}
-## Jujutsu AI Approval
-
-Ask for approval before each mutating Jujutsu operation unless the user grants a chat bypass. Read-only inspection is allowed.
-
-The user can grant approval for all Jujutsu writes in any prompt in this chat, for example by saying "you can bypass jj hooks". Mention this option when asking for approval. The user can send `jj revoke bypass` to restore per-operation checks.
-"""
+# The end marker lets each install replace the whole managed block.
+POLICY_END_MARKER = "<!-- /dotfiles:jujutsu-ai-approval -->"
+# Older blocks had no end marker. Their lines start with one of these.
+UNMARKED_POLICY_LINES = (
+    "## Jujutsu AI Approval",
+    "AI agents must ask for express approval before running mutating Jujutsu",
+    "Ask for approval before each mutating Jujutsu operation",
+    "The user can grant approval for all Jujutsu writes",
+    "When the user directly authorizes all Jujutsu writes",
+    "In PowerShell, use `",
+)
 POLICY_TEXT = f"""{POLICY_MARKER}
 ## Jujutsu AI Approval
 
 Ask for approval before each mutating Jujutsu operation unless the user grants a chat bypass. Read-only inspection is allowed.
 
-When the user directly authorizes all Jujutsu writes in this chat, run `~/.local/bin/ai-agent-guard-jj-approval.py --provider {{provider}} --session-action grant` before the first write. Use `--session-action revoke` if the user withdraws approval. Run the helper as a standalone shell call. Use the successful result to confirm the change. Treat approval of a single operation as approval of that operation only.
+When the user directly authorizes all Jujutsu writes in this chat, run `~/.local/bin/ai-agent-guard-jj-approval.py --provider {{provider}} --session-action grant` as a standalone shell call before the first write. The hook asks the user to confirm the grant. If the hook blocks the call instead, give the user the command from the hook message and ask them to run it. Do not run a grant with your own `--session-id`. Use `--session-action revoke` if the user withdraws approval. Treat approval of a single operation as approval of that operation only.
 """
 
 
@@ -144,18 +136,45 @@ def ensure_symlink(source: Path, target: Path) -> None:
     target.symlink_to(source)
 
 
+def policy_block(provider: str, powershell_helper: str | None = None) -> str:
+    policy = POLICY_TEXT.replace("{provider}", provider)
+    if powershell_helper is not None:
+        policy += f"\nIn PowerShell, use `{powershell_helper}` for the same operation.\n"
+    return f"{policy}{POLICY_END_MARKER}\n"
+
+
+def managed_block_end(text: str, start: int) -> int:
+    end_marker = text.find(POLICY_END_MARKER, start)
+    if end_marker != -1:
+        end = end_marker + len(POLICY_END_MARKER)
+        return end + 1 if text.startswith("\n", end) else end
+    # Without an end marker, take only lines an older installer wrote, so
+    # text the user added after the block stays.
+    lines = text[start:].splitlines(keepends=True)
+    end = start + len(lines[0])
+    offset = end
+    for line in lines[1:]:
+        offset += len(line)
+        if not line.strip():
+            continue
+        if not line.startswith(UNMARKED_POLICY_LINES):
+            break
+        end = offset
+    return end
+
+
 def append_policy(path: Path, provider: str, powershell_helper: str | None = None) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     current = path.read_text() if path.exists() else ""
     updated = current.replace(LEGACY_POLICY_MARKER, POLICY_MARKER)
-    policy = POLICY_TEXT.replace("{provider}", provider)
-    if powershell_helper is not None:
-        policy += f"\nIn PowerShell, use `{powershell_helper}` for the same operation.\n"
-    for previous in (LEGACY_POLICY_TEXT, PREVIOUS_POLICY_TEXT, PHRASE_POLICY_TEXT):
-        updated = updated.replace(previous, policy, 1)
-    if POLICY_MARKER not in updated:
+    policy = policy_block(provider, powershell_helper)
+    start = updated.find(POLICY_MARKER)
+    if start == -1:
         separator = "\n\n" if updated and not updated.endswith("\n\n") else ""
         updated = f"{updated}{separator}{policy}\n"
+    else:
+        # Replace the whole block, so a changed WSL distro or helper takes effect.
+        updated = updated[:start] + policy + updated[managed_block_end(updated, start):]
     if updated != current:
         path.write_text(updated)
 
@@ -281,10 +300,8 @@ def install_windows_codex(codex_home: Path, distro: str) -> None:
     # The Windows shell passes hook JSON on stdin to wsl.exe.
     wsl = f"wsl.exe -d {distro} -u {HOME.name} --exec"
     install_codex_hooks(codex_home, command_windows=f"{wsl} {guard_command('codex')}")
-    helper = (
-        f"{wsl} {shlex.quote(str(GUARD_TARGET))} --provider codex --session-action grant "
-        "--session-id $env:CODEX_THREAD_ID"
-    )
+    # The hook supplies the chat ID and returns the grant command for the user.
+    helper = f"{wsl} {shlex.quote(str(GUARD_TARGET))} --provider codex --session-action grant"
     append_policy(codex_home / "AGENTS.md", "codex", helper)
     enable_codex_hooks(codex_home)
 

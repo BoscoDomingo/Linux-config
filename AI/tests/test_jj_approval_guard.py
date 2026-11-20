@@ -198,49 +198,107 @@ class JjAiApprovalHookTests(unittest.TestCase):
         self.assertEqual(output["hookEventName"], "PreToolUse")
         self.assertEqual(output["permissionDecision"], "deny")
 
-    def test_agent_helper_grants_only_the_current_chat_until_revoked(self) -> None:
+    def bound_grant_command(self, provider: str, id_field: str, state_home: str) -> str:
+        # Check that the agent's grant call reaches the user, and return the
+        # command the user approves (or runs, for Codex).
+        helper = f"~/.local/bin/ai-agent-guard-jj-approval.py --provider {provider} --session-action grant"
+        payload = {id_field: "chat-one", "tool_input": {"command": helper, "description": "Grant"}}
+        bound = f"{helper} --session-id chat-one"
+        if provider == "cursor":
+            result = run_event(payload, provider, event="bind", state_home=state_home)
+            self.assertEqual(result["updated_input"], {"command": bound, "description": "Grant"})
+            shell = run_event({id_field: "chat-one", "command": bound}, provider, state_home=state_home)
+            self.assertEqual(shell["permission"], "ask")
+            return bound
+        output = run_event(payload, provider, state_home=state_home)["hookSpecificOutput"]
+        if provider == "claude":
+            self.assertEqual(output["permissionDecision"], "ask")
+            self.assertEqual(output["updatedInput"], {"command": bound, "description": "Grant"})
+            return bound
+        self.assertEqual(output["permissionDecision"], "deny")
+        self.assertNotIn("updatedInput", output)
+        self.assertIn(f"`{bound}`", output["permissionDecisionReason"])
+        return bound
+
+    def test_user_approved_grant_covers_only_the_current_chat_until_revoked(self) -> None:
         for provider, id_field, allowed in (
             ("cursor", "conversation_id", {"permission": "allow"}),
             ("claude", "session_id", {}),
             ("codex", "session_id", {}),
         ):
             with self.subTest(provider=provider), tempfile.TemporaryDirectory() as state_home:
-                chat = {id_field: "chat-one"}
-                command = {**chat, "tool_input": {"command": "jj commit -m ship"}}
+                env = {**os.environ, "XDG_STATE_HOME": state_home}
+                command = {id_field: "chat-one", "tool_input": {"command": "jj commit -m ship"}}
                 default = run_event(command, provider, state_home=state_home)
                 self.assertNotEqual(default, allowed)
 
-                for action in ("grant", "revoke"):
-                    helper = f"~/.local/bin/ai-agent-guard-jj-approval.py --provider {provider} --session-action {action}"
-                    payload = {**chat, "tool_input": {"command": helper, "description": "Update chat grant"}}
-                    event = "bind" if provider == "cursor" else "shell"
-                    result = run_event(payload, provider, event=event, state_home=state_home)
-                    if provider == "cursor":
-                        updated = result["updated_input"]
-                    else:
-                        updated = result["hookSpecificOutput"]["updatedInput"]
-                    self.assertEqual(updated["description"], "Update chat grant")
-                    self.assertEqual(updated["command"], f"{helper} --session-id chat-one")
-                    if action == "grant":
-                        self.assertEqual(run_event(command, provider, state_home=state_home), default)
+                bound = self.bound_grant_command(provider, id_field, state_home)
+                self.assertEqual(run_event(command, provider, state_home=state_home), default)
+                # The user approved (or ran) the bound command.
+                subprocess.run([str(HOOK), *shlex.split(bound)[1:]], env=env, check=True, capture_output=True)
+                self.assertEqual(run_event(command, provider, state_home=state_home), allowed)
+                for other_id in ("chat-two", None):
+                    other_chat = {**command, id_field: other_id}
+                    self.assertEqual(run_event(other_chat, provider, state_home=state_home), default)
+                other_provider = "codex" if provider == "claude" else "claude"
+                self.assertIn("hookSpecificOutput", run_event(
+                    {**command, "session_id": "chat-one"}, other_provider, state_home=state_home,
+                ))
 
-                    argv = shlex.split(updated["command"])
-                    subprocess.run(
-                        [str(HOOK), *argv[1:]],
-                        env={**os.environ, "XDG_STATE_HOME": state_home},
-                        check=True, capture_output=True, text=True,
+                revoke = f"~/.local/bin/ai-agent-guard-jj-approval.py --provider {provider} --session-action revoke"
+                payload = {id_field: "chat-one", "tool_input": {"command": revoke}}
+                event = "bind" if provider == "cursor" else "shell"
+                result = run_event(payload, provider, event=event, state_home=state_home)
+                if provider == "cursor":
+                    updated = result["updated_input"]["command"]
+                else:
+                    self.assertEqual(result["hookSpecificOutput"]["permissionDecision"], "allow")
+                    updated = result["hookSpecificOutput"]["updatedInput"]["command"]
+                self.assertEqual(updated, f"{revoke} --session-id chat-one")
+                subprocess.run([str(HOOK), *shlex.split(updated)[1:]], env=env, check=True, capture_output=True)
+                self.assertEqual(run_event(command, provider, state_home=state_home), default)
+
+    def test_agent_cannot_grant_by_calling_the_helper_another_way(self) -> None:
+        helper = "/home/user/.local/bin/ai-agent-guard-jj-approval.py --provider {provider}"
+        for spelling in (
+            "{helper} --session-action grant --session-id chat-one",
+            "{helper} --session-action=grant --session-id chat-one",
+            "python3 {helper} --session-action grant --session-id chat-one",
+            "cd /tmp && {helper} --session-action grant --session-id chat-one",
+            "bash -c '{helper} --session-action grant --session-id chat-one'",
+            "wsl.exe -d arch -u user --exec {helper} --session-action grant",
+            "python3 AI/agent-guards/jj-approval.py --provider {provider} --session-action grant --session-id x",
+        ):
+            for provider, decision in (("cursor", "ask"), ("claude", "ask"), ("codex", "deny")):
+                command = spelling.format(helper=helper.format(provider=provider), provider=provider)
+                with self.subTest(command=command), tempfile.TemporaryDirectory() as state_home:
+                    result = run_event(
+                        {"session_id": "chat-one", "conversation_id": "chat-one", "command": command},
+                        provider, state_home=state_home,
                     )
-                    expected = allowed if action == "grant" else default
-                    self.assertEqual(run_event(command, provider, state_home=state_home), expected)
-                    for other_id in ("chat-two", None):
-                        other_chat = {**command, id_field: other_id}
-                        self.assertEqual(run_event(other_chat, provider, state_home=state_home), default)
+                    if provider == "cursor":
+                        self.assertEqual(result["permission"], decision)
+                    else:
+                        self.assertEqual(result["hookSpecificOutput"]["permissionDecision"], decision)
 
-                    other_provider = "codex" if provider == "claude" else "claude"
-                    other_command = {**command, "session_id": "chat-one"}
-                    self.assertIn("hookSpecificOutput", run_event(
-                        other_command, other_provider, state_home=state_home,
-                    ))
+        revoke = helper.format(provider="claude") + " --session-action revoke --session-id chat-one"
+        self.assertEqual(run_event({"session_id": "chat-one", "command": revoke}, "claude"), {})
+
+    def test_helper_rejects_abbreviated_options(self) -> None:
+        with tempfile.TemporaryDirectory() as state_home:
+            completed = subprocess.run(
+                [str(HOOK), "--provider", "claude", "--session-a", "grant", "--session-id", "x"],
+                env={**os.environ, "XDG_STATE_HOME": state_home},
+                capture_output=True, text=True,
+            )
+            self.assertNotEqual(completed.returncode, 0)
+            self.assertFalse(Path(state_home, "ai-agent-jj-approval").exists())
+
+    def test_codex_grant_without_chat_id_is_unavailable(self) -> None:
+        helper = "~/.local/bin/ai-agent-guard-jj-approval.py --provider codex --session-action grant"
+        output = run_event({"tool_input": {"command": helper}}, "codex")["hookSpecificOutput"]
+        self.assertEqual(output["permissionDecision"], "deny")
+        self.assertIn("did not supply a chat ID", output["permissionDecisionReason"])
 
     def test_cursor_binding_leaves_other_shell_commands_alone(self) -> None:
         helper = "~/.local/bin/ai-agent-guard-jj-approval.py --provider cursor --session-action grant"
