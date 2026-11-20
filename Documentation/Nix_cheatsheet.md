@@ -169,11 +169,6 @@ dotfiles-bootstrap
 Avoid `nix profile install` for permanent tools: it creates imperative state
 outside this repository's declarative package list.
 
-### diffnav version pin
-
-`.config/mise/config.toml` pins `diffnav = "0.11.0"` because 0.12.0 is broken.
-This can be removed once upstream fixes land.
-
 ## Temporary environments
 
 Open a shell containing temporary packages:
