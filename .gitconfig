@@ -122,3 +122,5 @@
   path = ~/dotfiles/overrides/git/personal.gitconfig
 [includeIf "gitdir:~/personal/"]
   path = ~/dotfiles/overrides/git/personal.gitconfig
+[url "git@github.com:"]
+	insteadOf = https://github.com/
