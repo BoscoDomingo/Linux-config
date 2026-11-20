@@ -16,6 +16,19 @@ let
     pkgs.gnugrep
     pkgs.gnused
   ];
+  # Device-local opt-out: list step keys (the snake_case names given to
+  # `optional` below, one per line) in this gitignored file to skip those steps
+  # on this machine only, for example `agent_guards`. Checked at activation
+  # time, so no flake rebuild is needed. See Documentation/machine-overrides.md.
+  disabledSteps = "${repo}/overrides/activation/disabled";
+  # Wrap a step body so it runs only when its name is not in disabledSteps.
+  optional = name: body: ''
+    if [ -f "${disabledSteps}" ] && ${pkgs.gnugrep}/bin/grep -qxE '[[:space:]]*${name}[[:space:]]*' "${disabledSteps}"; then
+      echo "Skipping ${name}: listed in ${disabledSteps}"
+    else
+    ${body}
+    fi
+  '';
 in
 {
   # Ensure ~/.config/jj is a real directory,
@@ -28,7 +41,7 @@ in
       echo "Would migrate jj and mise machine-override links"
     else
     overrides="${repo}/overrides"
-    mkdir -p "$overrides/git" "$overrides/jj" "$overrides/mise" "$overrides/brew" "$overrides/patches"
+    mkdir -p "$overrides/git" "$overrides/jj" "$overrides/mise" "$overrides/brew" "$overrides/patches" "$overrides/activation"
 
     jjdir="$HOME/.config/jj"
     if [ -L "$jjdir" ]; then
@@ -60,30 +73,30 @@ in
 
   # oh-my-zsh framework at ~/.oh-my-zsh. Cloned (not a Nix store path) so it
   # stays writable for its own cache/updates; .zshrc points $ZSH here.
-  home.activation.ohMyZsh = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+  home.activation.ohMyZsh = lib.hm.dag.entryAfter [ "linkGeneration" ] (optional "oh_my_zsh" ''
     if [ ! -d "$HOME/.oh-my-zsh/.git" ]; then
       run ${git} clone --depth 1 https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh" || true
     fi
-  '';
+  '');
 
   # tmux plugin manager (tpm). tmux binary comes from packages.nix.
-  home.activation.tpm = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+  home.activation.tpm = lib.hm.dag.entryAfter [ "linkGeneration" ] (optional "tpm" ''
     if [ ! -d "$HOME/.tmux/plugins/tpm/.git" ]; then
       run ${git} clone --depth 1 https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm" || true
     fi
-  '';
+  '');
 
   # cheat community cheatsheets (personal sheets + conf.yml come from the
   # .config/cheat symlink; this dir is gitignored in the repo).
-  home.activation.cheatSheets = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+  home.activation.cheatSheets = lib.hm.dag.entryAfter [ "linkGeneration" ] (optional "cheat_sheets" ''
     community="''${XDG_CONFIG_HOME:-$HOME/.config}/cheat/cheatsheets/community"
     if [ ! -d "$community/.git" ]; then
       run ${git} clone --depth 1 https://github.com/cheat/cheatsheets.git "$community" || true
     fi
-  '';
+  '');
 
   # micro Catppuccin colorschemes (downloaded into the gitignored colorschemes/).
-  home.activation.microThemes = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+  home.activation.microThemes = lib.hm.dag.entryAfter [ "linkGeneration" ] (optional "micro_themes" ''
     dir="''${XDG_CONFIG_HOME:-$HOME/.config}/micro/colorschemes"
     run mkdir -p "$dir"
     for t in catppuccin-macchiato catppuccin-macchiato-transparent; do
@@ -93,7 +106,7 @@ in
           -o "$dir/$t.micro" || true
       fi
     done
-  '';
+  '');
 
   # opencode from the upstream installer instead of nixpkgs. The nixpkgs package
   # is a Bun standalone compiled by an autoPatchelfHook'd bun; the shifted ELF
@@ -103,7 +116,7 @@ in
   # Guarded on the binary being absent, so a switch never re-downloads 180 MB.
   # Upgrades are manual, because .config/opencode/opencode.json sets
   # `autoupdate: notify`: re-run the installer, or delete the binary and switch.
-  home.activation.opencode = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+  home.activation.opencode = lib.hm.dag.entryAfter [ "linkGeneration" ] (optional "opencode" ''
     if [ ! -x "$HOME/.opencode/bin/opencode" ]; then
       installer="$(${pkgs.coreutils}/bin/mktemp)"
       run ${pkgs.curl}/bin/curl -fsSL https://opencode.ai/install -o "$installer" || true
@@ -111,14 +124,15 @@ in
         ${pkgs.bash}/bin/bash "$installer" --no-modify-path || true
       ${pkgs.coreutils}/bin/rm -f "$installer"
     fi
-  '';
+  '');
 
   # Install AI-agent jj shell guards and the chat approval helper.
-  home.activation.jjGuards = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+  # Opt-out key agent_guards also turns off OpenCode's jj rules (see .profile).
+  home.activation.agentGuards = lib.hm.dag.entryAfter [ "linkGeneration" ] (optional "agent_guards" ''
     if [ -f "${repo}/AI/agent-guards/install.py" ]; then
       run ${pkgs.python3}/bin/python3 "${repo}/AI/agent-guards/install.py" || true
     fi
-  '';
+  '');
 
   # Copilot CLI sandbox: let sandboxed hooks see herdr's agent-state script and
   # reach its unix socket. Without this, the herdr SessionStart hook fails with
@@ -126,7 +140,7 @@ in
   # and rewritten by Copilot itself (plugins, hooks, model), so it cannot be a
   # symlink; merge only the two paths instead. Idempotent, and skipped when
   # Copilot has not created the file yet.
-  home.activation.copilotSandboxHerdr = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+  home.activation.copilotSandboxHerdr = lib.hm.dag.entryAfter [ "linkGeneration" ] (optional "copilot_sandbox_herdr" ''
     settings="$HOME/.copilot/settings.json"
     if [ -f "$settings" ] && [ -z "''${DRY_RUN:-}" ]; then
       tmp="$(${pkgs.coreutils}/bin/mktemp)"
@@ -138,5 +152,5 @@ in
       fi
       ${pkgs.coreutils}/bin/rm -f "$tmp"
     fi
-  '';
+  '');
 }
