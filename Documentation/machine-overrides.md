@@ -145,7 +145,9 @@ hand.
 `agent_guards` also turns off the OpenCode jj rules. These rules are in the
 repo-managed `opencode.json`, so `.profile` sets `OPENCODE_CONFIG` to
 `AI/agent-guards/opencode-disabled.json`. OpenCode merges that file, which
-allows `jj *`. Start a new login shell for the change to apply.
+allows `jj *`. Start a new login shell for the change to apply. When you
+remove the key, `.profile` also clears an inherited `OPENCODE_CONFIG` that
+points to this file.
 
 When you add a step to `tools.nix`, wrap its body with
 `optional "<snake_case_key>"`, then add the key to this table.

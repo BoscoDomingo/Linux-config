@@ -17,10 +17,15 @@ export DOTFILES_REPO="${DOTFILES_REPO:-$HOME/dotfiles}"
 # OpenCode reads its jj approval rules from the repo-managed opencode.json, so
 # no activation step can skip them. When agent_guards is opted out on this
 # machine, merge a config that allows jj. See Documentation/machine-overrides.md.
-if [ -z "${OPENCODE_CONFIG:-}" ] &&
-	grep -qxE '[[:space:]]*agent_guards[[:space:]]*' "$DOTFILES_REPO/overrides/activation/disabled" 2>/dev/null; then
-	export OPENCODE_CONFIG="$DOTFILES_REPO/AI/agent-guards/opencode-disabled.json"
+# When the key is removed, clear our value if a parent process (tmux, an IDE)
+# passed it down, so the guard comes back. A user-supplied path is kept.
+_oc_disabled="$DOTFILES_REPO/AI/agent-guards/opencode-disabled.json"
+if grep -qxE '[[:space:]]*agent_guards[[:space:]]*' "$DOTFILES_REPO/overrides/activation/disabled" 2>/dev/null; then
+	[ -z "${OPENCODE_CONFIG:-}" ] && export OPENCODE_CONFIG="$_oc_disabled"
+elif [ "${OPENCODE_CONFIG:-}" = "$_oc_disabled" ]; then
+	unset OPENCODE_CONFIG
 fi
+unset _oc_disabled
 
 export VISUAL=micro
 export EDITOR=nvim
