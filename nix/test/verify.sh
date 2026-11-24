@@ -90,7 +90,7 @@ case "$opencode_path" in
 *) no "opencode -> $opencode_path (expected $HOME/.opencode/bin/opencode, not Nix)" ;;
 esac
 
-# diffnav is mise-owned and pinned to 0.11.0 in .config/mise/config.toml,
+# diffnav is mise-owned (.config/mise/config.toml).
 diffnav_path=$(type -P diffnav 2>/dev/null || true)
 # Outside a `mise activate`d shell PATH resolves to the shim, which points at
 # the mise binary rather than the tool; ask mise where it actually lives.
@@ -98,12 +98,9 @@ if [ "$diffnav_path" = "$HOME/.local/share/mise/shims/diffnav" ]; then
 	diffnav_path=$(mise which diffnav 2>/dev/null || true)
 fi
 case "$diffnav_path" in
-"$HOME/.local/share/mise/installs/"*diffnav*/0.11.0/diffnav)
-	ok "diffnav pinned -> $diffnav_path (mise)"
-	;;
-"$HOME/.local/share/mise/installs/"*) no "diffnav -> $diffnav_path (expected the 0.11.0 pin)" ;;
-"") no "diffnav missing (expected mise-owned 0.11.0)" ;;
-*) no "diffnav -> $diffnav_path (expected mise-owned 0.11.0)" ;;
+"$HOME/.local/share/mise/installs/"*diffnav*/diffnav) ok "diffnav -> $diffnav_path (mise)" ;;
+"") no "diffnav missing (expected mise-owned)" ;;
+*) no "diffnav -> $diffnav_path (expected mise-owned)" ;;
 esac
 
 # $GOPATH/bin must match mise. If it does not, the Go extension asks you to
