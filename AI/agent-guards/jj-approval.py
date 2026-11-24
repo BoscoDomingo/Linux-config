@@ -274,31 +274,11 @@ def risky_jj_invocation(command: str) -> str | None:
     return None
 
 
-def grants_session(segment: list[str], index: int) -> bool:
-    if os.path.basename(segment[index]) not in GUARD_NAMES:
-        return False
-    args = segment[index + 1 :]
-    return "--session-action=grant" in args or any(
-        token == "--session-action" and value == "grant"
-        for token, value in zip(args, args[1:])
-    )
-
-
 def requests_grant(command: str) -> bool:
-    # A grant turns off the gate for the whole chat, so the user must confirm
-    # it however the agent spells the helper call (extra flags, nested shells).
-    try:
-        segments = list(command_segments(command))
-    except ValueError:
-        return False  # The jj check asks for approval of unparsable commands.
-    for segment in segments:
-        for index in range(len(segment)):
-            if grants_session(segment, index):
-                return True
-            nested = nested_shell_command(segment, index)
-            if nested and requests_grant(nested):
-                return True
-    return False
+    # A grant turns off the gate for the whole chat, so fail closed: any command
+    # that names the helper and says "grant" needs the user. Parsing the shell
+    # missed spellings such as eval or the helper fed to python3 on stdin.
+    return "grant" in command and any(name in command for name in GUARD_NAMES)
 
 
 def extract_command(hook_input: dict[str, Any]) -> str:
@@ -457,7 +437,7 @@ def classify_response(risky: str | None) -> dict[str, Any]:
 
 
 def main() -> int:
-    # No abbreviations, so requests_grant sees every spelling of --session-action.
+    # No abbreviations, so only the documented option names work.
     parser = argparse.ArgumentParser(allow_abbrev=False)
     parser.add_argument(
         "--provider",

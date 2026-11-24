@@ -268,6 +268,9 @@ class JjAiApprovalHookTests(unittest.TestCase):
             "bash -c '{helper} --session-action grant --session-id chat-one'",
             "wsl.exe -d arch -u user --exec {helper} --session-action grant",
             "python3 AI/agent-guards/jj-approval.py --provider {provider} --session-action grant --session-id x",
+            "eval '{helper} --session-action grant --session-id chat-one'",
+            "python3 - --provider {provider} --session-action grant --session-id x < {helper}",
+            'eval "$(printf %s \'{helper} --session-action grant\')"',
         ):
             for provider, decision in (("cursor", "ask"), ("claude", "ask"), ("codex", "deny")):
                 command = spelling.format(helper=helper.format(provider=provider), provider=provider)

@@ -17,7 +17,7 @@ The agent requests the grant with the standalone helper `~/.local/bin/ai-agent-g
 - Claude Code and Cursor show one approval prompt for the grant.
 - Codex hooks cannot ask, so the hook blocks the call. The block message contains the full grant command with the chat ID. The agent gives this command to the user, who runs it in their own Linux or WSL terminal.
 
-The hook also asks (or blocks, in Codex) when the agent runs the grant in another form, for example with its own `--session-id`, through `bash -c`, or through `wsl.exe`. Revoking needs no approval, because it only restores checks. Ask the agent to revoke approval to restore per-operation checks.
+The hook also asks (or blocks, in Codex) for any other shell command that names the helper and contains `grant`, for example with its own `--session-id`, through `bash -c`, `eval`, or `wsl.exe`, or with the helper fed to `python3` on stdin. This check fails closed, so a read-only command such as `grep grant` on the helper file also asks. Revoking needs no approval, because it only restores checks. Ask the agent to revoke approval to restore per-operation checks.
 
 This gate stops agent mistakes and prompt injections that use the documented helper. It does not stop an agent that writes the grant file directly. The agent sandbox must stop that.
 
