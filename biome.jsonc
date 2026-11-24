@@ -1,0 +1,31 @@
+{
+	// Repo-local Biome config so Biome parses dotfiles JSONC files with
+	// comments (and trailing commas where supported) instead of strict JSON.
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"files": {
+		"ignoreUnknown": true
+	},
+	"overrides": [
+		{
+			// VS Code, Zed, Vicinae, and Oh My Posh configs use JSONC syntax
+			// with a .json extension, which Biome parses as strict JSON by default.
+			"includes": [
+				"vscode/settings.json",
+				"vscode/keybindings.json",
+				".config/zed/settings.json",
+				".config/vicinae/settings.json",
+				"themes/EliteSWE.omp.json"
+			],
+			"json": {
+				"parser": {
+					"allowComments": true,
+					"allowTrailingCommas": true
+				}
+			}
+		}
+	]
+}

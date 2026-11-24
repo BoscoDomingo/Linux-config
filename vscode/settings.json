@@ -291,7 +291,16 @@
 		"typeinfo": "cpp",
 		"valarray": "cpp",
 		"variant": "cpp",
-		".shellrc": "shellscript"
+		".shellrc": "shellscript",
+		// Dotfiles and editor settings stored as .json that use JSONC comments.
+		"**/vscode/settings.json": "jsonc",
+		"**/vscode/keybindings.json": "jsonc",
+		"**/Code/User/settings.json": "jsonc",
+		"**/Code/User/keybindings.json": "jsonc",
+		"**/Cursor/User/settings.json": "jsonc",
+		"**/Cursor/User/keybindings.json": "jsonc",
+		"**/zed/settings.json": "jsonc",
+		"**/vicinae/settings.json": "jsonc"
 	},
 
 	"[markdown]": {
