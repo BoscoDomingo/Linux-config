@@ -41,6 +41,10 @@ in
     # Bare-metal Cursor / VS Code editor config (the repo keeps it in vscode/).
     # WSL-only IDE-server links live in hosts/arch-wsl.nix.
     ".cursor/extensions/extensions.json".source = link "${repo}/vscode/extensions-cursor.json";
+
+    # Copilot model routers kept under AI/ so they are not auto-loaded as repo assets.
+    ".agents/model-routers/coding-default.model-router.yaml".source =
+      link "${repo}/AI/model-routers/coding-default.model-router.yaml";
   };
 
   xdg.configFile = {

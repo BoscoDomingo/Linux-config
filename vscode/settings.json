@@ -1243,6 +1243,7 @@
 	"github.copilot.nextEditSuggestions.enabled": true,
 	"github.copilot.chat.githubMcpServer.enabled": true,
 	"github.copilot.chat.githubMcpServer.readonly": true,
+	"chat.copilot.modelRouter.enabled": true,
 	"chat.mcp.gallery.enabled": true,
 	"chat.checkpoints.showFileChanges": true,
 	"chat.permissions.default": "autopilot",

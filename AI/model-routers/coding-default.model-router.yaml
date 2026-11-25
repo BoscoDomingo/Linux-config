@@ -1,0 +1,36 @@
+version: 1
+description: Latest GPT Sol for most work, latest Luna or Gemini 4 Neon for small chores, latest Opus for hard problems, and latest GPT Astra (long context) for humongous tasks.
+effort: auto
+switching: first-turn
+routes:
+  - model: sol
+    when: Everyday implementation, multi-file edits, PR workflows, config reorganization, and repo maintenance. Includes implementing features or fixes, addressing PR feedback, opening or watching PRs, updating docs or tests, and reorganizing settings.
+    examples:
+      - Go for it
+      - Reorganise these settings changes
+      - Address the PR review feedback and push the fixes
+      - Babysit this PR until checks pass
+      - Implement the compatibility fixes and run the tests
+
+  - model: [luna, gemini-4-neon]
+    when: Quick questions, simple checks, and small chores that need little investigation. Includes asking how a tool or sandbox behaves, checking git or commit status, summarizing a small diff, removing stray comments, or making a trivial one-file edit.
+    examples:
+      - Did you commit the changes?
+      - What can you do in this sandbox?
+      - Commit the changes in the workspace
+      - Give me a brief summary of what changed and remove leftover comments
+
+  - model: opus
+    when: Truly hard engineering problems, deep audits, and subtle debugging. Includes anything sent in Plan mode, complex architecture or design trade-offs, cross-system compatibility audits, root-cause analysis of tricky failures, and reviewing subtle edge cases.
+    examples:
+      - Audit whether all our AI assets work properly with this tool and find subtle gaps
+      - Why is this failing intermittently and how should we redesign it?
+      - Review the architecture and tell me what could break
+
+  - model: astra
+    when: Extremely large or complex tasks that span huge parts of a codebase. Includes work on a tree with many changed files, requests with many documents or large logs attached, repository-wide migrations, or multi-package refactors.
+    examples:
+      - Refactor all packages across the monorepo to the new API
+      - Analyze these large logs and trace every failure across the pipeline
+      - Migrate every workflow and config file in this repository
+      - Build a whole new non-trivial tool from scratch
