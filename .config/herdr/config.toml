@@ -4,7 +4,7 @@ onboarding = false
 pane_history = true
 
 [theme]
-name = "rose-pine"
+name = "tokyo-night"
 
 auto_switch = false
 [ui.toast]
