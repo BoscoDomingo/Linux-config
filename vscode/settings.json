@@ -1243,6 +1243,10 @@
 	"github.copilot.nextEditSuggestions.enabled": true,
 	"github.copilot.chat.githubMcpServer.enabled": true,
 	"github.copilot.chat.githubMcpServer.readonly": true,
+	"github.copilot.chat.codesearch.enabled": true,
+	"github.copilot.chat.languageContext.fix.typescript.enabled": true,
+	"github.copilot.chat.languageContext.inline.typescript.enabled": true,
+	"github.copilot.chat.languageContext.typescript7.enabled": true,
 	"chat.copilot.modelRouter.enabled": true,
 	"chat.mcp.gallery.enabled": true,
 	"chat.checkpoints.showFileChanges": true,
@@ -1252,12 +1256,25 @@
 	"chat.agent.sandbox.enabledWindows": "on",
 	"chat.agent.sandbox.network.allowNetwork": true,
 	"chat.agent.sandbox.network.allowLocalNetwork": true,
-	// The VS Code agent sandbox denies reads under $HOME by default and ignores
-	// ~/.copilot/settings.json's sandbox.userPolicy. Allow herdr's Copilot
-	// SessionStart hook script (read) and its unix socket dir (write).
+	// The VS Code agent sandboxes deny reads under $HOME by default and ignore
+	// ~/.copilot/settings.json's sandbox.userPolicy. Allow read-only access to
+	// ~/.copilot/hooks so herdr's shared Copilot SessionStart hook can run,
+	// see HERDR_ENV is unset, and exit 0 without write access to ~/.config/herdr.
+	// fileSystem.linux covers VS Code's terminal sandbox; userConfiguredPaths
+	// covers the Copilot SDK / Agents window sandbox.
 	"chat.agent.sandbox.fileSystem.linux": {
-		"allowRead": ["~/.copilot/hooks"],
-		"allowWrite": ["~/.config/herdr"]
+		"allowRead": ["~/.copilot/hooks"]
+	},
+	"chat.agent.sandbox.fileSystem.userConfiguredPaths": {
+		"readonlyPaths": [
+			"~/.copilot/hooks",
+			"/home/bosco/repos/personal/utils/ai_llm/skills/jj-help/assets/agent-jujutsu-guide.md",
+			"/mnt/c/Users/BoscoDomingoBenito/AppData/Roaming/Code/User",
+			"/mnt/c/Users/BoscoDomingoBenito/.vscode/extensions",
+			"/home/bosco/.cache/biome/biome-logs",
+			"/mnt/c/Users/BoscoDomingoBenito"
+		],
+		"readwritePaths": ["/home/bosco/.agents"]
 	},
 	"chat.editor.wordWrap": "on",
 	"chat.editing.explainChanges.enabled": true,
