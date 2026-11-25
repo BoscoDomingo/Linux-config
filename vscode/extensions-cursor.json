@@ -823,36 +823,6 @@
 	},
 	{
 		"identifier": {
-			"id": "anysphere.remote-wsl",
-			"uuid": "39a52826-2472-403d-8410-37905302f26a"
-		},
-		"version": "1.0.13",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/anysphere.remote-wsl-1.0.13",
-			"scheme": "file"
-		},
-		"relativeLocation": "anysphere.remote-wsl-1.0.13",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1775659760512,
-			"pinned": true,
-			"source": "gallery",
-			"id": "39a52826-2472-403d-8410-37905302f26a",
-			"publisherId": "c16ea17f-2629-4893-9064-35c0fd9add4c",
-			"publisherDisplayName": "Anysphere",
-			"targetPlatform": "undefined",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
 			"id": "orta.vscode-twoslash-queries",
 			"uuid": "fd2c2092-c30c-4c43-b41f-b4dfbec3276f"
 		},
@@ -1228,7 +1198,9 @@
 		}
 	},
 	{
-		"identifier": { "id": "wraith13.zoombar-vscode" },
+		"identifier": {
+			"id": "wraith13.zoombar-vscode"
+		},
 		"version": "1.4.4",
 		"location": {
 			"$mid": 1,
@@ -1272,7 +1244,9 @@
 		}
 	},
 	{
-		"identifier": { "id": "mxsdev.typescript-explorer" },
+		"identifier": {
+			"id": "mxsdev.typescript-explorer"
+		},
 		"version": "0.4.2",
 		"location": {
 			"$mid": 1,
@@ -1287,7 +1261,9 @@
 		}
 	},
 	{
-		"identifier": { "id": "hexzii.unicode-hovery" },
+		"identifier": {
+			"id": "hexzii.unicode-hovery"
+		},
 		"version": "0.1.2",
 		"location": {
 			"$mid": 1,
@@ -1302,7 +1278,9 @@
 		}
 	},
 	{
-		"identifier": { "id": "jamesohortle.unicodehover" },
+		"identifier": {
+			"id": "jamesohortle.unicodehover"
+		},
 		"version": "0.3.0",
 		"location": {
 			"$mid": 1,
@@ -1317,7 +1295,9 @@
 		}
 	},
 	{
-		"identifier": { "id": "johnpapa.vscode-cloak" },
+		"identifier": {
+			"id": "johnpapa.vscode-cloak"
+		},
 		"version": "0.5.0",
 		"location": {
 			"$mid": 1,
@@ -1358,7 +1338,9 @@
 		}
 	},
 	{
-		"identifier": { "id": "jzmstrjp.color-the-tag-name" },
+		"identifier": {
+			"id": "jzmstrjp.color-the-tag-name"
+		},
 		"version": "0.24.0",
 		"location": {
 			"$mid": 1,
@@ -1373,7 +1355,9 @@
 		}
 	},
 	{
-		"identifier": { "id": "vitaliymaz.vscode-svg-previewer" },
+		"identifier": {
+			"id": "vitaliymaz.vscode-svg-previewer"
+		},
 		"version": "0.7.0",
 		"location": {
 			"$mid": 1,
@@ -2071,7 +2055,9 @@
 		}
 	},
 	{
-		"identifier": { "id": "enkeldigital.relative-goto" },
+		"identifier": {
+			"id": "enkeldigital.relative-goto"
+		},
 		"version": "0.5.4",
 		"location": {
 			"$mid": 1,
@@ -2086,7 +2072,9 @@
 		}
 	},
 	{
-		"identifier": { "id": "adpyke.js-unicode-preview" },
+		"identifier": {
+			"id": "adpyke.js-unicode-preview"
+		},
 		"version": "1.1.4",
 		"location": {
 			"$mid": 1,
@@ -2101,7 +2089,9 @@
 		}
 	},
 	{
-		"identifier": { "id": "socheatsok78-lab.dotenv-vscode-stripped" },
+		"identifier": {
+			"id": "socheatsok78-lab.dotenv-vscode-stripped"
+		},
 		"version": "0.24.0",
 		"location": {
 			"$mid": 1,
@@ -2116,7 +2106,9 @@
 		}
 	},
 	{
-		"identifier": { "id": "jackz.unicode-conversion" },
+		"identifier": {
+			"id": "jackz.unicode-conversion"
+		},
 		"version": "0.2.0",
 		"location": {
 			"$mid": 1,
@@ -2124,10 +2116,15 @@
 			"scheme": "file"
 		},
 		"relativeLocation": "jackz.unicode-conversion-0.2.0",
-		"metadata": { "installedTimestamp": 1779563234141, "source": "vsix" }
+		"metadata": {
+			"installedTimestamp": 1779563234141,
+			"source": "vsix"
+		}
 	},
 	{
-		"identifier": { "id": "mde.select-highlight-minimap" },
+		"identifier": {
+			"id": "mde.select-highlight-minimap"
+		},
 		"version": "0.1.0",
 		"location": {
 			"$mid": 1,
@@ -2142,7 +2139,9 @@
 		}
 	},
 	{
-		"identifier": { "id": "msyrus.go-doc" },
+		"identifier": {
+			"id": "msyrus.go-doc"
+		},
 		"version": "1.1.1",
 		"location": {
 			"$mid": 1,
@@ -2157,7 +2156,9 @@
 		}
 	},
 	{
-		"identifier": { "id": "kricsleo.vscode-package-json-inspector" },
+		"identifier": {
+			"id": "kricsleo.vscode-package-json-inspector"
+		},
 		"version": "0.2.0",
 		"location": {
 			"$mid": 1,
@@ -2585,36 +2586,8 @@
 	},
 	{
 		"identifier": {
-			"id": "anysphere.remote-containers",
-			"uuid": "94d8b289-9db0-4c3c-b4f3-a3294c789678"
+			"id": "iceye.syl"
 		},
-		"version": "1.0.41",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/anysphere.remote-containers-1.0.41",
-			"scheme": "file"
-		},
-		"relativeLocation": "anysphere.remote-containers-1.0.41",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1791988024771,
-			"pinned": false,
-			"source": "gallery",
-			"id": "94d8b289-9db0-4c3c-b4f3-a3294c789678",
-			"publisherId": "c16ea17f-2629-4893-9064-35c0fd9add4c",
-			"publisherDisplayName": "Anysphere",
-			"targetPlatform": "undefined",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": { "id": "iceye.syl" },
 		"version": "1.3.3",
 		"location": {
 			"$mid": 1,
@@ -2774,36 +2747,6 @@
 			"publisherId": "652ad61d-3a6a-48ca-ab1a-80dc8953b2b6",
 			"publisherDisplayName": "vscode-icons-team",
 			"targetPlatform": "universal",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": {
-			"id": "anysphere.remote-ssh",
-			"uuid": "73a45d83-83c7-4b22-bebf-c9130b0ab3f3"
-		},
-		"version": "1.1.17",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/anysphere.remote-ssh-1.1.17",
-			"scheme": "file"
-		},
-		"relativeLocation": "anysphere.remote-ssh-1.1.17",
-		"metadata": {
-			"isApplicationScoped": true,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1793648699746,
-			"pinned": false,
-			"source": "gallery",
-			"id": "73a45d83-83c7-4b22-bebf-c9130b0ab3f3",
-			"publisherId": "c16ea17f-2629-4893-9064-35c0fd9add4c",
-			"publisherDisplayName": "Anysphere",
-			"targetPlatform": "undefined",
 			"updated": true,
 			"private": false,
 			"isPreReleaseVersion": false,
@@ -3023,42 +2966,12 @@
 	},
 	{
 		"identifier": {
-			"id": "visualjj.visualjj",
-			"uuid": "338d7429-21f3-449d-acdf-8518eae43a72"
+			"id": "teabyii.ayu",
+			"uuid": "5178733e-4b02-4829-95c5-1ce970847c23"
 		},
-		"version": "0.36.3",
-		"location": {
-			"$mid": 1,
-			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/visualjj.visualjj-0.36.3-win32-x64",
-			"scheme": "file"
-		},
-		"relativeLocation": "visualjj.visualjj-0.36.3-win32-x64",
-		"metadata": {
-			"isApplicationScoped": false,
-			"isMachineScoped": false,
-			"isBuiltin": false,
-			"installedTimestamp": 1793691901017,
-			"pinned": false,
-			"source": "gallery",
-			"id": "338d7429-21f3-449d-acdf-8518eae43a72",
-			"publisherId": "828fee6d-3c80-4fdc-9b0e-a9a8d09fb856",
-			"publisherDisplayName": "visualjj",
-			"targetPlatform": "win32-x64",
-			"updated": true,
-			"private": false,
-			"isPreReleaseVersion": false,
-			"hasPreReleaseVersion": false,
-			"preRelease": false
-		}
-	},
-	{
-		"identifier": { "id": "teabyii.ayu" },
 		"version": "1.6.0",
 		"location": {
 			"$mid": 1,
-			"fsPath": "c:\\Users\\BoscoDomingoBenito\\.cursor\\extensions\\teabyii.ayu-1.6.0-universal",
-			"_sep": 1,
-			"external": "file:///c%3A/Users/BoscoDomingoBenito/.cursor/extensions/teabyii.ayu-1.6.0-universal",
 			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/teabyii.ayu-1.6.0-universal",
 			"scheme": "file"
 		},
@@ -3074,6 +2987,128 @@
 			"publisherId": "8a0aaf7f-34ab-48b1-9384-c15c80413d57",
 			"publisherDisplayName": "teabyii",
 			"targetPlatform": "universal",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "visualjj.visualjj",
+			"uuid": "338d7429-21f3-449d-acdf-8518eae43a72"
+		},
+		"version": "0.37.1",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/visualjj.visualjj-0.37.1-win32-x64",
+			"scheme": "file"
+		},
+		"relativeLocation": "visualjj.visualjj-0.37.1-win32-x64",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1794901855392,
+			"pinned": false,
+			"source": "gallery",
+			"id": "338d7429-21f3-449d-acdf-8518eae43a72",
+			"publisherId": "828fee6d-3c80-4fdc-9b0e-a9a8d09fb856",
+			"publisherDisplayName": "visualjj",
+			"targetPlatform": "win32-x64",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "anysphere.remote-wsl",
+			"uuid": "39a52826-2472-403d-8410-37905302f26a"
+		},
+		"version": "1.0.14",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/anysphere.remote-wsl-1.0.14",
+			"scheme": "file"
+		},
+		"relativeLocation": "anysphere.remote-wsl-1.0.14",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1795001358146,
+			"pinned": false,
+			"source": "gallery",
+			"id": "39a52826-2472-403d-8410-37905302f26a",
+			"publisherId": "c16ea17f-2629-4893-9064-35c0fd9add4c",
+			"publisherDisplayName": "Anysphere",
+			"targetPlatform": "undefined",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "anysphere.remote-containers",
+			"uuid": "94d8b289-9db0-4c3c-b4f3-a3294c789678"
+		},
+		"version": "1.0.42",
+		"location": {
+			"$mid": 1,
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/anysphere.remote-containers-1.0.42",
+			"scheme": "file"
+		},
+		"relativeLocation": "anysphere.remote-containers-1.0.42",
+		"metadata": {
+			"isApplicationScoped": false,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1795001358256,
+			"pinned": false,
+			"source": "gallery",
+			"id": "94d8b289-9db0-4c3c-b4f3-a3294c789678",
+			"publisherId": "c16ea17f-2629-4893-9064-35c0fd9add4c",
+			"publisherDisplayName": "Anysphere",
+			"targetPlatform": "undefined",
+			"updated": true,
+			"private": false,
+			"isPreReleaseVersion": false,
+			"hasPreReleaseVersion": false,
+			"preRelease": false
+		}
+	},
+	{
+		"identifier": {
+			"id": "anysphere.remote-ssh"
+		},
+		"version": "1.1.19",
+		"location": {
+			"$mid": 1,
+			"fsPath": "c:\\Users\\BoscoDomingoBenito\\.cursor\\extensions\\anysphere.remote-ssh-1.1.19",
+			"_sep": 1,
+			"external": "file:///c%3A/Users/BoscoDomingoBenito/.cursor/extensions/anysphere.remote-ssh-1.1.19",
+			"path": "/c:/Users/BoscoDomingoBenito/.cursor/extensions/anysphere.remote-ssh-1.1.19",
+			"scheme": "file"
+		},
+		"relativeLocation": "anysphere.remote-ssh-1.1.19",
+		"metadata": {
+			"isApplicationScoped": true,
+			"isMachineScoped": false,
+			"isBuiltin": false,
+			"installedTimestamp": 1795129879695,
+			"pinned": false,
+			"source": "gallery",
+			"id": "73a45d83-83c7-4b22-bebf-c9130b0ab3f3",
+			"publisherId": "c16ea17f-2629-4893-9064-35c0fd9add4c",
+			"publisherDisplayName": "Anysphere",
+			"targetPlatform": "undefined",
 			"updated": true,
 			"private": false,
 			"isPreReleaseVersion": false,

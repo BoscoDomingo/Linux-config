@@ -861,10 +861,7 @@
 		"[Default Dark*]": {
 			"textMateRules": [
 				{
-					"scope": [
-						"string",
-						"string.quoted.docstring.multi.python"
-					],
+					"scope": ["string", "string.quoted.docstring.multi.python"],
 					"settings": {
 						"foreground": "#ffb06a"
 					}
@@ -876,10 +873,7 @@
 					}
 				},
 				{
-					"scope": [
-						"keyword",
-						"keyword.control"
-					],
+					"scope": ["keyword", "keyword.control"],
 					"settings": {
 						"foreground": "#e475db"
 					}
@@ -904,17 +898,13 @@
 					}
 				},
 				{
-					"scope": [
-						"meta"
-					],
+					"scope": ["meta"],
 					"settings": {
 						"foreground": "#e1e1e1f0"
 					}
 				},
 				{
-					"scope": [
-						"meta.object-literal.key"
-					],
+					"scope": ["meta.object-literal.key"],
 					"settings": {
 						"foreground": "#eeeeee"
 					}
@@ -965,26 +955,20 @@
 					}
 				},
 				{
-					"scope": [
-						"constant"
-					],
+					"scope": ["constant"],
 					"name": "Numbers and booleans",
 					"settings": {
 						"foreground": "#F39C12"
 					}
 				},
 				{
-					"scope": [
-						"variable.parameter"
-					],
+					"scope": ["variable.parameter"],
 					"settings": {
 						"foreground": "#ffb06a"
 					}
 				},
 				{
-					"scope": [
-						"support.type"
-					],
+					"scope": ["support.type"],
 					"settings": {
 						"foreground": "#19c2ff"
 					}
@@ -1005,17 +989,13 @@
 		"[Shades of Purple]": {
 			"textMateRules": [
 				{
-					"scope": [
-						"entity.name.function"
-					],
+					"scope": ["entity.name.function"],
 					"settings": {
 						"foreground": "#fbe600"
 					}
 				},
 				{
-					"scope": [
-						"support.type.primitive"
-					],
+					"scope": ["support.type.primitive"],
 					"settings": {
 						"foreground": "#ff00dd"
 					}
@@ -1715,7 +1695,6 @@
 	"spellright.language": ["en", "es"],
 	"spellright.documentTypes": ["markdown", "latex", "plaintext", "jsonc"],
 	"coderabbit.accountRegion": "eu",
-	"coderabbit.region": "eu",
 	"syl.burnRateSpikeSensitivity": "relaxed",
 	"syl.allowEnvironmentCursorTokenFallback": true
 }
