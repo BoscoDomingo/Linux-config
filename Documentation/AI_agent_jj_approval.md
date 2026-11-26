@@ -73,6 +73,18 @@ Codex `PreToolUse` denies mutating `jj` commands by default and points to the ch
 
 OpenCode uses native `permission.bash` rules: `jj *` asks by default, with explicit allow rules for read-only `jj` commands.
 
+### VS Code and Copilot on Linux and WSL
+
+The [editor settings](../vscode/settings.json) give the terminal and Agents
+window sandboxes read-only access to the Nix profile, its links, and
+`/nix/store`. The Nix store contains the `jj` binary and its runtime libraries.
+These settings do not grant repository write access or change approval rules.
+
+After you apply the editor settings, reload VS Code and start a new sandboxed
+session. Run `jj --version` to check executable access. In a Jujutsu workspace,
+run `jj --ignore-working-copy --no-pager status` to check status without taking
+a working-copy snapshot. This command can omit changes made since the last snapshot.
+
 ## Installation
 
 `nix/home/tools.nix` runs `AI/agent-guards/install.py` on every `home-manager
