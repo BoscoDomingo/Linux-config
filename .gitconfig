@@ -112,7 +112,7 @@
 # Edit files under the gitignored overrides/ tree:
 #   overrides/git/local.gitconfig
 #   overrides/git/work.gitconfig       # ~/repos/
-#   overrides/git/personal.gitconfig   # ~/dotfiles/, ~/personal/
+#   overrides/git/personal.gitconfig   # ~/dotfiles/, ~/personal/, ~/repos/personal/
 # Later includes win. Missing paths are ignored.
 [include]
   path = ~/dotfiles/overrides/git/local.gitconfig
@@ -121,6 +121,10 @@
 [includeIf "gitdir:~/dotfiles/"]
   path = ~/dotfiles/overrides/git/personal.gitconfig
 [includeIf "gitdir:~/personal/"]
+  path = ~/dotfiles/overrides/git/personal.gitconfig
+# Personal repos nested in the work tree (such as the utils clone). Must stay
+# after the ~/repos/ include so the personal identity wins there.
+[includeIf "gitdir:~/repos/personal/"]
   path = ~/dotfiles/overrides/git/personal.gitconfig
 [url "git@github.com:"]
 	insteadOf = https://github.com/

@@ -264,6 +264,10 @@ email_in_jj_repo() {
 }
 [ -d "$HOME/repos" ] && identity "git in repos" "$HOME/repos" "$(email_in_git_repo "$HOME/repos" || echo 'n/a (no repo)')"
 [ -d "$HOME/repos" ] && identity "jj in repos" "$HOME/repos" "$(email_in_jj_repo "$HOME/repos" || echo 'n/a (no repo)')"
+# Personal repos nested in the work tree (.gitconfig includeIf after ~/repos/,
+# overrides/jj/zz-repos-personal.toml). Expect the personal email here.
+[ -d "$HOME/repos/personal" ] && identity "git in repos/personal" "$HOME/repos/personal" "$(email_in_git_repo "$HOME/repos/personal" || echo 'n/a (no repo)')"
+[ -d "$HOME/repos/personal" ] && identity "jj in repos/personal" "$HOME/repos/personal" "$(email_in_jj_repo "$HOME/repos/personal" || echo 'n/a (no repo)')"
 [ -d "$HOME/dotfiles" ] && identity "git in dotfiles" "$HOME/dotfiles" "$(cd "$HOME/dotfiles" && git config user.email 2>/dev/null || echo 'n/a')"
 [ -d "$HOME/dotfiles" ] && identity "jj in dotfiles" "$HOME/dotfiles" "$(cd "$HOME/dotfiles" && jj config get user.email 2>/dev/null || echo 'n/a')"
 [ -d "$HOME/personal" ] && identity "git in personal" "$HOME/personal" "$(email_in_git_repo "$HOME/personal" || echo 'n/a (no repo)')"

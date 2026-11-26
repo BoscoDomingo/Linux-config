@@ -9,11 +9,12 @@ overrides/
   git/
     local.gitconfig      # machine default identity
     work.gitconfig       # ~/repos/**
-    personal.gitconfig   # ~/dotfiles/** and ~/personal/**
+    personal.gitconfig   # ~/dotfiles/**, ~/personal/** and ~/repos/personal/**
   jj/
     local.toml           # machine default (no --when)
     work.toml            # --when.repositories = ["~/repos"]
     personal.toml        # --when.repositories = ["~/dotfiles", "~/personal"]
+    zz-repos-personal.toml  # --when.repositories = ["~/repos/personal"]; sorts after work.toml
   mise/
     config.toml          # device-only tools (merged by mise)
   brew/
@@ -53,7 +54,20 @@ personal machines need zero of these.
 | **Activation vars** | `nix/home/tools.nix` | `overrides/vars.env`          | Steps read their keys with `override_var KEY DEFAULT`         |
 
 Later git includes win, so personal path files beat `local` / `work` when both
-match. jj `conf.d` files load lexicographically after the synced config.toml.
+match. jj `conf.d` files load lexicographically after the synced config.toml,
+and the last matching file wins.
+
+### Personal repos under `~/repos/personal`
+
+`~/repos/**` gets the work identity, and `~/repos/personal/` is inside it. Both
+tools need a personal rule that comes **after** the work rule:
+
+- **git:** the committed `.gitconfig` has `includeIf "gitdir:~/repos/personal/"`
+  after the `~/repos/` include. It uses `overrides/git/personal.gitconfig`, so
+  that file must exist on work machines.
+- **jj:** a rule in `personal.toml` does not work, because `work.toml` loads
+  after it. Copy `overrides/jj/zz-repos-personal.toml.example` to
+  `overrides/jj/zz-repos-personal.toml`. The `zz-` prefix makes it load last.
 
 ## Examples
 
@@ -84,6 +98,14 @@ email = "you@work.example"
 ```toml
 # overrides/jj/personal.toml
 --when.repositories = ["~/dotfiles", "~/personal"]
+
+[user]
+email = "you@personal.example"
+```
+
+```toml
+# overrides/jj/zz-repos-personal.toml (loads after work.toml)
+--when.repositories = ["~/repos/personal"]
 
 [user]
 email = "you@personal.example"
@@ -185,9 +207,18 @@ UTILS_DIR=~/repos/personal/utils
 Each switch fetches the clone and moves it to `main@origin`. It moves the clone
 only when the working-copy change is empty and has no description, and all other
 changes are already on `main@origin`. If you have local work there, the step
-prints a note and does not change the clone. A new clone uses HTTPS. To push
-from it, set the remote to SSH:
-`jj -R <path> git remote set-url origin git@github.com:BoscoDomingo/utils.git`.
+prints a note and does not change the clone.
+
+A new clone uses HTTPS and ignores the global git config for the clone only,
+so the `url.insteadOf` rule in `.gitconfig` cannot turn it into SSH before you
+have SSH keys. Later fetches and pushes go through that rule and use SSH. A
+fetch that fails (no keys yet) only prints a note.
+
+The step also writes the baseline identity from `.gitconfig` (`user.name`,
+`user.email`) into the new clone's jj repo config and `.git/config`. So commits
+from the clone use the personal email even if the path rules above would give
+the work one (for example, `~/repos/utils` with the default `UTILS_DIR`). The
+step does not change the identity of a clone that already exists.
 
 If you change the path, the next switch clones to the new path and points the
 links there. It does not delete the old clone.

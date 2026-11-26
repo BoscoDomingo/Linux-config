@@ -182,8 +182,23 @@ in
 
     if [ ! -e "$dir" ]; then
       run ${pkgs.coreutils}/bin/mkdir -p "$(${pkgs.coreutils}/bin/dirname "$dir")"
-      # HTTPS, because a new machine may not have SSH keys yet (the repo is public).
-      run utils_vcs "$jj" git clone --colocate https://github.com/BoscoDomingo/utils.git "$dir" || true
+      # The repo is public, so clone over HTTPS: a new machine may not have SSH
+      # keys yet. GIT_CONFIG_GLOBAL=/dev/null stops the url.insteadOf rule in
+      # .gitconfig from turning the URL into SSH again. Later fetches and
+      # pushes go through that rule, so they use SSH.
+      if run utils_vcs env GIT_CONFIG_GLOBAL=/dev/null \
+          "$jj" git clone --colocate https://github.com/BoscoDomingo/utils.git "$dir"; then
+        # Put the baseline (personal) identity from .gitconfig in the clone
+        # itself, so commits use it whatever the path-based work/personal
+        # rules say about UTILS_DIR (~/repos/** is work).
+        for key in user.name user.email; do
+          value="$(${git} config --file "${repo}/.gitconfig" "$key" || true)"
+          if [ -n "$value" ]; then
+            run utils_vcs "$jj" -R "$dir" config set --repo "$key" "$value" || true
+            run ${git} -C "$dir" config "$key" "$value" || true
+          fi
+        done
+      fi
     elif [ -d "$dir/.jj" ]; then
       if run utils_vcs "$jj" -R "$dir" git fetch --remote origin; then
         # Changes a move to main@origin would leave behind. Empty means safe.

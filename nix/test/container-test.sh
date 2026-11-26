@@ -71,15 +71,18 @@ git clone -b "$BRANCH" "$REPO_URL" \$HOME/dotfiles
 
 # Seed per-machine WORK identity + path-scoped repos so verify.sh exercises
 # the overrides/ tree. HM activation creates the conf.d / mise symlinks.
-mkdir -p \$HOME/dotfiles/overrides/{git,jj,mise,brew} \$HOME/repos \$HOME/personal
+mkdir -p \$HOME/dotfiles/overrides/{git,jj,mise,brew} \$HOME/repos/personal \$HOME/personal
 printf '[user]\n\temail = you@work.example\n'     > \$HOME/dotfiles/overrides/git/local.gitconfig
 printf '[user]\n\temail = you@work.example\n'     > \$HOME/dotfiles/overrides/git/work.gitconfig
 printf '[user]\n\temail = you@personal.example\n' > \$HOME/dotfiles/overrides/git/personal.gitconfig
 printf '[user]\nemail = "you@work.example"\n'     > \$HOME/dotfiles/overrides/jj/local.toml
-printf '--when.repositories = ["~/repos"]\n\n[user]\nemail = "you@work.example"\n' > \$HOME/dotfiles/overrides/jj/work.toml
-printf '--when.repositories = ["~/dotfiles", "~/personal"]\n\n[user]\nemail = "you@personal.example"\n' > \$HOME/dotfiles/overrides/jj/personal.toml
+printf -- '--when.repositories = ["~/repos"]\n\n[user]\nemail = "you@work.example"\n' > \$HOME/dotfiles/overrides/jj/work.toml
+printf -- '--when.repositories = ["~/dotfiles", "~/personal"]\n\n[user]\nemail = "you@personal.example"\n' > \$HOME/dotfiles/overrides/jj/personal.toml
+# Personal repos nested in the work tree need a jj rule that loads after work.toml.
+printf -- '--when.repositories = ["~/repos/personal"]\n\n[user]\nemail = "you@personal.example"\n' > \$HOME/dotfiles/overrides/jj/zz-repos-personal.toml
 printf '[tools]\n' > \$HOME/dotfiles/overrides/mise/config.toml
 git init -q \$HOME/repos/acme
+git init -q \$HOME/repos/personal/tools
 git init -q \$HOME/personal/blog
 
 # SKIP_MISE keeps this fast: a full mise install builds node/python/rust and is

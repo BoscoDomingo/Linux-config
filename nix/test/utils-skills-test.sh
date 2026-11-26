@@ -58,16 +58,20 @@ sed -n "$((start + 1)),\$p" "$ACTIVATE" |
 		>"$TMP/step.raw"
 
 # The step has the real dotfiles path and the GitHub URL baked in. Point both
-# at fixtures in $TMP.
+# at fixtures in $TMP. A file:// URL (not a plain path) so that a git
+# url.insteadOf rule can match it, as it matches https://github.com/ for real.
 baked=$(grep -oE '"[^"]*/overrides/activation/disabled"' "$TMP/step.raw" | head -n 1 | tr -d '"')
 baked=${baked%/overrides/activation/disabled}
 [ -n "$baked" ] || fail "could not find the dotfiles path in the step"
 DOTFILES="$TMP/dotfiles"
 REMOTE="$TMP/remote"
+REMOTE_URL="file://$REMOTE"
 sed -e "s#$baked/overrides/#$DOTFILES/overrides/#g" \
-	-e "s#https://github.com/BoscoDomingo/utils.git#$REMOTE#g" \
+	-e "s#$baked/.gitconfig#$DOTFILES/.gitconfig#g" \
+	-e "s#https://github.com/BoscoDomingo/utils.git#$REMOTE_URL#g" \
 	"$TMP/step.raw" >"$TMP/step.sh"
-grep -q "$REMOTE" "$TMP/step.sh" || fail "clone URL not found in the step"
+grep -q "$REMOTE_URL" "$TMP/step.sh" || fail "clone URL not found in the step"
+grep -q "$DOTFILES/.gitconfig" "$TMP/step.sh" || fail "baseline .gitconfig path not found in the step"
 
 # Skills the step links (from utilsSkills in tools.nix).
 read -r -a SKILLS <<<"$(sed -nE 's/^for skill in (.*); do$/\1/p' "$TMP/step.sh" | tr -d "'")"
@@ -79,11 +83,16 @@ mkdir -p "$DOTFILES/overrides/activation"
 VARS="$DOTFILES/overrides/vars.env"
 DISABLED="$DOTFILES/overrides/activation/disabled"
 
-# jj and git must not read the real user config.
+# jj and git must not read the real user config. The global identity plays the
+# path-based work identity; the dotfiles .gitconfig holds the baseline
+# (personal) one that the step must copy into a new clone.
 export JJ_CONFIG="$TMP/jj.toml"
-printf '[user]\nname = "Test"\nemail = "test@example.com"\n' >"$JJ_CONFIG"
+printf '[user]\nname = "Work Name"\nemail = "work@example.com"\n' >"$JJ_CONFIG"
 export GIT_CONFIG_GLOBAL="$TMP/gitconfig"
-printf '[user]\n\tname = Test\n\temail = test@example.com\n' >"$GIT_CONFIG_GLOBAL"
+printf '[user]\n\tname = Work Name\n\temail = work@example.com\n' >"$GIT_CONFIG_GLOBAL"
+BASE_NAME="Baseline Person"
+BASE_EMAIL="personal@example.com"
+printf '[user]\n  name="%s"\n  email = "%s"\n' "$BASE_NAME" "$BASE_EMAIL" >"$DOTFILES/.gitconfig"
 
 git init -q -b main "$REMOTE"
 for skill in "${SKILLS[@]}"; do
@@ -131,6 +140,15 @@ run_step "$A"
 [ "$(wc_parent "$A/repos/utils")" = "$(remote_head)" ] || fail "new clone is not on main"
 assert_links_into "$A" "$A/repos/utils"
 pass "fresh clone to ~/repos/utils, skills linked"
+for key in user.name user.email; do
+	want=$BASE_EMAIL
+	[ "$key" = user.name ] && want=$BASE_NAME
+	got=$(jj -R "$A/repos/utils" config get "$key")
+	[ "$got" = "$want" ] || fail "jj $key in new clone is '$got' (expected baseline '$want')"
+	got=$(git -C "$A/repos/utils" config --local "$key" || true)
+	[ "$got" = "$want" ] || fail "git $key in new clone is '$got' (expected baseline '$want')"
+done
+pass "new clone has the baseline identity in jj and git repo config (beats the global one)"
 
 # --- 2. Up to date: no change -------------------------------------------------
 before=$(jj -R "$A/repos/utils" log --no-graph -r @ -T 'commit_id')
@@ -225,5 +243,16 @@ assert_out "Skipping utils_skills"
 [ ! -e "$E/repos" ] && [ ! -e "$E/.agents" ] || fail "opted-out step still changed \$HOME"
 rm -f "$DISABLED"
 pass "utils_skills in activation/disabled skips the step"
+
+# --- 11. A global url.insteadOf rule must not redirect the first clone ------
+# The real .gitconfig rewrites https://github.com/ to SSH, which fails on a new
+# machine without keys. Here the rule redirects the fixture URL to a missing
+# repo instead; the clone must still use the original URL.
+F="$TMP/home-f"
+printf '[url "file://%s/missing/"]\n\tinsteadOf = %s\n' "$TMP" "$REMOTE_URL" >>"$GIT_CONFIG_GLOBAL"
+run_step "$F"
+[ -d "$F/repos/utils/.jj" ] || fail "global insteadOf rule redirected the first clone"
+assert_links_into "$F" "$F/repos/utils"
+pass "first clone ignores the global url.insteadOf rule"
 
 echo "all utils_skills tests passed"
