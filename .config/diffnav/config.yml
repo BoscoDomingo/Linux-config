@@ -8,4 +8,3 @@ ui:
   colorFileNames: true
   showDiffStats: true
   sideBySide: false
-  startFoldersOpenDepth: 1

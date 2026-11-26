@@ -7,7 +7,10 @@ trap 'rm -f "$tmp_file"' EXIT HUP INT TERM
 cat >"$tmp_file"
 
 if grep -q 'diff --git ' "$tmp_file"; then
-	GIT_CONFIG_PARAMETERS='delta.side-by-side=false' diffnav <"$tmp_file"
+	# diffnav never passes a "not side-by-side" flag to delta, so override the
+	# gitconfig default here. Git needs each entry single-quoted inside the value;
+	# without the inner quotes delta ignores it and stays side-by-side.
+	GIT_CONFIG_PARAMETERS="'delta.side-by-side=false'" diffnav <"$tmp_file"
 else
 	less -FR <"$tmp_file"
 fi
