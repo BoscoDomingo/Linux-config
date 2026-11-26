@@ -21,6 +21,13 @@ let
   # on this machine only, for example `agent_guards`. Checked at activation
   # time, so no flake rebuild is needed. See Documentation/machine-overrides.md.
   disabledSteps = "${repo}/overrides/activation/disabled";
+  # Device-local clone path for github.com/BoscoDomingo/utils (first non-comment
+  # line, `~` allowed). Work devices set ~/repos/personal/utils to keep personal
+  # repos apart from work ones; without the file the clone goes to ~/repos/utils.
+  utilsPathFile = "${repo}/overrides/activation/utils-path";
+  # utils skills to link into ~/.agents/skills. Other skills in that repo also
+  # ship through the-armoury plugin, so linking them here would duplicate them.
+  utilsSkills = [ "jj-help" "use-asd-ste100" ];
   # Wrap a step body so it runs only when its name is not in disabledSteps.
   optional = name: body: ''
     if [ -f "${disabledSteps}" ] && ${pkgs.gnugrep}/bin/grep -qxE '[[:space:]]*${name}[[:space:]]*' "${disabledSteps}"; then
@@ -132,6 +139,72 @@ in
     if [ -f "${repo}/AI/agent-guards/install.py" ]; then
       run ${pkgs.python3}/bin/python3 "${repo}/AI/agent-guards/install.py" || true
     fi
+  '');
+
+  # Personal agent skills from github.com/BoscoDomingo/utils. Cloned (not a Nix
+  # store path) so the skills stay editable, and symlinked so agents see edits
+  # at once. Each switch fetches and moves the clone to main@origin, but only
+  # when no local work would be left behind: the working-copy change must be
+  # empty and undescribed, and every other change must already be on
+  # main@origin. Otherwise the step prints a note and keeps the checkout.
+  home.activation.utilsSkills = lib.hm.dag.entryAfter [ "linkGeneration" ] (optional "utils_skills" ''
+    dir="$HOME/repos/utils"
+    if [ -f "${utilsPathFile}" ]; then
+      custom="$(${pkgs.gnugrep}/bin/grep -vE '^[[:space:]]*(#|$)' "${utilsPathFile}" \
+        | ${pkgs.coreutils}/bin/head -n 1 \
+        | ${pkgs.gnused}/bin/sed -E 's/^[[:space:]]+|[[:space:]]+$//g' || true)"
+      case "$custom" in
+        "~") custom="$HOME" ;;
+        "~/"*) custom="$HOME/''${custom#"~/"}" ;;
+      esac
+      if [ -n "$custom" ]; then dir="$custom"; fi
+    fi
+
+    # jj fetches through git, and git through ssh. Activation replaces PATH
+    # with Nix tools only, so add both. BatchMode and GIT_TERMINAL_PROMPT stop
+    # an SSH passphrase or credential prompt from blocking the switch; a failed
+    # fetch only skips the update.
+    utils_vcs() {
+      env PATH="${lib.makeBinPath [ pkgs.git pkgs.openssh ]}:$PATH" GIT_TERMINAL_PROMPT=0 \
+        GIT_SSH_COMMAND="ssh -o BatchMode=yes" "$@"
+    }
+    jj="${pkgs.jujutsu}/bin/jj"
+
+    if [ ! -e "$dir" ]; then
+      run ${pkgs.coreutils}/bin/mkdir -p "$(${pkgs.coreutils}/bin/dirname "$dir")"
+      # HTTPS, because a new machine may not have SSH keys yet (the repo is public).
+      run utils_vcs "$jj" git clone --colocate https://github.com/BoscoDomingo/utils.git "$dir" || true
+    elif [ -d "$dir/.jj" ]; then
+      if run utils_vcs "$jj" -R "$dir" git fetch --remote origin; then
+        # Changes a move to main@origin would leave behind. Empty means safe.
+        if pending="$(utils_vcs "$jj" -R "$dir" log --no-graph \
+            -r '(::@ ~ ::main@origin) ~ (@ & empty() & description(exact:""))' \
+            -T 'commit_id ++ "\n"')"; then
+          if [ -n "$pending" ]; then
+            echo "utils: local changes in $dir, not moving it to main@origin"
+          elif [ -z "$(utils_vcs "$jj" -R "$dir" log --no-graph -r '@- & main@origin' -T 'commit_id')" ]; then
+            run utils_vcs "$jj" -R "$dir" new main@origin || true
+          fi
+        fi
+      else
+        echo "utils: fetch failed, keeping the current checkout of $dir"
+      fi
+    elif [ -d "$dir/.git" ]; then
+      run utils_vcs ${git} -C "$dir" pull --ff-only || true
+    fi
+
+    for skill in ${lib.escapeShellArgs utilsSkills}; do
+      target="$dir/ai_llm/skills/$skill"
+      link="$HOME/.agents/skills/$skill"
+      if [ ! -d "$target" ]; then
+        echo "utils: $target is missing, not linking $skill"
+      elif [ -e "$link" ] && [ ! -L "$link" ]; then
+        echo "utils: $link is not a symlink, leaving it as it is"
+      else
+        run ${pkgs.coreutils}/bin/mkdir -p "$HOME/.agents/skills"
+        run ${pkgs.coreutils}/bin/ln -sfn "$target" "$link"
+      fi
+    done
   '');
 
   # Copilot CLI sandbox: let sandboxed hooks see herdr's agent-state script and
