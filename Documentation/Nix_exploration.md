@@ -162,6 +162,7 @@ Per-machine extras (not synced) use the gitignored `overrides/` tree — see
 | **jj**       | `.config/jj/config.toml`   | `overrides/jj/*.toml`           |
 | **Homebrew** | `Brewfile`                 | `overrides/brew/Brewfile.local` |
 | **mise**     | `.config/mise/config.toml` | `overrides/mise/config.toml`    |
+| **Activation** | `home/tools.nix`         | `overrides/activation/disabled` (skip steps), `overrides/vars.env` (`KEY=value` settings) |
 
 `scripts/brew-bundle` (from `bootstrap.sh`) concatenates the Brewfile and
 optional local overlay, then runs `brew bundle`. Mise merges

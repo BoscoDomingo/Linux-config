@@ -1,0 +1,9 @@
+# Personal identity for personal repos nested in the work tree (~/repos/personal),
+# such as the utils clone. Copy to overrides/jj/zz-repos-personal.toml.
+# jj loads conf.d files in name order and the last match wins, so this file
+# must sort after work.toml (--when.repositories = ["~/repos"]). Adding
+# ~/repos/personal to personal.toml does not work: work.toml loads after it.
+--when.repositories = ["~/repos/personal"]
+
+[user]
+email = "boscodomingob@gmail.com"

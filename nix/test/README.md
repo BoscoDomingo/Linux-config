@@ -14,6 +14,19 @@ packages), including **per-machine local overrides**. It passed.
   `verify.sh`.
 - [`upgrade-test.sh`](upgrade-test.sh) — black-box test for
   `scripts/dotfiles-upgrade`: `bash ~/dotfiles/nix/test/upgrade-test.sh`.
+- [`utils-skills-test.sh`](utils-skills-test.sh) — black-box test for the
+  `utils_skills` activation step: `bash ~/dotfiles/nix/test/utils-skills-test.sh`.
+  It builds the activation package, then runs the generated step in a
+  throwaway `$HOME` against a local fixture repo (no network, real `$HOME`
+  untouched). It covers the default and `UTILS_DIR` paths, `vars.env` parsing,
+  update to `main@origin`, the local-work guard, plain git clones, a failed
+  fetch, and the opt-out key. Pass `ACTIVATE=<path>/activate` to skip the build.
+  `verify.sh` also checks the live clone and skill links after a switch.
+- [`identity-test.sh`](identity-test.sh) — black-box test for the path-based
+  git/jj identity rules: `bash ~/dotfiles/nix/test/identity-test.sh`. It uses
+  the committed `.gitconfig`, jj config and `overrides/jj/*.example` in a
+  throwaway `$HOME`, and checks `~/repos` → work, and `~/repos/personal`,
+  `~/personal`, `~/dotfiles` → personal, for both git and jj.
 
 ## What was verified (and the result)
 
@@ -25,7 +38,7 @@ packages), including **per-machine local overrides**. It passed.
 | 4 | Dotfiles are **out-of-store symlinks to the live repo** (still editable in place)                            | ✅ `~/.zshrc → ~/dotfiles/.zshrc`; editing the repo file is visible immediately through the link                                                |
 | 5 | Pre-existing files are backed up, not clobbered                                                              | ✅ `.profile`/`.bashrc` → `*.hm-bak` (equivalent to `home-manager -b`)                                                                          |
 | 6 | **Per-machine git/jj identity** via gitignored `overrides/git` + `overrides/jj`                              | ✅ work override wins; baseline stays `boscodomingob@gmail.com`                                                                                 |
-| 7 | **Per-directory git/jj identity** via `includeIf` / `--when.repositories`                                    | ✅ `~/repos` → work; `~/dotfiles` / `~/personal` → personal                                                                                     |
+| 7 | **Per-directory git/jj identity** via `includeIf` / `--when.repositories`                                    | ✅ `~/repos` → work; `~/dotfiles` / `~/personal` / `~/repos/personal` → personal (`identity-test.sh`)                                          |
 | 8 | **Atomic rollback** between generations                                                                      | ✅ gen2 added `tree` (on `PATH`); rollback to gen1 removed it while dotfiles stayed linked; generations recorded as `home-manager-{1,2,3}-link` |
 
 The current live-host verification checks 30 package and symlink invariants.

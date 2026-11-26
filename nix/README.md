@@ -49,8 +49,10 @@ blocked, see [`test/README.md`](test/README.md).
 | `bootstrap.sh`      | One-command setup for a new machine                                     |
 | `test/verify.sh`    | Post-switch sanity checks; `test/README.md` records the verified run    |
 
-Per-machine identity and device-only packages live in the gitignored
-[`overrides/`](../Documentation/machine-overrides.md) tree (`git`, `jj`,
-`mise`, `brew`). The SSH private key stays in `~/.ssh/` and is never committed.
+Per-machine identity, device-only packages and activation settings live in the
+gitignored [`overrides/`](../Documentation/machine-overrides.md) tree (`git`,
+`jj`, `mise`, `brew`, `activation/disabled`, and `vars.env` for `KEY=value`
+settings such as the `utils` clone path `UTILS_DIR`). The SSH private key stays
+in `~/.ssh/` and is never committed.
 
 Use the cheatsheet for routine updates and rollback.

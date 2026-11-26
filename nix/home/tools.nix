@@ -21,6 +21,30 @@ let
   # on this machine only, for example `agent_guards`. Checked at activation
   # time, so no flake rebuild is needed. See Documentation/machine-overrides.md.
   disabledSteps = "${repo}/overrides/activation/disabled";
+  # Device-local variables for activation steps, one KEY=value per line, so a
+  # machine can change a value (such as a path) without a new override file.
+  # See Documentation/machine-overrides.md.
+  varsFile = "${repo}/overrides/vars.env";
+  # Shell helper for steps: `override_var KEY DEFAULT` prints KEY from varsFile
+  # (last match wins, optional double quotes, leading `~` means $HOME), else
+  # DEFAULT. The file is parsed, not sourced, so it cannot run code or leak
+  # variables into other steps.
+  overrideVarFn = ''
+    override_var() {
+      local v
+      v="$(${pkgs.gnused}/bin/sed -nE "s/^[[:space:]]*$1[[:space:]]*=[[:space:]]*//p" "${varsFile}" 2>/dev/null \
+        | ${pkgs.coreutils}/bin/tail -n 1 \
+        | ${pkgs.gnused}/bin/sed -E 's/[[:space:]]+$//; s/^"(.*)"$/\1/' || true)"
+      case "$v" in
+        "~") v="$HOME" ;;
+        "~/"*) v="$HOME/''${v#"~/"}" ;;
+      esac
+      printf '%s\n' "''${v:-$2}"
+    }
+  '';
+  # utils skills to link into ~/.agents/skills. Other skills in that repo also
+  # ship through the-armoury plugin, so linking them here would duplicate them.
+  utilsSkills = [ "jj-help" "use-asd-ste100" ];
   # Wrap a step body so it runs only when its name is not in disabledSteps.
   optional = name: body: ''
     if [ -f "${disabledSteps}" ] && ${pkgs.gnugrep}/bin/grep -qxE '[[:space:]]*${name}[[:space:]]*' "${disabledSteps}"; then
@@ -132,6 +156,80 @@ in
     if [ -f "${repo}/AI/agent-guards/install.py" ]; then
       run ${pkgs.python3}/bin/python3 "${repo}/AI/agent-guards/install.py" || true
     fi
+  '');
+
+  # Personal agent skills from github.com/BoscoDomingo/utils. Cloned (not a Nix
+  # store path) so the skills stay editable, and symlinked so agents see edits
+  # at once. Each switch fetches and moves the clone to main@origin, but only
+  # when no local work would be left behind: the working-copy change must be
+  # empty and undescribed, and every other change must already be on
+  # main@origin. Otherwise the step prints a note and keeps the checkout.
+  # The clone path is UTILS_DIR in overrides/vars.env: work devices set
+  # ~/repos/personal/utils to keep personal repos apart from work ones.
+  home.activation.utilsSkills = lib.hm.dag.entryAfter [ "linkGeneration" ] (optional "utils_skills" ''
+    ${overrideVarFn}
+    dir="$(override_var UTILS_DIR "$HOME/repos/utils")"
+
+    # jj fetches through git, and git through ssh. Activation replaces PATH
+    # with Nix tools only, so add both. BatchMode and GIT_TERMINAL_PROMPT stop
+    # an SSH passphrase or credential prompt from blocking the switch; a failed
+    # fetch only skips the update.
+    utils_vcs() {
+      env PATH="${lib.makeBinPath [ pkgs.git pkgs.openssh ]}:$PATH" GIT_TERMINAL_PROMPT=0 \
+        GIT_SSH_COMMAND="ssh -o BatchMode=yes" "$@"
+    }
+    jj="${pkgs.jujutsu}/bin/jj"
+
+    if [ ! -e "$dir" ]; then
+      run ${pkgs.coreutils}/bin/mkdir -p "$(${pkgs.coreutils}/bin/dirname "$dir")"
+      # The repo is public, so clone over HTTPS: a new machine may not have SSH
+      # keys yet. GIT_CONFIG_GLOBAL=/dev/null stops the url.insteadOf rule in
+      # .gitconfig from turning the URL into SSH again. Later fetches and
+      # pushes go through that rule, so they use SSH.
+      if run utils_vcs env GIT_CONFIG_GLOBAL=/dev/null \
+          "$jj" git clone --colocate https://github.com/BoscoDomingo/utils.git "$dir"; then
+        # Put the baseline (personal) identity from .gitconfig in the clone
+        # itself, so commits use it whatever the path-based work/personal
+        # rules say about UTILS_DIR (~/repos/** is work).
+        for key in user.name user.email; do
+          value="$(${git} config --file "${repo}/.gitconfig" "$key" || true)"
+          if [ -n "$value" ]; then
+            run utils_vcs "$jj" -R "$dir" config set --repo "$key" "$value" || true
+            run ${git} -C "$dir" config "$key" "$value" || true
+          fi
+        done
+      fi
+    elif [ -d "$dir/.jj" ]; then
+      if run utils_vcs "$jj" -R "$dir" git fetch --remote origin; then
+        # Changes a move to main@origin would leave behind. Empty means safe.
+        if pending="$(utils_vcs "$jj" -R "$dir" log --no-graph \
+            -r '(::@ ~ ::main@origin) ~ (@ & empty() & description(exact:""))' \
+            -T 'commit_id ++ "\n"')"; then
+          if [ -n "$pending" ]; then
+            echo "utils: local changes in $dir, not moving it to main@origin"
+          elif [ -z "$(utils_vcs "$jj" -R "$dir" log --no-graph -r '@- & main@origin' -T 'commit_id')" ]; then
+            run utils_vcs "$jj" -R "$dir" new main@origin || true
+          fi
+        fi
+      else
+        echo "utils: fetch failed, keeping the current checkout of $dir"
+      fi
+    elif [ -d "$dir/.git" ]; then
+      run utils_vcs ${git} -C "$dir" pull --ff-only || true
+    fi
+
+    for skill in ${lib.escapeShellArgs utilsSkills}; do
+      target="$dir/ai_llm/skills/$skill"
+      link="$HOME/.agents/skills/$skill"
+      if [ ! -d "$target" ]; then
+        echo "utils: $target is missing, not linking $skill"
+      elif [ -e "$link" ] && [ ! -L "$link" ]; then
+        echo "utils: $link is not a symlink, leaving it as it is"
+      else
+        run ${pkgs.coreutils}/bin/mkdir -p "$HOME/.agents/skills"
+        run ${pkgs.coreutils}/bin/ln -sfn "$target" "$link"
+      fi
+    done
   '');
 
   # Copilot CLI sandbox: let sandboxed hooks see herdr's agent-state script and

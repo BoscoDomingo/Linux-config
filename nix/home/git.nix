@@ -28,6 +28,11 @@
         condition = "gitdir:~/personal/";
         path = "~/dotfiles/overrides/git/personal.gitconfig";
       }
+      # Personal repos nested in the work tree; after ~/repos/ so it wins.
+      {
+        condition = "gitdir:~/repos/personal/";
+        path = "~/dotfiles/overrides/git/personal.gitconfig";
+      }
     ];
   };
 }

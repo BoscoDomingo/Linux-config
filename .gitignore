@@ -17,6 +17,8 @@ __pycache__
 !/overrides/*/
 !/overrides/.gitkeep
 !/overrides/*/*.example
+# Root-level examples, such as vars.env.example for per-machine activation vars.
+!/overrides/*.example
 
 # Legacy paths (pre-overrides/ tree); keep ignoring in case a checkout still has them.
 .config/jj/repos/

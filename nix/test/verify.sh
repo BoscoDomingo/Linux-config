@@ -202,6 +202,40 @@ case "$mise_ov" in
 *) no "~/.mise/config.toml resolves to '$mise_ov' (expected $REPO/overrides/mise/config.toml)" ;;
 esac
 
+# utils_skills step (nix/home/tools.nix): the clone is at UTILS_DIR and each
+# listed skill links into it. nix/test/utils-skills-test.sh covers the update
+# rules; this only checks the live result.
+header "== utils skills (utils_skills step) =="
+if grep -qxE '[[:space:]]*utils_skills[[:space:]]*' "$REPO/overrides/activation/disabled" 2>/dev/null; then
+	echo "  (skipped) utils_skills is listed in overrides/activation/disabled"
+else
+	# Same rules as override_var in tools.nix: last match wins, optional
+	# double quotes, leading ~ means $HOME.
+	utils_dir=$(sed -nE 's/^[[:space:]]*UTILS_DIR[[:space:]]*=[[:space:]]*//p' "$REPO/overrides/vars.env" 2>/dev/null |
+		tail -n 1 | sed -E 's/[[:space:]]+$//; s/^"(.*)"$/\1/')
+	case "$utils_dir" in
+	"") utils_dir="$HOME/repos/utils" ;;
+	"~") utils_dir="$HOME" ;;
+	"~/"*) utils_dir="$HOME/${utils_dir#"~/"}" ;;
+	esac
+	if [ -d "$utils_dir/.jj" ] || [ -d "$utils_dir/.git" ]; then
+		ok "utils clone at $utils_dir"
+	else
+		no "no utils clone at $utils_dir (UTILS_DIR in overrides/vars.env, default ~/repos/utils)"
+	fi
+	utils_skills=$(sed -nE 's/^[[:space:]]*utilsSkills = \[(.*)\];/\1/p' "$REPO/nix/home/tools.nix" | tr -d '"')
+	[ -n "$utils_skills" ] || no "utilsSkills list not found in nix/home/tools.nix"
+	for skill in $utils_skills; do
+		link="$HOME/.agents/skills/$skill"
+		want=$(readlink -f "$utils_dir/ai_llm/skills/$skill" 2>/dev/null || true)
+		if [ -L "$link" ] && [ -n "$want" ] && [ "$(readlink -f "$link")" = "$want" ]; then
+			ok "~/.agents/skills/$skill -> $want"
+		else
+			no "~/.agents/skills/$skill resolves to '$(readlink -f "$link" 2>/dev/null)' (expected $utils_dir/ai_llm/skills/$skill)"
+		fi
+	done
+fi
+
 header "== git / jj identity (overrides/ tree) =="
 identity "baseline git" "$REPO/.gitconfig" "$(git -C "$REPO" config --file "$REPO/.gitconfig" user.email 2>/dev/null || echo '?')"
 identity "baseline jj" "$REPO/.config/jj/config.toml" "$(sed -n 's/^email = \"\(.*\)\"/\1/p' "$REPO/.config/jj/config.toml" 2>/dev/null | head -1)"
@@ -222,7 +256,9 @@ email_in_git_repo() { # $1 = base dir
 }
 email_in_jj_repo() {
 	local repo
-	repo=$(find "$1" -maxdepth 2 \( -name .git -o -name .jj \) 2>/dev/null | head -1)
+	# Only .jj: in a plain git repo, jj ignores --when.repositories and reports
+	# the machine default, which would look like a wrong identity.
+	repo=$(find "$1" -maxdepth 2 -name .jj 2>/dev/null | head -1)
 	[ -n "$repo" ] || return 1
 	local dir
 	dir=$(dirname "$repo")
@@ -230,6 +266,10 @@ email_in_jj_repo() {
 }
 [ -d "$HOME/repos" ] && identity "git in repos" "$HOME/repos" "$(email_in_git_repo "$HOME/repos" || echo 'n/a (no repo)')"
 [ -d "$HOME/repos" ] && identity "jj in repos" "$HOME/repos" "$(email_in_jj_repo "$HOME/repos" || echo 'n/a (no repo)')"
+# Personal repos nested in the work tree (.gitconfig includeIf after ~/repos/,
+# overrides/jj/zz-repos-personal.toml). Expect the personal email here.
+[ -d "$HOME/repos/personal" ] && identity "git in repos/personal" "$HOME/repos/personal" "$(email_in_git_repo "$HOME/repos/personal" || echo 'n/a (no repo)')"
+[ -d "$HOME/repos/personal" ] && identity "jj in repos/personal" "$HOME/repos/personal" "$(email_in_jj_repo "$HOME/repos/personal" || echo 'n/a (no repo)')"
 [ -d "$HOME/dotfiles" ] && identity "git in dotfiles" "$HOME/dotfiles" "$(cd "$HOME/dotfiles" && git config user.email 2>/dev/null || echo 'n/a')"
 [ -d "$HOME/dotfiles" ] && identity "jj in dotfiles" "$HOME/dotfiles" "$(cd "$HOME/dotfiles" && jj config get user.email 2>/dev/null || echo 'n/a')"
 [ -d "$HOME/personal" ] && identity "git in personal" "$HOME/personal" "$(email_in_git_repo "$HOME/personal" || echo 'n/a (no repo)')"
