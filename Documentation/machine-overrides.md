@@ -22,7 +22,7 @@ overrides/
     enabled              # selected bare-metal Arch system patches
   activation/
     disabled             # Home Manager activation steps to skip
-    utils-path           # clone path for BoscoDomingo/utils (default ~/repos/utils)
+  vars.env               # KEY=value settings read by activation steps
 ```
 
 `/overrides/` is gitignored. Home Manager / bootstrap create the directories and
@@ -50,7 +50,7 @@ personal machines need zero of these.
 | **Homebrew** | `Brewfile`                 | `overrides/brew/Brewfile.local` | `scripts/brew-bundle` concatenates both                       |
 | **Arch patches** | `Arch/patches/`        | `overrides/patches/enabled`     | Bootstrap installs selected patches and pacman hooks          |
 | **Activation steps** | `nix/home/tools.nix` | `overrides/activation/disabled` | Each step skips itself when its key is listed               |
-| **utils skills** | `nix/home/tools.nix`   | `overrides/activation/utils-path` | `utils_skills` step reads the clone path at activation      |
+| **Activation vars** | `nix/home/tools.nix` | `overrides/vars.env`          | Steps read their keys with `override_var KEY DEFAULT`         |
 
 Later git includes win, so personal path files beat `local` / `work` when both
 match. jj `conf.d` files load lexicographically after the synced config.toml.
@@ -155,17 +155,31 @@ points to this file.
 When you add a step to `tools.nix`, wrap its body with
 `optional "<snake_case_key>"`, then add the key to this table.
 
+## Per-machine variables
+
+`overrides/vars.env` holds settings for activation steps, one `KEY=value` per
+line (copy `overrides/vars.env.example`). Lines that start with `#` are
+comments. If a key occurs more than once, the last line wins. Double quotes
+around a value are optional, and a leading `~` means `$HOME`. Home Manager
+parses the file; it does not source it as shell.
+
+| Key         | Default          | Used by        | Meaning                              |
+|-------------|------------------|----------------|--------------------------------------|
+| `UTILS_DIR` | `~/repos/utils`  | `utils_skills` | Clone path for BoscoDomingo/utils    |
+
+To read a new key in a step, add `${overrideVarFn}` to the step body, then
+use `"$(override_var KEY DEFAULT)"`. Add the key to this table.
+
 ## Personal skills from `utils`
 
 The `utils_skills` step clones
 [BoscoDomingo/utils](https://github.com/BoscoDomingo/utils) and links the
 skills listed in `utilsSkills` (`nix/home/tools.nix`) into `~/.agents/skills/`.
 The clone goes to `~/repos/utils`. On a work machine, keep it apart from work
-repos: write the path on the first non-comment line of
-`overrides/activation/utils-path` (copy `utils-path.example`):
+repos with `UTILS_DIR` in `overrides/vars.env`:
 
-```text
-~/repos/personal/utils
+```sh
+UTILS_DIR=~/repos/personal/utils
 ```
 
 Each switch fetches the clone and moves it to `main@origin`. It moves the clone

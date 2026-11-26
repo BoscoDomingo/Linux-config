@@ -1,4 +1,0 @@
-# Clone path for github.com/BoscoDomingo/utils on this machine (first non-comment line).
-# Copy to overrides/activation/utils-path. Without that file the clone goes to ~/repos/utils.
-# Work devices: keep personal repos apart from work repos under ~/repos.
-~/repos/personal/utils

@@ -21,10 +21,27 @@ let
   # on this machine only, for example `agent_guards`. Checked at activation
   # time, so no flake rebuild is needed. See Documentation/machine-overrides.md.
   disabledSteps = "${repo}/overrides/activation/disabled";
-  # Device-local clone path for github.com/BoscoDomingo/utils (first non-comment
-  # line, `~` allowed). Work devices set ~/repos/personal/utils to keep personal
-  # repos apart from work ones; without the file the clone goes to ~/repos/utils.
-  utilsPathFile = "${repo}/overrides/activation/utils-path";
+  # Device-local variables for activation steps, one KEY=value per line, so a
+  # machine can change a value (such as a path) without a new override file.
+  # See Documentation/machine-overrides.md.
+  varsFile = "${repo}/overrides/vars.env";
+  # Shell helper for steps: `override_var KEY DEFAULT` prints KEY from varsFile
+  # (last match wins, optional double quotes, leading `~` means $HOME), else
+  # DEFAULT. The file is parsed, not sourced, so it cannot run code or leak
+  # variables into other steps.
+  overrideVarFn = ''
+    override_var() {
+      local v
+      v="$(${pkgs.gnused}/bin/sed -nE "s/^[[:space:]]*$1[[:space:]]*=[[:space:]]*//p" "${varsFile}" 2>/dev/null \
+        | ${pkgs.coreutils}/bin/tail -n 1 \
+        | ${pkgs.gnused}/bin/sed -E 's/[[:space:]]+$//; s/^"(.*)"$/\1/' || true)"
+      case "$v" in
+        "~") v="$HOME" ;;
+        "~/"*) v="$HOME/''${v#"~/"}" ;;
+      esac
+      printf '%s\n' "''${v:-$2}"
+    }
+  '';
   # utils skills to link into ~/.agents/skills. Other skills in that repo also
   # ship through the-armoury plugin, so linking them here would duplicate them.
   utilsSkills = [ "jj-help" "use-asd-ste100" ];
@@ -147,18 +164,11 @@ in
   # when no local work would be left behind: the working-copy change must be
   # empty and undescribed, and every other change must already be on
   # main@origin. Otherwise the step prints a note and keeps the checkout.
+  # The clone path is UTILS_DIR in overrides/vars.env: work devices set
+  # ~/repos/personal/utils to keep personal repos apart from work ones.
   home.activation.utilsSkills = lib.hm.dag.entryAfter [ "linkGeneration" ] (optional "utils_skills" ''
-    dir="$HOME/repos/utils"
-    if [ -f "${utilsPathFile}" ]; then
-      custom="$(${pkgs.gnugrep}/bin/grep -vE '^[[:space:]]*(#|$)' "${utilsPathFile}" \
-        | ${pkgs.coreutils}/bin/head -n 1 \
-        | ${pkgs.gnused}/bin/sed -E 's/^[[:space:]]+|[[:space:]]+$//g' || true)"
-      case "$custom" in
-        "~") custom="$HOME" ;;
-        "~/"*) custom="$HOME/''${custom#"~/"}" ;;
-      esac
-      if [ -n "$custom" ]; then dir="$custom"; fi
-    fi
+    ${overrideVarFn}
+    dir="$(override_var UTILS_DIR "$HOME/repos/utils")"
 
     # jj fetches through git, and git through ssh. Activation replaces PATH
     # with Nix tools only, so add both. BatchMode and GIT_TERMINAL_PROMPT stop
