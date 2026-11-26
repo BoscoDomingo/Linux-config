@@ -77,6 +77,19 @@ if command -v brew >/dev/null 2>&1 && [ -f "$REPO/Brewfile" ]; then
 	bash "$REPO/scripts/brew-bundle"
 fi
 
+# Colocated `jj workspace add` writes relative Git worktree paths and sets
+# extensions.relativeworktrees. Nix reads the flake through libgit2, which does
+# not know that extension and refuses to open the repo. Rewrite the worktree
+# links as absolute paths first, so it is then safe to drop the extension.
+# Remove this whole block once the libgit2 used by Nix supports
+# extensions.relativeworktrees.
+if command -v git >/dev/null 2>&1 &&
+	git -C "$REPO" config --local --get extensions.relativeworktrees >/dev/null 2>&1; then
+	printf '\033[35m== converting relative Git worktrees to absolute paths ==\033[0m\n'
+	git -C "$REPO" worktree repair --no-relative-paths
+	git -C "$REPO" config --local --unset extensions.relativeworktrees
+fi
+
 # Build and run the activation package pinned by this repository's flake.lock.
 #    The backup extension preserves pre-existing paths during first activation.
 printf '\033[35m== activating %s ==\033[0m\n' "$REPO/nix#homeConfigurations.$HOST"
