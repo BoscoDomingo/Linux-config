@@ -256,7 +256,9 @@ email_in_git_repo() { # $1 = base dir
 }
 email_in_jj_repo() {
 	local repo
-	repo=$(find "$1" -maxdepth 2 \( -name .git -o -name .jj \) 2>/dev/null | head -1)
+	# Only .jj: in a plain git repo, jj ignores --when.repositories and reports
+	# the machine default, which would look like a wrong identity.
+	repo=$(find "$1" -maxdepth 2 -name .jj 2>/dev/null | head -1)
 	[ -n "$repo" ] || return 1
 	local dir
 	dir=$(dirname "$repo")
