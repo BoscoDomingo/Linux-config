@@ -192,6 +192,9 @@ from it, set the remote to SSH:
 If you change the path, the next switch clones to the new path and points the
 links there. It does not delete the old clone.
 
+Tests: `bash nix/test/utils-skills-test.sh` runs the step offline against a
+fixture repo; `nix/test/verify.sh` checks the live clone and links.
+
 ## First-time setup on a work machine
 
 ```sh

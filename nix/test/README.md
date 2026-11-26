@@ -14,6 +14,14 @@ packages), including **per-machine local overrides**. It passed.
   `verify.sh`.
 - [`upgrade-test.sh`](upgrade-test.sh) — black-box test for
   `scripts/dotfiles-upgrade`: `bash ~/dotfiles/nix/test/upgrade-test.sh`.
+- [`utils-skills-test.sh`](utils-skills-test.sh) — black-box test for the
+  `utils_skills` activation step: `bash ~/dotfiles/nix/test/utils-skills-test.sh`.
+  It builds the activation package, then runs the generated step in a
+  throwaway `$HOME` against a local fixture repo (no network, real `$HOME`
+  untouched). It covers the default and `UTILS_DIR` paths, `vars.env` parsing,
+  update to `main@origin`, the local-work guard, plain git clones, a failed
+  fetch, and the opt-out key. Pass `ACTIVATE=<path>/activate` to skip the build.
+  `verify.sh` also checks the live clone and skill links after a switch.
 
 ## What was verified (and the result)
 

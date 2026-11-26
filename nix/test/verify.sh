@@ -202,6 +202,40 @@ case "$mise_ov" in
 *) no "~/.mise/config.toml resolves to '$mise_ov' (expected $REPO/overrides/mise/config.toml)" ;;
 esac
 
+# utils_skills step (nix/home/tools.nix): the clone is at UTILS_DIR and each
+# listed skill links into it. nix/test/utils-skills-test.sh covers the update
+# rules; this only checks the live result.
+header "== utils skills (utils_skills step) =="
+if grep -qxE '[[:space:]]*utils_skills[[:space:]]*' "$REPO/overrides/activation/disabled" 2>/dev/null; then
+	echo "  (skipped) utils_skills is listed in overrides/activation/disabled"
+else
+	# Same rules as override_var in tools.nix: last match wins, optional
+	# double quotes, leading ~ means $HOME.
+	utils_dir=$(sed -nE 's/^[[:space:]]*UTILS_DIR[[:space:]]*=[[:space:]]*//p' "$REPO/overrides/vars.env" 2>/dev/null |
+		tail -n 1 | sed -E 's/[[:space:]]+$//; s/^"(.*)"$/\1/')
+	case "$utils_dir" in
+	"") utils_dir="$HOME/repos/utils" ;;
+	"~") utils_dir="$HOME" ;;
+	"~/"*) utils_dir="$HOME/${utils_dir#"~/"}" ;;
+	esac
+	if [ -d "$utils_dir/.jj" ] || [ -d "$utils_dir/.git" ]; then
+		ok "utils clone at $utils_dir"
+	else
+		no "no utils clone at $utils_dir (UTILS_DIR in overrides/vars.env, default ~/repos/utils)"
+	fi
+	utils_skills=$(sed -nE 's/^[[:space:]]*utilsSkills = \[(.*)\];/\1/p' "$REPO/nix/home/tools.nix" | tr -d '"')
+	[ -n "$utils_skills" ] || no "utilsSkills list not found in nix/home/tools.nix"
+	for skill in $utils_skills; do
+		link="$HOME/.agents/skills/$skill"
+		want=$(readlink -f "$utils_dir/ai_llm/skills/$skill" 2>/dev/null || true)
+		if [ -L "$link" ] && [ -n "$want" ] && [ "$(readlink -f "$link")" = "$want" ]; then
+			ok "~/.agents/skills/$skill -> $want"
+		else
+			no "~/.agents/skills/$skill resolves to '$(readlink -f "$link" 2>/dev/null)' (expected $utils_dir/ai_llm/skills/$skill)"
+		fi
+	done
+fi
+
 header "== git / jj identity (overrides/ tree) =="
 identity "baseline git" "$REPO/.gitconfig" "$(git -C "$REPO" config --file "$REPO/.gitconfig" user.email 2>/dev/null || echo '?')"
 identity "baseline jj" "$REPO/.config/jj/config.toml" "$(sed -n 's/^email = \"\(.*\)\"/\1/p' "$REPO/.config/jj/config.toml" 2>/dev/null | head -1)"
