@@ -41,14 +41,14 @@ personal machines need zero of these.
 
 ## How each tool loads `overrides/`
 
-| Tool         | Synced baseline            | Override path                   | Mechanism                                                     |
-|--------------|----------------------------|---------------------------------|---------------------------------------------------------------|
-| **git**      | `.gitconfig`               | `overrides/git/*.gitconfig`     | `[include]` / `[includeIf]` with `~/dotfiles/overrides/git/…` |
-| **jj**       | `.config/jj/config.toml`   | `overrides/jj/*.toml`           | `~/.config/jj/conf.d` → symlink to `overrides/jj`             |
-| **mise**     | `.config/mise/config.toml` | `overrides/mise/config.toml`    | `~/.mise/config.toml` → symlink to that file                  |
-| **Homebrew** | `Brewfile`                 | `overrides/brew/Brewfile.local` | `scripts/brew-bundle` concatenates both                       |
-| **Arch patches** | `Arch/patches/`        | `overrides/patches/enabled`     | Bootstrap installs selected patches and pacman hooks          |
-| **Activation steps** | `nix/home/tools.nix` | `overrides/activation/disabled` | Each step skips itself when its key is listed               |
+| Tool                 | Synced baseline            | Override path                   | Mechanism                                                     |
+|----------------------|----------------------------|---------------------------------|---------------------------------------------------------------|
+| **git**              | `.gitconfig`               | `overrides/git/*.gitconfig`     | `[include]` / `[includeIf]` with `~/dotfiles/overrides/git/…` |
+| **jj**               | `.config/jj/config.toml`   | `overrides/jj/*.toml`           | `~/.config/jj/conf.d` → symlink to `overrides/jj`             |
+| **mise**             | `.config/mise/config.toml` | `overrides/mise/config.toml`    | `~/.mise/config.toml` → symlink to that file                  |
+| **Homebrew**         | `Brewfile`                 | `overrides/brew/Brewfile.local` | `scripts/brew-bundle` concatenates both                       |
+| **Arch patches**     | `Arch/patches/`            | `overrides/patches/enabled`     | Bootstrap installs selected patches and pacman hooks          |
+| **Activation steps** | `nix/home/tools.nix`       | `overrides/activation/disabled` | Each step skips itself when its key is listed                 |
 
 Later git includes win, so personal path files beat `local` / `work` when both
 match. jj `conf.d` files load lexicographically after the synced config.toml.
