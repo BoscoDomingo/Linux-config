@@ -1240,14 +1240,23 @@
 	// ~/.copilot/settings.json's sandbox.userPolicy. Allow read-only access to
 	// ~/.copilot/hooks so herdr's shared Copilot SessionStart hook can run,
 	// see HERDR_ENV is unset, and exit 0 without write access to ~/.config/herdr.
+	// Nix tools such as jj need the profile symlink chain and store libraries.
 	// fileSystem.linux covers VS Code's terminal sandbox; userConfiguredPaths
 	// covers the Copilot SDK / Agents window sandbox.
 	"chat.agent.sandbox.fileSystem.linux": {
-		"allowRead": ["~/.copilot/hooks"]
+		"allowRead": [
+			"~/.copilot/hooks",
+			"~/.nix-profile",
+			"~/.local/state/nix/profiles",
+			"/nix/store"
+		]
 	},
 	"chat.agent.sandbox.fileSystem.userConfiguredPaths": {
 		"readonlyPaths": [
 			"~/.copilot/hooks",
+			"~/.nix-profile",
+			"~/.local/state/nix/profiles",
+			"/nix/store",
 			"/home/bosco/repos/personal/utils/ai_llm/skills/jj-help/assets/agent-jujutsu-guide.md",
 			"/mnt/c/Users/BoscoDomingoBenito/AppData/Roaming/Code/User",
 			"/mnt/c/Users/BoscoDomingoBenito/.vscode/extensions",
